@@ -15,11 +15,26 @@ SOURCES += main.cpp \
     xboardprotocol.cpp \
     bitboard.cpp \
     board.cpp \
-    colorboard.cpp
+    colorboard.cpp \
+    pieceboard.cpp \
+    piecetype.cpp \
+    chessboard.cpp \
+    piecepositions.cpp \
+    position.cpp \
+    move.cpp
 
 HEADERS += \
     xboardprotocol.h \
     bitboard.h \
     board.h \
     colorboard.h \
-    color.h
+    color.h \
+    bitboard.h \
+    pieceboard.h \
+    colorboard.h \
+    piecetype.h \
+    chessboard.h \
+    color.h \
+    piecepositions.h \
+    position.h \
+    move.h
