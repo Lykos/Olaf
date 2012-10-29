@@ -7,6 +7,8 @@
 TARGET = Olaf
 CONFIG   += console
 CONFIG   -= app_bundle
+QMAKE_CXXFLAGS += -std=c++11
+CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
 TEMPLATE = app
 
@@ -14,16 +16,50 @@ TEMPLATE = app
 SOURCES += main.cpp \
     xboardprotocol.cpp \
     bitboard.cpp \
-    board.cpp \
+    positiondelta.cpp \
     colorboard.cpp \
+    pieceboard.cpp \
+    chessboard.cpp \
+    position.cpp \
+    move.cpp \
+    pawn.cpp \
+    linepiece.cpp \
     oncepiece.cpp \
-    positiondelta.cpp
+    anticastleaction.cpp \
+    captureaction.cpp \
+    piecemoveaction.cpp \
+    turnflipaction.cpp \
+    epenableaction.cpp \
+    epdisableaction.cpp \
+    pieceset.cpp \
+    conversionaction.cpp \
+    piece.cpp \
+    movegenerator.cpp
 
 HEADERS += \
     xboardprotocol.h \
     bitboard.h \
-    board.h \
     colorboard.h \
     color.h \
     oncepiece.h \
-    positiondelta.h
+    positiondelta.h \
+    bitboard.h \
+    pieceboard.h \
+    colorboard.h \
+    chessboard.h \
+    color.h \
+    position.h \
+    move.h \
+    moveaction.h \
+    pawn.h \
+    piece.h \
+    linepiece.h \
+    anticastleaction.h \
+    captureaction.h \
+    epenablaction.h \
+    piecemoveaction.h \
+    turnflipaction.h \
+    epdisableaction.h \
+    pieceset.h \
+    conversionaction.h \
+    movegenerator.h

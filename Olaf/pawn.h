@@ -1,0 +1,34 @@
+#ifndef PAWN_H
+#define PAWN_H
+
+#include "color.h"
+#include "piece.h"
+#include "pieceset.h"
+#include "move.h"
+#include <vector>
+#include <cstddef>
+
+class Pawn : public Piece
+{
+public:
+  Pawn(piece_index_t piece_index, const BitBoard& initial_board, const std::vector<piece_index_t> &conversions);
+
+  std::vector<Move> moves(const Position& source,
+                          const ChessBoard& board,
+                          const BitBoard &opponents,
+                          const BitBoard &friends) const;
+
+  /**
+   * @brief add_conversions adds all moves that are based upon the given base move combined with a conversion action.
+   * @param moves
+   * @param base_move
+   * @param position
+   */
+  void add_conversions(std::vector<Move>& moves, const Move& base_move, const Position &position) const;
+
+private:
+  std::vector<piece_index_t> m_conversions;
+
+};
+
+#endif // PAWN_H

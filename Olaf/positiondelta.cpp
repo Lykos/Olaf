@@ -1,20 +1,18 @@
 #include "positiondelta.h"
 
-PositionDelta::PositionDelta(d_row_t d_row, d_column_t d_column):
-  m_d_row (d_row),
-  m_d_column (d_column)
-{}
+using namespace std;
 
-PositionDelta::PositionDelta():
-  PositionDelta(0, 0)
-{}
-
-d_row_t PositionDelta::d_row() const
+PositionDelta::d_row_t PositionDelta::d_row() const
 {
   return m_d_row;
 }
 
-d_column_t PositionDelta::d_column() const
+PositionDelta::d_column_t PositionDelta::d_column() const
 {
   return m_d_column;
+}
+
+PositionDelta operator+(const PositionDelta &a, const PositionDelta &b)
+{
+  return PositionDelta(a.m_d_row + b.m_d_row, a.m_d_column + b.m_d_column);
 }
