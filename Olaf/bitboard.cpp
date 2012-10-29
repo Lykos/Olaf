@@ -1,28 +1,42 @@
 #include "bitboard.h"
 
-BitBoard operator|(BitBoard a, BitBoard b)
+using namespace std;
+
+BitBoard operator|(const BitBoard& a, const BitBoard& b)
 {
   return BitBoard(a.m_bits | b.m_bits);
 }
 
-BitBoard operator^(BitBoard a, BitBoard b)
+BitBoard operator^(const BitBoard& a, const BitBoard& b)
 {
   return BitBoard(a.m_bits ^ b.m_bits);
 }
 
-BitBoard operator&(BitBoard a, BitBoard b)
+BitBoard operator&(const BitBoard& a, const BitBoard& b)
 {
   return BitBoard(a.m_bits & b.m_bits);
+}
+
+BitBoard operator==(const BitBoard& a, const BitBoard& b)
+{
+  return a.m_bits == b.m_bits;
 }
 
 BitBoard::BitBoard(uint64_t bits):
   m_bits (bits)
 {}
 
-bool get(Position position)
+uint_fast8_t index(const Position& position)
 {
-  uint_fast8_t index = position.row() * COLUMN_SIZE + position.row();
-  static_cast<bool>((m_bits << index) & 1);
+  return position.column() * Position::ROW_SIZE + position.row();
 }
 
-bool set(Position, bool);
+bool BitBoard::get(const Position& position) const
+{
+  return static_cast<bool>((m_bits << index(position)) & 1);
+}
+
+void BitBoard::set(const Position& position, bool value)
+{
+  m_bits |= static_cast<uint64_t>(value) << index(position);
+}

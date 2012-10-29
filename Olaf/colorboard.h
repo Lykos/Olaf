@@ -1,9 +1,11 @@
 #ifndef COLORBOARD_H
 #define COLORBOARD_H
 
+class PieceBoard;
+
+#include "color.h"
 #include <vector>
-#include "pieceboard.h"
-#include "piecepositions.h"
+#include <cstdint>
 
 /**
  * @brief The ColorBoard class represents all the board information about one color, i.e. castling rights and
@@ -12,17 +14,52 @@
 class ColorBoard
 {
 public:
-  ColorBoard(const std::vector<PiecePositions>&, const std::vector<PieceBoard>&);
+  typedef std::uint_fast8_t piece_index_t;
 
-  const std::vector<PiecePositions>& piece_positions() const;
+  /**
+   * @brief ColorBoard
+   * @param color
+   * @param piece_boards
+   * @param can_castle_q True if queenside castling is possible.
+   * @param can_castle_k True if queenside castling is possible.
+   */
+  ColorBoard(Color color, const std::vector<PieceBoard>& piece_boards, bool can_castle_q = true, bool can_castle_k = true);
 
   const std::vector<PieceBoard>& piece_boards() const;
 
+  /**
+   * @brief piece_board returns the bitboard that belongs to a given piece.
+   * @param piece_index the index of the piece.
+   * @return the PieceBoard of that piece.
+   */
+  PieceBoard& piece_board(piece_index_t piece_index);
+
+  /**
+   * @brief piece_board returns the bitboard that belongs to a given piece.
+   * @param piece_index the index of the piece.
+   * @return the PieceBoard of that piece.
+   */
+  const PieceBoard& piece_board(piece_index_t piece_index) const;
+
+  bool can_castle_q() const;
+
+  bool can_castle_k() const;
+
+  void can_castle_q(bool new_can_castle_q);
+
+  void can_castle_k(bool new_can_castle_k);
+
 private:
-  std::vector<PiecePositions> m_piece_positions;
+  Color m_color;
 
   std::vector<PieceBoard> m_piece_boards;
 
+  bool m_can_castle_q;
+
+  bool m_can_castle_k;
+
 };
+
+#include "pieceboard.h"
 
 #endif // COLORBOARD_H

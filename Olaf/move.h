@@ -1,39 +1,36 @@
 #ifndef MOVE_H
 #define MOVE_H
 
-#include "position.h"
-#include <cassert>
-#include "chessboard.h"
+#include <boost/shared_ptr.hpp>
+
+class MoveAction;
+
+class ChessBoard;
 
 /**
- * @brief The Move class represents a move that can be executed or undone.
+ * @brief The Move class represents a move that encapsulates a possible move action
  */
 class Move
 {
 public:
-  Move();
+  Move(MoveAction* move_action);
 
   /**
-   * @brief execute executes the move on the given chessboard. Can not be called if the move has already been
-   * executed and not undone.
-   * @param ChessBoard is the board on which it should be executed.
+   * @brief execute executes the move action and flips the turn color.
    */
-  execute(ChessBoard);
+  void execute(ChessBoard&);
 
   /**
-   * @brief undo
+   * @brief undo takes back the move action and flips the turn color.
    */
-  undo();
+  void undo(ChessBoard&);
 
 private:
-  Position m_ep_field;
-
-  ChessBoard* m_chess_board;
-
-  bool m_executed;
-
-  vector<bool> taken;
+  boost::shared_ptr<MoveAction> m_move_ptr;
 
 };
+
+#include "chessboard.h"
+#include "moveaction.h"
 
 #endif // MOVE_H
