@@ -15,11 +15,15 @@ SOURCES += main.cpp \
     xboardprotocol.cpp \
     bitboard.cpp \
     board.cpp \
-    colorboard.cpp
+    colorboard.cpp \
+    oncepiece.cpp \
+    positiondelta.cpp
 
 HEADERS += \
     xboardprotocol.h \
     bitboard.h \
     board.h \
     colorboard.h \
-    color.h
+    color.h \
+    oncepiece.h \
+    positiondelta.h
