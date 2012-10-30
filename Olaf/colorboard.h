@@ -24,7 +24,7 @@ public:
    * @param can_castle_q True if queenside castling is possible.
    * @param can_castle_k True if queenside castling is possible.
    */
-  ColorBoard(const std::vector<PieceBoard>& piece_boards, bool can_castle_q = true, bool can_castle_k = true);
+  ColorBoard(const std::vector<PieceBoard>& piece_boards = std::vector<PieceBoard>(), bool can_castle_q = true, bool can_castle_k = true);
 
   const std::vector<PieceBoard>& piece_boards() const;
 

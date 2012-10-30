@@ -16,6 +16,11 @@ class Move
 {
 public:
   /**
+   * @brief Move creates an empty move that does nothing. Not even the turn flip.
+   */
+  Move();
+
+  /**
    * @brief Move creates a default move that moves a piece and flips the turn but does
    * nothing else (capturing etc is not handled).
    * @param piece_index

@@ -34,7 +34,9 @@ SOURCES += main.cpp \
     pieceset.cpp \
     conversionaction.cpp \
     piece.cpp \
-    movegenerator.cpp
+    movegenerator.cpp \
+    uciprotocol.cpp \
+    engine.cpp
 
 HEADERS += \
     xboardprotocol.h \
@@ -62,4 +64,7 @@ HEADERS += \
     epdisableaction.h \
     pieceset.h \
     conversionaction.h \
-    movegenerator.h
+    movegenerator.h \
+    protocol.h \
+    uciprotocol.h \
+    engine.h

@@ -15,14 +15,14 @@ class ChessBoard
 public:
   /**
    * @brief ChessBoard
-   * @param turn
    * @param color_boards
+   * @param turn
    * @param ep_possible
    * @param ep_capture_position
    * @param ep_vicitim_position
    */
   ChessBoard(
-      const std::array<ColorBoard, 2> &color_boards,
+      const std::array<ColorBoard, 2> &color_boards = {ColorBoard(), ColorBoard()},
       Color turn = White,
       bool ep_possible = false,
       const Position &ep_capture_position = Position(),

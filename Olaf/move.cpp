@@ -9,6 +9,9 @@
 
 using namespace std;
 
+Move::Move()
+{}
+
 Move::Move(PieceSet::piece_index_t piece_index, const Position &source, const Position &destination)
 {
   m_move_ptrs.push_back(new PieceMoveAction(piece_index, source, destination));
