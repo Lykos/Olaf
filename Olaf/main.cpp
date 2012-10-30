@@ -1,6 +1,5 @@
 #include <iostream>
-#include "xboardprotocol.h"
-#include "uciprotocol.h"
+#include "xboardreader.h"
 
 using namespace std;
 
@@ -8,10 +7,9 @@ int main()
 {
   cout.setf(ios::unitbuf);
   string protocol_name;
-  cin >> protocol_name;
-  if (protocol_name == XBoardProtocol::name()) {
-
-  } else if (protocol_name == UCIProtocol::name()) {
+  getline(cin, protocol_name);
+  if (protocol_name == "xboard") {
+    XBoardReader().run();
   } else {
     cout << "Error: Unknown protocol " << protocol_name << "." << endl;
     return 1;

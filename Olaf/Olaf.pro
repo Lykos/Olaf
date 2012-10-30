@@ -14,7 +14,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    xboardprotocol.cpp \
     bitboard.cpp \
     positiondelta.cpp \
     colorboard.cpp \
@@ -35,11 +34,13 @@ SOURCES += main.cpp \
     conversionaction.cpp \
     piece.cpp \
     movegenerator.cpp \
-    uciprotocol.cpp \
-    engine.cpp
+    engine.cpp \
+    xboardreader.cpp \
+    xboardwriter.cpp \
+    searchresult.cpp \
+    searcher.cpp
 
 HEADERS += \
-    xboardprotocol.h \
     bitboard.h \
     colorboard.h \
     color.h \
@@ -50,7 +51,6 @@ HEADERS += \
     colorboard.h \
     chessboard.h \
     color.h \
-    position.h \
     move.h \
     moveaction.h \
     pawn.h \
@@ -65,6 +65,12 @@ HEADERS += \
     pieceset.h \
     conversionaction.h \
     movegenerator.h \
-    protocol.h \
-    uciprotocol.h \
-    engine.h
+    engine.h \
+    position.h \
+    protocolreader.h \
+    protocolwriter.h \
+    xboardreader.h \
+    xboardwriter.h \
+    result.h \
+    searchresult.h \
+    searcher.h

@@ -2,24 +2,13 @@
 #define PIECESET_H
 
 #include "piece.h"
+#include "pawn.h"
 #include <vector>
 
 class PieceSet
 {
 public:
   typedef Piece::piece_index_t piece_index_t;
-
-  static const piece_index_t ROOK_INDEX = 0;
-
-  static const piece_index_t KNIGHT_INDEX = 1;
-
-  static const piece_index_t BISHOP_INDEX = 2;
-
-  static const piece_index_t QUEEN_INDEX = 3;
-
-  static const piece_index_t KING_INDEX = 4;
-
-  static const piece_index_t PAWN_INDEX = 5;
 
   ~PieceSet();
 
@@ -41,7 +30,7 @@ public:
 
   const Piece* king() const;
 
-  const Piece* pawn() const;
+  const Pawn* pawn() const;
 
   const std::vector<Piece*>& pieces() const;
 

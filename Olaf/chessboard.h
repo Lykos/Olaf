@@ -66,6 +66,48 @@ public:
 
   void flip_turn();
 
+  /**
+   * @attention Result caching might be invalid if the user is not careful.
+   * @brief opponents returns a bitboard indicating positions at which an opposing piece
+   * is present and caches the result until the next turn flip.
+   * @return
+   */
+  const BitBoard& opponents() const;
+
+  /**
+   * @brief opponent is a shortcut for opponents().get(position)
+   * @return
+   */
+  bool opponent(const Position&);
+
+  /**
+   * @attention Result caching might be invalid if the user is not careful.
+   * @brief opponents returns a bitboard indicating positions at which a friendly piece
+   * is present and caches the result until the next turn flip.
+   * @return
+   */
+  const BitBoard& friends() const;
+
+  /**
+   * @brief friendd is a shortcut for friends().get(position)
+   * @return
+   */
+  bool friendd(const Position&);
+
+  /**
+   * @attention Result caching might be invalid if the user is not careful.
+   * @brief opponents returns a bitboard indicating positions at which any piece
+   * is present and caches the result until the next turn flip.
+   * @return
+   */
+  const BitBoard& occupied() const;
+
+  /**
+   * @brief occupied is a shortcut for occupied().get(position)
+   * @return
+   */
+  bool occupied(const Position&);
+
 private:
   std::array<ColorBoard, 2> m_color_boards;
 
@@ -76,6 +118,18 @@ private:
   Position m_ep_capture_position;
 
   Position m_ep_victim_position;
+
+  mutable bool m_opponents_valid = false;
+
+  mutable bool m_friends_valid = false;
+
+  mutable bool m_occupied_valid = false;
+
+  mutable BitBoard m_opponents;
+
+  mutable BitBoard m_friends;
+
+  mutable BitBoard m_occupied;
 
 };
 

@@ -1,8 +1,15 @@
 #include "position.h"
 
-bool operator==(const Position& a, const Position& b)
+bool operator==(const Position &a, const Position &b)
 {
   return a.m_column == b.m_column && a.m_row == b.m_row;
+}
+
+PositionDelta operator-(const Position &a, const Position &b)
+{
+  PositionDelta::d_row_t d_row = static_cast<PositionDelta::d_row_t>(a.m_row) - static_cast<PositionDelta::d_row_t>(b.m_row);
+  PositionDelta::d_column_t d_column = static_cast<PositionDelta::d_column_t>(a.m_column) - static_cast<PositionDelta::d_column_t>(b.m_column);
+  return PositionDelta(d_row, d_column);
 }
 
 Position::row_t Position::row() const

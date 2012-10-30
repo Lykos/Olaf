@@ -7,14 +7,8 @@ using namespace std;
 
 vector<Move> MoveGenerator::generate_moves(const ChessBoard &board)
 {
-  BitBoard opponents (0);
-  BitBoard friends (0);
-  for (const PieceBoard &piece_board : board.noturn_board().piece_boards()) {
-    opponents = opponents | piece_board;
-  }
-  for (const PieceBoard &piece_board : board.turn_board().piece_boards()) {
-    friends = friends | piece_board;
-  }
+  BitBoard opponents = board.opponents();
+  BitBoard friends = board.friends();
   vector<Move> moves;
   for (const PieceBoard &piece_board : board.turn_board().piece_boards()) {
     const Piece &piece = piece_board.piece();
@@ -29,4 +23,26 @@ vector<Move> MoveGenerator::generate_moves(const ChessBoard &board)
     }
   }
   return moves;
+}
+
+bool MoveGenerator::valid_move(const ChessBoard &board, const Position &source, const Position &destination)
+{
+  return board.friendd(source) && board.turn_board().piece(source).can_move(source, destination, board);
+}
+
+bool MoveGenerator::valid_move(const ChessBoard &board, const Position &source, const Position &destination, Piece::piece_index_t conversion)
+{
+  const Pawn& pawn = *PieceSet::instance().pawn();
+  return board.friendd(source) && board.turn_board().piece(source) == pawn && pawn.can_move(source, destination, board, conversion);
+}
+
+Move move(const ChessBoard &board, const Position &source, const Position &destination)
+{
+  board.turn_board().piece(source).move(source, destination, board);
+}
+
+Move move(const ChessBoard &board, const Position &source, const Position &destination, Piece::piece_index_t conversion)
+{
+  const Pawn& pawn = *PieceSet::instance().pawn();
+  return pawn.move(source, destination, board, conversion);
 }

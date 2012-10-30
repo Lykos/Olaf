@@ -37,6 +37,11 @@ ColorBoard::piece_index_t ColorBoard::piece_index(const Position &position) cons
   return -1;
 }
 
+const Piece& ColorBoard::piece(const Position &position) const
+{
+  return m_piece_boards.at(piece_index(position)).piece();
+}
+
 bool ColorBoard::can_castle_q() const
 {
   return m_can_castle_q;
@@ -55,6 +60,15 @@ void ColorBoard::can_castle_q(bool new_can_castle_q)
 void ColorBoard::can_castle_k(bool new_can_castle_k)
 {
   m_can_castle_k = new_can_castle_k;
+}
+
+BitBoard ColorBoard::occupied() const
+{
+  BitBoard bla (0);
+  for (const PieceBoard &piece_board : m_piece_boards) {
+    bla = bla | piece_board;
+  }
+  return bla;
 }
 
 ColorBoard create_initial_color_board(Color color)

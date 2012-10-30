@@ -44,6 +44,8 @@ public:
 
   piece_index_t piece_index(const Position&) const;
 
+  const Piece& piece(const Position&) const;
+
   bool can_castle_q() const;
 
   bool can_castle_k() const;
@@ -51,6 +53,8 @@ public:
   void can_castle_q(bool new_can_castle_q);
 
   void can_castle_k(bool new_can_castle_k);
+
+  BitBoard occupied() const;
 
 private:
   std::vector<PieceBoard> m_piece_boards;

@@ -1,4 +1,5 @@
 #include "pawn.h"
+#include "move.h"
 #include "epenablaction.h"
 
 using namespace std;
@@ -14,18 +15,14 @@ static const array<PositionDelta, 2> sidewards_directions = {{
 }};
 
 std::vector<Move> Pawn::moves(const Position &source,
-                              const ChessBoard& board,
-                              const BitBoard &opponents,
-                              const BitBoard &friends) const
+                              const ChessBoard& board) const
 {
   vector<Move> result;
   Color color = board.turn();
-  BitBoard occupied = opponents | friends;
   Position simple_move_destination = source + forward_direction(color);
   // Check if square is free
-  if (!occupied.get(simple_move_destination)) {
-    Move simple_move (piece_index(), source, simple_move_destination);
-    simple_move.disable_ep();
+  if (!board.occupied(simple_move_destination)) {
+    Move simple_move (board, piece_index(), source, simple_move_destination);
     // Handle conversion, if necessary.
     if (source.row() == conversion_row(color)) {
       add_conversions(result, simple_move, simple_move_destination);
@@ -35,9 +32,8 @@ std::vector<Move> Pawn::moves(const Position &source,
       if (source.row() == pawn_row(color)) {
         Position double_move_destination = simple_move_destination + forward_direction(color);
         // Check if double move field is free.
-        if (!occupied.get(double_move_destination)) {
-          Move double_move (piece_index(), source, double_move_destination);
-          double_move.enable_ep(simple_move_destination, double_move_destination);
+        if (!board.occupied(double_move_destination)) {
+          result.push_back(Move(board, piece_index(), source, double_move_destination, simple_move_destination));
         }
       }
     }
@@ -47,25 +43,68 @@ std::vector<Move> Pawn::moves(const Position &source,
       continue;
     }
     Position capture_destination = source + forward_direction(color) + sidewards;
-    Move capture (piece_index(), source, capture_destination);
-    capture.disable_ep();
+    Move capture (board, piece_index(), source, capture_destination);
     // Check if capture is possible
-    if (opponents.get(capture_destination)) {
-      capture.capture(board.noturn_board().piece_index(capture_destination), capture_destination);
+    if (board.opponent(capture_destination)) {
       if (capture_destination.row() == conversion_row(color)) {
         add_conversions(result, capture, capture_destination);
       } else {
         result.push_back(capture);
       }
+    // or ep capture is possible
     } else if (board.ep_possible() && capture_destination == board.ep_capture_position()) {
-      capture.capture(board.noturn_board().piece_index(capture_destination), board.ep_victim_position());
+      capture.capture_ep(board);
       result.push_back(capture);
     }
   }
   return result;
 }
 
-void Pawn::add_conversions(vector<Move>& moves, const Move& base_move, const Position& position) const
+bool Pawn::can_move(const Position &source, const Position &destination, const ChessBoard &board) const
+{
+  if (destination.row() == conversion_row(board.turn())) {
+    return false;
+  }
+  Position step = source + forward_direction(board.turn());
+  Position two_step = step + forward_direction(board.turn());
+  return (!board.occupied(step) && (destination == step || (!board.occupied(two_step) && destination == two_step)))
+      || (board.occupied(destination) && destination.row() == step.row() && abs(destination.column() - step.column()) == 1);
+}
+
+bool Pawn::can_move(const Position &source, const Position &destination, const ChessBoard &board, piece_index_t conversion) const
+{
+  Position step = source + forward_direction(board.turn());
+  bool conversion_valid = false;
+  for (piece_index_t conv : m_conversions) {
+    if (conversion == conv) {
+      conversion_valid = true;
+      break;
+    }
+  }
+  return conversion_valid && destination.row() == conversion_row(board.turn()) &&
+      ((!board.occupied(step) && destination == step)
+      || (board.occupied(destination) && destination.row() == step.row() && abs(destination.column() - step.column()) == 1));
+}
+
+bool Pawn::move(const Position &source, const Position &destination, const ChessBoard &board) const
+{
+  Position step = source + forward_direction(board.turn());
+  Position two_step = step + forward_direction(board.turn());
+  if (destination == two_step) {
+    return Move(board, piece_index(), source, destination, step);
+  } else {
+    return Move(board, piece_index(), source, destination);
+  }
+}
+
+bool Pawn::move(const Position &source, const Position &destination, const ChessBoard &board, piece_index_t conversion) const
+{
+  Move result (board, piece_index(), source, destination);
+  result.conversion(destination, piece_index(), conversion);
+  return result;
+}
+
+void Pawn::add_conversion_moves(vector<Move>& moves, const Move& base_move, const Position& position) const
 {
   for (piece_index_t piece_index : m_conversions) {
     Move conversion (base_move);

@@ -77,7 +77,52 @@ Color ChessBoard::turn() const
 
 void ChessBoard::flip_turn()
 {
+  m_opponents_valid = false;
+  m_friends_valid = false;
+  m_occupied_valid = false;
   m_turn = next(m_turn);
+}
+
+const BitBoard& ChessBoard::opponents() const
+{
+  if (!m_opponents_valid) {
+    m_opponents = noturn_board().occupied();
+    m_opponents_valid = true;
+  }
+  return m_opponents;
+}
+
+bool ChessBoard::opponent(const Position &position)
+{
+  return opponents().get(position);
+}
+
+const BitBoard& ChessBoard::friends() const
+{
+  if (!m_friends_valid) {
+    m_friends = turn_board().occupied();
+    m_friends_valid = true;
+  }
+  return m_friends;
+}
+
+bool ChessBoard::friendd(const Position &position)
+{
+  return friends().get(position);
+}
+
+const BitBoard& ChessBoard::occupied() const
+{
+  if (!m_occupied_valid) {
+    m_occupied = opponents() | friends();
+    m_occupied_valid = true;
+  }
+  return m_occupied;
+}
+
+bool ChessBoard::occupied(const Position &position)
+{
+  return occupied().get(position);
 }
 
 ChessBoard create_initial_board()

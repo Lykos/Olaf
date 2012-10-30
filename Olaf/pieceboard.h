@@ -16,7 +16,7 @@ public:
 
   operator BitBoard() const;
 
-  const Piece &piece() const;
+  const Piece& piece() const;
 
   bool get(const Position&) const;
 

@@ -4,7 +4,10 @@
 #include "position.h"
 #include "piece.h"
 #include "chessboard.h"
+#include "movegenerator.h"
+#include "protocolwriter.h"
 #include <mutex>
+#include <thread>
 #include <queue>
 
 class Engine
@@ -31,15 +34,19 @@ private:
 
   ChessBoard m_board;
 
+  MoveGenerator m_move_generator;
+
   std::mutex m_move_mutex;
 
-  std::queue moves;
+  std::queue m_move_queue;
 
-  bool m_stop;
+  std::thread m_worker;
 
-  bool m_reset;
+  volatile bool m_stop;
 
-  Protocol *m_protocol;
+  volatile bool m_reset;
+
+  ProtocolWriter *m_writer;
 
 };
 

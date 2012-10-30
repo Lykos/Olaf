@@ -21,40 +21,33 @@ public:
   Move();
 
   /**
-   * @brief Move creates a default move that moves a piece and flips the turn but does
-   * nothing else (capturing etc is not handled).
+   * @brief Move creates a default move that moves a piece, disables ep and handles normal capturing (but not ep capturing) and turn flip.
+   * @param board
    * @param piece_index
    * @param source
    * @param destination
    */
-  Move(PieceSet::piece_index_t piece_index, const Position& source, const Position& destination);
+  Move(const ChessBoard &board, Piece::piece_index_t piece_index, const Position &source, const Position &destination);
 
   /**
-   * @brief move_piece moves an additional piece.
+   * @brief Move creates a default move that moves a piece, enables ep at the given position and handles normal capturing (but not ep capturing) and turn flip.
+   * @param board
    * @param piece_index
    * @param source
    * @param destination
+   * @param capture_position Position at which an ep capture can be performed
    */
-  void move_piece(PieceSet::piece_index_t piece_index, const Position& source, const Position& destination);
+  Move(const ChessBoard &board, Piece::piece_index_t piece_index, const Position &source, const Position &destination, const Position &capture_position);
 
   /**
-   * @brief disable_ep enables en passent capturing after this move.
-   * @param capture_position
-   * @param victim_position
+   * @brief Move creates a castling move that moves king and rook, disables ep and handles turn flip.
+   * @param board
+   * @param source
+   * @param destination
    */
-  void enable_ep(const Position& capture_position, const Position& victim_position);
+  Move(const ChessBoard &board, const Position &source, const Position &destination);
 
-  /**
-   * @brief disable_ep disables en passent capturing after this move.
-   */
-  void disable_ep();
-
-  /**
-   * @brief capture adds the capturing action to this move.
-   * @param piece_index
-   * @param victim_position
-   */
-  void capture(PieceSet::piece_index_t piece_index, const Position& victim_position);
+  void capture(const ChessBoard &board);
 
   void forbid_castling();
 
@@ -68,7 +61,7 @@ public:
    * @param removed_piece
    * @param created_piece
    */
-  void conversion(const Position &position, PieceSet::piece_index_t removed_piece, PieceSet::piece_index_t created_piece);
+  void conversion(const Position &position, Piece::piece_index_t removed_piece, Piece::piece_index_t created_piece);
 
   /**
    * @brief execute executes the move action and flips the turn color.
@@ -80,10 +73,26 @@ public:
    */
   void undo(ChessBoard&);
 
+  const Position& source() const;
+
+  const Position& destination() const;
+
+  bool is_conversion() const;
+
+  Piece::piece_index_t created_piece() const;
+
   ~Move();
 
 private:
-  std::vector<MoveAction*> m_move_ptrs;
+  std::vector<MoveAction*> m_move_actions;
+
+  Position m_source;
+
+  Position m_destination;
+
+  bool m_conversion = false;
+
+  bool m_created_piece;
 
 };
 

@@ -8,6 +8,8 @@ class Position;
 
 bool operator==(const Position&, const Position&);
 
+PositionDelta operator-(const Position&, const Position&);
+
 /**
  * @brief The Position class represents the coordinates of one particular square of the board.
  */
@@ -18,6 +20,8 @@ class Position
   friend Position operator+(const Position&, const PositionDelta&);
 
   friend Position operator+(const PositionDelta&, const Position&);
+
+  friend PositionDelta operator-(const Position&, const Position&);
 
 public:
   typedef std::uint_fast8_t row_t;
