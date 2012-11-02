@@ -17,7 +17,7 @@ public:
 
   std::vector<Move> moves(const Position &source, const ChessBoard &board) const;
 
-  bool can_move(const Position &source, const Position &destination) const;
+  bool can_move(const Position &source, const Position &destination, const ChessBoard &board) const;
 
   Move move(const Position &source, const Position &destination, const ChessBoard &board) const;
 

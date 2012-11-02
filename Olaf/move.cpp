@@ -43,9 +43,9 @@ Move::Move(const ChessBoard &board, const Position &source, const Position &dest
   forbid_castling();
 }
 
-void Move::capture(const ChessBoard &board)
+void Move::capture_ep(const ChessBoard &board)
 {
-  m_move_actions.push_back(new CaptureAction(board.ep_position(), PieceSet::instance().pawn()->piece_index()));
+  m_move_actions.push_back(new CaptureAction(board.ep_victim_position(), PieceSet::instance().pawn()->piece_index()));
 }
 
 void Move::forbid_castling()

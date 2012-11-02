@@ -38,7 +38,11 @@ SOURCES += main.cpp \
     xboardreader.cpp \
     xboardwriter.cpp \
     searchresult.cpp \
-    searcher.cpp
+    enginefactory.cpp \
+    searcher.cpp \
+    materialevaluator.cpp \
+    negamaxer.cpp \
+    nomoveorderer.cpp
 
 HEADERS += \
     bitboard.h \
@@ -73,4 +77,10 @@ HEADERS += \
     xboardwriter.h \
     result.h \
     searchresult.h \
-    searcher.h
+    searcher.h \
+    moveorderer.h \
+    enginefactory.h \
+    positionevaluator.h \
+    materialevaluator.h \
+    negamaxer.h \
+    nomoveorderer.h

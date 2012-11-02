@@ -1,6 +1,7 @@
 #include "pawn.h"
 #include "move.h"
 #include "epenablaction.h"
+#include "pieceset.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ std::vector<Move> Pawn::moves(const Position &source,
     Move simple_move (board, piece_index(), source, simple_move_destination);
     // Handle conversion, if necessary.
     if (source.row() == conversion_row(color)) {
-      add_conversions(result, simple_move, simple_move_destination);
+      add_conversion_moves(result, simple_move, simple_move_destination);
     } else {
       result.push_back(simple_move);
       // Check if the pawn is at its initial position
@@ -47,7 +48,7 @@ std::vector<Move> Pawn::moves(const Position &source,
     // Check if capture is possible
     if (board.opponent(capture_destination)) {
       if (capture_destination.row() == conversion_row(color)) {
-        add_conversions(result, capture, capture_destination);
+        add_conversion_moves(result, capture, capture_destination);
       } else {
         result.push_back(capture);
       }
@@ -86,7 +87,7 @@ bool Pawn::can_move(const Position &source, const Position &destination, const C
       || (board.occupied(destination) && destination.row() == step.row() && abs(destination.column() - step.column()) == 1));
 }
 
-bool Pawn::move(const Position &source, const Position &destination, const ChessBoard &board) const
+Move Pawn::move(const Position &source, const Position &destination, const ChessBoard &board) const
 {
   Position step = source + forward_direction(board.turn());
   Position two_step = step + forward_direction(board.turn());
@@ -97,7 +98,7 @@ bool Pawn::move(const Position &source, const Position &destination, const Chess
   }
 }
 
-bool Pawn::move(const Position &source, const Position &destination, const ChessBoard &board, piece_index_t conversion) const
+Move Pawn::move(const Position &source, const Position &destination, const ChessBoard &board, piece_index_t conversion) const
 {
   Move result (board, piece_index(), source, destination);
   result.conversion(destination, piece_index(), conversion);

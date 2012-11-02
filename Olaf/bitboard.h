@@ -33,13 +33,15 @@ class BitBoard
 public:
   typedef std::uint64_t bits_t;
 
-  constexpr BitBoard(bits_t bits): m_bits (bits) {}
+  constexpr BitBoard(bits_t bits = 0): m_bits (bits) {}
 
   bool get(const Position&) const;
 
   void set(const Position&, bool);
 
   BitBoard mirror_rows() const;
+
+  std::uint_fast8_t number() const;
 
 private:
 

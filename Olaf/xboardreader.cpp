@@ -1,10 +1,11 @@
 #include "xboardreader.h"
+#include "enginefactory.h"
 #include <sstream>
 
 using namespace std;
 
 XBoardReader::XBoardReader():
-  m_engine (m_writer)
+  m_engine (EngineFactory().create_engine(m_writer))
 {}
 
 void XBoardReader::run()

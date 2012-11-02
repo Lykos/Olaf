@@ -24,3 +24,8 @@ void PieceBoard::set(const Position &position, bool value)
 {
   m_bit_board.set(position, value);
 }
+
+const BitBoard& PieceBoard::bit_board() const
+{
+  return m_bit_board;
+}

@@ -22,6 +22,8 @@ public:
 
   void set(const Position&, bool);
 
+  const BitBoard& bit_board() const;
+
 private:
   const Piece *m_piece;
 

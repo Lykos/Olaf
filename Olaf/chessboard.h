@@ -22,7 +22,7 @@ public:
    * @param ep_vicitim_position
    */
   ChessBoard(
-      const std::array<ColorBoard, 2> &color_boards = {ColorBoard(), ColorBoard()},
+      const std::array<ColorBoard, 2> &color_boards = {{ColorBoard(), ColorBoard()}},
       Color turn = White,
       bool ep_possible = false,
       const Position &ep_capture_position = Position(),
@@ -78,7 +78,7 @@ public:
    * @brief opponent is a shortcut for opponents().get(position)
    * @return
    */
-  bool opponent(const Position&);
+  bool opponent(const Position&) const;
 
   /**
    * @attention Result caching might be invalid if the user is not careful.
@@ -92,7 +92,7 @@ public:
    * @brief friendd is a shortcut for friends().get(position)
    * @return
    */
-  bool friendd(const Position&);
+  bool friendd(const Position&) const;
 
   /**
    * @attention Result caching might be invalid if the user is not careful.
@@ -106,7 +106,7 @@ public:
    * @brief occupied is a shortcut for occupied().get(position)
    * @return
    */
-  bool occupied(const Position&);
+  bool occupied(const Position&) const;
 
 private:
   std::array<ColorBoard, 2> m_color_boards;

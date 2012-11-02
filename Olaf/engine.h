@@ -6,20 +6,26 @@
 #include "chessboard.h"
 #include "movegenerator.h"
 #include "protocolwriter.h"
+#include "searcher.h"
 #include <mutex>
 #include <thread>
 #include <queue>
+#include <boost/shared_ptr.hpp>
 
 class Engine
 {
 public:
-  Engine(Protocol *protocol);
+  Engine(boost::shared_ptr<Searcher> searcher, ProtocolWriter *writer);
 
   void request_reset();
 
   void start();
 
+  void resume(bool);
+
   void request_stop();
+
+  void ponder(bool);
 
   bool move(const Position &source, const Position &destination);
 
@@ -36,15 +42,23 @@ private:
 
   MoveGenerator m_move_generator;
 
+  boost::shared_ptr<Searcher> m_searcher;
+
   std::mutex m_move_mutex;
 
-  std::queue m_move_queue;
+  std::mutex m_resume_mutex;
+
+  std::queue<Move> m_move_queue;
 
   std::thread m_worker;
 
   volatile bool m_stop;
 
   volatile bool m_reset;
+
+  volatile bool m_ponder;
+
+  volatile bool m_my_turn;
 
   ProtocolWriter *m_writer;
 

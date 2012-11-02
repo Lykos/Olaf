@@ -3,7 +3,6 @@
 
 #include "color.h"
 #include "piece.h"
-#include "pieceset.h"
 #include <vector>
 #include <cstddef>
 

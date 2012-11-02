@@ -15,16 +15,22 @@ void Engine::request_reset()
 void Engine::request_stop()
 {
   m_stop = true;
+  m_searcher.stop();
 }
 
-static void run(Engine* engine)
+static void run(const Engine& engine)
 {
-
+  engine.run();
 }
 
 void Engine::start()
 {
+  m_worker = thread(run, engine);
+}
 
+void Engine::resume(bool my_turn)
+{
+  m_my_turn = my_turn;
 }
 
 void Engine::stop()
@@ -45,6 +51,7 @@ bool Engine::move(const Position &source, const Position &destination)
     return false;
   }
   Move move = m_move_generator.move(m_board, source, destination);
+  request_stop();
   m_move_mutex.lock();
   m_move_queue.push(move);
   m_move_mutex.unlock();

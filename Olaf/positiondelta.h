@@ -7,8 +7,12 @@ class Position;
 class PositionDelta;
 
 Position operator+(const Position&, const PositionDelta&);
+
 Position operator+(const PositionDelta&, const Position&);
+
 PositionDelta operator+(const PositionDelta&, const PositionDelta&);
+
+bool operator==(const PositionDelta&, const PositionDelta&);
 
 class PositionDelta
 {
@@ -17,6 +21,8 @@ class PositionDelta
   friend Position operator+(const PositionDelta&, const Position&);
 
   friend PositionDelta operator+(const PositionDelta&, const PositionDelta&);
+
+  friend bool operator==(const PositionDelta&, const PositionDelta&);
 
 public:
   typedef std::int_fast8_t d_row_t;

@@ -47,7 +47,7 @@ public:
    */
   Move(const ChessBoard &board, const Position &source, const Position &destination);
 
-  void capture(const ChessBoard &board);
+  void capture_ep(const ChessBoard &board);
 
   void forbid_castling();
 

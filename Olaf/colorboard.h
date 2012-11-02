@@ -1,12 +1,17 @@
 #ifndef COLORBOARD_H
 #define COLORBOARD_H
 
-class PieceBoard;
-
 #include "color.h"
 #include "position.h"
 #include <vector>
 #include <cstdint>
+
+class PieceBoard;
+
+class BitBoard;
+
+class Piece;
+
 
 /**
  * @brief The ColorBoard class represents all the board information about one color, i.e. castling rights and
@@ -68,5 +73,7 @@ private:
 ColorBoard create_initial_color_board(Color);
 
 #include "pieceboard.h"
+#include "piece.h"
+#include "bitboard.h"
 
 #endif // COLORBOARD_H

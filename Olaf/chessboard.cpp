@@ -92,7 +92,7 @@ const BitBoard& ChessBoard::opponents() const
   return m_opponents;
 }
 
-bool ChessBoard::opponent(const Position &position)
+bool ChessBoard::opponent(const Position &position) const
 {
   return opponents().get(position);
 }
@@ -106,7 +106,7 @@ const BitBoard& ChessBoard::friends() const
   return m_friends;
 }
 
-bool ChessBoard::friendd(const Position &position)
+bool ChessBoard::friendd(const Position &position) const
 {
   return friends().get(position);
 }
@@ -120,7 +120,7 @@ const BitBoard& ChessBoard::occupied() const
   return m_occupied;
 }
 
-bool ChessBoard::occupied(const Position &position)
+bool ChessBoard::occupied(const Position &position) const
 {
   return occupied().get(position);
 }
