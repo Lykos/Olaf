@@ -16,18 +16,14 @@ vector<Move> OncePiece::moves(const Position &source, const ChessBoard &board) c
       Position destination = source + direction;
       if (!board.friendd(destination)) {
         Move move (board, piece_index(), source, destination);
-        move.disable_ep();
-        if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && operator==(*PieceSet::instance().king()) && source.row() == ground_line(board.turn()) && source.column() == 4) {
+        if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && *this == *PieceSet::instance().king() && source.row() == ground_line(board.turn()) && source.column() == 4) {
           move.forbid_castling();
-        }
-        if (opponents.get(destination)) {
-          move.capture(board.noturn_board().piece_index(destination), destination);
         }
         result.push_back(move);
       }
     }
   }
-  if (operator==(*PieceSet::instance().king()) && source.row() == ground_line(board.turn()) && source.column() == 4) {
+  if (*this == *PieceSet::instance().king() && source.row() == ground_line(board.turn()) && source.column() == 4) {
     if (board.turn_board().can_castle_q()) {
       result.push_back(Move(board, source, Position(source.row(), 2)));
     } else if (board.turn_board().can_castle_k()) {
@@ -42,7 +38,7 @@ bool OncePiece::can_move(const Position &source, const Position &destination, co
   if (board.friendd(destination)) {
     return false;
   }
-  if (operator==(*PieceSet::instance().king()) && destination.row() == source.row() && source.row() == ground_line(board.turn()) && source.column() == 4) {
+  if (*this == *PieceSet::instance().king() && destination.row() == source.row() && source.row() == ground_line(board.turn()) && source.column() == 4) {
     if (destination.column() == 2) {
           return board.turn_board().can_castle_q()
               && !board.occupied(Position(ground_line(board.turn()), 1))
@@ -55,7 +51,7 @@ bool OncePiece::can_move(const Position &source, const Position &destination, co
     }
   }
   PositionDelta direction = destination - source;
-  for (PositionDelta &dir : m_directions) {
+  for (const PositionDelta &dir : m_directions) {
     if (dir == direction) {
       return true;
     }
@@ -65,11 +61,11 @@ bool OncePiece::can_move(const Position &source, const Position &destination, co
 
 Move OncePiece::move(const Position &source, const Position &destination, const ChessBoard &board) const
 {
-  if (operator==(*PieceSet::instance().king()) && destination.row() == source.row() && source.row() == ground_line(board.turn()) && source.column() == 4 && abs(source.column() - destination.column()) == 2) {
+  if (*this == *PieceSet::instance().king() && destination.row() == source.row() && source.row() == ground_line(board.turn()) && source.column() == 4 && abs(source.column() - destination.column()) == 2) {
     return Move(board, source, destination);
   }
   Move result (board, piece_index(), source, destination);
-  if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && operator==(*PieceSet::instance().king()) && source.row() == ground_line(board.turn()) && source.column() == 4) {
+  if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && *this == *PieceSet::instance().king() && source.row() == ground_line(board.turn()) && source.column() == 4) {
     result.forbid_castling();
   }
   return result;

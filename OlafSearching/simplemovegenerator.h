@@ -1,12 +1,13 @@
-#ifndef MOVEGENERATOR_H
-#define MOVEGENERATOR_H
+#ifndef SIMPLEMOVEGENERATOR_H
+#define SIMPLEMOVEGENERATOR_H
 
+#include "movegenerator.h"
 #include "move.h"
 #include "chessboard.h"
 #include "piece.h"
 #include <vector>
 
-class MoveGenerator
+class MoveGenerator : public MoveGenerator
 {
 public:
   std::vector<Move> generate_moves(const ChessBoard& board);
@@ -21,4 +22,4 @@ public:
 
 };
 
-#endif // MOVEGENERATOR_H
+#endif // SIMPLEMOVEGENERATOR_H

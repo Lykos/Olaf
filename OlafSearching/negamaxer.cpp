@@ -11,12 +11,6 @@ NegaMaxer::NegaMaxer(shared_ptr<PositionEvaluator> evaluator, shared_ptr<MoveOrd
   m_orderer (orderer)
 {}
 
-SearchResult NegaMaxer::search(ChessBoard &board, int depth) const
-{
-  return internal_search(board, depth - 1, numeric_limits<int>::min(), numeric_limits<int>::max());
-}
-
-
 SearchResult NegaMaxer::no_parallel_search(ChessBoard &board, int depth, int alpha, int beta)
 {
   if (should_stop()) {
@@ -50,7 +44,7 @@ static NegaMaxerInternalSearchResult async_eval(NegaMaxer &nega_maxer, const Mov
   return result;
 }
 
-SearchResult NegaMaxer::internal_search(ChessBoard &board, int depth, int alpha, int beta)
+SearchResult NegaMaxer::search_alpha_beta(ChessBoard &board, int depth, int alpha, int beta)
 {
   if (should_stop()) {
     return SearchResult();
@@ -59,7 +53,7 @@ SearchResult NegaMaxer::internal_search(ChessBoard &board, int depth, int alpha,
   } else if (depth <= no_parallel_depth) {
     return no_parallel_search(board, depth, alpha, beta);
   }
-  vector<Move> moves = m_generator.generate_moves(board);
+  vector<Move> moves = m_generator->generate_moves(board);
   m_orderer->order_moves(board, moves);
   vector<Move> alpha_variation;
   auto it = moves.begin();

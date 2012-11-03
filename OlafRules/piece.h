@@ -36,6 +36,8 @@ public:
 
   virtual Move move(const Position &source, const Position &destination, const ChessBoard &board) const = 0;
 
+  virtual ~Piece() {}
+
 private:
   piece_index_t m_piece_index;
 

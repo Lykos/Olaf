@@ -1,7 +1,9 @@
 #include "linepiece.h"
 #include "pieceset.h"
+#include <utility>
 
 using namespace std;
+using namespace rel_ops;
 
 LinePiece::LinePiece(piece_index_t piece_index, const BitBoard& initial_board, const vector<PositionDelta>& directions):
   Piece(piece_index, initial_board),
@@ -55,7 +57,7 @@ bool LinePiece::can_move(const Position &source, const Position &destination, co
   if (!valid_direction) {
     return false;
   }
-  for (Position position = source; position != destination; position += direction) {
+  for (Position position = source; position != destination; position = position + direction) {
     if (board.occupied(position)) {
       return false;
     }
@@ -65,12 +67,12 @@ bool LinePiece::can_move(const Position &source, const Position &destination, co
 
 Move LinePiece::move(const Position &source, const Position &destination, const ChessBoard &board) const
 {
-  Move result (board, source, destination, piece_index());
-  if (board.turn_board().can_castle_q() && operator==(*PieceSet::instance().rook()) && source.row() == ground_line(board.turn()) && source.column() == 0) {
-    move.forbid_q_castling();
+  Move result (board, piece_index(), source, destination);
+  if (board.turn_board().can_castle_q() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn()) && source.column() == 0) {
+    result.forbid_q_castling();
   }
-  if (board.turn_board().can_castle_k() && operator==(*PieceSet::instance().rook()) && source.row() == ground_line(board.turn()) && source.column() == 7) {
-    move.forbid_k_castling();
+  if (board.turn_board().can_castle_k() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn()) && source.column() == 7) {
+    result.forbid_k_castling();
   }
   return result;
 }

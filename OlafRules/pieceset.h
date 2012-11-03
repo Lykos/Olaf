@@ -49,7 +49,7 @@ private:
 
   Piece* m_king;
 
-  Piece* m_pawn;
+  Pawn* m_pawn;
 
   std::vector<Piece*> m_pieces;
 

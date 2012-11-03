@@ -1,5 +1,5 @@
-#ifndef ENGINE_H
-#define ENGINE_H
+#ifndef ENGINEPRODUCER_H
+#define ENGINEPRODUCER_H
 
 #include "position.h"
 #include "piece.h"
@@ -11,11 +11,12 @@
 #include <thread>
 #include <queue>
 #include <boost/shared_ptr.hpp>
+#include <condition_variable>
 
-class Engine
+class EngineProducer
 {
 public:
-  Engine(boost::shared_ptr<Searcher> searcher, ProtocolWriter *writer);
+  EngineProducer(const boost::shared_ptr<MoveGenerator>& move_generator);
 
   void request_reset();
 
@@ -25,7 +26,11 @@ public:
 
   void request_stop();
 
+  void request_quit();
+
   void ponder(bool);
+
+  void run();
 
   bool move(const Position &source, const Position &destination);
 
@@ -36,11 +41,13 @@ private:
 
   void reset();
 
+  void suspend();
+
   void make_moves();
 
   ChessBoard m_board;
 
-  MoveGenerator m_move_generator;
+  boost::shared_ptr<MoveGenerator> m_move_generator;
 
   boost::shared_ptr<Searcher> m_searcher;
 
@@ -52,6 +59,8 @@ private:
 
   std::thread m_worker;
 
+  std::condition_variable m_condition_variable;
+
   volatile bool m_stop;
 
   volatile bool m_reset;
@@ -60,8 +69,10 @@ private:
 
   volatile bool m_my_turn;
 
+  volatile bool m_quit;
+
   ProtocolWriter *m_writer;
 
 };
 
-#endif // ENGINE_H
+#endif // ENGINEPRODUCER_H

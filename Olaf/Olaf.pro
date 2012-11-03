@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 
+QT       -= core gui
 TARGET = Olaf
 CONFIG   += console
 CONFIG   -= app_bundle
@@ -22,6 +23,7 @@ SOURCES += main.cpp \
     position.cpp \
     move.cpp \
     pawn.cpp \
+    simplemovegenerator.cpp \
     linepiece.cpp \
     oncepiece.cpp \
     anticastleaction.cpp \
@@ -33,8 +35,6 @@ SOURCES += main.cpp \
     pieceset.cpp \
     conversionaction.cpp \
     piece.cpp \
-    movegenerator.cpp \
-    engine.cpp \
     xboardreader.cpp \
     xboardwriter.cpp \
     searchresult.cpp \
@@ -42,7 +42,9 @@ SOURCES += main.cpp \
     searcher.cpp \
     materialevaluator.cpp \
     negamaxer.cpp \
-    nomoveorderer.cpp
+    nomoveorderer.cpp \
+    engineproducer.cpp \
+    enginestate.cpp
 
 HEADERS += \
     bitboard.h \
@@ -55,6 +57,7 @@ HEADERS += \
     colorboard.h \
     chessboard.h \
     color.h \
+    simplemovegenerator.h \
     move.h \
     moveaction.h \
     pawn.h \
@@ -69,7 +72,6 @@ HEADERS += \
     pieceset.h \
     conversionaction.h \
     movegenerator.h \
-    engine.h \
     position.h \
     protocolreader.h \
     protocolwriter.h \
@@ -83,4 +85,23 @@ HEADERS += \
     positionevaluator.h \
     materialevaluator.h \
     negamaxer.h \
-    nomoveorderer.h
+    nomoveorderer.h \
+    engineproducer.h \
+    enginestate.h \
+    engineevent.h
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Release/ -lOlafRules
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Debug/ -lOlafRules
+else:symbian: LIBS += -lOlafRules
+else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Release/ -lOlafRules
+else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Debug/ -lOlafRules
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafSearching-build-desktop-Release/ -lOlafSearching
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafSearching-build-desktop-Debug/ -lOlafSearching
+else:symbian: LIBS += -lOlafRules
+else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafSearching-build-desktop-Release/ -lOlafSearching
+else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafSearching-build-desktop-Debug/ -lOlafSearching
+
+INCLUDEPATH += $$PWD/../
+DEPENDPATH += $$PWD/../
