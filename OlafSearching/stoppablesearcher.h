@@ -7,6 +7,8 @@ public:
 
   void request_stop();
 
+  virtual void forward_stop_request() {}
+
   virtual ~StoppableSearcher() {}
 
 protected:

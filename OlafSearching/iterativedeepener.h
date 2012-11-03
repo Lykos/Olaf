@@ -3,8 +3,9 @@
 
 #include "infinitesearcher.h"
 #include "OlafRules/chessboard.h"
-#include <boost/shared_ptr.hpp>
 #include "depthsearcher.h"
+#include <boost/shared_ptr.hpp>
+#include <mutex>
 
 class IterativeDeepener : public InfiniteSearcher
 {
@@ -14,11 +15,14 @@ public:
   SearchResult search_infinite(ChessBoard &board);
 
 private:
+  std::mutex m_mutex;
+
   static const unsigned int min_depth = 2;
 
-  volatile unsigned int m_current_depth;
+  // TODO volatile is not good enough here
+  volatile bool m_move_found = false;
 
-  volatile bool m_time_stop;
+  volatile bool m_time_stop = false;
 
   boost::shared_ptr<DepthSearcher> m_searcher;
 

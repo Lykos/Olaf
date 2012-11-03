@@ -24,7 +24,9 @@ SOURCES += \
     stoppablesearcher.cpp \
     alphabetasearcher.cpp \
     timedsearcher.cpp \
-    iterativedeepener.cpp
+    iterativedeepener.cpp \
+    simpletimedsearcher.cpp \
+    compositestopper.cpp
 
 HEADERS += \
     simplemovegenerator.h \
@@ -40,7 +42,10 @@ HEADERS += \
     stoppablesearcher.h \
     alphabetasearcher.h \
     timedsearcher.h \
-    iterativedeepener.h
+    iterativedeepener.h \
+    simpletimedsearcher.h \
+    stopper.h \
+    compositestopper.h
 
 unix:!symbian {
     maemo5 {

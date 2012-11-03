@@ -1,10 +1,14 @@
 #ifndef TIMEDSEARCHER_H
 #define TIMEDSEARCHER_H
 
-class TimedSearcher
+#include "OlafRules/chessboard.h"
+#include "stoppablesearcher.h"
+
+class TimedSearcher : public StoppableSearcher
 {
 public:
-  TimedSearcher();
+  virtual SearchResult search(ChessBoard &board) = 0;
+
 };
 
 #endif // TIMEDSEARCHER_H

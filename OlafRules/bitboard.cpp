@@ -1,4 +1,7 @@
 #include "bitboard.h"
+#ifdef __POPCNT__
+#include <popcntintrin.h>
+#endif
 
 using namespace std;
 
@@ -48,6 +51,14 @@ BitBoard BitBoard::mirror_rows() const
   return BitBoard(bits);
 }
 
+#ifdef __POPCNT__
+
+uint_fast8_t BitBoard::number() const
+{
+  return _mm_popcnt_u64(m_bits);
+}
+
+#else
 const uint64_t m1  = 0x5555555555555555;
 const uint64_t m2  = 0x3333333333333333;
 const uint64_t m4  = 0x0f0f0f0f0f0f0f0f;
@@ -61,3 +72,4 @@ uint_fast8_t BitBoard::number() const
   x = (x + (x >> 4)) & m4;
   return (x * h01) >> 56;
 }
+#endif
