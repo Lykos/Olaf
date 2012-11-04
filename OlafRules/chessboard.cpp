@@ -125,6 +125,12 @@ bool ChessBoard::occupied(const Position &position) const
   return occupied().get(position);
 }
 
+bool ChessBoard::finished() const
+{
+  // TODO
+  return false;
+}
+
 ChessBoard create_initial_board()
 {
   static const array<ColorBoard, 2> colors = {{create_initial_color_board(White), create_initial_color_board(Black)}};

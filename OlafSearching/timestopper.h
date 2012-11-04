@@ -1,0 +1,24 @@
+#ifndef TIMESTOPPER_H
+#define TIMESTOPPER_H
+
+#include "stopper.h"
+#include <chrono>
+
+/**
+ * @brief The TimeStopper class represents a class that stops the searching after a certain time.
+ */
+class TimeStopper : public Stopper
+{
+public:
+  TimeStopper(const std::chrono::milliseconds& millis);
+
+  bool should_stop(int nodes_searched) const;
+
+private:
+  std::chrono::steady_clock::time_point m_start;
+
+  std::chrono::milliseconds m_millis;
+
+};
+
+#endif // TIMESTOPPER_H

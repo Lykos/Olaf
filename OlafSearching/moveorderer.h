@@ -1,10 +1,13 @@
 #ifndef MOVEORDERER_H
 #define MOVEORDERER_H
 
-#include "chessboard.h"
-#include "move.h"
+#include "OlafRules/chessboard.h"
+#include "OlafRules/move.h"
 #include <vector>
 
+/**
+ * @brief The MoveOrderer class is responsible for ordering moves.
+ */
 class MoveOrderer
 {
 public:

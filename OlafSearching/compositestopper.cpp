@@ -1,13 +1,12 @@
 #include "compositestopper.h"
 
 using namespace std;
-using namespace boost;
 
-CompositeStopper::CompositeStopper(const vector<shared_ptr<Stopper>> &sub_stoppers):
+CompositeStopper::CompositeStopper(const vector< shared_ptr<Stopper> > &sub_stoppers):
   m_sub_stoppers (sub_stoppers)
 {}
 
-CompositeStopper::CompositeStopper(const initializer_list<shared_ptr<Stopper>> &sub_stoppers):
+CompositeStopper::CompositeStopper(const initializer_list< shared_ptr<Stopper> > &sub_stoppers):
   m_sub_stoppers (sub_stoppers)
 {}
 

@@ -1,30 +1,27 @@
 #ifndef ITERATIVEDEEPENER_H
 #define ITERATIVEDEEPENER_H
 
-#include "infinitesearcher.h"
+#include "iterativesearcher.h"
 #include "OlafRules/chessboard.h"
 #include "depthsearcher.h"
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <mutex>
 
-class IterativeDeepener : public InfiniteSearcher
+class IterativeDeepener : public IterativeSearcher
 {
 public:
-  IterativeDeepener(const boost::shared_ptr<DepthSearcher>& searcher);
+  IterativeDeepener(const std::shared_ptr<DepthSearcher>& searcher);
 
-  SearchResult search_infinite(ChessBoard &board);
+  SearchResult search_infinite(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper);
+
+  SearchResult search_bounded(ChessBoard &board, int max_depth, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper);
 
 private:
-  std::mutex m_mutex;
+  SearchResult internal_search(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper, int max_depth, bool infinite);
 
   static const unsigned int min_depth = 2;
 
-  // TODO volatile is not good enough here
-  volatile bool m_move_found = false;
-
-  volatile bool m_time_stop = false;
-
-  boost::shared_ptr<DepthSearcher> m_searcher;
+  std::shared_ptr<DepthSearcher> m_searcher;
 
 };
 

@@ -1,4 +1,5 @@
 #include "xboardwriter.h"
+#include <iostream>
 
 using namespace std;
 
@@ -26,21 +27,21 @@ static const string rows = "12345678";
 
 static const string columns = "abcdefgh";
 
-void XBoardWriter::move(const Move &move) const
+void XBoardWriter::move(const Move &mov) const
 {
   cout << "move "
-       << columns[move.source().column()]
-       << rows[move.source().row()]
-       << columns[move.destination().column()]
-       << rows[move.destination().row()];
-  if (move.is_conversion()) {
-    if (move.created_piece() == PieceSet::instance().bishop()->piece_index()) {
+       << columns[mov.source().column()]
+       << rows[mov.source().row()]
+       << columns[mov.destination().column()]
+       << rows[mov.destination().row()];
+  if (mov.is_conversion()) {
+    if (mov.created_piece() == PieceSet::instance().bishop()->piece_index()) {
       cout << "b";
-    } else if (move.created_piece() == PieceSet::instance().knight()->piece_index()) {
+    } else if (mov.created_piece() == PieceSet::instance().knight()->piece_index()) {
       cout << "n";
-    } else if (move.created_piece() == PieceSet::instance().queen()->piece_index()) {
+    } else if (mov.created_piece() == PieceSet::instance().queen()->piece_index()) {
       cout << "q";
-    } else if (move.created_piece() == PieceSet::instance().rook()->piece_index()) {
+    } else if (mov.created_piece() == PieceSet::instance().rook()->piece_index()) {
       cout << "r";
     }
   }
@@ -68,52 +69,52 @@ void XBoardWriter::offer_draw() const
   cout << "offer draw" << endl;
 }
 
-void tell_opponent(const std::string &message)
+void XBoardWriter::tell_opponent(const std::string &message) const
 {
   cout << "tellopponent " << message << endl;
 }
 
-void tell_others(const std::string &message)
+void XBoardWriter::tell_others(const std::string &message) const
 {
   cout << "tellothers " << message << endl;
 }
 
-void tell_all(const std::string &message)
+void XBoardWriter::tell_all(const std::string &message) const
 {
   cout << "tellall " << message << endl;
 }
 
-void tell_user(const std::string &message)
+void XBoardWriter::tell_user(const std::string &message) const
 {
   cout << "telluser " << message << endl;
 }
 
-void tell_user_error(const std::string &message)
+void XBoardWriter::tell_user_error(const std::string &message) const
 {
   cout << "tellusererror " << message << endl;
 }
 
-void askuser(const std::string &rep_tag, const std::string &question)
+void XBoardWriter::askuser(const std::string &rep_tag, const std::string &question) const
 {
   cout << "askuser " << rep_tag << " " << question << endl;
 }
 
-void tell_ics(const std::string &message)
+void XBoardWriter::tell_ics(const std::string &message) const
 {
   cout << "tellics " << message << endl;
 }
 
-void tell_ics_noalias(const std::string &message)
+void XBoardWriter::tell_ics_noalias(const std::string &message) const
 {
   cout << "tellicsnoalias " << message << endl;
 }
 
-void comment(const std::string &message)
+void XBoardWriter::comment(const std::string &message) const
 {
   cout << "# " << message << endl;
 }
 
-void pong(const std::string& number)
+void XBoardWriter::pong(const std::string& number) const
 {
   cout << number << endl;
 }

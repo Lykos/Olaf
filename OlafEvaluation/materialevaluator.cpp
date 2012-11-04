@@ -1,10 +1,10 @@
 #include "materialevaluator.h"
-#include "pieceset.h"
+#include "OlafRules/pieceset.h"
 
 MaterialEvaluator::MaterialEvaluator():
   m_piece_values (PieceSet::instance().pieces().size())
 {
-  const PieceSet &set;
+  const PieceSet &set = PieceSet::instance();
   m_piece_values[set.rook()->piece_index()] = 500;
   m_piece_values[set.knight()->piece_index()] = 300;
   m_piece_values[set.bishop()->piece_index()] = 300;
@@ -15,7 +15,7 @@ MaterialEvaluator::MaterialEvaluator():
 
 int MaterialEvaluator::evaluate(const ChessBoard &board)
 {
-  result = 0;
+  int result = 0;
   for (const PieceBoard &piece_board : board.turn_board().piece_boards()) {
     result += piece_board.bit_board().number() * m_piece_values[piece_board.piece().piece_index()];
   }

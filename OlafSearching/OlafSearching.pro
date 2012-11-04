@@ -18,15 +18,18 @@ SOURCES += \
     searchresult.cpp \
     nomoveorderer.cpp \
     negamaxer.cpp \
-    materialevaluator.cpp \
     searcherfactory.cpp \
-    infinitesearcher.cpp \
-    stoppablesearcher.cpp \
     alphabetasearcher.cpp \
-    timedsearcher.cpp \
     iterativedeepener.cpp \
     simpletimedsearcher.cpp \
-    compositestopper.cpp
+    compositestopper.cpp \
+    simplemovecreator.cpp \
+    timestopper.cpp \
+    forcedstopper.cpp \
+    nodestopper.cpp \
+    evaluatorsearcher.cpp \
+    parallelnegamaxer.cpp \
+    capturegenerator.cpp
 
 HEADERS += \
     simplemovegenerator.h \
@@ -35,17 +38,23 @@ HEADERS += \
     negamaxer.h \
     moveorderer.h \
     movegenerator.h \
-    materialevaluator.h \
     searcherfactory.h \
     depthsearcher.h \
-    infinitesearcher.h \
-    stoppablesearcher.h \
     alphabetasearcher.h \
     timedsearcher.h \
     iterativedeepener.h \
     simpletimedsearcher.h \
     stopper.h \
-    compositestopper.h
+    compositestopper.h \
+    movecreator.h \
+    simplemovecreator.h \
+    timestopper.h \
+    forcedstopper.h \
+    nodestopper.h \
+    evaluatorsearcher.h \
+    iterativesearcher.h \
+    parallelnegamaxer.h \
+    capturegenerator.h
 
 unix:!symbian {
     maemo5 {
@@ -56,11 +65,17 @@ unix:!symbian {
     INSTALLS += target
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Release/ -lOlafRules
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Debug/ -lOlafRules
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Release/ -lOlafRules
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Debug/ -lOlafRules
 else:symbian: LIBS += -lOlafRules
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Release/ -lOlafRules
-else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-desktop-Debug/ -lOlafRules
+else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Release/ -lOlafRules
+else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Debug/ -lOlafRules
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Release/ -lOlafEvaluation
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Debug/ -lOlafEvaluation
+else:symbian: LIBS += -lOlafEvaluation
+else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Release/ -lOlafEvaluation
+else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Debug/ -lOlafEvaluation
 
 INCLUDEPATH += $$PWD/../
 DEPENDPATH += $$PWD/../

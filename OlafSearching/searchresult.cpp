@@ -8,6 +8,11 @@ SearchResult::SearchResult(unsigned int nodes, int value, const vector<Move>& ma
   m_main_variation (main_variation)
 {}
 
+SearchResult SearchResult::operator-() const
+{
+  return SearchResult(m_nodes, -m_value, m_main_variation);
+}
+
 unsigned int SearchResult::nodes() const
 {
   return m_nodes;

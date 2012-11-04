@@ -2,8 +2,8 @@
 #define XBOARDWRITER_H
 
 #include "protocolwriter.h"
-#include "move.h"
 #include "result.h"
+#include "OlafRules/move.h"
 #include <string>
 
 class XBoardWriter : public ProtocolWriter
@@ -17,7 +17,7 @@ public:
 
   void feature(const std::string& name, const std::string& value) const;
 
-  void move(const Move&);
+  void move(const Move &) const;
 
   void error(const std::string& type, const std::string& message) const;
 
@@ -27,25 +27,25 @@ public:
 
   void result(Result, const std::string&) const;
 
-  void tell_opponent(const std::string&);
+  void tell_opponent(const std::string&) const;
 
-  void tell_others(const std::string&);
+  void tell_others(const std::string&) const;
 
-  void tell_all(const std::string&);
+  void tell_all(const std::string&) const;
 
-  void tell_user(const std::string&);
+  void tell_user(const std::string&) const;
 
-  void tell_user_error(const std::string&);
+  void tell_user_error(const std::string&) const;
 
-  void askuser(const std::string &rep_tag, const std::string &question);
+  void askuser(const std::string &rep_tag, const std::string &question) const;
 
-  void tell_ics(const std::string&);
+  void tell_ics(const std::string&) const;
 
-  void tell_ics_noalias(const std::string&);
+  void tell_ics_noalias(const std::string&) const;
 
-  void comment(const std::string&);
+  void comment(const std::string&) const;
 
-  void pong(const std::string&);
+  void pong(const std::string&) const;
 
   void illegal_move(const std::string& move) const;
 

@@ -108,6 +108,12 @@ public:
    */
   bool occupied(const Position&) const;
 
+  /**
+   * @brief finished returns true if the game is finished
+   * @return
+   */
+  bool finished() const;
+
 private:
   std::array<ColorBoard, 2> m_color_boards;
 

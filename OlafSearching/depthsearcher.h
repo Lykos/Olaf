@@ -3,11 +3,14 @@
 
 #include "OlafRules/chessboard.h"
 #include "searchresult.h"
-#include "stoppablesearcher.h"
+#include "stopper.h"
+#include <memory>
 
-class DepthSearcher : public StoppableSearcher {
+class DepthSearcher {
 public:
-  virtual SearchResult search_depth(ChessBoard &board, int depth) = 0;
+  virtual SearchResult search_depth(ChessBoard &board, int depth, int nodes_searched, const std::shared_ptr<Stopper> &stopper) = 0;
+
+  virtual ~DepthSearcher() {}
 
 };
 

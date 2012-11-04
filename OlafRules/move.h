@@ -1,10 +1,11 @@
 #ifndef MOVE_H
 #define MOVE_H
 
-#include <vector>
 #include "position.h"
 #include "pieceset.h"
 #include "colorboard.h"
+#include <memory>
+#include <vector>
 
 class MoveAction;
 class ChessBoard;
@@ -77,20 +78,22 @@ public:
 
   const Position& destination() const;
 
+  bool is_capture() const;
+
   bool is_conversion() const;
 
   Piece::piece_index_t created_piece() const;
 
-  ~Move();
-
 private:
-  std::vector<MoveAction*> m_move_actions;
+  std::vector< std::shared_ptr<MoveAction> > m_move_actions;
 
   Position m_source;
 
   Position m_destination;
 
   bool m_conversion = false;
+
+  bool m_capture = false;
 
   bool m_created_piece;
 

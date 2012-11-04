@@ -2,12 +2,14 @@
 #define TIMEDSEARCHER_H
 
 #include "OlafRules/chessboard.h"
-#include "stoppablesearcher.h"
+#include "stopper.h"
+#include "searchresult.h"
+#include <memory>
 
-class TimedSearcher : public StoppableSearcher
+class TimedSearcher
 {
 public:
-  virtual SearchResult search(ChessBoard &board) = 0;
+  virtual SearchResult search(ChessBoard &board, std::shared_ptr<Stopper>& stopper) = 0;
 
 };
 

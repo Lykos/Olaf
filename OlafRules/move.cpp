@@ -17,55 +17,68 @@ Move::Move(const ChessBoard& board, Piece::piece_index_t piece_index, const Posi
   m_source (source),
   m_destination (destination)
 {
-  m_move_actions.push_back(new PieceMoveAction(piece_index, source, destination));
-  m_move_actions.push_back(new TurnFlipAction());
-  m_move_actions.push_back(new EpDisableAction());
+  shared_ptr<MoveAction> piece_move_action(new PieceMoveAction(piece_index, source, destination));
+  shared_ptr<MoveAction> turn_flip_action(new TurnFlipAction());
+  shared_ptr<MoveAction> ep_disable_action(new EpDisableAction());
+  m_move_actions.push_back(piece_move_action);
+  m_move_actions.push_back(turn_flip_action);
+  m_move_actions.push_back(ep_disable_action);
   if (board.opponent(destination)) {
-    m_move_actions.push_back(new CaptureAction(destination, board.noturn_board().piece_index(destination)));
+    shared_ptr<MoveAction> capture_action(new CaptureAction(destination, board.noturn_board().piece_index(destination)));
+    m_move_actions.push_back(capture_action);
+    m_capture = true;
   }
-
 }
 
 Move::Move(const ChessBoard& board, Piece::piece_index_t piece_index, const Position &source, const Position &destination, const Position &capture_position):
   Move(board, piece_index, source, destination)
 {
-  m_move_actions.push_back(new EpEnableAction(capture_position, destination));
+  shared_ptr<MoveAction> ep_enable_action(new EpEnableAction(capture_position, destination));
+  m_move_actions.push_back(ep_enable_action);
 }
 
 Move::Move(const ChessBoard &board, const Position &source, const Position &destination):
   Move(board, PieceSet::instance().king()->piece_index(), source, destination)
 {
   if (destination.column() == 2) {
-    m_move_actions.push_back(new PieceMoveAction(PieceSet::instance().rook()->piece_index(), Position(source.row(), 0), Position(source.row(), 3)));
+    shared_ptr<MoveAction> rook_move_action (new PieceMoveAction(PieceSet::instance().rook()->piece_index(), Position(source.row(), 0), Position(source.row(), 3)));
+    m_move_actions.push_back(rook_move_action);
   } else if (destination.column() == 6) {
-    m_move_actions.push_back(new PieceMoveAction(PieceSet::instance().rook()->piece_index(), Position(source.row(), 7), Position(source.row(), 5)));
+    shared_ptr<MoveAction> rook_move_action (new PieceMoveAction(PieceSet::instance().rook()->piece_index(), Position(source.row(), 7), Position(source.row(), 5)));
+    m_move_actions.push_back(rook_move_action);
   }
   forbid_castling();
 }
 
 void Move::capture_ep(const ChessBoard &board)
 {
-  m_move_actions.push_back(new CaptureAction(board.ep_victim_position(), PieceSet::instance().pawn()->piece_index()));
+  shared_ptr<MoveAction> capture_action (new CaptureAction(board.ep_victim_position(), PieceSet::instance().pawn()->piece_index()));
+  m_capture = true;
+  m_move_actions.push_back(capture_action);
 }
 
 void Move::forbid_castling()
 {
-  m_move_actions.push_back(new AntiCastleAction(true, true));
+  shared_ptr<MoveAction> anti_castle_action (new AntiCastleAction(true, true));
+  m_move_actions.push_back(anti_castle_action);
 }
 
 void Move::forbid_q_castling()
 {
-  m_move_actions.push_back(new AntiCastleAction(true, false));
+  shared_ptr<MoveAction> anti_castle_action (new AntiCastleAction(true, false));
+  m_move_actions.push_back(anti_castle_action);
 }
 
 void Move::forbid_k_castling()
 {
-  m_move_actions.push_back(new AntiCastleAction(false, true));
+  shared_ptr<MoveAction> anti_castle_action (new AntiCastleAction(false, true));
+  m_move_actions.push_back(anti_castle_action);
 }
 
 void Move::conversion(const Position &position, PieceSet::piece_index_t removed_piece, PieceSet::piece_index_t created_piece)
 {
-  m_move_actions.push_back(new ConversionAction(position, removed_piece, created_piece));
+  shared_ptr<MoveAction> conversion_action (new ConversionAction(position, removed_piece, created_piece));
+  m_move_actions.push_back(conversion_action);
   m_conversion = true;
   m_created_piece = created_piece;
 }
@@ -96,6 +109,11 @@ const Position& Move::destination() const
   return m_destination;
 }
 
+bool Move::is_capture() const
+{
+  return m_capture;
+}
+
 bool Move::is_conversion() const
 {
   return m_conversion;
@@ -104,11 +122,4 @@ bool Move::is_conversion() const
 Piece::piece_index_t Move::created_piece() const
 {
   return m_created_piece;
-}
-
-Move::~Move()
-{
-  for (auto it = m_move_actions.begin(); it < m_move_actions.end(); ++it) {
-    delete *it;
-  }
 }

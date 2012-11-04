@@ -1,11 +1,11 @@
-#include "movegenerator.h"
-#include "bitboard.h"
-#include "position.h"
-#include "piece.h"
+#include "simplemovegenerator.h"
+#include "OlafRules/bitboard.h"
+#include "OlafRules/position.h"
+#include "OlafRules/piece.h"
 
 using namespace std;
 
-vector<Move> MoveGenerator::generate_moves(const ChessBoard &board)
+vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard &board)
 {
   vector<Move> moves;
   for (const PieceBoard &piece_board : board.turn_board().piece_boards()) {
@@ -21,26 +21,4 @@ vector<Move> MoveGenerator::generate_moves(const ChessBoard &board)
     }
   }
   return moves;
-}
-
-bool MoveGenerator::valid_move(const ChessBoard &board, const Position &source, const Position &destination)
-{
-  return board.friendd(source) && board.turn_board().piece(source).can_move(source, destination, board);
-}
-
-bool MoveGenerator::valid_move(const ChessBoard &board, const Position &source, const Position &destination, Piece::piece_index_t conversion)
-{
-  const Pawn& pawn = *PieceSet::instance().pawn();
-  return board.friendd(source) && board.turn_board().piece(source) == pawn && pawn.can_move(source, destination, board, conversion);
-}
-
-Move move(const ChessBoard &board, const Position &source, const Position &destination)
-{
-  return board.turn_board().piece(source).move(source, destination, board);
-}
-
-Move move(const ChessBoard &board, const Position &source, const Position &destination, Piece::piece_index_t conversion)
-{
-  const Pawn& pawn = *PieceSet::instance().pawn();
-  return pawn.move(source, destination, board, conversion);
 }
