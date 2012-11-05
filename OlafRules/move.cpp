@@ -7,6 +7,7 @@
 #include "anticastleaction.h"
 #include "conversionaction.h"
 #include "pieceset.h"
+#include <iostream>
 
 using namespace std;
 
@@ -17,16 +18,20 @@ Move::Move(const ChessBoard& board, Piece::piece_index_t piece_index, const Posi
   m_source (source),
   m_destination (destination)
 {
-  shared_ptr<MoveAction> piece_move_action(new PieceMoveAction(piece_index, source, destination));
+  cout << "# Creating move " << piece_index << " " << source << " " << destination << endl;
   shared_ptr<MoveAction> turn_flip_action(new TurnFlipAction());
+  shared_ptr<MoveAction> piece_move_action(new PieceMoveAction(piece_index, source, destination));
   shared_ptr<MoveAction> ep_disable_action(new EpDisableAction());
-  m_move_actions.push_back(piece_move_action);
   m_move_actions.push_back(turn_flip_action);
+  m_move_actions.push_back(piece_move_action);
   m_move_actions.push_back(ep_disable_action);
   if (board.opponent(destination)) {
+    cout << "# Capture " << board.noturn_board().piece_index(destination) << endl;
     shared_ptr<MoveAction> capture_action(new CaptureAction(destination, board.noturn_board().piece_index(destination)));
     m_move_actions.push_back(capture_action);
     m_capture = true;
+  } else {
+    cout << "# No capture " << m_capture << endl;
   }
 }
 
@@ -85,15 +90,13 @@ void Move::conversion(const Position &position, PieceSet::piece_index_t removed_
 
 void Move::execute(ChessBoard& chess_board)
 {
-  for (auto it = m_move_actions.begin(); it < m_move_actions.end(); ++it) {
+  for (auto it = m_move_actions.rbegin(); it < m_move_actions.rend(); ++it) {
     (*it)->execute(chess_board);
   }
-  chess_board.flip_turn();
 }
 
 void Move::undo(ChessBoard& chess_board)
 {
-  chess_board.flip_turn();
   for (auto it = m_move_actions.begin(); it < m_move_actions.end(); ++it) {
     (*it)->undo(chess_board);
   }

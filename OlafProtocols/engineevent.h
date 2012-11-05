@@ -7,9 +7,9 @@ class EngineEvent
 {
 public:
 
-  virtual void execute(EngineState& engine_state);
+  virtual void execute(EngineState& engine_state) = 0;
 
-  virtual ~EngineEvent() {}
+  virtual ~EngineEvent() = 0;
 
 };
 

@@ -136,3 +136,9 @@ ChessBoard create_initial_board()
   static const array<ColorBoard, 2> colors = {{create_initial_color_board(White), create_initial_color_board(Black)}};
   return ChessBoard(colors);
 }
+
+ChessBoard create_empty_board()
+{
+  static const array<ColorBoard, 2> colors = {{create_empty_color_board(), create_empty_color_board()}};
+  return ChessBoard(colors);
+}

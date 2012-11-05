@@ -25,7 +25,7 @@ constexpr Position::row_t ground_line(Color color)
 
 constexpr PositionDelta forward_direction(Color color)
 {
-  return color == White ? PositionDelta(0, 1) : PositionDelta(0, -1);
+  return color == White ? PositionDelta(1, 0) : PositionDelta(-1, 0);
 }
 
 constexpr Position::row_t pawn_row(Color color)

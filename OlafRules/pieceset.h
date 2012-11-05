@@ -4,13 +4,12 @@
 #include "piece.h"
 #include "pawn.h"
 #include <vector>
+#include <memory>
 
 class PieceSet
 {
 public:
   typedef Piece::piece_index_t piece_index_t;
-
-  ~PieceSet();
 
   PieceSet(PieceSet&& that) = delete;
 
@@ -20,38 +19,38 @@ public:
 
   PieceSet& operator=(const PieceSet& that) = delete;
 
-  const Piece* rook() const;
+  const std::shared_ptr<const Piece>& rook() const;
 
-  const Piece* knight() const;
+  const std::shared_ptr<const Piece>& knight() const;
 
-  const Piece* bishop() const;
+  const std::shared_ptr<const Piece>& bishop() const;
 
-  const Piece* queen() const;
+  const std::shared_ptr<const Piece>& queen() const;
 
-  const Piece* king() const;
+  const std::shared_ptr<const Piece>& king() const;
 
-  const Pawn* pawn() const;
+  const std::shared_ptr<const Pawn>& pawn() const;
 
-  const std::vector<Piece*>& pieces() const;
+  const std::vector< std::shared_ptr<const Piece> >& pieces() const;
 
   static const PieceSet& instance();
 
 private:
   PieceSet();
 
-  Piece* m_rook;
+  std::shared_ptr<const Piece> m_rook;
 
-  Piece* m_knight;
+  std::shared_ptr<const Piece> m_knight;
 
-  Piece* m_bishop;
+  std::shared_ptr<const Piece> m_bishop;
 
-  Piece* m_queen;
+  std::shared_ptr<const Piece> m_queen;
 
-  Piece* m_king;
+  std::shared_ptr<const Piece> m_king;
 
-  Pawn* m_pawn;
+  std::shared_ptr<const Pawn> m_pawn;
 
-  std::vector<Piece*> m_pieces;
+  std::vector< std::shared_ptr<const Piece> > m_pieces;
 
 };
 

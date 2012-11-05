@@ -17,10 +17,10 @@ int MaterialEvaluator::evaluate(const ChessBoard &board)
 {
   int result = 0;
   for (const PieceBoard &piece_board : board.turn_board().piece_boards()) {
-    result += piece_board.bit_board().number() * m_piece_values[piece_board.piece().piece_index()];
+    result += piece_board.bit_board().number() * m_piece_values[piece_board.piece()->piece_index()];
   }
   for (const PieceBoard &piece_board : board.noturn_board().piece_boards()) {
-    result -= piece_board.bit_board().number() * m_piece_values[piece_board.piece().piece_index()];
+    result -= piece_board.bit_board().number() * m_piece_values[piece_board.piece()->piece_index()];
   }
   return result;
 }

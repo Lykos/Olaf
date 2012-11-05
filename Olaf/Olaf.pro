@@ -13,7 +13,6 @@ CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
 TEMPLATE = app
 
-
 SOURCES += main.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Release/ -lOlafRules

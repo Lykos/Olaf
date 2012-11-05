@@ -5,6 +5,7 @@
 #include "piece.h"
 #include "position.h"
 #include "color.h"
+#include <memory>
 
 /**
  * @brief The PieceBoard class represents a bitboard associated with a given pieceboard.
@@ -12,11 +13,11 @@
 class PieceBoard
 {
 public:
-  PieceBoard(const Piece*, const BitBoard&);
+  PieceBoard(const std::shared_ptr<const Piece>&, const BitBoard&);
 
   operator BitBoard() const;
 
-  const Piece& piece() const;
+  const std::shared_ptr<const Piece>& piece() const;
 
   bool get(const Position&) const;
 
@@ -25,7 +26,7 @@ public:
   const BitBoard& bit_board() const;
 
 private:
-  const Piece *m_piece;
+  std::shared_ptr<const Piece> m_piece;
 
   BitBoard m_bit_board;
 

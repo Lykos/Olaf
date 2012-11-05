@@ -1,5 +1,6 @@
 #include "oncepiece.h"
 #include "pieceset.h"
+#include <cassert>
 
 using namespace std;
 

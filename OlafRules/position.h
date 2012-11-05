@@ -1,10 +1,17 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include <cstdint>
 #include "positiondelta.h"
+#include <cstdint>
+#include <ostream>
+#include <istream>
+#include <string>
 
 class Position;
+
+std::ostream& operator<<(std::ostream &out, const Position &position);
+
+std::istream& operator>>(std::istream &in, Position &position);
 
 bool operator==(const Position&, const Position&);
 
@@ -15,6 +22,10 @@ PositionDelta operator-(const Position&, const Position&);
  */
 class Position
 {
+  friend std::ostream& operator<<(std::ostream &out, const Position &position);
+
+  friend std::istream& operator>>(std::istream &in, Position &position);
+
   friend bool operator==(const Position&, const Position&);
 
   friend Position operator+(const Position&, const PositionDelta&);
@@ -31,6 +42,10 @@ public:
   static const row_t ROW_SIZE = 8;
 
   static const column_t COLUMN_SIZE = 8;
+
+  static const std::string columns;
+
+  static const std::string rows;
 
   /**
    * @brief Position

@@ -3,14 +3,19 @@
 
 using namespace std;
 
+void XBoardWriter::newline() const
+{
+  cout << endl;
+}
+
 void XBoardWriter::feature(const string& name, bool value) const
 {
-  cout << "feature " << name << " " << (value ? 1 : 0) << endl;
+  cout << "feature " << name << "=" << (value ? 1 : 0) << endl;
 }
 
 void XBoardWriter::feature(const string& name, int value) const
 {
-  cout << "feature " << name << " " << value << endl;
+  cout << "feature " << name << "=" << value << endl;
 }
 
 void XBoardWriter::feature(const string& name, const string& value) const
@@ -23,17 +28,11 @@ void XBoardWriter::unknown_command(const string &command) const
   error("unknown command", command);
 }
 
-static const string rows = "12345678";
-
-static const string columns = "abcdefgh";
-
 void XBoardWriter::move(const Move &mov) const
 {
   cout << "move "
-       << columns[mov.source().column()]
-       << rows[mov.source().row()]
-       << columns[mov.destination().column()]
-       << rows[mov.destination().row()];
+       << mov.source()
+       << mov.destination();
   if (mov.is_conversion()) {
     if (mov.created_piece() == PieceSet::instance().bishop()->piece_index()) {
       cout << "b";
@@ -114,9 +113,9 @@ void XBoardWriter::comment(const std::string &message) const
   cout << "# " << message << endl;
 }
 
-void XBoardWriter::pong(const std::string& number) const
+void XBoardWriter::pong(int number) const
 {
-  cout << number << endl;
+  cout << "pong " << number << endl;
 }
 
 void XBoardWriter::error(const std::string& type, const std::string& message) const

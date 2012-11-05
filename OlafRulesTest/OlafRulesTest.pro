@@ -1,38 +1,29 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2012-11-04T14:23:35
+# Project created by QtCreator 2012-11-05T02:03:02
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT       += testlib
 
-TARGET = OlafEvaluation
-TEMPLATE = lib
+QT       -= gui
+
+TARGET = tst_olafrulestesttest
+CONFIG   += console
+CONFIG   -= app_bundle
+
+TEMPLATE = app
 QMAKE_CXXFLAGS += -std=c++11
 CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
-DEFINES += OLAFEVALUATION_LIBRARY
 
 SOURCES += \
-    materialevaluator.cpp \
-    evaluatorfactory.cpp
+    tst_olafrules.cpp \
+    boardtest.cpp
+DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
-    positionevaluator.h \
-    materialevaluator.h \
-    evaluatorfactory.h
-
-header_files.files = $$HEADERS
-header_files.path = /usr/local/include/OlafEvaluation
-
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/local/lib
-    } else {
-        target.path = /usr/local/lib
-    }
-    INSTALLS += target
-}
+    boardtest.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Release/ -lOlafRules
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Debug/ -lOlafRules

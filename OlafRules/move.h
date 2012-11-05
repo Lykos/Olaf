@@ -95,7 +95,7 @@ private:
 
   bool m_capture = false;
 
-  bool m_created_piece;
+  Piece::piece_index_t m_created_piece;
 
 };
 

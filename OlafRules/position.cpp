@@ -1,4 +1,28 @@
 #include "position.h"
+#include <cctype>
+#include <iostream>
+
+using namespace std;
+
+const std::string Position::rows = "12345678";
+
+const std::string Position::columns = "abcdefgh";
+
+std::ostream& operator<<(std::ostream &out, const Position &position)
+{
+  return out << Position::columns[position.column()] << Position::rows[position.row()];
+}
+
+std::istream& operator>>(std::istream &in, Position &position)
+{
+  while (isspace(in.peek())) {
+    in.get();
+  }
+  char column = in.get();
+  char row = in.get();
+  position = Position(Position::rows.find(row), Position::columns.find(column));
+  return in;
+}
 
 bool operator==(const Position &a, const Position &b)
 {

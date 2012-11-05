@@ -9,6 +9,8 @@
 class XBoardWriter : public ProtocolWriter
 {
 public:
+  void newline() const;
+
   void unknown_command(const std::string&) const;
 
   void feature(const std::string& name, bool value) const;
@@ -45,7 +47,7 @@ public:
 
   void comment(const std::string&) const;
 
-  void pong(const std::string&) const;
+  void pong(int number) const;
 
   void illegal_move(const std::string& move) const;
 

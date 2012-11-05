@@ -6,5 +6,5 @@ MoveEvent::MoveEvent(const Move &move):
 
 void MoveEvent::execute(EngineState &engine_state)
 {
-  engine_state.my_turn(engine_state.my_turn());
+  engine_state.flip_turn();
 }

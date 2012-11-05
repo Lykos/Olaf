@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for d in Olaf{Protocols,Rules,Searching,Evaluation}-build-Desktop-Debug
+do
+cd $d
+echo $d
+make
+sudo make install
+cd ..
+done

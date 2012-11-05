@@ -2,16 +2,17 @@
 #define PROTOCOLWRITER_H
 
 #include "OlafRules/move.h"
-#include <string>
 
 class ProtocolWriter
 {
 public:
   virtual void move(const Move &move) const = 0;
 
-  virtual void pong(const std::string&) const = 0;
+  virtual void pong(int number) const = 0;
 
-  virtual ~ProtocolWriter() {}
+  virtual void comment(const std::string &message) const = 0;
+
+  virtual ~ProtocolWriter() = 0;
 };
 
 #endif // PROTOCOLWRITER_H

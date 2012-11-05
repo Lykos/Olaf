@@ -3,6 +3,7 @@
 #include "pawn.h"
 #include "oncepiece.h"
 #include "bitboard.h"
+#include <iostream>
 
 using namespace std;
 
@@ -42,17 +43,17 @@ static const vector<PositionDelta> c_knight_directions = {
   PositionDelta(2, 1)
 };
 
-static const BitBoard c_rook_initial_board (0x8100000000000000);
+static const BitBoard c_rook_initial_board (0x81ull);
 
-static const BitBoard c_knight_initial_board (0x4200000000000000);
+static const BitBoard c_knight_initial_board (0x42ull);
 
-static const BitBoard c_bishop_initial_board (0x2400000000000000);
+static const BitBoard c_bishop_initial_board (0x24ull);
 
-static const BitBoard c_queen_initial_board (0x1000000000000000);
+static const BitBoard c_queen_initial_board (0x10ull);
 
-static const BitBoard c_king_initial_board (0x800000000000000);
+static const BitBoard c_king_initial_board (0x8ull);
 
-static const BitBoard c_pawn_initial_board (0xff000000000000);
+static const BitBoard c_pawn_initial_board (0xff00ull);
 
 static const PieceSet::piece_index_t c_rook_index = 0;
 
@@ -73,37 +74,37 @@ static const vector<PieceSet::piece_index_t> c_pawn_conversions = {
   c_queen_index
 };
 
-const Piece* PieceSet::rook() const
+const shared_ptr<const Piece>& PieceSet::rook() const
 {
   return m_rook;
 }
 
-const Piece* PieceSet::knight() const
+const shared_ptr<const Piece>& PieceSet::knight() const
 {
   return m_knight;
 }
 
-const Piece* PieceSet::bishop() const
+const shared_ptr<const Piece>& PieceSet::bishop() const
 {
   return m_bishop;
 }
 
-const Piece* PieceSet::queen() const
+const shared_ptr<const Piece>& PieceSet::queen() const
 {
   return m_queen;
 }
 
-const Piece* PieceSet::king() const
+const shared_ptr<const Piece>& PieceSet::king() const
 {
   return m_king;
 }
 
-const Pawn* PieceSet::pawn() const
+const shared_ptr<const Pawn>& PieceSet::pawn() const
 {
   return m_pawn;
 }
 
-const vector<Piece*>& PieceSet::pieces() const
+const vector< shared_ptr<const Piece> >& PieceSet::pieces() const
 {
   return m_pieces;
 }
@@ -121,21 +122,11 @@ PieceSet::PieceSet():
   m_pieces.push_back(m_bishop);
   m_pieces.push_back(m_king);
   m_pieces.push_back(m_queen);
-  m_pieces.push_back(m_pawn);
+  m_pieces.push_back(static_pointer_cast<const Piece>(m_pawn));
 }
 
 const PieceSet& PieceSet::instance()
 {
   static PieceSet instance;
   return instance;
-}
-
-PieceSet::~PieceSet()
-{
-  delete m_rook;
-  delete m_knight;
-  delete m_bishop;
-  delete m_queen;
-  delete m_king;
-  delete m_pawn;
 }

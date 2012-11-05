@@ -141,4 +141,6 @@ private:
 
 ChessBoard create_initial_board();
 
+ChessBoard create_empty_board();
+
 #endif // CHESSBOARD_H

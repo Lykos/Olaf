@@ -25,7 +25,9 @@ SOURCES += \
     myturnflipevent.cpp \
     deferredponderingevent.cpp \
     pingevent.cpp \
-    boardstate.cpp
+    boardstate.cpp \
+    engineevent.cpp \
+    protocolwriter.cpp
 
 HEADERS +=\
     xboardwriter.h \
@@ -45,11 +47,14 @@ HEADERS +=\
     pingevent.h \
     boardstate.h
 
+header_files.files = $$HEADERS
+header_files.path = /usr/local/include/OlafProtocols
+
 unix:!symbian {
     maemo5 {
-        target.path = /opt/usr/lib
+        target.path = /opt/usr/local/lib
     } else {
-        target.path = /usr/lib
+        target.path = /usr/local/lib
     }
     INSTALLS += target
 }

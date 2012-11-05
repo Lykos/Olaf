@@ -4,14 +4,13 @@
 #include "color.h"
 #include "position.h"
 #include <vector>
-#include <cstdint>
+#include <memory>
 
 class PieceBoard;
 
 class BitBoard;
 
 class Piece;
-
 
 /**
  * @brief The ColorBoard class represents all the board information about one color, i.e. castling rights and
@@ -20,7 +19,7 @@ class Piece;
 class ColorBoard
 {
 public:
-  typedef std::uint_fast8_t piece_index_t;
+  typedef unsigned int piece_index_t;
 
   /**
    * @brief ColorBoard
@@ -49,7 +48,7 @@ public:
 
   piece_index_t piece_index(const Position&) const;
 
-  const Piece& piece(const Position&) const;
+  const std::shared_ptr<const Piece>& piece(const Position&) const;
 
   bool can_castle_q() const;
 
@@ -71,6 +70,8 @@ private:
 };
 
 ColorBoard create_initial_color_board(Color);
+
+ColorBoard create_empty_color_board();
 
 #include "pieceboard.h"
 #include "piece.h"

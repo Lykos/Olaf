@@ -22,7 +22,7 @@ class Piece
   friend bool operator==(const Piece &a, const Piece &b);
 
 public:
-  typedef std::uint_fast8_t piece_index_t;
+  typedef unsigned int piece_index_t;
 
   Piece(piece_index_t, const BitBoard&);
 

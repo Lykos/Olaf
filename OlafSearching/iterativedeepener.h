@@ -19,7 +19,7 @@ public:
 private:
   SearchResult internal_search(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper, int max_depth, bool infinite);
 
-  static const unsigned int min_depth = 2;
+  static const unsigned int min_depth = 1;
 
   std::shared_ptr<DepthSearcher> m_searcher;
 

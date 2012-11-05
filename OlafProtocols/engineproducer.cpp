@@ -20,7 +20,7 @@ EngineProducer::EngineProducer(const shared_ptr<ProtocolWriter> &writer,
 
 void EngineProducer::request_reset()
 {
-  m_board_state.reset();
+  m_board_state->reset();
 }
 
 void EngineProducer::request_myturn(bool value)
@@ -52,7 +52,12 @@ void EngineProducer::request_quit()
   m_consumer->request_quit();
 }
 
-void EngineProducer::ping(const string &number)
+void EngineProducer::move_now()
+{
+  m_consumer->weak_stop();
+}
+
+void EngineProducer::ping(int number)
 {
   shared_ptr<EngineEvent> ping_event (new PingEvent(m_writer, number));
   m_consumer->enqueue(ping_event);

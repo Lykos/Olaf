@@ -5,7 +5,6 @@
 #include "engineconsumer.h"
 #include "boardstate.h"
 #include <memory>
-#include <string>
 
 class EngineProducer
 {
@@ -26,7 +25,9 @@ public:
 
   void request_quit();
 
-  void ping(const std::string &number);
+  void move_now();
+
+  void ping(int number);
 
   bool request_move(const Position &source, const Position &destination);
 

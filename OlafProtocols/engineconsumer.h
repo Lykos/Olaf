@@ -21,14 +21,16 @@ public:
                  const std::shared_ptr<BoardState> &board_state,
                  const std::shared_ptr<TimedSearcher> &searcher);
 
+  void run();
+
   void enqueue(const std::shared_ptr<EngineEvent> &event);
+
+  void weak_stop();
 
   void request_quit();
 
-  void run();
-
 private:
-  void handle_events();
+  ChessBoard handle_events();
 
   void move(const Move &move);
 
@@ -38,7 +40,9 @@ private:
 
   EngineState m_state;
 
-  std::shared_ptr<ForcedStopper> m_stopper;
+  std::shared_ptr<ForcedStopper> m_forced_stopper;
+
+  std::shared_ptr<ForcedStopper> m_weak_stopper;
 
   std::shared_ptr<ProtocolWriter> m_writer;
 

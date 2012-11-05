@@ -56,11 +56,14 @@ HEADERS += \
     parallelnegamaxer.h \
     capturegenerator.h
 
+header_files.files = $$HEADERS
+header_files.path = /usr/local/include/OlafSearching
+
 unix:!symbian {
     maemo5 {
-        target.path = /opt/usr/lib
+        target.path = /opt/usr/local/lib
     } else {
-        target.path = /usr/lib
+        target.path = /usr/local/lib
     }
     INSTALLS += target
 }

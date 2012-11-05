@@ -20,6 +20,11 @@ void EngineState::my_turn(bool value)
   m_my_turn = value;
 }
 
+void EngineState::flip_turn()
+{
+  m_my_turn = !m_my_turn;
+}
+
 bool EngineState::force() const
 {
   return m_force;

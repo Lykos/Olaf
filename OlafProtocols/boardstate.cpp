@@ -1,4 +1,6 @@
 #include "boardstate.h"
+#include <iostream>
+#include "OlafSearching/searcherfactory.h"
 
 using namespace std;
 
@@ -19,11 +21,48 @@ void BoardState::reset()
   m_board = create_initial_board();
 }
 
+void BoardState::undo()
+{
+  unique_lock<mutex> lock (m_mutex);
+  if (!m_moves.empty()) {
+    m_moves.top().undo(m_board);
+    m_moves.pop();
+  }
+}
+
 void BoardState::move(const Move &move)
 {
-  Move mov (move);
   unique_lock<mutex> lock (m_mutex);
-  mov.execute(m_board);
+  m_moves.push(move);
+  m_moves.top().execute(m_board);
+  cout << "# " << "board_state.move()" << endl;
+  cout << "# source " << move.source() << endl;
+  cout << "# destination " << move.destination() << endl;
+  for (int i = 7; i >= 0; --i) {
+    cout << "# ";
+    for (int j = 0; j < 8; ++j) {
+      if (m_board.turn() == White)
+        cout << (m_board.opponent(Position(i, j)) ? "x" : " ");
+      else
+        cout << (m_board.friendd(Position(i, j)) ? "x" : " ");
+    }
+    cout << endl;
+  }
+  cout << "# bla" << endl;
+  for (int i = 7; i >= 0; --i) {
+    cout << "# ";
+    for (int j = 0; j < 8; ++j) {
+      if (m_board.turn() == Black)
+        cout << (m_board.opponent(Position(i, j)) ? "x" : " ");
+      else
+        cout << (m_board.friendd(Position(i, j)) ? "x" : " ");
+    }
+    cout << endl;
+  }
+  cout << "# Possible moves: " << endl;
+  SearcherFactory().move_generator()->generate_moves(m_board);
+  cout << "# Possible captures: " << endl;
+  SearcherFactory().capture_generator()->generate_moves(m_board);
 }
 
 bool BoardState::valid_move(const Position &source, const Position &destination)

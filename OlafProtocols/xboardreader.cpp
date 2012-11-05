@@ -15,7 +15,9 @@ XBoardReader::XBoardReader(const shared_ptr<XBoardWriter> &writer, const shared_
 
 void XBoardReader::run()
 {
-  while (true) {
+  m_writer->newline();
+  while (!cin.eof()) {
+    cout << "# Reading command" << endl;
     string message;
     getline(cin, message);
     istringstream iss (message);
@@ -25,54 +27,56 @@ void XBoardReader::run()
       continue;
     }
     string command = tokens[0];
+    cout << "# Understood command " << command << endl;
     if (command == "protover") {
       int version;
-      cin >> version;
+      istringstream iss (tokens[1]);
+      iss >> version;
       if (version >= 2) {
         write_features();
       }
-      break;
     } else if (command == "accepted") {
-      break;
     } else if (command == "rejected") {
-      break;
     } else if (command == "quit") {
-      m_engine->request_quit();
-      return;
+      break;
     } else if (command == "new") {
-      m_engine->request_force(false);
+      m_engine->request_force(true);
       m_engine->request_reset();
       m_engine->request_deferred_pondering();
       m_engine->request_myturn(false);
-      break;
+      m_engine->request_force(false);
     } else if (command == "random") {
-      break;
     } else if (command == "force") {
       m_engine->request_force(true);
-      break;
     } else if (command == "go") {
       m_engine->request_myturn(true);
       m_engine->request_force(false);
-      break;
     } else if (command == "playother") {
       m_engine->request_myturn(false);
       m_engine->request_force(false);
-      break;
     } else if (command == "?") {
-      // TODO
-      break;
+      m_engine->move_now();
     } else if (command == "ping") {
-      m_engine->ping(tokens[1]);
-      break;
+      int number;
+      istringstream iss (tokens[1]);
+      iss >> number;
+      m_engine->ping(number);
     } else if (command == "result") {
       m_engine->request_force(true);
-      break;
     } else if (command == "easy") {
       m_engine->request_pondering(false);
-      break;
     } else if (command == "hard") {
       m_engine->request_pondering(true);
-      break;
+    } else if (command == "name") {
+    } else if (command == "ics") {
+    } else if (command == "time") {
+    } else if (command == "otim") {
+    } else if (command == "usermove") {
+      if (is_move(tokens[1])) {
+        handle_move(tokens[1]);
+      } else {
+        m_writer->illegal_move(message);
+      }
     } else {
       if (is_move(message)) {
         handle_move(message);
@@ -81,20 +85,19 @@ void XBoardReader::run()
       }
     }
   }
+  m_engine->request_quit();
 }
 
-static const string columns = "abcdefgh";
-static const string rows = "012345678";
 static const string conversions = "rbnq";
 
 bool XBoardReader::is_move(const string& command) const
 {
   if (
       command.size() < 4 ||
-      columns.find(command[0]) == string::npos ||
-      rows.find(command[1]) == string::npos ||
-      columns.find(command[2]) == string::npos ||
-      rows.find(command[3]) == string::npos
+      Position::columns.find(command[0]) == string::npos ||
+      Position::rows.find(command[1]) == string::npos ||
+      Position::columns.find(command[2]) == string::npos ||
+      Position::rows.find(command[3]) == string::npos
       ) {
     return false;
   }
@@ -103,8 +106,10 @@ bool XBoardReader::is_move(const string& command) const
 
 void XBoardReader::handle_move(const std::string& move) const
 {
-  Position source (rows.find(move[1]), columns.find(move[0]));
-  Position destination (rows.find(move[3]), columns.find(move[2]));
+  Position source;
+  Position destination;
+  istringstream iss (move);
+  iss >> source >> destination;
   if (move.size() == 4) {
     if (!m_engine->request_move(source, destination)) {
       m_writer->illegal_move(move);
@@ -144,5 +149,7 @@ void XBoardReader::write_features() const
   m_writer->feature("name", true);
   m_writer->feature("nps", false);
   m_writer->feature("pause", true);
+  m_writer->feature("debug", true);
+  m_writer->feature("sigint", false);
   m_writer->feature("done", true);
 }

@@ -7,6 +7,7 @@
 #include "OlafRules/position.h"
 #include <memory>
 #include <mutex>
+#include <stack>
 
 class BoardState
 {
@@ -16,6 +17,8 @@ public:
   ChessBoard board();
 
   void reset();
+
+  void undo();
 
   void move(const Move &move);
 
@@ -33,6 +36,8 @@ private:
   std::mutex m_mutex;
 
   ChessBoard m_board;
+
+  std::stack<Move> m_moves;
 
 };
 

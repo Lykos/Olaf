@@ -1,6 +1,8 @@
 #include "pieceboard.h"
 
-PieceBoard::PieceBoard(const Piece *piece, const BitBoard &bit_board):
+using namespace std;
+
+PieceBoard::PieceBoard(const std::shared_ptr<const Piece> &piece, const BitBoard &bit_board):
   m_piece (piece),
   m_bit_board (bit_board)
 {}
@@ -10,9 +12,9 @@ PieceBoard::operator BitBoard() const
   return m_bit_board;
 }
 
-const Piece &PieceBoard::piece() const
+const std::shared_ptr<const Piece>& PieceBoard::piece() const
 {
-  return *m_piece;
+  return m_piece;
 }
 
 bool PieceBoard::get(const Position &position) const

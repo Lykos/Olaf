@@ -13,7 +13,7 @@ BitBoard operator^(const BitBoard&, const BitBoard&);
 
 BitBoard operator&(const BitBoard&, const BitBoard&);
 
-BitBoard operator==(const BitBoard&, const BitBoard&);
+bool operator==(const BitBoard&, const BitBoard&);
 
 // static_assert(sizeof(uint64_t) * CHAR_BIT >= Position::COLUMN_SIZE * Position::ROW_SIZE);
 
@@ -28,7 +28,7 @@ class BitBoard
 
   friend BitBoard operator&(const BitBoard&, const BitBoard&);
 
-  friend BitBoard operator==(const BitBoard&, const BitBoard&);
+  friend bool operator==(const BitBoard&, const BitBoard&);
 
 public:
   typedef std::uint64_t bits_t;

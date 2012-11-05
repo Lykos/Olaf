@@ -2,7 +2,7 @@
 
 using namespace std;
 
-PingEvent::PingEvent(const shared_ptr<ProtocolWriter> &writer, const string &number):
+PingEvent::PingEvent(const shared_ptr<ProtocolWriter> &writer, int number):
   m_writer (writer),
   m_number (number)
 {}
