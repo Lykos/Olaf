@@ -38,9 +38,9 @@ bool BitBoard::get(const Position& position) const
 void BitBoard::set(const Position& position, bool value)
 {
   if (value) {
-    m_bits |= 1 << index(position);
+    m_bits |= 1ull << index(position);
   } else {
-    m_bits &= ~(1 << index(position));
+    m_bits &= ~(1ull << index(position));
   }
 }
 

@@ -78,6 +78,8 @@ void XBoardReader::run()
       m_engine->request_set_time(milliseconds(centiseconds * 10));
     } else if (command == "otim") {
     } else if (command == "computer") {
+    } else if (command == "level") {
+      // TODO
     } else if (command == "usermove") {
       if (is_move(tokens[1])) {
         handle_move(tokens[1]);

@@ -1,5 +1,4 @@
 #include "capturegenerator.h"
-#include <iostream>
 
 using namespace std;
 
@@ -14,9 +13,6 @@ vector<Move> CaptureGenerator::generate_moves(const ChessBoard &board)
   for (const Move &move : candidates) {
     if (move.is_capture()) {
       result.push_back(move);
-      cout << "# capture generator takes " << move.source() << " " << move.destination() << endl;
-    } else {
-      cout << "# capture generator ignores " << move.source() << " " << move.destination() << endl;
     }
   }
   return result;

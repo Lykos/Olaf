@@ -4,6 +4,7 @@
 #include "stopper.h"
 #include "searchresult.h"
 #include "OlafRules/chessboard.h"
+#include "nostopper.h"
 #include <memory>
 
 /**
@@ -20,17 +21,24 @@ public:
    * @param weak_stopper A stopper that only applies after a move has been found.
    * @return
    */
-  virtual SearchResult search_infinite(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper) = 0;
+  virtual SearchResult search_infinite(ChessBoard &board,
+                                       const std::shared_ptr<Stopper> &forced_stopper,
+                                       const std::shared_ptr<Stopper> &weak_stopper = std::shared_ptr<Stopper>(new NoStopper())) = 0;
 
   /**
-   * @brief search_infinite
+   * @brief search_bounded
    * @param board
    * @param max_depth The maximum depth.
    * @param forced_stopper A stopper that also applies in the first round, before any move has been found.
    * @param weak_stopper A stopper that only applies after a move has been found.
    * @return
    */
-  virtual SearchResult search_bounded(ChessBoard &board, int max_depth, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper) = 0;
+  virtual SearchResult search_bounded(ChessBoard &board,
+                                      int max_depth,
+                                      const std::shared_ptr<Stopper> &forced_stopper,
+                                      const std::shared_ptr<Stopper> &weak_stopper) = 0;
+
+  virtual ~IterativeSearcher() = 0;
 
 };
 

@@ -12,6 +12,13 @@ public:
 
   virtual void output(const ChessBoard &board, const SearchResult &result, const std::chrono::milliseconds &time, int depth) = 0;
 
+  void post(bool value);
+
+  bool post() const;
+
+private:
+  bool m_post = false;
+
 };
 
 #endif // THINKINGWRITER_H

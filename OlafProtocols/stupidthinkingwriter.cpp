@@ -11,6 +11,9 @@ StupidThinkingWriter::StupidThinkingWriter(const shared_ptr<ProtocolWriter> &wri
 
 void StupidThinkingWriter::output(const ChessBoard &board, const SearchResult &result, const milliseconds &time, int depth)
 {
+  if (!post()) {
+    return;
+  }
   ostringstream oss;
   int turn_number = board.turn_number();
   int ply = 0;

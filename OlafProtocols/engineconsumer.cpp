@@ -27,10 +27,11 @@ void EngineConsumer::run()
       shared_ptr<Stopper> forced_stopper (static_pointer_cast<Stopper>(m_forced_stopper));
       shared_ptr<Stopper> weak_stopper (static_pointer_cast<Stopper>(m_weak_stopper));
       if (m_state.my_turn() && !m_state.force()) {
-        SearchResult result = m_searcher->search(board, forced_stopper, weak_stopper);
+        m_searcher->time(m_state.time());
+        SearchResult result = m_searcher->search_timed(board, forced_stopper, weak_stopper);
         move(result.main_variation().back());
       } else {
-        m_searcher->search(board, forced_stopper, weak_stopper);
+        m_searcher->search_untimed(board, forced_stopper);
       }
     }
 
