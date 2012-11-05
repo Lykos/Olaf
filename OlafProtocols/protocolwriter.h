@@ -12,6 +12,8 @@ public:
 
   virtual void comment(const std::string &message) const = 0;
 
+  virtual void thinking_output(int ply, int score, int centiseconds, int nodes, const std::string &moves) = 0;
+
   virtual ~ProtocolWriter() = 0;
 };
 

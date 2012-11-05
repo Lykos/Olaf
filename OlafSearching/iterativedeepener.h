@@ -4,13 +4,14 @@
 #include "iterativesearcher.h"
 #include "OlafRules/chessboard.h"
 #include "depthsearcher.h"
+#include "thinkingwriter.h"
 #include <memory>
 #include <mutex>
 
 class IterativeDeepener : public IterativeSearcher
 {
 public:
-  IterativeDeepener(const std::shared_ptr<DepthSearcher>& searcher);
+  IterativeDeepener(const std::shared_ptr<DepthSearcher> &searcher, const std::shared_ptr<ThinkingWriter> &writer);
 
   SearchResult search_infinite(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper);
 
@@ -22,6 +23,8 @@ private:
   static const unsigned int min_depth = 1;
 
   std::shared_ptr<DepthSearcher> m_searcher;
+
+  std::shared_ptr<ThinkingWriter> m_writer;
 
 };
 

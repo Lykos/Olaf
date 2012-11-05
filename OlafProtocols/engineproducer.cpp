@@ -6,6 +6,7 @@
 #include "deferredponderingevent.h"
 #include "myturnflipevent.h"
 #include "pingevent.h"
+#include "settimeevent.h"
 #include "OlafRules/move.h"
 
 using namespace std;
@@ -50,6 +51,12 @@ void EngineProducer::request_force(bool value)
 void EngineProducer::request_quit()
 {
   m_consumer->request_quit();
+}
+
+void EngineProducer::request_set_time(const std::chrono::milliseconds &time)
+{
+  shared_ptr<SetTimeEvent> set_time (new SetTimeEvent(time));
+  m_consumer->enqueue(set_time);
 }
 
 void EngineProducer::move_now()

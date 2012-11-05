@@ -1,6 +1,11 @@
 #ifndef ENGINESTATE_H
 #define ENGINESTATE_H
 
+#include <chrono>
+
+/**
+ * @brief The EngineState class represents the state of the engine except for the board, i.e. the time and the options.
+ */
 class EngineState
 {
 public:
@@ -20,6 +25,10 @@ public:
 
   void deferred_pondering();
 
+  std::chrono::milliseconds time() const;
+
+  void time(const std::chrono::milliseconds &time);
+
 private:
   bool m_my_turn = false;
 
@@ -28,6 +37,8 @@ private:
   bool m_force = true;
 
   bool m_deferred_pondering = false;
+
+  std::chrono::milliseconds m_time;
 
 };
 

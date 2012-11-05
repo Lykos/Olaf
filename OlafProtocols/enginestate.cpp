@@ -1,5 +1,8 @@
 #include "enginestate.h"
 
+using namespace std;
+using namespace chrono;
+
 bool EngineState::pondering() const
 {
   return m_pondering && !m_deferred_pondering;
@@ -38,4 +41,14 @@ void EngineState::force(bool value)
 void EngineState::deferred_pondering()
 {
   m_deferred_pondering = true;
+}
+
+milliseconds EngineState::time() const
+{
+  return m_time;
+}
+
+void EngineState::time(const milliseconds &time)
+{
+  m_time = time;
 }

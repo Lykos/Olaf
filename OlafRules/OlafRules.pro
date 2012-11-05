@@ -8,7 +8,7 @@ QT       -= core gui
 
 TARGET = OlafRules
 TEMPLATE = lib
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11 -march=native -mtune=native
 CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
 DEFINES += OLAFRULES_LIBRARY

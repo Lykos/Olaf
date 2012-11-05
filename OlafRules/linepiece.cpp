@@ -21,10 +21,10 @@ vector<Move> LinePiece::moves(const Position &source, const ChessBoard &board) c
         break;
       }
       Move move (board, piece_index(), source, current);
-      if (board.turn_board().can_castle_q() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn()) && source.column() == 0) {
+      if (board.turn_board().can_castle_q() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn_color()) && source.column() == 0) {
         move.forbid_q_castling();
       }
-      if (board.turn_board().can_castle_k() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn()) && source.column() == 7) {
+      if (board.turn_board().can_castle_k() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn_color()) && source.column() == 7) {
         move.forbid_k_castling();
       }
       result.push_back(move);
@@ -68,10 +68,10 @@ bool LinePiece::can_move(const Position &source, const Position &destination, co
 Move LinePiece::move(const Position &source, const Position &destination, const ChessBoard &board) const
 {
   Move result (board, piece_index(), source, destination);
-  if (board.turn_board().can_castle_q() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn()) && source.column() == 0) {
+  if (board.turn_board().can_castle_q() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn_color()) && source.column() == 0) {
     result.forbid_q_castling();
   }
-  if (board.turn_board().can_castle_k() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn()) && source.column() == 7) {
+  if (board.turn_board().can_castle_k() && *this == *PieceSet::instance().rook() && source.row() == ground_line(board.turn_color()) && source.column() == 7) {
     result.forbid_k_castling();
   }
   return result;

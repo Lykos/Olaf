@@ -41,7 +41,7 @@ void BoardState::move(const Move &move)
   for (int i = 7; i >= 0; --i) {
     cout << "# ";
     for (int j = 0; j < 8; ++j) {
-      if (m_board.turn() == White)
+      if (m_board.turn_color() == White)
         cout << (m_board.opponent(Position(i, j)) ? "x" : " ");
       else
         cout << (m_board.friendd(Position(i, j)) ? "x" : " ");
@@ -52,7 +52,7 @@ void BoardState::move(const Move &move)
   for (int i = 7; i >= 0; --i) {
     cout << "# ";
     for (int j = 0; j < 8; ++j) {
-      if (m_board.turn() == Black)
+      if (m_board.turn_color() == Black)
         cout << (m_board.opponent(Position(i, j)) ? "x" : " ");
       else
         cout << (m_board.friendd(Position(i, j)) ? "x" : " ");
@@ -60,9 +60,9 @@ void BoardState::move(const Move &move)
     cout << endl;
   }
   cout << "# Possible moves: " << endl;
-  SearcherFactory().move_generator()->generate_moves(m_board);
+  SearcherFactory(shared_ptr<ThinkingWriter>()).move_generator()->generate_moves(m_board);
   cout << "# Possible captures: " << endl;
-  SearcherFactory().capture_generator()->generate_moves(m_board);
+  SearcherFactory(shared_ptr<ThinkingWriter>()).capture_generator()->generate_moves(m_board);
 }
 
 bool BoardState::valid_move(const Position &source, const Position &destination)

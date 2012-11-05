@@ -19,11 +19,13 @@ CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
 SOURCES += \
     tst_olafrules.cpp \
-    boardtest.cpp
+    boardtest.cpp \
+    pawntest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
-    boardtest.h
+    boardtest.h \
+    pawntest.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Release/ -lOlafRules
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Debug/ -lOlafRules

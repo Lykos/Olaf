@@ -11,6 +11,10 @@
 
 using namespace std;
 
+SearcherFactory::SearcherFactory(const shared_ptr<ThinkingWriter> &writer):
+  m_writer (writer)
+{}
+
 shared_ptr<TimedSearcher> SearcherFactory::timed_searcher() const
 {
   shared_ptr<TimedSearcher> searcher (new SimpleTimedSearcher(iterative_searcher()));
@@ -19,7 +23,7 @@ shared_ptr<TimedSearcher> SearcherFactory::timed_searcher() const
 
 shared_ptr<IterativeSearcher> SearcherFactory::iterative_searcher() const
 {
-  shared_ptr<IterativeSearcher> searcher (new IterativeDeepener(parallel_depth_searcher()));
+  shared_ptr<IterativeSearcher> searcher (new IterativeDeepener(parallel_depth_searcher(), m_writer));
   return searcher;
 }
 

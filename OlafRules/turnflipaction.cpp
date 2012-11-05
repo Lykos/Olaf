@@ -2,10 +2,10 @@
 
 void TurnFlipAction::execute(ChessBoard &chess_board)
 {
-  chess_board.flip_turn();
+  chess_board.next_turn();
 }
 
 void TurnFlipAction::undo(ChessBoard &chess_board)
 {
-  chess_board.flip_turn();
+  chess_board.previous_turn();
 }

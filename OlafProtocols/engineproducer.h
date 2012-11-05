@@ -5,6 +5,7 @@
 #include "engineconsumer.h"
 #include "boardstate.h"
 #include <memory>
+#include <chrono>
 
 class EngineProducer
 {
@@ -24,6 +25,8 @@ public:
   void request_force(bool value);
 
   void request_quit();
+
+  void request_set_time(const std::chrono::milliseconds &time);
 
   void move_now();
 

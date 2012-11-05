@@ -17,14 +17,14 @@ vector<Move> OncePiece::moves(const Position &source, const ChessBoard &board) c
       Position destination = source + direction;
       if (!board.friendd(destination)) {
         Move move (board, piece_index(), source, destination);
-        if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && *this == *PieceSet::instance().king() && source.row() == ground_line(board.turn()) && source.column() == 4) {
+        if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && *this == *PieceSet::instance().king() && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
           move.forbid_castling();
         }
         result.push_back(move);
       }
     }
   }
-  if (*this == *PieceSet::instance().king() && source.row() == ground_line(board.turn()) && source.column() == 4) {
+  if (*this == *PieceSet::instance().king() && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
     if (board.turn_board().can_castle_q()) {
       result.push_back(Move(board, source, Position(source.row(), 2)));
     } else if (board.turn_board().can_castle_k()) {
@@ -39,15 +39,15 @@ bool OncePiece::can_move(const Position &source, const Position &destination, co
   if (board.friendd(destination)) {
     return false;
   }
-  if (*this == *PieceSet::instance().king() && destination.row() == source.row() && source.row() == ground_line(board.turn()) && source.column() == 4) {
+  if (*this == *PieceSet::instance().king() && destination.row() == source.row() && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
     if (destination.column() == 2) {
           return board.turn_board().can_castle_q()
-              && !board.occupied(Position(ground_line(board.turn()), 1))
-              && !board.occupied(Position(ground_line(board.turn()), 3))
+              && !board.occupied(Position(ground_line(board.turn_color()), 1))
+              && !board.occupied(Position(ground_line(board.turn_color()), 3))
               && !board.occupied(destination);
     } else if (destination.column() == 6) {
       return board.turn_board().can_castle_k()
-          && !board.occupied(Position(ground_line(board.turn()), 5))
+          && !board.occupied(Position(ground_line(board.turn_color()), 5))
           && !board.occupied(destination);
     }
   }
@@ -62,11 +62,11 @@ bool OncePiece::can_move(const Position &source, const Position &destination, co
 
 Move OncePiece::move(const Position &source, const Position &destination, const ChessBoard &board) const
 {
-  if (*this == *PieceSet::instance().king() && destination.row() == source.row() && source.row() == ground_line(board.turn()) && source.column() == 4 && abs(source.column() - destination.column()) == 2) {
+  if (*this == *PieceSet::instance().king() && destination.row() == source.row() && source.row() == ground_line(board.turn_color()) && source.column() == 4 && abs(source.column() - destination.column()) == 2) {
     return Move(board, source, destination);
   }
   Move result (board, piece_index(), source, destination);
-  if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && *this == *PieceSet::instance().king() && source.row() == ground_line(board.turn()) && source.column() == 4) {
+  if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && *this == *PieceSet::instance().king() && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
     result.forbid_castling();
   }
   return result;

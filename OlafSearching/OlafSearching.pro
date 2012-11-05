@@ -29,7 +29,8 @@ SOURCES += \
     nodestopper.cpp \
     evaluatorsearcher.cpp \
     parallelnegamaxer.cpp \
-    capturegenerator.cpp
+    capturegenerator.cpp \
+    thinkingwriter.cpp
 
 HEADERS += \
     simplemovegenerator.h \
@@ -54,7 +55,8 @@ HEADERS += \
     evaluatorsearcher.h \
     iterativesearcher.h \
     parallelnegamaxer.h \
-    capturegenerator.h
+    capturegenerator.h \
+    thinkingwriter.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafSearching

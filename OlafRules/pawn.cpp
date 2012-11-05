@@ -19,7 +19,7 @@ std::vector<Move> Pawn::moves(const Position &source,
                               const ChessBoard& board) const
 {
   vector<Move> result;
-  Color color = board.turn();
+  Color color = board.turn_color();
   Position simple_move_destination = source + forward_direction(color);
   // Check if square is free
   if (!board.occupied(simple_move_destination)) {
@@ -63,18 +63,18 @@ std::vector<Move> Pawn::moves(const Position &source,
 
 bool Pawn::can_move(const Position &source, const Position &destination, const ChessBoard &board) const
 {
-  if (destination.row() == conversion_row(board.turn())) {
+  if (destination.row() == conversion_row(board.turn_color())) {
     return false;
   }
-  Position step = source + forward_direction(board.turn());
-  Position two_step = step + forward_direction(board.turn());
+  Position step = source + forward_direction(board.turn_color());
+  Position two_step = step + forward_direction(board.turn_color());
   return (!board.occupied(step) && (destination == step || (!board.occupied(two_step) && destination == two_step)))
       || (board.occupied(destination) && destination.row() == step.row() && abs(destination.column() - step.column()) == 1);
 }
 
 bool Pawn::can_move(const Position &source, const Position &destination, const ChessBoard &board, piece_index_t conversion) const
 {
-  Position step = source + forward_direction(board.turn());
+  Position step = source + forward_direction(board.turn_color());
   bool conversion_valid = false;
   for (piece_index_t conv : m_conversions) {
     if (conversion == conv) {
@@ -82,15 +82,15 @@ bool Pawn::can_move(const Position &source, const Position &destination, const C
       break;
     }
   }
-  return conversion_valid && destination.row() == conversion_row(board.turn()) &&
+  return conversion_valid && destination.row() == conversion_row(board.turn_color()) &&
       ((!board.occupied(step) && destination == step)
       || (board.occupied(destination) && destination.row() == step.row() && abs(destination.column() - step.column()) == 1));
 }
 
 Move Pawn::move(const Position &source, const Position &destination, const ChessBoard &board) const
 {
-  Position step = source + forward_direction(board.turn());
-  Position two_step = step + forward_direction(board.turn());
+  Position step = source + forward_direction(board.turn_color());
+  Position two_step = step + forward_direction(board.turn_color());
   if (destination == two_step) {
     return Move(board, piece_index(), source, destination, step);
   } else {

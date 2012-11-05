@@ -5,8 +5,10 @@
 #include <sstream>
 #include <iostream>
 #include <iterator>
+#include <chrono>
 
 using namespace std;
+using namespace chrono;
 
 XBoardReader::XBoardReader(const shared_ptr<XBoardWriter> &writer, const shared_ptr<EngineProducer> &engine):
   m_writer (writer),
@@ -70,7 +72,12 @@ void XBoardReader::run()
     } else if (command == "name") {
     } else if (command == "ics") {
     } else if (command == "time") {
+      istringstream iss (tokens[1]);
+      int centiseconds;
+      iss >> centiseconds;
+      m_engine->request_set_time(milliseconds(centiseconds * 10));
     } else if (command == "otim") {
+    } else if (command == "computer") {
     } else if (command == "usermove") {
       if (is_move(tokens[1])) {
         handle_move(tokens[1]);

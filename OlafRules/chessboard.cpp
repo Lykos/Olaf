@@ -4,7 +4,7 @@ using namespace std;
 
 ChessBoard::ChessBoard(const array<ColorBoard, 2> &color_boards, Color turn, bool ep_possible, const Position& ep_capture_position, const Position& ep_victim_position):
   m_color_boards (color_boards),
-  m_turn (turn),
+  m_turn_color (turn),
   m_ep_possible (ep_possible),
   m_ep_capture_position (ep_capture_position),
   m_ep_victim_position (ep_victim_position)
@@ -22,22 +22,22 @@ ColorBoard& ChessBoard::color_board(Color color)
 
 const ColorBoard& ChessBoard::turn_board() const
 {
-  return m_color_boards[static_cast<uint_fast8_t>(m_turn)];
+  return m_color_boards[static_cast<uint_fast8_t>(m_turn_color)];
 }
 
 ColorBoard& ChessBoard::turn_board()
 {
-  return m_color_boards[static_cast<uint_fast8_t>(m_turn)];
+  return m_color_boards[static_cast<uint_fast8_t>(m_turn_color)];
 }
 
 const ColorBoard& ChessBoard::noturn_board() const
 {
-  return m_color_boards[1 - static_cast<uint_fast8_t>(m_turn)];
+  return m_color_boards[1 - static_cast<uint_fast8_t>(m_turn_color)];
 }
 
 ColorBoard& ChessBoard::noturn_board()
 {
-  return m_color_boards[1 - static_cast<uint_fast8_t>(m_turn)];
+  return m_color_boards[1 - static_cast<uint_fast8_t>(m_turn_color)];
 }
 
 bool ChessBoard::ep_possible() const
@@ -70,17 +70,36 @@ void ChessBoard::ep_victim_position(const Position &position)
   m_ep_victim_position = position;
 }
 
-Color ChessBoard::turn() const
+Color ChessBoard::turn_color() const
 {
-  return m_turn;
+  return m_turn_color;
 }
 
-void ChessBoard::flip_turn()
+int ChessBoard::turn_number() const
+{
+  return m_turn_number;
+}
+
+void ChessBoard::next_turn()
 {
   m_opponents_valid = false;
   m_friends_valid = false;
   m_occupied_valid = false;
-  m_turn = next(m_turn);
+  m_turn_color = next(m_turn_color);
+  if (m_turn_color == White) {
+    ++m_turn_number;
+  }
+}
+
+void ChessBoard::previous_turn()
+{
+  m_opponents_valid = false;
+  m_friends_valid = false;
+  m_occupied_valid = false;
+  m_turn_color = previous(m_turn_color);
+  if (m_turn_color == Black) {
+    --m_turn_number;
+  }
 }
 
 const BitBoard& ChessBoard::opponents() const

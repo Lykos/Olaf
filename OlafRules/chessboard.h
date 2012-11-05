@@ -62,9 +62,13 @@ public:
 
   void ep_victim_position(const Position&);
 
-  Color turn() const;
+  Color turn_color() const;
 
-  void flip_turn();
+  int turn_number() const;
+
+  void next_turn();
+
+  void previous_turn();
 
   /**
    * @attention Result caching might be invalid if the user is not careful.
@@ -117,7 +121,9 @@ public:
 private:
   std::array<ColorBoard, 2> m_color_boards;
 
-  Color m_turn;
+  Color m_turn_color;
+
+  int m_turn_number = 1;
 
   bool m_ep_possible;
 

@@ -5,6 +5,8 @@
 #include "OlafProtocols/xboardwriter.h"
 #include "OlafProtocols/engineconsumer.h"
 #include "OlafProtocols/engineproducer.h"
+#include "OlafProtocols/stupidthinkingwriter.h"
+#include "OlafSearching/thinkingwriter.h"
 #include <memory>
 #include <iostream>
 
@@ -25,7 +27,8 @@ int main()
     cout << "Error: Unknown protocol " << protocol_name << "." << endl;
     return 1;
   }
-  SearcherFactory factory;
+  shared_ptr<ThinkingWriter> thinking_writer (new StupidThinkingWriter(writer));
+  SearcherFactory factory (thinking_writer);
   auto searcher = factory.timed_searcher();
   shared_ptr<BoardState> board_state (new BoardState(factory.move_creator()));
   shared_ptr<ProtocolReader> reader;

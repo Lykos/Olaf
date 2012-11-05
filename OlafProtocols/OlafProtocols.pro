@@ -27,7 +27,9 @@ SOURCES += \
     pingevent.cpp \
     boardstate.cpp \
     engineevent.cpp \
-    protocolwriter.cpp
+    protocolwriter.cpp \
+    settimeevent.cpp \
+    stupidthinkingwriter.cpp
 
 HEADERS +=\
     xboardwriter.h \
@@ -45,7 +47,9 @@ HEADERS +=\
     myturnflipevent.h \
     deferredponderingevent.h \
     pingevent.h \
-    boardstate.h
+    boardstate.h \
+    settimeevent.h \
+    stupidthinkingwriter.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafProtocols

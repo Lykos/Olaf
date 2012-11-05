@@ -10,11 +10,14 @@
 #include "movegenerator.h"
 #include "moveorderer.h"
 #include "OlafEvaluation/evaluatorfactory.h"
+#include "thinkingwriter.h"
 #include <memory>
 
 class SearcherFactory
 {
 public:
+  SearcherFactory(const std::shared_ptr<ThinkingWriter> &writer);
+
   std::shared_ptr<TimedSearcher> timed_searcher() const;
 
   std::shared_ptr<IterativeSearcher> iterative_searcher() const;
@@ -38,6 +41,8 @@ public:
   std::shared_ptr<MoveCreator> move_creator() const;
 
 private:
+  std::shared_ptr<ThinkingWriter> m_writer;
+
   EvaluatorFactory m_evaluator_factory;
 
   static const int sequential_depth = 2;
