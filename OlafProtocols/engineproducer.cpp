@@ -13,10 +13,12 @@ using namespace std;
 
 EngineProducer::EngineProducer(const shared_ptr<ProtocolWriter> &writer,
                                const shared_ptr<BoardState> &board_state,
-                               const shared_ptr<EngineConsumer> &consumer):
+                               const shared_ptr<EngineConsumer> &consumer,
+                               const shared_ptr<ThinkingWriter> &thinking_writer):
   m_writer (writer),
   m_board_state (board_state),
-  m_consumer (consumer)
+  m_consumer (consumer),
+  m_thinking_writer (thinking_writer)
 {}
 
 void EngineProducer::request_reset()
@@ -68,6 +70,11 @@ void EngineProducer::ping(int number)
 {
   shared_ptr<EngineEvent> ping_event (new PingEvent(m_writer, number));
   m_consumer->enqueue(ping_event);
+}
+
+void EngineProducer::post(bool value)
+{
+  m_thinking_writer->post(value);
 }
 
 bool EngineProducer::request_move(const Position &source, const Position &destination)

@@ -80,6 +80,10 @@ void XBoardReader::run()
     } else if (command == "computer") {
     } else if (command == "level") {
       // TODO
+    } else if (command == "post") {
+      m_engine->post(true);
+    } else if (command == "nopost") {
+      m_engine->post(false);
     } else if (command == "usermove") {
       if (is_move(tokens[1])) {
         handle_move(tokens[1]);

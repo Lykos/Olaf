@@ -16,7 +16,7 @@ ParallelNegaMaxer::ParallelNegaMaxer(const shared_ptr<MoveGenerator> &generator,
 static SearchResult eval_move(ParallelNegaMaxer *nega_maxer, Move move, ChessBoard board, int depth, int nodes_searched, int alpha, int beta, const shared_ptr<Stopper> &stopper)
 {
   move.execute(board);
-  SearchResult result = nega_maxer->search_stoppable_alpha_beta(board, depth, nodes_searched, -beta, -alpha, stopper);
+  SearchResult result = nega_maxer->search_stoppable_alpha_beta(board, depth - 1, nodes_searched, -beta, -alpha, stopper);
   result.add_move(move);
   return result;
 }
@@ -35,6 +35,9 @@ SearchResult ParallelNegaMaxer::search_alpha_beta(ChessBoard &board, int depth, 
   auto it = moves.begin();
   // Do the first one synchronously
   SearchResult first_result = eval_move(this, *it, board, depth, nodes_searched, alpha, beta, stopper);
+  if (!first_result.valid()) {
+    return first_result;
+  }
   ++it;
   int value = -first_result.value();
   unsigned int nodes = first_result.nodes();
@@ -48,9 +51,11 @@ SearchResult ParallelNegaMaxer::search_alpha_beta(ChessBoard &board, int depth, 
   for (; it < moves.end(); ++it) {
     other_results.push_back(async(launch::async, eval_move, this, *it, board, depth, nodes_searched + nodes, alpha, beta, stopper));
   }
+  bool valid = true;
   for (future<SearchResult> &fut : other_results) {
     fut.wait();
     SearchResult result = fut.get();
+    valid &= result.valid();
     nodes += result.nodes();
     int value = -result.value();
     if (value >= beta) {
@@ -59,6 +64,9 @@ SearchResult ParallelNegaMaxer::search_alpha_beta(ChessBoard &board, int depth, 
       alpha = value;
       alpha_variation = result.main_variation();
     }
+  }
+  if (!valid) {
+    return SearchResult();
   }
   return SearchResult(nodes, alpha, alpha_variation);
 }

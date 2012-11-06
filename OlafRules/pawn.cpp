@@ -67,13 +67,27 @@ bool Pawn::can_move(const Position &source, const Position &destination, const C
     return false;
   }
   Position step = source + forward_direction(board.turn_color());
+  if (destination.row() == step.row() && abs(destination.column() - step.column()) == 1 && board.opponent(destination)) {
+    return true;
+  }
+  if (board.occupied(step)) {
+    return false;
+  }
+  if (destination == step) {
+    return true;
+  }
+  if (source.row() != pawn_row(board.turn_color())) {
+    return false;
+  }
   Position two_step = step + forward_direction(board.turn_color());
-  return (!board.occupied(step) && (destination == step || (!board.occupied(two_step) && destination == two_step)))
-      || (board.occupied(destination) && destination.row() == step.row() && abs(destination.column() - step.column()) == 1);
+  return destination == two_step && !board.occupied(step) && !board.occupied(two_step);
 }
 
 bool Pawn::can_move(const Position &source, const Position &destination, const ChessBoard &board, piece_index_t conversion) const
 {
+  if (destination.row() != conversion_row(board.turn_color())) {
+    return false;
+  }
   Position step = source + forward_direction(board.turn_color());
   bool conversion_valid = false;
   for (piece_index_t conv : m_conversions) {
@@ -82,9 +96,13 @@ bool Pawn::can_move(const Position &source, const Position &destination, const C
       break;
     }
   }
-  return conversion_valid && destination.row() == conversion_row(board.turn_color()) &&
-      ((!board.occupied(step) && destination == step)
-      || (board.occupied(destination) && destination.row() == step.row() && abs(destination.column() - step.column()) == 1));
+  if (!conversion_valid) {
+    return false;
+  }
+  if (destination.row() == step.row() && abs(destination.column() - step.column()) == 1 && board.opponent(destination)) {
+    return true;
+  }
+  return destination == step && !board.occupied(step);
 }
 
 Move Pawn::move(const Position &source, const Position &destination, const ChessBoard &board) const

@@ -33,7 +33,7 @@ int main()
   shared_ptr<BoardState> board_state (new BoardState(factory.move_creator()));
   shared_ptr<ProtocolReader> reader;
   shared_ptr<EngineConsumer> consumer (new EngineConsumer(writer, board_state, searcher));
-  shared_ptr<EngineProducer> producer (new EngineProducer(writer, board_state, consumer));
+  shared_ptr<EngineProducer> producer (new EngineProducer(writer, board_state, consumer, thinking_writer));
   if (protocol_name == "xboard") {
     shared_ptr<ProtocolReader> xboard_reader (new XBoardReader(xboard_writer, producer));
     reader = xboard_reader;

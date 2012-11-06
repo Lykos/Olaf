@@ -13,7 +13,7 @@
 class OncePiece : public Piece
 {
 public:
-  OncePiece(piece_index_t piece_index, const BitBoard& initial_board, const std::vector<PositionDelta>&);
+  OncePiece(piece_index_t piece_index, const BitBoard& initial_board, const std::vector<PositionDelta> &directions, bool is_king);
 
   std::vector<Move> moves(const Position &source, const ChessBoard &board) const;
 
@@ -27,6 +27,8 @@ public:
 
 private:
   std::vector<PositionDelta> m_directions;
+
+  bool m_is_king;
 
 };
 

@@ -23,7 +23,7 @@ shared_ptr<TimedSearcher> SearcherFactory::timed_searcher() const
 
 shared_ptr<IterativeSearcher> SearcherFactory::iterative_searcher() const
 {
-  shared_ptr<IterativeSearcher> searcher (new IterativeDeepener(parallel_depth_searcher(), m_writer));
+  shared_ptr<IterativeSearcher> searcher (new IterativeDeepener(sequential_depth_searcher(), m_writer));
   return searcher;
 }
 
@@ -41,7 +41,7 @@ shared_ptr<AlphaBetaSearcher> SearcherFactory::sequential_depth_searcher() const
 
 shared_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  shared_ptr<AlphaBetaSearcher> searcher (new NegaMaxer(capture_generator(), move_orderer(), evaluation_searcher(), false));
+  shared_ptr<AlphaBetaSearcher> searcher (new NegaMaxer(capture_generator(), move_orderer(), evaluation_searcher(), true));
   return searcher;
 }
 

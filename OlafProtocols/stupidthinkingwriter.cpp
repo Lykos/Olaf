@@ -1,6 +1,7 @@
 #include "stupidthinkingwriter.h"
 #include "OlafRules/pieceset.h"
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 using namespace chrono;
@@ -22,7 +23,9 @@ void StupidThinkingWriter::output(const ChessBoard &board, const SearchResult &r
     ++turn_number;
     ++ply;
   }
-  for (const Move &move : result.main_variation()) {
+  vector<Move> moves = result.main_variation();
+  reverse(moves.begin(), moves.end());
+  for (const Move &move : moves) {
     if (ply % 2 == 0) {
       oss << " " << turn_number << ".";
     }
@@ -40,5 +43,5 @@ void StupidThinkingWriter::output(const ChessBoard &board, const SearchResult &r
     }
     ++ply;
   }
-  m_writer->thinking_output(depth, result.value(), time.count() / 10, result.nodes(), oss.str());
+  m_writer->thinking_output(depth, (board.turn_color() == White ? result.value() : -result.value()), time.count() / 10, result.nodes(), oss.str());
 }

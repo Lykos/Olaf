@@ -4,6 +4,7 @@
 #include "protocolwriter.h"
 #include "engineconsumer.h"
 #include "boardstate.h"
+#include "OlafSearching/thinkingwriter.h"
 #include <memory>
 #include <chrono>
 
@@ -12,7 +13,8 @@ class EngineProducer
 public:
   EngineProducer(const std::shared_ptr<ProtocolWriter> &writer,
                  const std::shared_ptr<BoardState> &board_state,
-                 const std::shared_ptr<EngineConsumer> &consumer);
+                 const std::shared_ptr<EngineConsumer> &consumer,
+                 const std::shared_ptr<ThinkingWriter> &thinking_writer);
 
   void request_reset();
 
@@ -32,6 +34,8 @@ public:
 
   void ping(int number);
 
+  void post(bool value);
+
   bool request_move(const Position &source, const Position &destination);
 
   bool request_move(const Position &source, const Position &destination, Piece::piece_index_t conversion);
@@ -44,6 +48,8 @@ private:
   std::shared_ptr<BoardState> m_board_state;
 
   std::shared_ptr<EngineConsumer> m_consumer;
+
+  std::shared_ptr<ThinkingWriter> m_thinking_writer;
 
 };
 

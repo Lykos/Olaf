@@ -158,5 +158,5 @@ void XBoardWriter::illegal_move(const std::string& reason, const std::string& mo
 void XBoardWriter::thinking_output(int ply, int score, int centiseconds, int nodes, const std::string &moves)
 {
   unique_lock<mutex> lock (m_mutex);
-  cout << ply << " " << score << " " << centiseconds << " " << nodes << " " << moves << endl;
+  cout << ply << "\t" << score << "\t" << centiseconds << "\t" << nodes << "\t" << moves << endl;
 }

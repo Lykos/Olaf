@@ -27,6 +27,9 @@ SearchResult NegaMaxer::search_alpha_beta(ChessBoard &board, int depth, int node
   for (Move &move : moves) {
     move.execute(board);
     SearchResult result = search_stoppable_alpha_beta(board, depth - 1, nodes_searched + nodes, -beta, -alpha, stopper);
+    if (!result.valid()) {
+      return result;
+    }
     int value = -result.value();
     move.undo(board);
     nodes += result.nodes();
