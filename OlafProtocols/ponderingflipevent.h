@@ -3,16 +3,19 @@
 
 #include "engineevent.h"
 
+/**
+ * @brief The PonderingFlipEvent class is an event representing a flip of the
+ *        boolean that indicates whether pondering is on or off.
+ */
 class PonderingFlipEvent : public EngineEvent
 {
 public:
   PonderingFlipEvent(bool value);
 
-  void execute(EngineState &engine_state);
+  void execute(EngineState* engine_state) override;
 
 private:
-  bool m_value;
-
+  const bool m_value;
 };
 
 #endif // PONDERINGFLIP_H

@@ -11,7 +11,7 @@ public:
 
   void request_stop();
 
-  bool should_stop(int nodes_searched) const;
+  bool should_stop(int nodes_searched) const override;
 
 private:
   std::atomic<bool> m_stop;

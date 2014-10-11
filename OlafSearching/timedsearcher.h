@@ -17,7 +17,9 @@ public:
    * @param weak_stopper A stopper that only applies after a move has been found.
    * @return
    */
-  virtual SearchResult search_timed(ChessBoard &board, const std::shared_ptr<Stopper>& forced_stopper, const std::shared_ptr<Stopper>& weak_stopper) = 0;
+  virtual SearchResult search_timed(ChessBoard* board,
+                                    const Stopper& forced_stopper,
+                                    const Stopper& weak_stopper) = 0;
 
   /**
    * @brief search_untimed just searches until interrupted
@@ -26,7 +28,8 @@ public:
    * @param weak_stopper A stopper that only applies after a move has been found.
    * @return
    */
-  virtual SearchResult search_untimed(ChessBoard &board, const std::shared_ptr<Stopper>& forced_stopper) = 0;
+  virtual SearchResult search_untimed(ChessBoard* board,
+                                      const Stopper& forced_stopper) = 0;
 
   virtual ~TimedSearcher() = 0;
 
@@ -38,7 +41,6 @@ private:
   std::chrono::milliseconds m_time;
 
   std::chrono::steady_clock::time_point m_start;
-
 };
 
 #endif // TIMEDSEARCHER_H

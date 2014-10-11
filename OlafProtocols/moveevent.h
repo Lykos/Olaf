@@ -4,16 +4,19 @@
 #include "engineevent.h"
 #include "OlafRules/move.h"
 
+/**
+ * @brief The MoveEvent class is an event representing a move received
+ *        from the chess interface program.
+ */
 class MoveEvent : public EngineEvent
 {
 public:
   MoveEvent(const Move& move);
 
-  void execute(EngineState &engine_state);
+  void execute(EngineState* engine_state) override;
 
 private:
-  Move m_move;
-
+  const Move m_move;
 };
 
 #endif // MOVEEVENT_H

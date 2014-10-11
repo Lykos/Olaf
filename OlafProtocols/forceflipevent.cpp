@@ -1,10 +1,10 @@
 #include "forceflipevent.h"
 
-ForceFlipEvent::ForceFlipEvent(bool value):
-  m_value (value)
+ForceFlipEvent::ForceFlipEvent(const bool value):
+  m_value(value)
 {}
 
-void ForceFlipEvent::execute(EngineState &engine_state)
+void ForceFlipEvent::execute(EngineState* const engine_state)
 {
-  engine_state.force(m_value);
+  engine_state->force(m_value);
 }

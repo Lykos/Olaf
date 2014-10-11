@@ -17,9 +17,7 @@ SOURCES += \
     xboardwriter.cpp \
     xboardreader.cpp \
     enginestate.cpp \
-    engineproducer.cpp \
     moveevent.cpp \
-    engineconsumer.cpp \
     forceflipevent.cpp \
     ponderingflipevent.cpp \
     myturnflipevent.cpp \
@@ -29,7 +27,9 @@ SOURCES += \
     engineevent.cpp \
     protocolwriter.cpp \
     settimeevent.cpp \
-    stupidthinkingwriter.cpp
+    engine.cpp \
+    engineeventhelper.cpp \
+    simplethinkingwriter.cpp
 
 HEADERS +=\
     xboardwriter.h \
@@ -38,10 +38,8 @@ HEADERS +=\
     protocolwriter.h \
     protocolreader.h \
     enginestate.h \
-    engineproducer.h \
     engineevent.h \
     moveevent.h \
-    engineconsumer.h \
     forceflipevent.h \
     ponderingflipevent.h \
     myturnflipevent.h \
@@ -49,7 +47,9 @@ HEADERS +=\
     pingevent.h \
     boardstate.h \
     settimeevent.h \
-    stupidthinkingwriter.h
+    engineeventhelper.h \
+    engine.h \
+    simplethinkingwriter.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafProtocols

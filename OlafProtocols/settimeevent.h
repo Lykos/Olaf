@@ -4,15 +4,19 @@
 #include "engineevent.h"
 #include <chrono>
 
+/**
+ * @brief The SetTimeEvent class represents an event that the time
+ *        the engine has available has been changed.
+ */
 class SetTimeEvent : public EngineEvent
 {
 public:
-  SetTimeEvent(const std::chrono::milliseconds &time);
+  SetTimeEvent(const std::chrono::milliseconds& time);
 
-  void execute(EngineState &engine_state);
+  void execute(EngineState* engine_state);
 
 private:
-  std::chrono::milliseconds m_time;
+  const std::chrono::milliseconds m_time;
 
 };
 

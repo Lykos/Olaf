@@ -6,27 +6,30 @@
 
 using namespace std;
 
-PawnTest::test_can_move_data()
+void PawnTest::test_can_move_data()
 {
 
 }
 
-PawnTest::test_can_move()
+void PawnTest::test_can_move()
 {
+  /*
   QFETCH(ChessBoard, board);
   QFETCH(Position, source);
   QFETCH(Position, destination);
   QFETCH(bool, result);
 
-  shared_ptr<Pawn> pawn = PieceSet::instance().
+  shared_ptr<Pawn> pawn = PieceSet::instance().pawn();
+  pawn->can_move(source, destination, position);
+  */
 }
 
-PawnTest::test_moves_data()
+void PawnTest::test_moves_data()
 {
 
 }
 
-PawnTest::test_moves()
+void PawnTest::test_moves()
 {
 
 }

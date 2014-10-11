@@ -16,14 +16,14 @@ public:
    * @brief execute executes the move on the given chessboard.
    * @param chess_board is the board on which it should be executed.
    */
-  virtual void execute(ChessBoard& chess_board) = 0;
+  virtual void execute(ChessBoard* chess_board) = 0;
 
   /**
    * Takes back the move. Should only be called if this was the last executed move on this particular chess board.
    * @param chess_board the chessboard on which it should be undone.
    * @brief undo takes back the move.
    */
-  virtual void undo(ChessBoard& chess_board) = 0;
+  virtual void undo(ChessBoard* chess_board) = 0;
 
   virtual ~MoveAction() {}
 

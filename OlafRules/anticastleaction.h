@@ -21,19 +21,18 @@ public:
    */
   AntiCastleAction(bool forbid_castle_q, bool forbid_castle_k);
 
-  void execute(ChessBoard &chess_board);
+  void execute(ChessBoard* chess_board) override;
 
-  void undo(ChessBoard &chess_board);
+  void undo(ChessBoard* chess_board) override;
 
 private:
   bool m_old_can_castle_q;
 
   bool m_old_can_castle_k;
 
-  bool m_forbid_castle_q;
+  const bool m_forbid_castle_q;
 
-  bool m_forbid_castle_k;
-
+  const bool m_forbid_castle_k;
 };
 
 #include "chessboard.h"

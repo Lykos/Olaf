@@ -8,6 +8,10 @@
 #include <mutex>
 #include <vector>
 
+/**
+ * @brief The XBoardWriter class sends answers to the chess interface program
+ *        using the XBoard protocol.
+ */
 class XBoardWriter : public ProtocolWriter
 {
 public:
@@ -21,7 +25,7 @@ public:
 
   void feature(const std::string& name, const std::string& value);
 
-  void move(const Move &);
+  void move(const Move &) override;
 
   void error(const std::string& type, const std::string& message);
 
@@ -47,15 +51,15 @@ public:
 
   void tell_ics_noalias(const std::string&);
 
-  void comment(const std::string&);
+  void comment(const std::string&) override;
 
-  void pong(int number);
+  void pong(int number) override;
 
   void illegal_move(const std::string& move);
 
   void illegal_move(const std::string& reason, const std::string& move);
 
-  void thinking_output(int ply, int score, int centiseconds, int nodes, const std::string &moves);
+  void thinking_output(int ply, int score, int centiseconds, int nodes, const std::string &moves) override;
 
 private:
   std::mutex m_mutex;

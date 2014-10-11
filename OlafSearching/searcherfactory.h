@@ -16,9 +16,12 @@
 class SearcherFactory
 {
 public:
-  SearcherFactory(const std::shared_ptr<ThinkingWriter> &writer);
+  /**
+   * @brief SearcherFactory does not take ownership of writer.
+   */
+  SearcherFactory(ThinkingWriter* writer);
 
-  std::shared_ptr<TimedSearcher> timed_searcher() const;
+  std::unique_ptr<TimedSearcher> timed_searcher() const;
 
   std::shared_ptr<IterativeSearcher> iterative_searcher() const;
 
@@ -38,10 +41,10 @@ public:
 
   std::shared_ptr<MoveGenerator> move_generator() const;
 
-  std::shared_ptr<MoveCreator> move_creator() const;
+  std::unique_ptr<MoveCreator> move_creator() const;
 
 private:
-  std::shared_ptr<ThinkingWriter> m_writer;
+  ThinkingWriter* const m_writer;
 
   EvaluatorFactory m_evaluator_factory;
 

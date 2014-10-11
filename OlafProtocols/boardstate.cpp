@@ -4,14 +4,14 @@
 
 using namespace std;
 
-BoardState::BoardState(const shared_ptr<MoveCreator> &move_creator):
-  m_move_creator (move_creator)
+BoardState::BoardState(unique_ptr<MoveCreator> move_creator):
+  m_move_creator(std::move(move_creator))
 {}
 
 ChessBoard BoardState::board()
 {
-  unique_lock<mutex> lock (m_mutex);
-  ChessBoard board (m_board);
+  unique_lock<mutex> lock(m_mutex);
+  ChessBoard board(m_board);
   return board;
 }
 
@@ -23,18 +23,18 @@ void BoardState::reset()
 
 void BoardState::undo()
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   if (!m_moves.empty()) {
-    m_moves.top().undo(m_board);
+    m_moves.top().undo(&m_board);
     m_moves.pop();
   }
 }
 
-void BoardState::move(const Move &move)
+void BoardState::move(const Move& move)
 {
   unique_lock<mutex> lock (m_mutex);
   m_moves.push(move);
-  m_moves.top().execute(m_board);
+  m_moves.top().execute(&m_board);
   cout << "# " << "board_state.move()" << endl;
   cout << "# source " << move.source() << endl;
   cout << "# destination " << move.destination() << endl;
@@ -60,30 +60,30 @@ void BoardState::move(const Move &move)
     cout << endl;
   }
   cout << "# Possible moves: " << endl;
-  SearcherFactory(shared_ptr<ThinkingWriter>()).move_generator()->generate_moves(m_board);
+  SearcherFactory(nullptr).move_generator()->generate_moves(m_board);
   cout << "# Possible captures: " << endl;
-  SearcherFactory(shared_ptr<ThinkingWriter>()).capture_generator()->generate_moves(m_board);
+  SearcherFactory(nullptr).capture_generator()->generate_moves(m_board);
 }
 
-bool BoardState::valid_move(const Position &source, const Position &destination)
+bool BoardState::valid_move(const Position& source, const Position& destination)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->valid_move(m_board, source, destination);
 }
 
-bool BoardState::valid_move(const Position &source, const Position &destination, Piece::piece_index_t conversion)
+bool BoardState::valid_move(const Position& source, const Position& destination, Piece::piece_index_t conversion)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->valid_move(m_board, source, destination, conversion);
 }
 
-Move BoardState::create_move(const Position &source, const Position &destination)
+Move BoardState::create_move(const Position& source, const Position& destination)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->create_move(m_board, source, destination);
 }
 
-Move BoardState::create_move(const Position &source, const Position &destination, Piece::piece_index_t conversion)
+Move BoardState::create_move(const Position& source, const Position& destination, Piece::piece_index_t conversion)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->create_move(m_board, source, destination, conversion);

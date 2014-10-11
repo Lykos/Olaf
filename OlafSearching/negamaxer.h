@@ -8,15 +8,20 @@
 #include <memory>
 
 /**
- * @brief The NegaMaxer class is an abstract class which implements the Negamax algorithm, but it leaves
- * open to its subclasses when the recursion stops.
+ * @brief The NegaMaxer class is an abstract class which implements the Negamax algorithm.
+ *        It calls its sub searcher for the leaves.
  */
 class NegaMaxer : public AlphaBetaSearcher
 {
 public:
   NegaMaxer(const std::shared_ptr<MoveGenerator> &generator, const std::shared_ptr<MoveOrderer> &orderer, const std::shared_ptr<AlphaBetaSearcher> &searcher, bool ignore_depth);
 
-  SearchResult search_alpha_beta(ChessBoard &board, int depth, int nodes_searched, int alpha, int beta, const std::shared_ptr<Stopper> &stopper);
+  SearchResult search_alpha_beta(ChessBoard* board,
+                                 int depth,
+                                 int nodes_searched,
+                                 int alpha,
+                                 int beta,
+                                 const Stopper& stopper) final;
 
 private:
   std::shared_ptr<MoveGenerator> m_generator;

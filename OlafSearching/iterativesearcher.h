@@ -21,9 +21,9 @@ public:
    * @param weak_stopper A stopper that only applies after a move has been found.
    * @return
    */
-  virtual SearchResult search_infinite(ChessBoard &board,
-                                       const std::shared_ptr<Stopper> &forced_stopper,
-                                       const std::shared_ptr<Stopper> &weak_stopper = std::shared_ptr<Stopper>(new NoStopper())) = 0;
+  virtual SearchResult search_infinite(ChessBoard* board,
+                                       const Stopper& forced_stopper,
+                                       const Stopper& weak_stopper = NoStopper()) = 0;
 
   /**
    * @brief search_bounded
@@ -33,10 +33,10 @@ public:
    * @param weak_stopper A stopper that only applies after a move has been found.
    * @return
    */
-  virtual SearchResult search_bounded(ChessBoard &board,
+  virtual SearchResult search_bounded(ChessBoard* board,
                                       int max_depth,
-                                      const std::shared_ptr<Stopper> &forced_stopper,
-                                      const std::shared_ptr<Stopper> &weak_stopper) = 0;
+                                      const Stopper& forced_stopper,
+                                      const Stopper& weak_stopper) = 0;
 
   virtual ~IterativeSearcher() = 0;
 

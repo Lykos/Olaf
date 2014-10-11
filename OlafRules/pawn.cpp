@@ -1,6 +1,6 @@
 #include "pawn.h"
 #include "move.h"
-#include "epenablaction.h"
+#include "epenableaction.h"
 #include "pieceset.h"
 
 using namespace std;

@@ -3,9 +3,9 @@
 #include "OlafProtocols/protocolwriter.h"
 #include "OlafProtocols/xboardreader.h"
 #include "OlafProtocols/xboardwriter.h"
-#include "OlafProtocols/engineconsumer.h"
-#include "OlafProtocols/engineproducer.h"
-#include "OlafProtocols/stupidthinkingwriter.h"
+#include "OlafProtocols/engine.h"
+#include "OlafProtocols/engineeventhelper.h"
+#include "OlafProtocols/simplethinkingwriter.h"
 #include "OlafSearching/thinkingwriter.h"
 #include <memory>
 #include <iostream>
@@ -17,29 +17,27 @@ int main()
   cout.setf(ios::unitbuf);
   string protocol_name;
   getline(cin, protocol_name);
-  shared_ptr<ProtocolWriter> writer;
-  shared_ptr<XBoardWriter> xboard_writer;
+  unique_ptr<ProtocolWriter> writer;
   if (protocol_name == "xboard") {
-    shared_ptr<XBoardWriter> tmp (new XBoardWriter());
-    xboard_writer = tmp;
-    writer = static_pointer_cast<ProtocolWriter>(xboard_writer);
+    writer.reset(new XBoardWriter);
   } else {
     cout << "Error: Unknown protocol " << protocol_name << "." << endl;
     return 1;
   }
-  shared_ptr<ThinkingWriter> thinking_writer (new StupidThinkingWriter(writer));
-  SearcherFactory factory (thinking_writer);
+  SimpleThinkingWriter thinking_writer(writer.get());
+  SearcherFactory factory(&thinking_writer);
   auto searcher = factory.timed_searcher();
-  shared_ptr<BoardState> board_state (new BoardState(factory.move_creator()));
-  shared_ptr<ProtocolReader> reader;
-  shared_ptr<EngineConsumer> consumer (new EngineConsumer(writer, board_state, searcher));
-  shared_ptr<EngineProducer> producer (new EngineProducer(writer, board_state, consumer));
+  BoardState board_state(factory.move_creator());
+  unique_ptr<ProtocolReader> reader;
+  Engine engine(writer.get(), &board_state, move(searcher));
+  std::unique_ptr<EngineEventHelper> engine_helper(
+        new EngineEventHelper(writer.get(), &board_state, &engine));
   if (protocol_name == "xboard") {
-    shared_ptr<ProtocolReader> xboard_reader (new XBoardReader(xboard_writer, producer));
-    reader = xboard_reader;
+    reader.reset(new XBoardReader(static_cast<XBoardWriter*>(writer.get()), move(engine_helper)));
   }
-  thread consumer_thread ([consumer] { consumer->run(); });
-  reader->run();
-  consumer_thread.join();
+  thread engine_thread ([&engine] { engine.run(); });
+  thread reader_thread ([&reader] { reader->run(); });
+  engine_thread.join();
+  reader_thread.join();
   return 0;
 }

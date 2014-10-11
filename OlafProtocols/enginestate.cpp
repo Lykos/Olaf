@@ -25,6 +25,7 @@ void EngineState::my_turn(bool value)
 
 void EngineState::flip_turn()
 {
+  m_deferred_pondering = false;
   m_my_turn = !m_my_turn;
 }
 
@@ -41,6 +42,7 @@ void EngineState::force(bool value)
 void EngineState::deferred_pondering()
 {
   m_deferred_pondering = true;
+  m_pondering = true;
 }
 
 milliseconds EngineState::time() const

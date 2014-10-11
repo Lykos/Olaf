@@ -5,17 +5,23 @@
 #include "protocolwriter.h"
 #include <memory>
 
+/**
+ * @brief The PingEvent class is an event representing a ping from the
+ */
 class PingEvent : public EngineEvent
 {
 public:
-  PingEvent(const std::shared_ptr<ProtocolWriter> &writer, int number);
+  /**
+   * @brief PingEvent does not take ownership of writer.
+   */
+  PingEvent(ProtocolWriter* writer, int number);
 
-  void execute(EngineState &engine_state);
+  void execute(EngineState* engine_state) override;
 
 private:
-  std::shared_ptr<ProtocolWriter> m_writer;
+  ProtocolWriter* const m_writer;
 
-  int m_number;
+  const int m_number;
 
 };
 

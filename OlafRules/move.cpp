@@ -2,7 +2,7 @@
 #include "piecemoveaction.h"
 #include "turnflipaction.h"
 #include "epdisableaction.h"
-#include "epenablaction.h"
+#include "epenableaction.h"
 #include "captureaction.h"
 #include "anticastleaction.h"
 #include "conversionaction.h"
@@ -83,14 +83,14 @@ void Move::conversion(const Position &position, PieceSet::piece_index_t removed_
   m_created_piece = created_piece;
 }
 
-void Move::execute(ChessBoard& chess_board)
+void Move::execute(ChessBoard* const chess_board)
 {
   for (auto it = m_move_actions.rbegin(); it < m_move_actions.rend(); ++it) {
     (*it)->execute(chess_board);
   }
 }
 
-void Move::undo(ChessBoard& chess_board)
+void Move::undo(ChessBoard* const chess_board)
 {
   for (auto it = m_move_actions.begin(); it < m_move_actions.end(); ++it) {
     (*it)->undo(chess_board);

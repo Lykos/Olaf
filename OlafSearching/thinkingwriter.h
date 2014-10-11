@@ -10,7 +10,10 @@ class ThinkingWriter
 public:
   virtual ~ThinkingWriter() = 0;
 
-  virtual void output(const ChessBoard &board, const SearchResult &result, const std::chrono::milliseconds &time, int depth) = 0;
+  virtual void output(const ChessBoard& board,
+                      const SearchResult& result,
+                      const std::chrono::milliseconds& time,
+                      int depth) = 0;
 
   void post(bool value);
 
@@ -18,7 +21,6 @@ public:
 
 private:
   bool m_post = false;
-
 };
 
 #endif // THINKINGWRITER_H

@@ -46,11 +46,11 @@ void BitBoard::set(const Position& position, bool value)
 
 BitBoard BitBoard::mirror_rows() const
 {
-  bits_t bits = 0;
-  static const bits_t row_mask = (1 << Position::COLUMN_SIZE) - 1;
+  bitboard_t bits = 0;
+  static const bitboard_t row_mask = (1 << Position::COLUMN_SIZE) - 1;
   for (Position::row_t row_index = 0; row_index < Position::ROW_SIZE; ++row_index) {
     Position::row_t old_row_index = Position::COLUMN_SIZE - 1 - row_index;
-    bits_t old_row_content = (m_bits >> old_row_index * Position::COLUMN_SIZE) & row_mask;
+    bitboard_t old_row_content = (m_bits >> old_row_index * Position::COLUMN_SIZE) & row_mask;
     bits |= old_row_content << row_index * Position::COLUMN_SIZE;
   }
   return BitBoard(bits);
@@ -64,14 +64,14 @@ uint_fast8_t BitBoard::number() const
 }
 
 #else
-const uint64_t m1  = 0x5555555555555555;
-const uint64_t m2  = 0x3333333333333333;
-const uint64_t m4  = 0x0f0f0f0f0f0f0f0f;
-const uint64_t h01 = 0x0101010101010101;
+const bitboard_t m1  = 0x5555555555555555;
+const bitboard_t m2  = 0x3333333333333333;
+const bitboard_t m4  = 0x0f0f0f0f0f0f0f0f;
+const bitboard_t h01 = 0x0101010101010101;
 
 uint_fast8_t BitBoard::number() const
 {
-  bits_t x = m_bits;
+  bitboard_t x = m_bits;
   x -= (x >> 1) & m1;
   x = (x & m2) + ((x >> 2) & m2);
   x = (x + (x >> 4)) & m4;

@@ -9,10 +9,16 @@
 #include <mutex>
 #include <stack>
 
+/**
+ * @brief The BoardState class is the engines interface to the chess board.
+ */
 class BoardState
 {
 public:
-  BoardState(const std::shared_ptr<MoveCreator> &move_creator);
+  /**
+   * @brief BoardState takes ownership of move_creator.
+   */
+  BoardState(std::unique_ptr<MoveCreator> move_creator);
 
   ChessBoard board();
 
@@ -20,18 +26,20 @@ public:
 
   void undo();
 
-  void move(const Move &move);
+  void move(const Move& move);
 
-  bool valid_move(const Position &source, const Position &destination);
+  bool valid_move(const Position& source, const Position& destination);
 
-  bool valid_move(const Position &source, const Position &destination, Piece::piece_index_t conversion);
+  bool valid_move(const Position& source, const Position& destination,
+                  Piece::piece_index_t conversion);
 
-  Move create_move(const Position &source, const Position &destination);
+  Move create_move(const Position& source, const Position& destination);
 
-  Move create_move(const Position &source, const Position &destination, Piece::piece_index_t conversion);
+  Move create_move(const Position& source, const Position& destination,
+                   Piece::piece_index_t conversion);
 
 private:
-  std::shared_ptr<MoveCreator> m_move_creator;
+  std::unique_ptr<MoveCreator> m_move_creator;
 
   std::mutex m_mutex;
 

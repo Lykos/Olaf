@@ -2,7 +2,7 @@
 
 ThinkingWriter::~ThinkingWriter() {}
 
-void ThinkingWriter::post(bool value)
+void ThinkingWriter::post(const bool value)
 {
   m_post = value;
 }

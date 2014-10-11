@@ -8,7 +8,7 @@ QT       -= core gui
 TARGET = Olaf
 CONFIG   += console
 CONFIG   -= app_bundle
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11 -Wl,--no-as-needed
 CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
 TEMPLATE = app

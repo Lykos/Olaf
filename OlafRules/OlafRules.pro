@@ -38,7 +38,6 @@ HEADERS += \
     moveaction.h \
     move.h \
     linepiece.h \
-    epenablaction.h \
     epdisableaction.h \
     conversionaction.h \
     positionevaluator.h \
@@ -56,7 +55,8 @@ HEADERS += \
     chessboard.h \
     captureaction.h \
     bitboard.h \
-    anticastleaction.h
+    anticastleaction.h \
+    epenableaction.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafRules

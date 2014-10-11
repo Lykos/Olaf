@@ -9,14 +9,20 @@
 class CompositeStopper : public Stopper
 {
 public:
-  CompositeStopper(const std::vector< std::shared_ptr<Stopper> >&);
+  /**
+   * @brief CompositeStopper does not take ownership of any of the sub_stoppers
+   */
+  CompositeStopper(const std::vector<const Stopper*>& sub_stoppers);
 
-  CompositeStopper(const std::initializer_list< std::shared_ptr<Stopper> >&);
+  /**
+   * @brief CompositeStopper does not take ownership of any of the sub_stoppers
+   */
+  CompositeStopper(const std::initializer_list<const Stopper*>& sub_stoppers);
 
-  bool should_stop(int nodes_searched) const;
+  bool should_stop(int nodes_searched) const override;
 
 private:
-  std::vector< std::shared_ptr<Stopper> > m_sub_stoppers;
+  std::vector<const Stopper*> m_sub_stoppers;
 
 };
 

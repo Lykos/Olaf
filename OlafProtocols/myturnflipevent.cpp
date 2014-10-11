@@ -1,10 +1,10 @@
 #include "myturnflipevent.h"
 
-MyTurnFlipEvent::MyTurnFlipEvent(bool value):
-  m_value (value)
+MyTurnFlipEvent::MyTurnFlipEvent(const bool value):
+  m_value(value)
 {}
 
-void MyTurnFlipEvent::execute(EngineState &engine_state)
+void MyTurnFlipEvent::execute(EngineState* const engine_state)
 {
-  engine_state.my_turn(m_value);
+  engine_state->my_turn(m_value);
 }

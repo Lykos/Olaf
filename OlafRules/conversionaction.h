@@ -16,18 +16,20 @@ public:
    * @param removed_piece
    * @param created_piece
    */
-  ConversionAction(const Position &position, PieceSet::piece_index_t removed_piece, PieceSet::piece_index_t created_piece);
+  ConversionAction(const Position &position,
+                   PieceSet::piece_index_t removed_piece,
+                   PieceSet::piece_index_t created_piece);
 
-  void execute(ChessBoard &chess_board);
+  void execute(ChessBoard* chess_board) override;
 
-  void undo(ChessBoard &chess_board);
+  void undo(ChessBoard* chess_board) override;
 
 private:
-  Position m_position;
+  const Position m_position;
 
-  PieceSet::piece_index_t m_removed_piece;
+  const PieceSet::piece_index_t m_removed_piece;
 
-  PieceSet::piece_index_t m_created_piece;
+  const PieceSet::piece_index_t m_created_piece;
 
 };
 

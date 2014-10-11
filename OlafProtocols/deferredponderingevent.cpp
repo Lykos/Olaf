@@ -1,6 +1,6 @@
 #include "deferredponderingevent.h"
 
-void DeferredPonderingEvent::execute(EngineState &engine_state)
+void DeferredPonderingEvent::execute(EngineState* const engine_state)
 {
-  engine_state.deferred_pondering();
+  engine_state->deferred_pondering();
 }

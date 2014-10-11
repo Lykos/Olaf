@@ -1,7 +1,7 @@
 #ifndef XBOARDREADER_H
 #define XBOARDREADER_H
 
-#include "engineproducer.h"
+#include "engineeventhelper.h"
 #include "protocolreader.h"
 #include "xboardwriter.h"
 #include <string>
@@ -10,20 +10,23 @@
 class XBoardReader : public ProtocolReader
 {
 public:
-  XBoardReader(const std::shared_ptr<XBoardWriter> &writer, const std::shared_ptr<EngineProducer> &engine);
+  /**
+   * @brief XBoardReader takes ownership of engine_helper but not of writer.
+   */
+  XBoardReader(XBoardWriter* writer, std::unique_ptr<EngineEventHelper> engine_helper);
 
-  void run();
+  void run() override;
 
-  bool is_move(const std::string&) const;
+  bool is_move(const std::string& command) const;
 
-  void handle_move(const std::string&) const;
+  void handle_move(const std::string& move) const;
 
   void write_features() const;
 
 private:
-  std::shared_ptr<XBoardWriter> m_writer;
+  XBoardWriter* const m_writer;
 
-  std::shared_ptr<EngineProducer> m_engine;
+  std::unique_ptr<EngineEventHelper> m_engine_helper;
 
 };
 

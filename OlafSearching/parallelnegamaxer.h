@@ -10,9 +10,17 @@
 class ParallelNegaMaxer : public AlphaBetaSearcher
 {
 public:
-  ParallelNegaMaxer(const std::shared_ptr<MoveGenerator> &generator, const std::shared_ptr<MoveOrderer> &orderer, const std::shared_ptr<AlphaBetaSearcher> &searcher, int sequential_depth);
+  ParallelNegaMaxer(const std::shared_ptr<MoveGenerator> &generator,
+                    const std::shared_ptr<MoveOrderer> &orderer,
+                    const std::shared_ptr<AlphaBetaSearcher> &searcher,
+                    int sequential_depth);
 
-  SearchResult search_alpha_beta(ChessBoard &board, int depth, int nodes_searched, int alpha, int beta, const std::shared_ptr<Stopper> &stopper);
+  SearchResult search_alpha_beta(ChessBoard* board,
+                                 int depth,
+                                 int nodes_searched,
+                                 int alpha,
+                                 int beta,
+                                 const Stopper& stopper);
 
 private:
   std::shared_ptr<MoveGenerator> m_generator;

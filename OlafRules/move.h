@@ -28,7 +28,10 @@ public:
    * @param source
    * @param destination
    */
-  Move(const ChessBoard &board, Piece::piece_index_t piece_index, const Position &source, const Position &destination);
+  Move(const ChessBoard& board,
+       Piece::piece_index_t piece_index,
+       const Position &source,
+       const Position &destination);
 
   /**
    * @brief Move creates a default move that moves a piece, enables ep at the given position and handles normal capturing (but not ep capturing) and turn flip.
@@ -38,7 +41,11 @@ public:
    * @param destination
    * @param capture_position Position at which an ep capture can be performed
    */
-  Move(const ChessBoard &board, Piece::piece_index_t piece_index, const Position &source, const Position &destination, const Position &capture_position);
+  Move(const ChessBoard &board,
+       Piece::piece_index_t piece_index,
+       const Position &source,
+       const Position &destination,
+       const Position &capture_position);
 
   /**
    * @brief Move creates a castling move that moves king and rook, disables ep and handles turn flip.
@@ -46,7 +53,9 @@ public:
    * @param source
    * @param destination
    */
-  Move(const ChessBoard &board, const Position &source, const Position &destination);
+  Move(const ChessBoard &board,
+       const Position &source,
+       const Position &destination);
 
   void capture_ep(const ChessBoard &board);
 
@@ -67,12 +76,12 @@ public:
   /**
    * @brief execute executes the move action and flips the turn color.
    */
-  void execute(ChessBoard&);
+  void execute(ChessBoard* chessboard);
 
   /**
    * @brief undo takes back the move action and flips the turn color.
    */
-  void undo(ChessBoard&);
+  void undo(ChessBoard* chessboard);
 
   const Position& source() const;
 
@@ -85,7 +94,7 @@ public:
   Piece::piece_index_t created_piece() const;
 
 private:
-  std::vector< std::shared_ptr<MoveAction> > m_move_actions;
+  std::vector<std::shared_ptr<MoveAction>> m_move_actions;
 
   Position m_source;
 

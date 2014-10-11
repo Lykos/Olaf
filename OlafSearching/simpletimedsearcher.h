@@ -15,13 +15,15 @@ class SimpleTimedSearcher : public TimedSearcher
 public:
   explicit SimpleTimedSearcher(const std::shared_ptr<IterativeSearcher> &searcher);
 
-  SearchResult search_timed(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper>& weak_stopper);
+  SearchResult search_timed(ChessBoard* board,
+                            const Stopper& forced_stopper,
+                            const Stopper& weak_stopper);
 
-  SearchResult search_untimed(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper);
+  SearchResult search_untimed(ChessBoard* board,
+                              const Stopper& forced_stopper);
 
 private:
   std::shared_ptr<IterativeSearcher> m_searcher;
-
 };
 
 #endif // SIMPLETIMEDSEARCHER_H

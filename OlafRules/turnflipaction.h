@@ -7,9 +7,9 @@
 class TurnFlipAction : public MoveAction
 {
 public:
-  void execute(ChessBoard &chess_board);
+  void execute(ChessBoard* chess_board);
 
-  void undo(ChessBoard &chess_board);
+  void undo(ChessBoard* chess_board);
 
 };
 

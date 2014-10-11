@@ -11,20 +11,29 @@
 class IterativeDeepener : public IterativeSearcher
 {
 public:
-  IterativeDeepener(const std::shared_ptr<DepthSearcher> &searcher, const std::shared_ptr<ThinkingWriter> &writer);
+  IterativeDeepener(const std::shared_ptr<DepthSearcher> &searcher, ThinkingWriter* writer);
 
-  SearchResult search_infinite(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper);
+  SearchResult search_infinite(ChessBoard* board,
+                               const Stopper& forced_stopper,
+                               const Stopper& weak_stopper) override;
 
-  SearchResult search_bounded(ChessBoard &board, int max_depth, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper);
+  SearchResult search_bounded(ChessBoard* board,
+                              int max_depth,
+                              const Stopper& forced_stopper,
+                              const Stopper& weak_stopper) override;
 
 private:
-  SearchResult internal_search(ChessBoard &board, const std::shared_ptr<Stopper> &forced_stopper, const std::shared_ptr<Stopper> &weak_stopper, int max_depth, bool infinite);
+  SearchResult internal_search(ChessBoard* board,
+                               const Stopper& forced_stopper,
+                               const Stopper& weak_stopper,
+                               int max_depth,
+                               bool infinite);
 
   static const unsigned int min_depth = 1;
 
   std::shared_ptr<DepthSearcher> m_searcher;
 
-  std::shared_ptr<ThinkingWriter> m_writer;
+  ThinkingWriter* const m_writer;
 
 };
 

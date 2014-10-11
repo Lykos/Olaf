@@ -21,18 +21,20 @@ public:
    * @param source is the source position
    * @param destination is the destination position
    */
-  PieceMoveAction(PieceSet::piece_index_t piece_index, const Position& source, const Position& destination);
+  PieceMoveAction(PieceSet::piece_index_t piece_index,
+                  const Position& source,
+                  const Position& destination);
 
-  void execute(ChessBoard& chess_board);
+  void execute(ChessBoard* chess_board) override;
 
-  void undo(ChessBoard& chess_board);
+  void undo(ChessBoard* chess_board) override;
 
 private:
-  PieceSet::piece_index_t m_piece_index;
+  const PieceSet::piece_index_t m_piece_index;
 
-  Position m_source;
+  const Position m_source;
 
-  Position m_destination;
+  const Position m_destination;
 
 };
 

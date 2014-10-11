@@ -10,9 +10,9 @@
 using namespace std;
 using namespace chrono;
 
-XBoardReader::XBoardReader(const shared_ptr<XBoardWriter> &writer, const shared_ptr<EngineProducer> &engine):
-  m_writer (writer),
-  m_engine (engine)
+XBoardReader::XBoardReader(XBoardWriter* const writer, unique_ptr<EngineEventHelper> engine_helper):
+  m_writer(writer),
+  m_engine_helper(move(engine_helper))
 {}
 
 void XBoardReader::run()
@@ -42,40 +42,40 @@ void XBoardReader::run()
     } else if (command == "quit") {
       break;
     } else if (command == "new") {
-      m_engine->request_force(true);
-      m_engine->request_reset();
-      m_engine->request_deferred_pondering();
-      m_engine->request_myturn(false);
-      m_engine->request_force(false);
+      m_engine_helper->request_force(true);
+      m_engine_helper->request_reset();
+      m_engine_helper->request_deferred_pondering();
+      m_engine_helper->request_myturn(false);
+      m_engine_helper->request_force(false);
     } else if (command == "random") {
     } else if (command == "force") {
-      m_engine->request_force(true);
+      m_engine_helper->request_force(true);
     } else if (command == "go") {
-      m_engine->request_myturn(true);
-      m_engine->request_force(false);
+      m_engine_helper->request_myturn(true);
+      m_engine_helper->request_force(false);
     } else if (command == "playother") {
-      m_engine->request_myturn(false);
-      m_engine->request_force(false);
+      m_engine_helper->request_myturn(false);
+      m_engine_helper->request_force(false);
     } else if (command == "?") {
-      m_engine->move_now();
+      m_engine_helper->move_now();
     } else if (command == "ping") {
       int number;
       istringstream iss (tokens[1]);
       iss >> number;
-      m_engine->ping(number);
+      m_engine_helper->ping(number);
     } else if (command == "result") {
-      m_engine->request_force(true);
+      m_engine_helper->request_force(true);
     } else if (command == "easy") {
-      m_engine->request_pondering(false);
+      m_engine_helper->request_pondering(false);
     } else if (command == "hard") {
-      m_engine->request_pondering(true);
+      m_engine_helper->request_pondering(true);
     } else if (command == "name") {
     } else if (command == "ics") {
     } else if (command == "time") {
       istringstream iss (tokens[1]);
       int centiseconds;
       iss >> centiseconds;
-      m_engine->request_set_time(milliseconds(centiseconds * 10));
+      m_engine_helper->request_set_time(milliseconds(centiseconds * 10));
     } else if (command == "otim") {
     } else if (command == "computer") {
     } else if (command == "level") {
@@ -94,7 +94,7 @@ void XBoardReader::run()
       }
     }
   }
-  m_engine->request_quit();
+  m_engine_helper->request_quit();
 }
 
 static const string conversions = "rbnq";
@@ -120,7 +120,7 @@ void XBoardReader::handle_move(const std::string& move) const
   istringstream iss (move);
   iss >> source >> destination;
   if (move.size() == 4) {
-    if (!m_engine->request_move(source, destination)) {
+    if (!m_engine_helper->request_move(source, destination)) {
       m_writer->illegal_move(move);
     }
   } else {
@@ -140,7 +140,7 @@ void XBoardReader::handle_move(const std::string& move) const
       conversion = set.knight()->piece_index();
       break;
     }
-    if (!m_engine->request_move(source, destination, conversion)) {
+    if (!m_engine_helper->request_move(source, destination, conversion)) {
       m_writer->illegal_move(move);
     }
   }

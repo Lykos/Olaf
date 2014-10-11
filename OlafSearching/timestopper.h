@@ -12,12 +12,12 @@ class TimeStopper : public Stopper
 public:
   TimeStopper(const std::chrono::milliseconds& millis);
 
-  bool should_stop(int nodes_searched) const;
+  bool should_stop(int nodes_searched) const override;
 
 private:
-  std::chrono::steady_clock::time_point m_start;
+  const std::chrono::steady_clock::time_point m_start;
 
-  std::chrono::milliseconds m_millis;
+  const std::chrono::milliseconds m_millis;
 
 };
 

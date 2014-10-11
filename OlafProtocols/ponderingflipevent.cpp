@@ -1,10 +1,10 @@
 #include "ponderingflipevent.h"
 
-PonderingFlipEvent::PonderingFlipEvent(bool value):
+PonderingFlipEvent::PonderingFlipEvent(const bool value):
   m_value (value)
 {}
 
-void PonderingFlipEvent::execute(EngineState &engine_state)
+void PonderingFlipEvent::execute(EngineState* const engine_state)
 {
-  engine_state.pondering(m_value);
+  engine_state->pondering(m_value);
 }
