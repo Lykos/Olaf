@@ -52,8 +52,6 @@ private:
 
   ProtocolWriter* const m_writer;
 
-  BoardState* const m_board_state;
-
   std::unique_ptr<TimedSearcher> m_searcher;
 
   std::queue<std::unique_ptr<EngineEvent>> m_event_queue;

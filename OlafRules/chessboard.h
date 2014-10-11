@@ -26,8 +26,7 @@ public:
       Color turn = White,
       bool ep_possible = false,
       const Position &ep_capture_position = Position(),
-      const Position &ep_victim_position = Position()
-  );
+      const Position &ep_victim_position = Position());
 
   const ColorBoard& color_board(Color) const;
 

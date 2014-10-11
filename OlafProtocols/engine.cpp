@@ -8,10 +8,10 @@ using namespace std;
 Engine::Engine(ProtocolWriter* const writer,
                BoardState* board_state,
                unique_ptr<TimedSearcher> searcher):
+  m_state(board_state),
   m_forced_stopper(new ForcedStopper),
   m_weak_stopper(new ForcedStopper),
   m_writer(writer),
-  m_board_state(board_state),
   m_searcher(std::move(searcher)),
   m_quit(false)
 {}
@@ -49,7 +49,7 @@ ChessBoard Engine::handle_events()
   }
   m_forced_stopper.reset(new ForcedStopper);
   m_weak_stopper.reset(new ForcedStopper);
-  ChessBoard board = m_board_state->board();
+  ChessBoard board = m_state.board_state().board();
   return board;
 }
 
@@ -80,5 +80,5 @@ void Engine::move(const Move &move)
   Move mov(move);
   m_writer->move(mov);
   m_state.flip_turn();
-  m_board_state->move(mov);
+  m_state.board_state().move(mov);
 }

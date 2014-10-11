@@ -1,12 +1,14 @@
 #ifndef XBOARDWRITER_H
 #define XBOARDWRITER_H
 
-#include "protocolwriter.h"
-#include "result.h"
-#include "OlafRules/move.h"
 #include <string>
 #include <mutex>
 #include <vector>
+#include <ostream>
+
+#include "protocolwriter.h"
+#include "result.h"
+#include "OlafRules/move.h"
 
 /**
  * @brief The XBoardWriter class sends answers to the chess interface program
@@ -15,6 +17,12 @@
 class XBoardWriter : public ProtocolWriter
 {
 public:
+  /**
+   * @brief XBoardWriter does not take ownership of out.
+   * @param out the output stream to which the result should be written.
+   */
+  XBoardWriter(std::ostream* out);
+
   void newline();
 
   void unknown_command(const std::string&);
@@ -64,6 +72,7 @@ public:
 private:
   std::mutex m_mutex;
 
+  std::ostream* const m_out;
 };
 
 #endif // XBOARDWRITER_H

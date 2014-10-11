@@ -1,0 +1,4 @@
+xboard
+protover 2
+new
+usermove e2e4

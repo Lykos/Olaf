@@ -1,14 +1,22 @@
 #include "enginestate.h"
 
+#include <cassert>
+
 using namespace std;
 using namespace chrono;
+
+EngineState::EngineState(BoardState* const board_state):
+  m_board_state(board_state)
+{
+  assert(board_state);
+}
 
 bool EngineState::pondering() const
 {
   return m_pondering && !m_deferred_pondering;
 }
 
-void EngineState::pondering(bool value)
+void EngineState::pondering(const bool value)
 {
   m_pondering = value;
 }
@@ -18,7 +26,7 @@ bool EngineState::my_turn() const
   return m_my_turn;
 }
 
-void EngineState::my_turn(bool value)
+void EngineState::my_turn(const bool value)
 {
   m_my_turn = value;
 }
@@ -53,4 +61,14 @@ milliseconds EngineState::time() const
 void EngineState::time(const milliseconds &time)
 {
   m_time = time;
+}
+
+const BoardState& EngineState::board_state() const
+{
+  return *m_board_state;
+}
+
+BoardState& EngineState::board_state()
+{
+  return *m_board_state;
 }

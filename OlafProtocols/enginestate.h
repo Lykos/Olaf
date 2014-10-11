@@ -3,13 +3,17 @@
 
 #include <chrono>
 
+class BoardState;
+
 /**
  * @brief The EngineState class represents the state of the engine
- *        except for the board, i.e. the time and the options.
+ *        i.e. the board, the time and the options.
  */
 class EngineState
 {
 public:
+  explicit EngineState(BoardState* board_state);
+
   bool pondering() const;
 
   void pondering(bool value);
@@ -30,14 +34,20 @@ public:
 
   void time(const std::chrono::milliseconds& time);
 
+  const BoardState& board_state() const;
+
+  BoardState& board_state();
+
 private:
+  BoardState* const m_board_state;
+
   bool m_my_turn = false;
 
   bool m_pondering = true;
 
   bool m_force = true;
 
-  bool m_deferred_pondering = false;
+  bool m_deferred_pondering = true;
 
   std::chrono::milliseconds m_time;
 

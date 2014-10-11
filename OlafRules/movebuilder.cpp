@@ -64,12 +64,10 @@ MoveBuilder::MoveBuilder(const ChessBoard& board,
   m_source(source),
   m_destination(destination)
 {
-  const Piece::piece_index_t piece_index = board.turn_board().piece_index(destination);
-  unique_ptr<MoveAction> turn_flip_action(new TurnFlipAction());
+  const Piece::piece_index_t piece_index = board.turn_board().piece_index(source);
   unique_ptr<MoveAction> piece_move_action(
         new PieceMoveAction(piece_index, source, destination));
   unique_ptr<MoveAction> ep_disable_action(new EpDisableAction());
-  m_move_actions.push_back(move(turn_flip_action));
   m_move_actions.push_back(move(piece_move_action));
   m_move_actions.push_back(move(ep_disable_action));
   if (board.opponent(destination)) {
@@ -127,6 +125,8 @@ void MoveBuilder::conversion(const Position& position,
 
 Move MoveBuilder::build()
 {
+  unique_ptr<MoveAction> turn_flip_action(new TurnFlipAction());
+  m_move_actions.push_back(move(turn_flip_action));
   return Move(copy_move_actions(),
               m_source,
               m_destination,

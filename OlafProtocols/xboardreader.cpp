@@ -3,6 +3,7 @@
 #include "OlafRules/position.h"
 #include "OlafRules/pieceset.h"
 #include <sstream>
+#include <istream>
 #include <iostream>
 #include <iterator>
 #include <chrono>
@@ -10,18 +11,21 @@
 using namespace std;
 using namespace chrono;
 
-XBoardReader::XBoardReader(XBoardWriter* const writer, unique_ptr<EngineEventHelper> engine_helper):
+XBoardReader::XBoardReader(XBoardWriter* const writer,
+                           unique_ptr<EngineEventHelper> engine_helper,
+                           istream* const in):
   m_writer(writer),
-  m_engine_helper(move(engine_helper))
+  m_engine_helper(move(engine_helper)),
+  m_in(in)
 {}
 
 void XBoardReader::run()
 {
   m_writer->newline();
-  while (!cin.eof()) {
-    cout << "# Reading command" << endl;
+  while (!m_in->eof()) {
+    m_writer->comment("Reading command");
     string message;
-    getline(cin, message);
+    getline(*m_in, message);
     istringstream iss (message);
     vector<string> tokens;
     copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter<vector<string>>(tokens));
@@ -29,7 +33,9 @@ void XBoardReader::run()
       continue;
     }
     string command = tokens[0];
-    cout << "# Understood command " << command << endl;
+    ostringstream oss;
+    oss << "Understood command " << command;
+    m_writer->comment(oss.str());
     if (command == "protover") {
       int version;
       istringstream iss (tokens[1]);
@@ -105,29 +111,36 @@ static const string conversions = "rbnq";
 
 bool XBoardReader::is_move(const string& command) const
 {
-  if (
-      command.size() < 4 ||
-      Position::columns.find(command[0]) == string::npos ||
-      Position::rows.find(command[1]) == string::npos ||
-      Position::columns.find(command[2]) == string::npos ||
-      Position::rows.find(command[3]) == string::npos
-      ) {
+  if (command.size() < 4
+      || Position::columns.find(command[0]) == string::npos
+      || Position::rows.find(command[1]) == string::npos
+      || Position::columns.find(command[2]) == string::npos
+      || Position::rows.find(command[3]) == string::npos) {
     return false;
   }
-  return command.length() == 4 || (command.length() == 5 && conversions.find(command[4]) != string::npos);
+  if (command.length() == 4) {
+    return true;
+  } else if (command.length() == 5) {
+    return conversions.find(command[4]) != string::npos;
+  } else {
+    return false;
+  }
 }
 
 void XBoardReader::handle_move(const std::string& move)
 {
   Position source;
   Position destination;
-  istringstream iss (move);
+  istringstream iss(move);
   iss >> source >> destination;
+  ostringstream oss;
+  oss << "Got " << source << " to " << destination;
+  m_writer->comment(oss.str());
   if (move.size() == 4) {
     if (!m_engine_helper->request_move(source, destination)) {
       m_writer->illegal_move(move);
     }
-  } else {
+  } else if (move.size() == 5) {
     Piece::piece_index_t conversion = -1;
     const PieceSet &set = PieceSet::instance();
     switch (move[4]) {
@@ -143,10 +156,15 @@ void XBoardReader::handle_move(const std::string& move)
     case 'n':
       conversion = set.knight().piece_index();
       break;
+    default:
+      m_writer->illegal_move(move);
+      return;
     }
     if (!m_engine_helper->request_move(source, destination, conversion)) {
       m_writer->illegal_move(move);
     }
+  } else {
+    m_writer->illegal_move(move);
   }
 }
 
