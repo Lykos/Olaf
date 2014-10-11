@@ -5,11 +5,14 @@
 
 using namespace std;
 
-ParallelNegaMaxer::ParallelNegaMaxer(const shared_ptr<MoveGenerator> &generator, const shared_ptr<MoveOrderer> &orderer, const shared_ptr<AlphaBetaSearcher> &searcher, int sequential_depth):
-  m_generator (generator),
-  m_orderer (orderer),
-  m_searcher (searcher),
-  m_sequential_depth (sequential_depth)
+ParallelNegaMaxer::ParallelNegaMaxer(unique_ptr<MoveGenerator> generator,
+                                     unique_ptr<MoveOrderer> orderer,
+                                     unique_ptr<AlphaBetaSearcher> searcher,
+                                     const int sequential_depth):
+  m_generator(move(generator)),
+  m_orderer(move(orderer)),
+  m_searcher(move(searcher)),
+  m_sequential_depth(sequential_depth)
 {}
 
 
@@ -49,7 +52,7 @@ SearchResult ParallelNegaMaxer::search_alpha_beta(ChessBoard* const board,
   if (moves.empty()) {
     return m_searcher->search_stoppable_alpha_beta(board, depth, nodes_searched, alpha, beta, stopper);
   }
-  m_orderer->order_moves(*board, moves);
+  m_orderer->order_moves(*board, &moves);
   vector<Move> alpha_variation;
   auto it = moves.begin();
   // Do the first one synchronously

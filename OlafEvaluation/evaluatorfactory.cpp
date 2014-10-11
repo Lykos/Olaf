@@ -3,8 +3,8 @@
 
 using namespace std;
 
-shared_ptr<PositionEvaluator> EvaluatorFactory::evaluator() const
+unique_ptr<PositionEvaluator> EvaluatorFactory::evaluator() const
 {
-  shared_ptr<PositionEvaluator> evaluator (new MaterialEvaluator());
+  unique_ptr<PositionEvaluator> evaluator(new MaterialEvaluator());
   return evaluator;
 }

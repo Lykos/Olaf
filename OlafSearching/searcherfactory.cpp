@@ -21,56 +21,56 @@ unique_ptr<TimedSearcher> SearcherFactory::timed_searcher() const
   return searcher;
 }
 
-shared_ptr<IterativeSearcher> SearcherFactory::iterative_searcher() const
+unique_ptr<IterativeSearcher> SearcherFactory::iterative_searcher() const
 {
-  shared_ptr<IterativeSearcher> searcher (new IterativeDeepener(sequential_depth_searcher(), m_writer));
+  unique_ptr<IterativeSearcher> searcher (new IterativeDeepener(sequential_depth_searcher(), m_writer));
   return searcher;
 }
 
-shared_ptr<DepthSearcher> SearcherFactory::parallel_depth_searcher() const
+unique_ptr<DepthSearcher> SearcherFactory::parallel_depth_searcher() const
 {
-  shared_ptr<DepthSearcher> searcher(new ParallelNegaMaxer(move_generator(), move_orderer(), sequential_depth_searcher(), sequential_depth));
+  unique_ptr<DepthSearcher> searcher(new ParallelNegaMaxer(move_generator(), move_orderer(), sequential_depth_searcher(), sequential_depth));
   return searcher;
 }
 
-shared_ptr<AlphaBetaSearcher> SearcherFactory::sequential_depth_searcher() const
+unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_depth_searcher() const
 {
-  shared_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(), move_orderer(), quiescer(), false));
+  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(), move_orderer(), quiescer(), false));
   return searcher;
 }
 
-shared_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
+unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  shared_ptr<AlphaBetaSearcher> searcher (new NegaMaxer(capture_generator(), move_orderer(), evaluation_searcher(), true));
+  unique_ptr<AlphaBetaSearcher> searcher (new NegaMaxer(capture_generator(), move_orderer(), evaluation_searcher(), true));
   return searcher;
 }
 
-shared_ptr<AlphaBetaSearcher> SearcherFactory::evaluation_searcher() const
+unique_ptr<AlphaBetaSearcher> SearcherFactory::evaluation_searcher() const
 {
-  shared_ptr<AlphaBetaSearcher> searcher(new EvaluatorSearcher(position_evaluator()));
+  unique_ptr<AlphaBetaSearcher> searcher(new EvaluatorSearcher(position_evaluator()));
   return searcher;
 }
 
-shared_ptr<PositionEvaluator> SearcherFactory::position_evaluator() const
+unique_ptr<PositionEvaluator> SearcherFactory::position_evaluator() const
 {
   return m_evaluator_factory.evaluator();
 }
 
-shared_ptr<MoveOrderer> SearcherFactory::move_orderer() const
+unique_ptr<MoveOrderer> SearcherFactory::move_orderer() const
 {
-  shared_ptr<MoveOrderer> orderer(new NoMoveOrderer());
+  unique_ptr<MoveOrderer> orderer(new NoMoveOrderer());
   return orderer;
 }
 
-shared_ptr<MoveGenerator> SearcherFactory::capture_generator() const
+unique_ptr<MoveGenerator> SearcherFactory::capture_generator() const
 {
-  shared_ptr<MoveGenerator> generator(new CaptureGenerator(move_generator()));
+  unique_ptr<MoveGenerator> generator(new CaptureGenerator(move_generator()));
   return generator;
 }
 
-shared_ptr<MoveGenerator> SearcherFactory::move_generator() const
+unique_ptr<MoveGenerator> SearcherFactory::move_generator() const
 {
-  shared_ptr<MoveGenerator> generator(new SimpleMoveGenerator());
+  unique_ptr<MoveGenerator> generator(new SimpleMoveGenerator());
   return generator;
 }
 

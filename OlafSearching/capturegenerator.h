@@ -9,12 +9,12 @@
 class CaptureGenerator : public MoveGenerator
 {
 public:
-  CaptureGenerator(const std::shared_ptr<MoveGenerator> &generator);
+  CaptureGenerator(std::unique_ptr<MoveGenerator> generator);
 
   std::vector<Move> generate_moves(const ChessBoard &board);
 
 private:
-  std::shared_ptr<MoveGenerator> m_generator;
+  std::unique_ptr<MoveGenerator> m_generator;
 
 };
 

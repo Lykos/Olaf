@@ -11,7 +11,7 @@
 class EvaluatorSearcher : public AlphaBetaSearcher
 {
 public:
-  EvaluatorSearcher(const std::shared_ptr<PositionEvaluator>& evaluator);
+  EvaluatorSearcher(std::unique_ptr<PositionEvaluator> evaluator);
 
   SearchResult search_alpha_beta(ChessBoard* board,
                                  int depth,
@@ -21,7 +21,7 @@ public:
                                  const Stopper& stopper) final;
 
 private:
-  std::shared_ptr<PositionEvaluator> m_evaluator;
+  std::unique_ptr<PositionEvaluator> m_evaluator;
 };
 
 #endif // EVALUATORSEARCHER_H

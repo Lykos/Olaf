@@ -7,7 +7,9 @@
 class SearchResult
 {
 public:
-  SearchResult(unsigned int nodes = 0, int value = 0, const std::vector<Move>& main_variation = std::vector<Move>());
+  SearchResult(unsigned int nodes = 0,
+               int value = 0,
+               const std::vector<Move>& main_variation = std::vector<Move>());
 
   SearchResult operator-() const;
 

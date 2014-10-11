@@ -6,8 +6,8 @@
 using namespace std;
 using namespace chrono;
 
-SimpleTimedSearcher::SimpleTimedSearcher(const std::shared_ptr<IterativeSearcher> &searcher):
-  m_searcher (searcher)
+SimpleTimedSearcher::SimpleTimedSearcher(unique_ptr<IterativeSearcher> searcher):
+  m_searcher(move(searcher))
 {}
 
 

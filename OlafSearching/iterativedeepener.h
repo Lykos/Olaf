@@ -11,7 +11,7 @@
 class IterativeDeepener : public IterativeSearcher
 {
 public:
-  IterativeDeepener(const std::shared_ptr<DepthSearcher> &searcher, ThinkingWriter* writer);
+  IterativeDeepener(std::unique_ptr<DepthSearcher> searcher, ThinkingWriter* writer);
 
   SearchResult search_infinite(ChessBoard* board,
                                const Stopper& forced_stopper,

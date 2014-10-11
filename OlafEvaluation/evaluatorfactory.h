@@ -7,7 +7,7 @@
 class EvaluatorFactory
 {
 public:
-  std::shared_ptr<PositionEvaluator> evaluator() const;
+  std::unique_ptr<PositionEvaluator> evaluator() const;
 
 };
 

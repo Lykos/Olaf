@@ -8,7 +8,7 @@ class NodeStopper : public Stopper
 public:
   NodeStopper(int nodes);
 
-  bool should_stop(int nodes_searched) const;
+  bool should_stop(int nodes_searched) const override;
 
 private:
   int m_nodes;

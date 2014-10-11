@@ -10,13 +10,23 @@
 class SimpleMoveCreator : public MoveCreator
 {
 public:
-  bool valid_move(const ChessBoard &board, const Position &source, const Position &destination);
+  bool valid_move(const ChessBoard& board,
+                  const Position& source,
+                  const Position& destination) override;
 
-  bool valid_move(const ChessBoard &board, const Position &source, const Position &destination, Piece::piece_index_t conversion);
+  bool valid_move(const ChessBoard& board,
+                  const Position& source,
+                  const Position& destination,
+                  Piece::piece_index_t conversion) override;
 
-  Move create_move(const ChessBoard &board, const Position &source, const Position &destination);
+  Move create_move(const ChessBoard& board,
+                   const Position& source,
+                   const Position& destination) override;
 
-  Move create_move(const ChessBoard &board, const Position &source, const Position &destination, Piece::piece_index_t conversion);
+  Move create_move(const ChessBoard& board,
+                   const Position& source,
+                   const Position& destination,
+                   Piece::piece_index_t conversion) override;
 
 };
 

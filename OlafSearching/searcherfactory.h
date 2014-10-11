@@ -23,23 +23,23 @@ public:
 
   std::unique_ptr<TimedSearcher> timed_searcher() const;
 
-  std::shared_ptr<IterativeSearcher> iterative_searcher() const;
+  std::unique_ptr<IterativeSearcher> iterative_searcher() const;
 
-  std::shared_ptr<DepthSearcher> parallel_depth_searcher() const;
+  std::unique_ptr<DepthSearcher> parallel_depth_searcher() const;
 
-  std::shared_ptr<AlphaBetaSearcher> sequential_depth_searcher() const;
+  std::unique_ptr<AlphaBetaSearcher> sequential_depth_searcher() const;
 
-  std::shared_ptr<AlphaBetaSearcher> quiescer() const;
+  std::unique_ptr<AlphaBetaSearcher> quiescer() const;
 
-  std::shared_ptr<AlphaBetaSearcher> evaluation_searcher() const;
+  std::unique_ptr<AlphaBetaSearcher> evaluation_searcher() const;
 
-  std::shared_ptr<PositionEvaluator> position_evaluator() const;
+  std::unique_ptr<PositionEvaluator> position_evaluator() const;
 
-  std::shared_ptr<MoveOrderer> move_orderer() const;
+  std::unique_ptr<MoveOrderer> move_orderer() const;
 
-  std::shared_ptr<MoveGenerator> capture_generator() const;
+  std::unique_ptr<MoveGenerator> capture_generator() const;
 
-  std::shared_ptr<MoveGenerator> move_generator() const;
+  std::unique_ptr<MoveGenerator> move_generator() const;
 
   std::unique_ptr<MoveCreator> move_creator() const;
 

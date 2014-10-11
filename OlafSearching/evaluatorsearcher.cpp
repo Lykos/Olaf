@@ -1,7 +1,9 @@
 #include "evaluatorsearcher.h"
 
-EvaluatorSearcher::EvaluatorSearcher(const std::shared_ptr<PositionEvaluator>& evaluator):
-  m_evaluator (evaluator)
+using namespace std;
+
+EvaluatorSearcher::EvaluatorSearcher(unique_ptr<PositionEvaluator> evaluator):
+  m_evaluator(move(evaluator))
 {}
 
 SearchResult EvaluatorSearcher::search_alpha_beta(ChessBoard* const board,

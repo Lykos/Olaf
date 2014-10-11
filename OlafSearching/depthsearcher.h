@@ -8,7 +8,10 @@
 
 class DepthSearcher {
 public:
-  virtual SearchResult search_depth(ChessBoard* board, int depth, int nodes_searched, const Stopper& stopper) = 0;
+  virtual SearchResult search_depth(ChessBoard* board,
+                                    int depth,
+                                    int nodes_searched,
+                                    const Stopper& stopper) = 0;
 
   virtual ~DepthSearcher() {}
 

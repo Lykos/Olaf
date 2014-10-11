@@ -5,14 +5,14 @@
 
 using namespace std;
 
-NegaMaxer::NegaMaxer(const std::shared_ptr<MoveGenerator> &generator,
-                     const std::shared_ptr<MoveOrderer> &orderer,
-                     const std::shared_ptr<AlphaBetaSearcher> &searcher,
+NegaMaxer::NegaMaxer(std::unique_ptr<MoveGenerator> generator,
+                     std::unique_ptr<MoveOrderer> orderer,
+                     std::unique_ptr<AlphaBetaSearcher> searcher,
                      const bool ignore_depth):
-  m_generator (generator),
-  m_orderer (orderer),
-  m_searcher (searcher),
-  m_ignore_depth (ignore_depth)
+  m_generator(move(generator)),
+  m_orderer(move(orderer)),
+  m_searcher(move(searcher)),
+  m_ignore_depth(ignore_depth)
 {}
 
 SearchResult NegaMaxer::search_alpha_beta(ChessBoard* const board,
@@ -29,7 +29,7 @@ SearchResult NegaMaxer::search_alpha_beta(ChessBoard* const board,
   if (moves.empty()) {
     return m_searcher->search_stoppable_alpha_beta(board, depth, nodes_searched, alpha, beta, stopper);
   }
-  m_orderer->order_moves(*board, moves);
+  m_orderer->order_moves(*board, &moves);
   vector<Move> alpha_variation;
   int nodes = 0;
   for (Move& move : moves) {

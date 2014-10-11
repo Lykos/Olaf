@@ -6,7 +6,7 @@
 class NoMoveOrderer : public MoveOrderer
 {
 public:
-  void order_moves(const ChessBoard &board, std::vector<Move> &moves);
+  void order_moves(const ChessBoard& board, std::vector<Move>* moves) override;
 
 };
 

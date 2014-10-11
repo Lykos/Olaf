@@ -14,7 +14,10 @@
 class NegaMaxer : public AlphaBetaSearcher
 {
 public:
-  NegaMaxer(const std::shared_ptr<MoveGenerator> &generator, const std::shared_ptr<MoveOrderer> &orderer, const std::shared_ptr<AlphaBetaSearcher> &searcher, bool ignore_depth);
+  NegaMaxer(std::unique_ptr<MoveGenerator> generator,
+            std::unique_ptr<MoveOrderer> orderer,
+            std::unique_ptr<AlphaBetaSearcher> searcher,
+            bool ignore_depth);
 
   SearchResult search_alpha_beta(ChessBoard* board,
                                  int depth,
@@ -24,11 +27,11 @@ public:
                                  const Stopper& stopper) final;
 
 private:
-  std::shared_ptr<MoveGenerator> m_generator;
+  std::unique_ptr<MoveGenerator> m_generator;
 
-  std::shared_ptr<MoveOrderer> m_orderer;
+  std::unique_ptr<MoveOrderer> m_orderer;
 
-  std::shared_ptr<AlphaBetaSearcher> m_searcher;
+  std::unique_ptr<AlphaBetaSearcher> m_searcher;
 
   bool m_ignore_depth;
 

@@ -2,8 +2,8 @@
 
 using namespace std;
 
-CaptureGenerator::CaptureGenerator(const shared_ptr<MoveGenerator> &generator):
-  m_generator (generator)
+CaptureGenerator::CaptureGenerator(unique_ptr<MoveGenerator> generator):
+  m_generator(move(generator))
 {}
 
 vector<Move> CaptureGenerator::generate_moves(const ChessBoard &board)

@@ -2,10 +2,12 @@
 
 using namespace std;
 
-SearchResult::SearchResult(unsigned int nodes, int value, const vector<Move>& main_variation):
-  m_nodes (nodes),
-  m_value (value),
-  m_main_variation (main_variation)
+SearchResult::SearchResult(const unsigned int nodes,
+                           const int value,
+                           const vector<Move>& main_variation):
+  m_nodes(nodes),
+  m_value(value),
+  m_main_variation(main_variation)
 {}
 
 SearchResult SearchResult::operator-() const

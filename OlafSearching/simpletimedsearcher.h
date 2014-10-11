@@ -13,7 +13,7 @@
 class SimpleTimedSearcher : public TimedSearcher
 {
 public:
-  explicit SimpleTimedSearcher(const std::shared_ptr<IterativeSearcher> &searcher);
+  explicit SimpleTimedSearcher(std::unique_ptr<IterativeSearcher> searcher);
 
   SearchResult search_timed(ChessBoard* board,
                             const Stopper& forced_stopper,
@@ -23,7 +23,7 @@ public:
                               const Stopper& forced_stopper);
 
 private:
-  std::shared_ptr<IterativeSearcher> m_searcher;
+  std::unique_ptr<IterativeSearcher> m_searcher;
 };
 
 #endif // SIMPLETIMEDSEARCHER_H

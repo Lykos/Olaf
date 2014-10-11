@@ -5,10 +5,10 @@
 using namespace std;
 using namespace chrono;
 
-IterativeDeepener::IterativeDeepener(const shared_ptr<DepthSearcher>& searcher,
+IterativeDeepener::IterativeDeepener(unique_ptr<DepthSearcher> searcher,
                                      ThinkingWriter* const writer):
-  m_searcher (searcher),
-  m_writer (writer)
+  m_searcher(move(searcher)),
+  m_writer(writer)
 {}
 
 
