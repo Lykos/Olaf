@@ -21,3 +21,11 @@ const BitBoard& Piece::initial_board() const
 }
 
 Piece::~Piece() {}
+
+bool Piece::can_move(const Position& source,
+                     const Position& destination,
+                     const ChessBoard& board) const {
+  return board.friendd(source)
+      && !board.friendd(destination)
+      && board.turn_board().piece_index(source) == m_piece_index;
+}

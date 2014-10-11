@@ -1,4 +1,5 @@
 #include "pawn.h"
+
 #include "move.h"
 #include "epenableaction.h"
 #include "pieceset.h"
@@ -71,26 +72,10 @@ bool Pawn::can_move(const Position& source,
                     const Position& destination,
                     const ChessBoard& board) const
 {
-  if (destination.row() == conversion_row(board.turn_color())) {
+  if (!internal_can_move(source, destination, board)) {
     return false;
   }
-  Position step = source + forward_direction(board.turn_color());
-  if (destination.row() == step.row()
-      && abs(destination.column() - step.column()) == 1
-      && board.opponent(destination)) {
-    return true;
-  }
-  if (board.occupied(step)) {
-    return false;
-  }
-  if (destination == step) {
-    return true;
-  }
-  if (source.row() != pawn_row(board.turn_color())) {
-    return false;
-  }
-  Position two_step = step + forward_direction(board.turn_color());
-  return destination == two_step && !board.occupied(step) && !board.occupied(two_step);
+  return destination.row() != conversion_row(board.turn_color());
 }
 
 bool Pawn::can_move(const Position& source,
@@ -98,26 +83,18 @@ bool Pawn::can_move(const Position& source,
                     const ChessBoard& board,
                     const piece_index_t conversion) const
 {
+  if (!internal_can_move(source, destination, board)) {
+    return false;
+  }
   if (destination.row() != conversion_row(board.turn_color())) {
     return false;
   }
-  Position step = source + forward_direction(board.turn_color());
-  bool conversion_valid = false;
   for (piece_index_t conv : m_conversions) {
     if (conversion == conv) {
-      conversion_valid = true;
-      break;
+      return true;
     }
   }
-  if (!conversion_valid) {
-    return false;
-  }
-  if (destination.row() == step.row()
-      && abs(destination.column() - step.column()) == 1
-      && board.opponent(destination)) {
-    return true;
-  }
-  return destination == step && !board.occupied(step);
+  return false;
 }
 
 Move Pawn::move(const Position& source,
@@ -152,4 +129,38 @@ void Pawn::add_conversion_moves(vector<Move>* const moves,
     conversion.conversion(position, this->piece_index(), piece_index);
     moves->push_back(conversion.build());
   }
+}
+
+bool Pawn::internal_can_move(const Position& source,
+                             const Position& destination,
+                             const ChessBoard& board) const
+{
+  if (!Piece::can_move(source, destination, board)) {
+    return false;
+  }
+  const PositionDelta& delta = forward_direction(board.turn_color());
+  const Position& step = source + delta;
+  // Handle valid capture.
+  if (destination.row() == step.row()
+      && abs(destination.column() - step.column()) == 1
+      && board.opponent(destination)) {
+    return true;
+  }
+  // blocked pawn
+  if (board.occupied(step)) {
+    return false;
+  }
+  // valid single step
+  if (destination == step) {
+    return true;
+  }
+  // double step
+  if (source.row() != pawn_row(board.turn_color())) {
+    return false;
+  }
+  if (board.occupied(destination)) {
+    return false;
+  }
+  const Position& two_step = step + delta;
+  return destination == two_step;
 }

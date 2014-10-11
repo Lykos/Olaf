@@ -20,7 +20,7 @@ public:
 
   bool can_move(const Position& source,
                 const Position& destination,
-                const ChessBoard& board) const;
+                const ChessBoard& board) const override;
 
   bool can_move(const Position& source,
                 const Position& destination,
@@ -29,7 +29,7 @@ public:
 
   Move move(const Position& source,
             const Position& destination,
-            const ChessBoard& board) const;
+            const ChessBoard& board) const override;
 
   Move move(const Position& source,
             const Position& destination,
@@ -45,6 +45,10 @@ public:
   void add_conversion_moves(std::vector<Move>* moves, const MoveBuilder& base_move, const Position& position) const;
 
 private:
+  bool internal_can_move(const Position& source,
+                         const Position& destination,
+                         const ChessBoard& board) const;
+
   std::vector<piece_index_t> m_conversions;
 };
 

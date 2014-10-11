@@ -56,13 +56,14 @@ bool OncePiece::can_move(const Position& source,
                          const Position& destination,
                          const ChessBoard& board) const
 {
-  if (board.friendd(destination)) {
+  if (!Piece::can_move(source, destination, board)) {
     return false;
   }
   if (is_castling_move(source, destination, board)) {
     if (destination.column() == Position::QUEENS_BISHOP_COLUMN) {
       return can_castle_q(board);
-    } else if (destination.column() == Position::KINGS_KNIGHT_COLUMN) {
+    } else {
+      assert(destination.column() == Position::KINGS_KNIGHT_COLUMN);
       return can_castle_k(board);
     }
   }

@@ -26,15 +26,20 @@ public:
 
   Piece(piece_index_t, const BitBoard&);
 
-  virtual std::vector<Move> moves(const Position& source, const ChessBoard& board) const = 0;
+  virtual std::vector<Move> moves(const Position& source,
+                                  const ChessBoard& board) const = 0;
 
   piece_index_t piece_index() const;
 
   const BitBoard& initial_board() const;
 
-  virtual bool can_move(const Position& source, const Position& destination, const ChessBoard& board) const = 0;
+  virtual bool can_move(const Position& source,
+                        const Position& destination,
+                        const ChessBoard& board) const;
 
-  virtual Move move(const Position& source, const Position& destination, const ChessBoard& board) const = 0;
+  virtual Move move(const Position& source,
+                    const Position& destination,
+                    const ChessBoard& board) const = 0;
 
   virtual ~Piece() = 0;
 

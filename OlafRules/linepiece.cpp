@@ -38,13 +38,10 @@ bool LinePiece::can_move(const Position& source,
                          const Position& destination,
                          const ChessBoard& board) const
 {
+  if (!Piece::can_move(source, destination, board)) {
+    return false;
+  }
   PositionDelta difference = destination - source;
-  if (difference.d_row() == 0 && difference.d_column() == 0) {
-    return false;
-  }
-  if (board.friendd(destination)) {
-    return false;
-  }
   uint_fast8_t length = max(abs(difference.d_row()), abs(difference.d_column()));
   PositionDelta direction (difference.d_row() / length, difference.d_column() / length);
   bool valid_direction = false;
