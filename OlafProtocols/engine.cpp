@@ -8,6 +8,8 @@ using namespace std;
 Engine::Engine(ProtocolWriter* const writer,
                BoardState* board_state,
                unique_ptr<TimedSearcher> searcher):
+  m_forced_stopper(new ForcedStopper),
+  m_weak_stopper(new ForcedStopper),
   m_writer(writer),
   m_board_state(board_state),
   m_searcher(std::move(searcher)),
