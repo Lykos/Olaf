@@ -4,12 +4,12 @@
 #
 #-------------------------------------------------
 
+include(../common.pri)
+
 QT       -= core gui
 
 TARGET = OlafProtocols
 TEMPLATE = lib
-QMAKE_CXXFLAGS += -std=c++11
-CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
 DEFINES += OLAFPROTOCOLS_LIBRARY
 
@@ -54,32 +54,14 @@ HEADERS +=\
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafProtocols
 
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/local/lib
-    } else {
-        target.path = /usr/local/lib
-    }
-    INSTALLS += target
-}
+target.path = /usr/local/lib
+INSTALLS += target
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Release/ -lOlafRules
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Debug/ -lOlafRules
-else:symbian: LIBS += -lOlafRules
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Release/ -lOlafRules
-else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafRules-build-Desktop-Debug/ -lOlafRules
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafRules -lOlafRules
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafRules -lOlafRules
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Release/ -lOlafEvaluation
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Debug/ -lOlafEvaluation
-else:symbian: LIBS += -lOlafEvaluation
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Release/ -lOlafEvaluation
-else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafEvaluation-build-Desktop-Debug/ -lOlafEvaluation
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafEvaluation -lOlafEvaluation
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafEvaluation -lOlafEvaluation
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafSearching-build-Desktop-Release/ -lOlafSearching
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafSearching-build-Desktop-Debug/ -lOlafSearching
-else:symbian: LIBS += -lOlafSearching
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../OlafSearching-build-Desktop-Release/ -lOlafSearching
-else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OlafSearching-build-Desktop-Debug/ -lOlafSearching
-
-INCLUDEPATH += $$PWD/../
-DEPENDPATH += $$PWD/../
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafSearching -lOlafSearching
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafSearching -lOlafSearching
