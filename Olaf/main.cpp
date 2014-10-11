@@ -31,7 +31,7 @@ int main()
   unique_ptr<ProtocolReader> reader;
   Engine engine(writer.get(), &board_state, move(searcher));
   std::unique_ptr<EngineEventHelper> engine_helper(
-        new EngineEventHelper(writer.get(), &board_state, &engine));
+        new EngineEventHelper(writer.get(), &board_state, &engine, &thinking_writer));
   if (protocol_name == "xboard") {
     reader.reset(new XBoardReader(static_cast<XBoardWriter*>(writer.get()), move(engine_helper)));
   }

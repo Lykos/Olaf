@@ -80,6 +80,10 @@ void XBoardReader::run()
     } else if (command == "computer") {
     } else if (command == "level") {
       // TODO
+    } else if (command == "post") {
+      m_engine_helper->post(true);
+    } else if (command == "nopost") {
+      m_engine_helper->post(false);
     } else if (command == "usermove") {
       if (is_move(tokens[1])) {
         handle_move(tokens[1]);
@@ -113,7 +117,7 @@ bool XBoardReader::is_move(const string& command) const
   return command.length() == 4 || (command.length() == 5 && conversions.find(command[4]) != string::npos);
 }
 
-void XBoardReader::handle_move(const std::string& move) const
+void XBoardReader::handle_move(const std::string& move)
 {
   Position source;
   Position destination;

@@ -19,15 +19,13 @@ public:
 
   bool is_move(const std::string& command) const;
 
-  void handle_move(const std::string& move) const;
+  void handle_move(const std::string& move);
 
   void write_features() const;
-
 private:
   XBoardWriter* const m_writer;
 
   std::unique_ptr<EngineEventHelper> m_engine_helper;
-
 };
 
 #endif // XBOARDREADER_H

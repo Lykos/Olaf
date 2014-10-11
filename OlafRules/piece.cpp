@@ -19,3 +19,5 @@ const BitBoard& Piece::initial_board() const
 {
   return m_initial_board;
 }
+
+Piece::~Piece() {}

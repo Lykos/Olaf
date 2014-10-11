@@ -11,6 +11,8 @@ public:
 
   SearchResult operator-() const;
 
+  bool valid() const;
+
   unsigned int nodes() const;
 
   int value() const;

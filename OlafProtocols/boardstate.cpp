@@ -59,10 +59,6 @@ void BoardState::move(const Move& move)
     }
     cout << endl;
   }
-  cout << "# Possible moves: " << endl;
-  SearcherFactory(nullptr).move_generator()->generate_moves(m_board);
-  cout << "# Possible captures: " << endl;
-  SearcherFactory(nullptr).capture_generator()->generate_moves(m_board);
 }
 
 bool BoardState::valid_move(const Position& source, const Position& destination)

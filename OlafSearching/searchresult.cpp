@@ -13,6 +13,11 @@ SearchResult SearchResult::operator-() const
   return SearchResult(m_nodes, -m_value, m_main_variation);
 }
 
+bool SearchResult::valid() const
+{
+  return m_nodes != 0;
+}
+
 unsigned int SearchResult::nodes() const
 {
   return m_nodes;

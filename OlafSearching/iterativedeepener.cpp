@@ -27,10 +27,10 @@ SearchResult IterativeDeepener::internal_search(ChessBoard* const board,
   CompositeStopper composite_stopper{&forced_stopper, &weak_stopper};
   for (int depth = min_depth + 1; depth <= max_depth || infinite; ++depth) {
     SearchResult next_result = m_searcher->search_depth(board, depth, nodes_searched, composite_stopper);
-    nodes_searched += result.nodes();
-    if (composite_stopper.should_stop(nodes_searched)) {
+    if (!next_result.valid()) {
       break;
     }
+    nodes_searched += result.nodes();
     result = SearchResult(nodes_searched, next_result.value(), next_result.main_variation());
     milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
     m_writer->output(*board, result, time, depth);

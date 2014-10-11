@@ -40,6 +40,9 @@ SearchResult NegaMaxer::search_alpha_beta(ChessBoard* const board,
                                                       -beta,
                                                       -alpha,
                                                       stopper);
+    if (!result.valid()) {
+      return result;
+    }
     int value = -result.value();
     move.undo(board);
     nodes += result.nodes();

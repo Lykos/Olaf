@@ -4,10 +4,13 @@
 #include "searchresult.h"
 #include "OlafRules/chessboard.h"
 #include <chrono>
+#include <atomic>
 
 class ThinkingWriter
 {
 public:
+  ThinkingWriter();
+
   virtual ~ThinkingWriter() = 0;
 
   virtual void output(const ChessBoard& board,
@@ -20,7 +23,7 @@ public:
   bool post() const;
 
 private:
-  bool m_post = false;
+  std::atomic<bool> m_post;
 };
 
 #endif // THINKINGWRITER_H
