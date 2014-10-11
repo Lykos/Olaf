@@ -19,38 +19,38 @@ public:
 
   PieceSet& operator=(const PieceSet& that) = delete;
 
-  const std::shared_ptr<const Piece>& rook() const;
+  const Piece& rook() const;
 
-  const std::shared_ptr<const Piece>& knight() const;
+  const Piece& knight() const;
 
-  const std::shared_ptr<const Piece>& bishop() const;
+  const Piece& bishop() const;
 
-  const std::shared_ptr<const Piece>& queen() const;
+  const Piece& queen() const;
 
-  const std::shared_ptr<const Piece>& king() const;
+  const Piece& king() const;
 
-  const std::shared_ptr<const Pawn>& pawn() const;
+  const Pawn& pawn() const;
 
-  const std::vector< std::shared_ptr<const Piece> >& pieces() const;
+  const std::vector<const Piece*>& pieces() const;
 
   static const PieceSet& instance();
 
 private:
   PieceSet();
 
-  std::shared_ptr<const Piece> m_rook;
+  std::unique_ptr<const Piece> m_rook;
 
-  std::shared_ptr<const Piece> m_knight;
+  std::unique_ptr<const Piece> m_knight;
 
-  std::shared_ptr<const Piece> m_bishop;
+  std::unique_ptr<const Piece> m_bishop;
 
-  std::shared_ptr<const Piece> m_queen;
+  std::unique_ptr<const Piece> m_queen;
 
-  std::shared_ptr<const Piece> m_king;
+  std::unique_ptr<const Piece> m_king;
 
-  std::shared_ptr<const Pawn> m_pawn;
+  std::unique_ptr<const Pawn> m_pawn;
 
-  std::vector< std::shared_ptr<const Piece> > m_pieces;
+  std::vector<const Piece*> m_pieces;
 
 };
 

@@ -21,6 +21,10 @@ class ColorBoard
 public:
   typedef unsigned int piece_index_t;
 
+  static ColorBoard create_initial_color_board(Color);
+
+  static ColorBoard create_empty_color_board();
+
   /**
    * @brief ColorBoard
    * @param color
@@ -48,7 +52,7 @@ public:
 
   piece_index_t piece_index(const Position&) const;
 
-  const std::shared_ptr<const Piece>& piece(const Position&) const;
+  const Piece& piece(const Position&) const;
 
   bool can_castle_q() const;
 
@@ -68,10 +72,6 @@ private:
   bool m_can_castle_k;
 
 };
-
-ColorBoard create_initial_color_board(Color);
-
-ColorBoard create_empty_color_board();
 
 #include "pieceboard.h"
 #include "piece.h"

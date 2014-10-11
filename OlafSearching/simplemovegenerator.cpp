@@ -10,12 +10,12 @@ vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard &board)
 {
   vector<Move> moves;
   for (const PieceBoard &piece_board : board.turn_board().piece_boards()) {
-    const shared_ptr<const Piece> &piece = piece_board.piece();
+    const Piece& piece = piece_board.piece();
     for (Position::row_t row = 0; row < Position::ROW_SIZE; ++row) {
       for (Position::row_t column = 0; column < Position::COLUMN_SIZE; ++column) {
         Position source (row, column);
         if (piece_board.get(source)) {
-          vector<Move> piece_moves = piece->moves(source, board);
+          vector<Move> piece_moves = piece.moves(source, board);
           moves.insert(moves.end(), piece_moves.begin(), piece_moves.end());
         }
       }

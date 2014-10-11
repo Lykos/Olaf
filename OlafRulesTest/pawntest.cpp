@@ -14,10 +14,10 @@ Q_DECLARE_METATYPE(Position)
 
 void PawnTest::initTestCase()
 {
-  m_pawn = PieceSet::instance().pawn();
+  m_pawn = &(PieceSet::instance().pawn());
   m_board = create_empty_board();
-  m_pawn_index = PieceSet::instance().pawn()->piece_index();
-  m_knight_index = PieceSet::instance().knight()->piece_index();
+  m_pawn_index = m_pawn->piece_index();
+  m_knight_index = PieceSet::instance().knight().piece_index();
   PieceBoard &pawn_board = m_board.turn_board().piece_board(m_pawn_index);
   PieceBoard &knight_board = m_board.turn_board().piece_board(m_knight_index);
   PieceBoard &opawn_board = m_board.noturn_board().piece_board(m_pawn_index);

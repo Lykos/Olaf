@@ -74,55 +74,55 @@ static const vector<PieceSet::piece_index_t> c_pawn_conversions = {
   c_queen_index
 };
 
-const shared_ptr<const Piece>& PieceSet::rook() const
+const Piece& PieceSet::rook() const
 {
-  return m_rook;
+  return *m_rook;
 }
 
-const shared_ptr<const Piece>& PieceSet::knight() const
+const Piece& PieceSet::knight() const
 {
-  return m_knight;
+  return *m_knight;
 }
 
-const shared_ptr<const Piece>& PieceSet::bishop() const
+const Piece& PieceSet::bishop() const
 {
-  return m_bishop;
+  return *m_bishop;
 }
 
-const shared_ptr<const Piece>& PieceSet::queen() const
+const Piece& PieceSet::queen() const
 {
-  return m_queen;
+  return *m_queen;
 }
 
-const shared_ptr<const Piece>& PieceSet::king() const
+const Piece& PieceSet::king() const
 {
-  return m_king;
+  return *m_king;
 }
 
-const shared_ptr<const Pawn>& PieceSet::pawn() const
+const Pawn& PieceSet::pawn() const
 {
-  return m_pawn;
+  return *m_pawn;
 }
 
-const vector< shared_ptr<const Piece> >& PieceSet::pieces() const
+const vector<const Piece*>& PieceSet::pieces() const
 {
   return m_pieces;
 }
 
 PieceSet::PieceSet():
-  m_rook (new LinePiece(c_rook_index, c_rook_initial_board, c_rook_directions, true)),
-  m_knight (new OncePiece(c_knight_index, c_knight_initial_board, c_knight_directions, false)),
-  m_bishop (new LinePiece(c_bishop_index, c_bishop_initial_board, c_bishop_directions, false)),
-  m_queen (new LinePiece(c_queen_index, c_queen_initial_board, c_queen_directions, false)),
-  m_king (new OncePiece(c_king_index, c_king_initial_board, c_queen_directions, true)),
-  m_pawn (new Pawn(c_pawn_index, c_pawn_initial_board, c_pawn_conversions))
+  m_rook(new LinePiece(c_rook_index, c_rook_initial_board, c_rook_directions, true)),
+  m_knight(new OncePiece(c_knight_index, c_knight_initial_board, c_knight_directions, false)),
+  m_bishop(new LinePiece(c_bishop_index, c_bishop_initial_board, c_bishop_directions, false)),
+  m_queen(new LinePiece(c_queen_index, c_queen_initial_board, c_queen_directions, false)),
+  m_king(new OncePiece(c_king_index, c_king_initial_board, c_queen_directions, true)),
+  m_pawn(new Pawn(c_pawn_index, c_pawn_initial_board, c_pawn_conversions))
 {
-  m_pieces.push_back(m_rook);
-  m_pieces.push_back(m_knight);
-  m_pieces.push_back(m_bishop);
-  m_pieces.push_back(m_king);
-  m_pieces.push_back(m_queen);
-  m_pieces.push_back(static_pointer_cast<const Piece>(m_pawn));
+  m_pieces.push_back(m_rook.get());
+  m_pieces.push_back(m_knight.get());
+  m_pieces.push_back(m_bishop.get());
+  m_pieces.push_back(m_king.get());
+  m_pieces.push_back(m_queen.get());
+  m_pieces.push_back(m_pawn.get());
 }
 
 const PieceSet& PieceSet::instance()

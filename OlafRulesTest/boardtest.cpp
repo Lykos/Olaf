@@ -3,7 +3,7 @@
 #include "OlafRules/pieceset.h"
 
 BoardTest::BoardTest():
-  m_bishop (PieceSet::instance().bishop()->piece_index())
+  m_bishop(PieceSet::instance().bishop().piece_index())
 {}
 
 void BoardTest::test_friends()

@@ -13,20 +13,23 @@
 class PieceBoard
 {
 public:
-  PieceBoard(const std::shared_ptr<const Piece>&, const BitBoard&);
+  /**
+   * @brief PieceBoard does not take ownership of piece.
+   */
+  PieceBoard(const Piece* piece, const BitBoard& bit_board);
 
   operator BitBoard() const;
 
-  const std::shared_ptr<const Piece>& piece() const;
+  const Piece& piece() const;
 
-  bool get(const Position&) const;
+  bool get(const Position& position) const;
 
-  void set(const Position&, bool);
+  void set(const Position& position, bool value);
 
   const BitBoard& bit_board() const;
 
 private:
-  std::shared_ptr<const Piece> m_piece;
+  const Piece* const m_piece;
 
   BitBoard m_bit_board;
 

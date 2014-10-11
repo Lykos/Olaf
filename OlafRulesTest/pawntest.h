@@ -19,7 +19,7 @@ private:
 
   Piece::piece_index_t m_knight_index;
 
-  std::shared_ptr<const Pawn> m_pawn;
+  const Pawn* m_pawn;
 
 private Q_SLOTS:
   void initTestCase();

@@ -38,13 +38,19 @@ Move::Move(const ChessBoard& board, Piece::piece_index_t piece_index, const Posi
 }
 
 Move::Move(const ChessBoard &board, const Position &source, const Position &destination):
-  Move(board, PieceSet::instance().king()->piece_index(), source, destination)
+  Move(board, PieceSet::instance().king().piece_index(), source, destination)
 {
   if (destination.column() == 2) {
-    shared_ptr<MoveAction> rook_move_action (new PieceMoveAction(PieceSet::instance().rook()->piece_index(), Position(source.row(), 0), Position(source.row(), 3)));
+    shared_ptr<MoveAction> rook_move_action(new PieceMoveAction(
+                                              PieceSet::instance().rook().piece_index(),
+                                              Position(source.row(), 0),
+                                              Position(source.row(), 3)));
     m_move_actions.push_back(rook_move_action);
   } else if (destination.column() == 6) {
-    shared_ptr<MoveAction> rook_move_action (new PieceMoveAction(PieceSet::instance().rook()->piece_index(), Position(source.row(), 7), Position(source.row(), 5)));
+    shared_ptr<MoveAction> rook_move_action(new PieceMoveAction(
+                                              PieceSet::instance().rook().piece_index(),
+                                              Position(source.row(), 7),
+                                              Position(source.row(), 5)));
     m_move_actions.push_back(rook_move_action);
   }
   forbid_castling();
@@ -52,7 +58,9 @@ Move::Move(const ChessBoard &board, const Position &source, const Position &dest
 
 void Move::capture_ep(const ChessBoard &board)
 {
-  shared_ptr<MoveAction> capture_action (new CaptureAction(board.ep_victim_position(), PieceSet::instance().pawn()->piece_index()));
+  shared_ptr<MoveAction> capture_action(new CaptureAction(
+                                          board.ep_victim_position(),
+                                          PieceSet::instance().pawn().piece_index()));
   m_capture = true;
   m_move_actions.push_back(capture_action);
 }

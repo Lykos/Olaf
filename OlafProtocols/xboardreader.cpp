@@ -132,16 +132,16 @@ void XBoardReader::handle_move(const std::string& move)
     const PieceSet &set = PieceSet::instance();
     switch (move[4]) {
     case 'r':
-      conversion = set.rook()->piece_index();
+      conversion = set.rook().piece_index();
       break;
     case 'b':
-      conversion = set.bishop()->piece_index();
+      conversion = set.bishop().piece_index();
       break;
     case 'q':
-      conversion = set.queen()->piece_index();
+      conversion = set.queen().piece_index();
       break;
     case 'n':
-      conversion = set.knight()->piece_index();
+      conversion = set.knight().piece_index();
       break;
     }
     if (!m_engine_helper->request_move(source, destination, conversion)) {

@@ -38,7 +38,7 @@ ColorBoard::piece_index_t ColorBoard::piece_index(const Position &position) cons
   return -1;
 }
 
-const shared_ptr<const Piece>& ColorBoard::piece(const Position &position) const
+const Piece& ColorBoard::piece(const Position &position) const
 {
   return m_piece_boards.at(piece_index(position)).piece();
 }
@@ -72,10 +72,11 @@ BitBoard ColorBoard::occupied() const
   return bla;
 }
 
-ColorBoard create_initial_color_board(Color color)
+// static
+ColorBoard ColorBoard::create_initial_color_board(Color color)
 {
   vector<PieceBoard> piece_boards;
-  for (shared_ptr<const Piece> piece : PieceSet::instance().pieces()) {
+  for (const Piece* const piece : PieceSet::instance().pieces()) {
     BitBoard initial_board = piece->initial_board();
     if (color == Black) {
       initial_board = initial_board.mirror_rows();
@@ -86,12 +87,13 @@ ColorBoard create_initial_color_board(Color color)
   return ColorBoard(piece_boards);
 }
 
-ColorBoard create_empty_color_board()
+// static
+ColorBoard ColorBoard::create_empty_color_board()
 {
   vector<PieceBoard> piece_boards;
-  for (shared_ptr<const Piece> piece : PieceSet::instance().pieces()) {
-    BitBoard empty_board (0);
-    PieceBoard piece_board (piece, empty_board);
+  for (const Piece* const piece : PieceSet::instance().pieces()) {
+    BitBoard empty_board(0);
+    PieceBoard piece_board(piece, empty_board);
     piece_boards.push_back(piece_board);
   }
   return ColorBoard(piece_boards);
