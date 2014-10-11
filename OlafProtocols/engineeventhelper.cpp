@@ -11,10 +11,10 @@
 
 using namespace std;
 
-EngineEventHelper::EngineEventHelper(ProtocolWriter* writer,
-                                     BoardState* board_state,
-                                     Engine* engine,
-                                     ThinkingWriter* thinking_writer):
+EngineEventHelper::EngineEventHelper(ProtocolWriter* const writer,
+                                     BoardState* const board_state,
+                                     Engine* const engine,
+                                     ThinkingWriter* const thinking_writer):
   m_writer(writer),
   m_board_state(board_state),
   m_engine(engine),

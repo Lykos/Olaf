@@ -7,7 +7,7 @@
 include(../common.pri)
 
 QT       -= core gui
-TARGET = Olaf
+TARGET = OlafMain
 QMAKE_CXXFLAGS += -pthread -lpthread
 CONFIG   += console
 CONFIG   -= app_bundle
