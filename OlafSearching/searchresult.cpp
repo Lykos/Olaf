@@ -35,7 +35,7 @@ const vector<Move>& SearchResult::main_variation() const
   return m_main_variation;
 }
 
-void SearchResult::add_move(const Move &move)
+void SearchResult::add_move(const Move& move)
 {
   m_main_variation.push_back(move);
 }

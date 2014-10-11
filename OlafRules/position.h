@@ -43,6 +43,15 @@ public:
 
   static const column_t COLUMN_SIZE = 8;
 
+  static const column_t QUEENS_ROOK_COLUMN = 0;
+  static const column_t QUEENS_KNIGHT_COLUMN = 1;
+  static const column_t QUEENS_BISHOP_COLUMN = 2;
+  static const column_t QUEEN_COLUMN = 3;
+  static const column_t KING_COLUMN = 4;
+  static const column_t KINGS_BISHOP_COLUMN = 5;
+  static const column_t KINGS_KNIGHT_COLUMN = 6;
+  static const column_t KINGS_ROOK_COLUMN = 7;
+
   static const std::string columns;
 
   static const std::string rows;
@@ -59,17 +68,16 @@ public:
    */
   constexpr Position(): Position(0, 0) {}
 
-  row_t row() const;
+  constexpr row_t row() const { return m_row; }
 
-  column_t column() const;
+  constexpr column_t column() const { return m_column; }
 
-  bool in_bounds(const PositionDelta&) const;
+  bool in_bounds(const PositionDelta& d_pos) const;
 
 private:
   row_t m_row;
 
   column_t m_column;
-
 };
 
 #endif // POSITION_H

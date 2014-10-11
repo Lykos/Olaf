@@ -58,6 +58,8 @@ public:
 
   bool can_castle_k() const;
 
+  bool can_castle() const;
+
   void can_castle_q(bool new_can_castle_q);
 
   void can_castle_k(bool new_can_castle_k);

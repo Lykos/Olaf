@@ -1,5 +1,8 @@
 #include "xboardwriter.h"
+
 #include <iostream>
+
+#include "OlafRules/pieceset.h"
 
 using namespace std;
 

@@ -25,9 +25,9 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
     ++turn_number;
     ++ply;
   }
-  vector<Move> moves = result.main_variation();
-  reverse(moves.begin(), moves.end());
-  for (const Move &move : moves) {
+  const vector<Move>& moves = result.main_variation();
+  for (auto it = moves.crbegin(); it != moves.crend(); ++it) {
+    const Move& move = *it;
     if (ply % 2 == 0) {
       oss << " " << turn_number << ".";
     }

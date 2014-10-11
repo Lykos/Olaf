@@ -25,7 +25,7 @@ public:
 
   void feature(const std::string& name, const std::string& value);
 
-  void move(const Move &) override;
+  void move(const Move& mov) override;
 
   void error(const std::string& type, const std::string& message);
 

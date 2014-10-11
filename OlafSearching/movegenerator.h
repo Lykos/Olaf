@@ -10,7 +10,6 @@ class MoveGenerator
 {
 public:
   virtual std::vector<Move> generate_moves(const ChessBoard& board) = 0;
-
 };
 
 #endif // MOVEGENERATOR_H

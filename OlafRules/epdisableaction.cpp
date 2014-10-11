@@ -1,5 +1,9 @@
 #include "epdisableaction.h"
 
+#include <memory>
+
+using namespace std;
+
 void EpDisableAction::execute(ChessBoard* const chess_board)
 {
   m_old_ep_possible = chess_board->ep_possible();
@@ -9,4 +13,8 @@ void EpDisableAction::execute(ChessBoard* const chess_board)
 void EpDisableAction::undo(ChessBoard* const chess_board)
 {
   chess_board->ep_possible(m_old_ep_possible);
+}
+
+unique_ptr<MoveAction> EpDisableAction::copy() const {
+  return unique_ptr<MoveAction>(new EpDisableAction(*this));
 }

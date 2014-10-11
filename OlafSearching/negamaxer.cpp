@@ -50,7 +50,10 @@ SearchResult NegaMaxer::search_alpha_beta(ChessBoard* const board,
       return SearchResult(nodes, value, result.main_variation());
     } else if (value > alpha) {
       alpha = value;
-      alpha_variation = result.main_variation();
+      alpha_variation.clear();
+      for (const Move& move : result.main_variation()) {
+        alpha_variation.push_back(move);
+      }
       alpha_variation.push_back(move);
     }
   }

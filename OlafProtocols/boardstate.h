@@ -28,14 +28,18 @@ public:
 
   void move(const Move& move);
 
-  bool valid_move(const Position& source, const Position& destination);
+  bool valid_move(const Position& source,
+                  const Position& destination);
 
-  bool valid_move(const Position& source, const Position& destination,
+  bool valid_move(const Position& source,
+                  const Position& destination,
                   Piece::piece_index_t conversion);
 
-  Move create_move(const Position& source, const Position& destination);
+  Move create_move(const Position& source,
+                   const Position& destination);
 
-  Move create_move(const Position& source, const Position& destination,
+  Move create_move(const Position& source,
+                   const Position& destination,
                    Piece::piece_index_t conversion);
 
 private:
@@ -46,7 +50,6 @@ private:
   ChessBoard m_board;
 
   std::stack<Move> m_moves;
-
 };
 
 #endif // BOARDSTATE_H

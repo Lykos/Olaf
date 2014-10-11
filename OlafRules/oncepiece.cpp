@@ -1,63 +1,73 @@
 #include "oncepiece.h"
+
 #include <cassert>
+
+#include "movebuilder.h"
 
 using namespace std;
 
-OncePiece::OncePiece(piece_index_t piece_index, const BitBoard& initial_board, const std::vector<PositionDelta> &directions, bool is_king):
+static bool can_castle_q(const ChessBoard& board)
+{
+  return board.turn_board().can_castle_q()
+      && !board.occupied(Position(ground_line(board.turn_color()), Position::QUEENS_KNIGHT_COLUMN))
+      && !board.occupied(Position(ground_line(board.turn_color()), Position::QUEENS_BISHOP_COLUMN))
+      && !board.occupied(Position(ground_line(board.turn_color()), Position::QUEEN_COLUMN));
+}
+
+static bool can_castle_k(const ChessBoard& board)
+{
+  return board.turn_board().can_castle_k()
+      && !board.occupied(Position(ground_line(board.turn_color()), Position::KINGS_BISHOP_COLUMN))
+      && !board.occupied(Position(ground_line(board.turn_color()), Position::KINGS_KNIGHT_COLUMN));
+}
+
+OncePiece::OncePiece(const piece_index_t piece_index,
+                     const BitBoard& initial_board,
+                     const std::vector<PositionDelta>& directions,
+                     const bool is_king):
   Piece(piece_index, initial_board),
   m_directions (directions),
   m_is_king (is_king)
 {}
 
-vector<Move> OncePiece::moves(const Position &source, const ChessBoard &board) const
+vector<Move> OncePiece::moves(const Position& source,
+                              const ChessBoard& board) const
 {
   vector<Move> result;
-  for (const PositionDelta &direction : m_directions) {
+  for (const PositionDelta& direction : m_directions) {
     if (source.in_bounds(direction)) {
       Position destination = source + direction;
       if (!board.friendd(destination)) {
-        Move move (board, piece_index(), source, destination);
-        if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && m_is_king && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
-          move.forbid_castling();
-        }
-        result.push_back(move);
+        result.push_back(move(source, destination, board));
       }
     }
   }
-  if (m_is_king && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
-    if (board.turn_board().can_castle_q()
-        && !board.occupied(Position(source.row(), 1))
-        && !board.occupied(Position(source.row(), 2))
-        && !board.occupied(Position(source.row(), 3))) {
-      result.push_back(Move(board, source, Position(source.row(), 2)));
-    } else if (board.turn_board().can_castle_k()
-               && !board.occupied(Position(source.row(), 5))
-               && !board.occupied(Position(source.row(), 6))) {
-      result.push_back(Move(board, source, Position(source.row(), 6)));
+  if (is_king_at_initial_position(source, board)) {
+    if (can_castle_q(board)) {
+      result.push_back(move(source, Position(source.row(), Position::QUEENS_BISHOP_COLUMN), board));
+    } else if (can_castle_k(board)) {
+      result.push_back(move(source, Position(source.row(), Position::KINGS_KNIGHT_COLUMN), board));
     }
   }
   return result;
 }
 
-bool OncePiece::can_move(const Position &source, const Position &destination, const ChessBoard &board) const
+bool OncePiece::can_move(const Position& source,
+                         const Position& destination,
+                         const ChessBoard& board) const
 {
   if (board.friendd(destination)) {
     return false;
   }
-  if (m_is_king && destination.row() == source.row() && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
-    if (destination.column() == 2) {
-          return board.turn_board().can_castle_q()
-              && !board.occupied(Position(ground_line(board.turn_color()), 1))
-              && !board.occupied(Position(ground_line(board.turn_color()), 3))
-              && !board.occupied(destination);
-    } else if (destination.column() == 6) {
-      return board.turn_board().can_castle_k()
-          && !board.occupied(Position(ground_line(board.turn_color()), 5))
-          && !board.occupied(destination);
+  if (is_castling_move(source, destination, board)) {
+    if (destination.column() == Position::QUEENS_BISHOP_COLUMN) {
+      return can_castle_q(board);
+    } else if (destination.column() == Position::KINGS_KNIGHT_COLUMN) {
+      return can_castle_k(board);
     }
   }
   PositionDelta direction = destination - source;
-  for (const PositionDelta &dir : m_directions) {
+  for (const PositionDelta& dir : m_directions) {
     if (dir == direction) {
       return true;
     }
@@ -65,14 +75,38 @@ bool OncePiece::can_move(const Position &source, const Position &destination, co
   return false;
 }
 
-Move OncePiece::move(const Position &source, const Position &destination, const ChessBoard &board) const
+Move OncePiece::move(const Position& source, const Position& destination, const ChessBoard& board) const
 {
-  if (m_is_king && destination.row() == source.row() && source.row() == ground_line(board.turn_color()) && source.column() == 4 && abs(source.column() - destination.column()) == 2) {
-    return Move(board, source, destination);
+  if (is_castling_move(source, destination, board)) {
+    return MoveBuilder::castle(board, source, destination);
   }
-  Move result (board, piece_index(), source, destination);
-  if ((board.turn_board().can_castle_q() || board.turn_board().can_castle_k()) && m_is_king && source.row() == ground_line(board.turn_color()) && source.column() == 4) {
-    result.forbid_castling();
+  MoveBuilder builder(board, source, destination);
+  if (forbids_castle(source, board)) {
+    builder.forbid_castling();
   }
-  return result;
+  return builder.build();
 }
+
+bool OncePiece::is_king_at_initial_position(const Position& position,
+                                            const ChessBoard& board) const
+{
+  return m_is_king
+      && position.row() == ground_line(board.turn_color())
+      && position.column() == Position::KING_COLUMN;
+}
+
+bool OncePiece::is_castling_move(const Position& source,
+                                 const Position& destination,
+                                 const ChessBoard& board) const
+{
+  return is_king_at_initial_position(source, board)
+      && source.row() == destination.row()
+      && abs(source.column() - destination.column() == 2);
+}
+
+bool OncePiece::forbids_castle(const Position& source, const ChessBoard& board) const
+{
+  return board.turn_board().can_castle()
+      && is_king_at_initial_position(source, board);
+}
+

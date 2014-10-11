@@ -53,12 +53,17 @@ bool ColorBoard::can_castle_k() const
   return m_can_castle_k;
 }
 
-void ColorBoard::can_castle_q(bool new_can_castle_q)
+bool ColorBoard::can_castle() const
+{
+  return m_can_castle_q || m_can_castle_k;
+}
+
+void ColorBoard::can_castle_q(const bool new_can_castle_q)
 {
   m_can_castle_q = new_can_castle_q;
 }
 
-void ColorBoard::can_castle_k(bool new_can_castle_k)
+void ColorBoard::can_castle_k(const bool new_can_castle_k)
 {
   m_can_castle_k = new_can_castle_k;
 }

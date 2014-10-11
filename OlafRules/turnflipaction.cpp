@@ -9,3 +9,8 @@ void TurnFlipAction::undo(ChessBoard* const chess_board)
 {
   chess_board->previous_turn();
 }
+
+std::unique_ptr<MoveAction> TurnFlipAction::copy() const {
+  return std::unique_ptr<MoveAction>(new TurnFlipAction(*this));
+}
+

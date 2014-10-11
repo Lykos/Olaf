@@ -14,7 +14,6 @@ CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 DEFINES += OLAFRULES_LIBRARY
 
 SOURCES += \
-    move.cpp \
     linepiece.cpp \
     epenableaction.cpp \
     epdisableaction.cpp \
@@ -32,11 +31,12 @@ SOURCES += \
     chessboard.cpp \
     captureaction.cpp \
     bitboard.cpp \
-    anticastleaction.cpp
+    anticastleaction.cpp \
+    movebuilder.cpp \
+    move.cpp
 
 HEADERS += \
     moveaction.h \
-    move.h \
     linepiece.h \
     epdisableaction.h \
     conversionaction.h \
@@ -56,7 +56,9 @@ HEADERS += \
     captureaction.h \
     bitboard.h \
     anticastleaction.h \
-    epenableaction.h
+    epenableaction.h \
+    movebuilder.h \
+    move.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafRules

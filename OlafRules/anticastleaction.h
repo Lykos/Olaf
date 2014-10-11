@@ -1,6 +1,8 @@
 #ifndef ANTICASTLEMOVE_H
 #define ANTICASTLEMOVE_H
 
+#include <memory>
+
 #include "moveaction.h"
 #include "colorboard.h"
 
@@ -24,6 +26,8 @@ public:
   void execute(ChessBoard* chess_board) override;
 
   void undo(ChessBoard* chess_board) override;
+
+  std::unique_ptr<MoveAction> copy() const override;
 
 private:
   bool m_old_can_castle_q;

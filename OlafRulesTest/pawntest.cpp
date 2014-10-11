@@ -102,7 +102,8 @@ void PawnTest::test_can_move()
     QCOMPARE(move.is_capture(), is_capture);
   }
   if (is_conversion) {
-    QVERIFY2(m_pawn->can_move(source, destination, m_board, m_knight_index), "Move does not work as a conversion.");
+    QVERIFY2(m_pawn->can_move(source, destination, m_board, m_knight_index),
+             "Move does not work as a conversion.");
     Move move = m_pawn->move(source, destination, m_board, m_knight_index);
     QCOMPARE(move.is_capture(), is_capture);
     QVERIFY2(move.is_conversion(), "Conversion is not a conversion.");

@@ -61,25 +61,31 @@ void BoardState::move(const Move& move)
   }
 }
 
-bool BoardState::valid_move(const Position& source, const Position& destination)
+bool BoardState::valid_move(const Position& source,
+                            const Position& destination)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->valid_move(m_board, source, destination);
 }
 
-bool BoardState::valid_move(const Position& source, const Position& destination, Piece::piece_index_t conversion)
+bool BoardState::valid_move(const Position& source,
+                            const Position& destination,
+                            const Piece::piece_index_t conversion)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->valid_move(m_board, source, destination, conversion);
 }
 
-Move BoardState::create_move(const Position& source, const Position& destination)
+Move BoardState::create_move(const Position& source,
+                             const Position& destination)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->create_move(m_board, source, destination);
 }
 
-Move BoardState::create_move(const Position& source, const Position& destination, Piece::piece_index_t conversion)
+Move BoardState::create_move(const Position& source,
+                             const Position& destination,
+                             const Piece::piece_index_t conversion)
 {
   unique_lock<mutex> lock (m_mutex);
   return m_move_creator->create_move(m_board, source, destination, conversion);

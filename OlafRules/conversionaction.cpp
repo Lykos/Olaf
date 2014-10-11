@@ -20,3 +20,8 @@ void ConversionAction::undo(ChessBoard* const chess_board)
   chess_board->turn_board().piece_board(m_created_piece).set(m_position, false);
   chess_board->turn_board().piece_board(m_removed_piece).set(m_position, true);
 }
+
+std::unique_ptr<MoveAction> ConversionAction::copy() const
+{
+  return std::unique_ptr<MoveAction>(new ConversionAction(*this));
+}

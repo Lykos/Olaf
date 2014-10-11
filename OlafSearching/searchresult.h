@@ -21,7 +21,7 @@ public:
 
   const std::vector<Move>& main_variation() const;
 
-  void add_move(const Move &move);
+  void add_move(const Move& move);
 
 private:
   unsigned int m_nodes;

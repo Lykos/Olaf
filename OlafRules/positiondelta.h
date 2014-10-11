@@ -33,15 +33,16 @@ public:
 
   constexpr PositionDelta(): PositionDelta(0, 0) {}
 
-  d_row_t d_row() const;
+  constexpr d_row_t d_row() const { return m_d_row; }
 
-  d_column_t d_column() const;
+  constexpr d_column_t d_column() const { return m_d_column; }
 
 private:
-  d_row_t m_d_row;
+  const d_row_t m_d_row;
 
-  d_column_t m_d_column;
-
+  const d_column_t m_d_column;
 };
+
+#include "position.h"
 
 #endif // POSITIONDELTA_H

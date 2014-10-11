@@ -22,3 +22,7 @@ void PieceMoveAction::undo(ChessBoard* const chess_board)
   chess_board->turn_board().piece_board(m_piece_index).set(m_destination, false);
   chess_board->turn_board().piece_board(m_piece_index).set(m_source, true);
 }
+
+std::unique_ptr<MoveAction> PieceMoveAction::copy() const {
+  return std::unique_ptr<MoveAction>(new PieceMoveAction(*this));
+}

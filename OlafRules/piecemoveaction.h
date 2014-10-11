@@ -1,11 +1,12 @@
 #ifndef PIECEMOVEACTION_H
 #define PIECEMOVEACTION_H
 
+#include <memory>
+
 #include "position.h"
 #include "moveaction.h"
 #include "colorboard.h"
 #include "pieceset.h"
-#include <cassert>
 
 class ChessBoard;
 
@@ -29,13 +30,14 @@ public:
 
   void undo(ChessBoard* chess_board) override;
 
+  std::unique_ptr<MoveAction> copy() const override;
+
 private:
   const PieceSet::piece_index_t m_piece_index;
 
   const Position m_source;
 
   const Position m_destination;
-
 };
 
 #include "chessboard.h"
