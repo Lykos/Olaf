@@ -9,7 +9,7 @@ class MaterialEvaluator : public PositionEvaluator {
 public:
   MaterialEvaluator();
 
-  int evaluate(const ChessBoard &board);
+  int evaluate(const ChessBoard& board) override;
 
 private:
   std::vector<int> m_piece_values;

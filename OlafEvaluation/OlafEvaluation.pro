@@ -14,12 +14,14 @@ DEFINES += OLAFEVALUATION_LIBRARY
 
 SOURCES += \
     materialevaluator.cpp \
-    evaluatorfactory.cpp
+    evaluatorfactory.cpp \
+    configreader.cpp
 
 HEADERS += \
     positionevaluator.h \
     materialevaluator.h \
-    evaluatorfactory.h
+    evaluatorfactory.h \
+    configreader.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafEvaluation
@@ -29,3 +31,5 @@ INSTALLS += target
 
 CONFIG(release, debug|release): LIBS += -L../OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L../OlafRules -lOlafRules
+
+LIBS += -lyaml-cpp
