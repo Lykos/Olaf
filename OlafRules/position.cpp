@@ -1,6 +1,8 @@
 #include "position.h"
+
+#include <cassert>
 #include <cctype>
-#include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -10,6 +12,8 @@ const std::string Position::columns = "abcdefgh";
 
 std::ostream& operator<<(std::ostream& out, const Position& position)
 {
+  assert(0 <= position.m_column && position.m_column < Position::COLUMN_SIZE);
+  assert(0 <= position.m_row && position.m_row < Position::ROW_SIZE);
   return out << Position::columns[position.column()] << Position::rows[position.row()];
 }
 
@@ -34,6 +38,12 @@ PositionDelta operator-(const Position& a, const Position& b)
   PositionDelta::d_row_t d_row = static_cast<PositionDelta::d_row_t>(a.m_row) - static_cast<PositionDelta::d_row_t>(b.m_row);
   PositionDelta::d_column_t d_column = static_cast<PositionDelta::d_column_t>(a.m_column) - static_cast<PositionDelta::d_column_t>(b.m_column);
   return PositionDelta(d_row, d_column);
+}
+
+Position::Position(const string &pos)
+{
+  istringstream iss(pos);
+  iss >> *this;
 }
 
 bool Position::in_bounds(const PositionDelta& d_pos) const

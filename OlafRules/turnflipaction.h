@@ -12,6 +12,8 @@ public:
   void undo(ChessBoard* chess_board) override;
 
   std::unique_ptr<MoveAction> copy() const override;
+
+  int priority() const override;
 };
 
 #endif // TURNFLIPACTION_H

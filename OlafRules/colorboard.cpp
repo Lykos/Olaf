@@ -17,30 +17,31 @@ const std::vector<PieceBoard>& ColorBoard::piece_boards() const
   return m_piece_boards;
 }
 
-const PieceBoard& ColorBoard::piece_board(piece_index_t piece_index) const
+const PieceBoard& ColorBoard::piece_board(const piece_index_t piece_index) const
 {
   return m_piece_boards[piece_index];
 }
 
 
-PieceBoard& ColorBoard::piece_board(piece_index_t piece_index)
+PieceBoard& ColorBoard::piece_board(const piece_index_t piece_index)
 {
   return m_piece_boards[piece_index];
 }
 
 ColorBoard::piece_index_t ColorBoard::piece_index(const Position &position) const
 {
-  for (piece_index_t index = 0; index < m_piece_boards.size(); ++index) {
+  const piece_index_t size = m_piece_boards.size();
+  for (piece_index_t index = 0; index < size; ++index) {
     if (m_piece_boards[index].get(position)) {
       return index;
     }
   }
-  return -1;
+  return Piece::c_no_piece;
 }
 
 const Piece& ColorBoard::piece(const Position &position) const
 {
-  return m_piece_boards.at(piece_index(position)).piece();
+  return m_piece_boards[piece_index(position)].piece();
 }
 
 bool ColorBoard::can_castle_q() const
@@ -86,7 +87,7 @@ ColorBoard ColorBoard::create_initial_color_board(Color color)
     if (color == Black) {
       initial_board = initial_board.mirror_rows();
     }
-    PieceBoard piece_board (piece, initial_board);
+    const PieceBoard piece_board(piece, initial_board);
     piece_boards.push_back(piece_board);
   }
   return ColorBoard(piece_boards);
@@ -97,8 +98,8 @@ ColorBoard ColorBoard::create_empty_color_board()
 {
   vector<PieceBoard> piece_boards;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
-    BitBoard empty_board(0);
-    PieceBoard piece_board(piece, empty_board);
+    const BitBoard empty_board(0);
+    const PieceBoard piece_board(piece, empty_board);
     piece_boards.push_back(piece_board);
   }
   return ColorBoard(piece_boards);

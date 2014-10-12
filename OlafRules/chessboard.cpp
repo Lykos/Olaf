@@ -2,7 +2,28 @@
 
 using namespace std;
 
-ChessBoard::ChessBoard(const array<ColorBoard, 2> &color_boards, Color turn, bool ep_possible, const Position& ep_capture_position, const Position& ep_victim_position):
+std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
+{
+  for (int i = 7; i >= 0; --i) {
+    for (int j = 0; j < 8; ++j) {
+      const Position pos(i, j);
+      if (board.friendd(pos)) {
+        out << board.turn_board().piece(pos).symbol(board.turn_color());
+      } else if (board.opponent(pos)) {
+        out << board.noturn_board().piece(pos).symbol(previous(board.turn_color()));
+      } else {
+        out << ".";
+      }
+    }
+    out << endl;
+  }
+  return out;
+}
+
+ChessBoard::ChessBoard(const array<ColorBoard, 2>& color_boards, Color turn,
+                       const bool ep_possible,
+                       const Position& ep_capture_position,
+                       const Position& ep_victim_position):
   m_color_boards (color_boards),
   m_turn_color (turn),
   m_ep_possible (ep_possible),

@@ -22,10 +22,11 @@ static bool can_castle_k(const ChessBoard& board)
 }
 
 OncePiece::OncePiece(const piece_index_t piece_index,
+                     const char symbol,
                      const BitBoard& initial_board,
                      const std::vector<PositionDelta>& directions,
                      const bool is_king):
-  Piece(piece_index, initial_board),
+  Piece(piece_index, symbol, initial_board),
   m_directions (directions),
   m_is_king (is_king)
 {}
@@ -45,7 +46,8 @@ vector<Move> OncePiece::moves(const Position& source,
   if (is_king_at_initial_position(source, board)) {
     if (can_castle_q(board)) {
       result.push_back(move(source, Position(source.row(), Position::QUEENS_BISHOP_COLUMN), board));
-    } else if (can_castle_k(board)) {
+    }
+    if (can_castle_k(board)) {
       result.push_back(move(source, Position(source.row(), Position::KINGS_KNIGHT_COLUMN), board));
     }
   }
@@ -102,7 +104,7 @@ bool OncePiece::is_castling_move(const Position& source,
 {
   return is_king_at_initial_position(source, board)
       && source.row() == destination.row()
-      && abs(source.column() - destination.column() == 2);
+      && abs(source.column() - destination.column()) == 2;
 }
 
 bool OncePiece::forbids_castle(const Position& source, const ChessBoard& board) const

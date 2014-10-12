@@ -19,7 +19,9 @@ class Piece;
 class ColorBoard
 {
 public:
-  typedef unsigned int piece_index_t;
+  // Because of cyclic dependencies, we have to redefine it here. :(
+  // The original is in Piece.
+  typedef int piece_index_t;
 
   static ColorBoard create_initial_color_board(Color);
 
@@ -32,7 +34,9 @@ public:
    * @param can_castle_q True if queenside castling is possible.
    * @param can_castle_k True if queenside castling is possible.
    */
-  ColorBoard(const std::vector<PieceBoard>& piece_boards = std::vector<PieceBoard>(), bool can_castle_q = true, bool can_castle_k = true);
+  ColorBoard(const std::vector<PieceBoard>& piece_boards = std::vector<PieceBoard>(),
+             bool can_castle_q = true,
+             bool can_castle_k = true);
 
   const std::vector<PieceBoard>& piece_boards() const;
 

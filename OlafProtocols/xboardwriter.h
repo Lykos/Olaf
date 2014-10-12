@@ -23,6 +23,8 @@ public:
    */
   XBoardWriter(std::ostream* out);
 
+  ~XBoardWriter();
+
   void newline();
 
   void unknown_command(const std::string&);

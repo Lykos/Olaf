@@ -35,9 +35,9 @@ class Position
   friend PositionDelta operator-(const Position&, const Position&);
 
 public:
-  typedef std::uint_fast8_t row_t;
+  typedef std::int_fast8_t row_t;
 
-  typedef std::uint_fast8_t column_t;
+  typedef std::int_fast8_t column_t;
 
   static const row_t ROW_SIZE = 8;
 
@@ -67,6 +67,8 @@ public:
    * @brief Position with row = column = 0
    */
   constexpr Position(): Position(0, 0) {}
+
+  explicit Position(const std::string& pos);
 
   constexpr row_t row() const { return m_row; }
 

@@ -25,3 +25,8 @@ std::unique_ptr<MoveAction> ConversionAction::copy() const
 {
   return std::unique_ptr<MoveAction>(new ConversionAction(*this));
 }
+
+int ConversionAction::priority() const
+{
+  return MoveAction::CONVERSION_ACTION_PRIORITY;
+}

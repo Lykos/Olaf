@@ -1,5 +1,6 @@
 #include "movebuilder.h"
 
+#include <algorithm>
 
 #include "piecemoveaction.h"
 #include "turnflipaction.h"
@@ -13,6 +14,16 @@
 #include "moveaction.h"
 
 using namespace std;
+
+namespace {
+
+bool CompareMoveActionPriorities(const unique_ptr<MoveAction>& left,
+                                 const unique_ptr<MoveAction>& right)
+{
+  return left->priority() < right->priority();
+}
+
+} // namespace
 
 // static
 Move MoveBuilder::castle(const ChessBoard& board,
@@ -65,9 +76,11 @@ MoveBuilder::MoveBuilder(const ChessBoard& board,
   m_destination(destination)
 {
   const Piece::piece_index_t piece_index = board.turn_board().piece_index(source);
+  unique_ptr<MoveAction> turn_flip_action(new TurnFlipAction());
   unique_ptr<MoveAction> piece_move_action(
         new PieceMoveAction(piece_index, source, destination));
   unique_ptr<MoveAction> ep_disable_action(new EpDisableAction());
+  m_move_actions.push_back(move(turn_flip_action));
   m_move_actions.push_back(move(piece_move_action));
   m_move_actions.push_back(move(ep_disable_action));
   if (board.opponent(destination)) {
@@ -125,8 +138,6 @@ void MoveBuilder::conversion(const Position& position,
 
 Move MoveBuilder::build()
 {
-  unique_ptr<MoveAction> turn_flip_action(new TurnFlipAction());
-  m_move_actions.push_back(move(turn_flip_action));
   return Move(copy_move_actions(),
               m_source,
               m_destination,
@@ -141,5 +152,6 @@ MoveActions MoveBuilder::copy_move_actions() const
   for (const std::unique_ptr<MoveAction>& move_action : m_move_actions) {
     result.push_back(move_action->copy());
   }
+  sort(result.begin(), result.end(), CompareMoveActionPriorities);
   return result;
 }

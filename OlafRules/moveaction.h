@@ -29,11 +29,24 @@ public:
   virtual void undo(ChessBoard* chess_board) = 0;
 
   /**
+   * @brief priority returns the priority of the move action. This is used for the order of their execution.
+   */
+  virtual int priority() const = 0;
+
+  /**
    * @brief copy returns a copy of the move action.
    */
   virtual std::unique_ptr<MoveAction> copy() const = 0;
 
   virtual ~MoveAction() {}
+
+  static const int CAPTURE_ACTION_PRIORITY = 1;
+  static const int PIECE_MOVE_ACTION_PRIORITY = 2;
+  static const int CONVERSION_ACTION_PRIORITY = 3;
+  static const int EP_DISABLE_PRIORITY = 4;
+  static const int EP_ENABLE_PRIORITY = 5;
+  static const int ANTI_CASTLE_ACTION_PRIORITY = 6;
+  static const int TURN_FLIP_ACTION_PRIORITY = 7;
 };
 
 typedef std::vector<std::unique_ptr<MoveAction>> MoveActions;

@@ -32,6 +32,8 @@ public:
 
   std::unique_ptr<MoveAction> copy() const override;
 
+  int priority() const override;
+
 private:
   const PieceSet::piece_index_t m_piece_index;
 

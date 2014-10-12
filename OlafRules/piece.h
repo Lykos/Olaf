@@ -1,10 +1,11 @@
 #ifndef PIECETYPE_H
 #define PIECETYPE_H
 
+#include <vector>
+
 #include "position.h"
 #include "color.h"
 #include "bitboard.h"
-#include <vector>
 
 class Move;
 
@@ -22,14 +23,28 @@ class Piece
   friend bool operator==(const Piece& a, const Piece& b);
 
 public:
-  typedef unsigned int piece_index_t;
+  typedef int piece_index_t;
 
-  Piece(piece_index_t, const BitBoard&);
+  Piece(piece_index_t piece_index,
+        char symbol,
+        const BitBoard& initial_board);
+
+  Piece(const Piece& piece) = delete;
+
+  Piece(Piece&& piece) = delete;
+
+  Piece& operator =(const Piece& piece) = delete;
+
+  Piece& operator =(Piece&& piece) = delete;
+
+  virtual ~Piece();
 
   virtual std::vector<Move> moves(const Position& source,
                                   const ChessBoard& board) const = 0;
 
   piece_index_t piece_index() const;
+
+  char symbol(Color color) const;
 
   const BitBoard& initial_board() const;
 
@@ -41,13 +56,14 @@ public:
                     const Position& destination,
                     const ChessBoard& board) const = 0;
 
-  virtual ~Piece() = 0;
+  static const piece_index_t c_no_piece = -1;
 
 private:
-  piece_index_t m_piece_index;
+  const piece_index_t m_piece_index;
 
-  BitBoard m_initial_board;
+  const char m_symbol;
 
+  const BitBoard m_initial_board;
 };
 
 #include "chessboard.h"

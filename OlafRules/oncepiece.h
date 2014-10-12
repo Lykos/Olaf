@@ -14,6 +14,7 @@ class OncePiece : public Piece
 {
 public:
   OncePiece(piece_index_t piece_index,
+            char symbol,
             const BitBoard& initial_board,
             const std::vector<PositionDelta>& directions,
             bool is_king);

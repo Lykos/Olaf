@@ -1,3 +1,10 @@
+#include <memory>
+#include <iostream>
+#include <fstream>
+#include <istream>
+#include <ostream>
+#include <gflags/gflags.h>
+
 #include "OlafSearching/searcherfactory.h"
 #include "OlafProtocols/protocolreader.h"
 #include "OlafProtocols/protocolwriter.h"
@@ -7,32 +14,40 @@
 #include "OlafProtocols/engineeventhelper.h"
 #include "OlafProtocols/simplethinkingwriter.h"
 #include "OlafSearching/thinkingwriter.h"
-#include <memory>
-#include <iostream>
-#include <fstream>
-#include <istream>
 
 using namespace std;
 
+DEFINE_string(input_file, "", "If this is non-empty, the input will be read from here instead of stdin.");
+
+DEFINE_string(output_file, "", "If this is non-empty, the output will be written here instead of stdout.");
+
 int main(int argc, char* argv[])
 {
+  google::ParseCommandLineFlags(&argc, &argv, true);
   istream* in;
-  std::unique_ptr<fstream> file_deleter;
-  // TODO use google flags library
-  if (argc == 2) {
-    file_deleter.reset(new fstream(argv[1], fstream::in));
-    in = file_deleter.get();
+  std::unique_ptr<ifstream> in_file_deleter;
+  ostream* out;
+  std::unique_ptr<ofstream> out_file_deleter;
+  if (!FLAGS_input_file.empty()) {
+    in_file_deleter.reset(new ifstream(FLAGS_input_file, fstream::in));
+    in = in_file_deleter.get();
   } else {
     in = &cin;
   }
-  cout.setf(ios::unitbuf);
+  if (!FLAGS_output_file.empty()) {
+    out_file_deleter.reset(new ofstream(FLAGS_output_file, fstream::out));
+    out = out_file_deleter.get();
+  } else {
+    out = &cout;
+  }
+  out->setf(ios::unitbuf);
   string protocol_name;
   getline(*in, protocol_name);
   unique_ptr<ProtocolWriter> writer;
   if (protocol_name == "xboard") {
-    writer.reset(new XBoardWriter(&cout));
+    writer.reset(new XBoardWriter(out));
   } else {
-    cout << "Error: Unknown protocol " << protocol_name << "." << endl;
+    *out << "Error: Unknown protocol " << protocol_name << "." << endl;
     return 1;
   }
   SimpleThinkingWriter thinking_writer(writer.get());

@@ -19,12 +19,25 @@ TEMPLATE = app
 SOURCES += \
     tst_olafrules.cpp \
     boardtest.cpp \
-    pawntest.cpp
+    pawntest.cpp \
+    oncepiecetest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     boardtest.h \
-    pawntest.h
+    pawntest.h \
+    oncepiecetest.h \
+    testutil.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafRules -lOlafRules
+
+LIBS += -L$$PWD/../../../../Downloads/gmock-1.7.0/build/ -lgmock
+
+INCLUDEPATH += $$PWD/../../../../Downloads/gmock-1.7.0/include
+DEPENDPATH += $$PWD/../../../../Downloads/gmock-1.7.0/include
+
+INCLUDEPATH += $$PWD/../../../../Downloads/gmock-1.7.0/gtest/include
+DEPENDPATH += $$PWD/../../../../Downloads/gmock-1.7.0/gtest/include
+
+PRE_TARGETDEPS += $$PWD/../../../../Downloads/gmock-1.7.0/build/libgmock.a

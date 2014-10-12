@@ -9,12 +9,13 @@ using namespace std;
 using namespace rel_ops;
 
 LinePiece::LinePiece(const piece_index_t piece_index,
+                     const char symbol,
                      const BitBoard& initial_board,
                      const vector<PositionDelta>& directions,
                      const bool is_rook):
-  Piece(piece_index, initial_board),
-  m_directions (directions),
-  m_is_rook (is_rook)
+  Piece(piece_index, symbol, initial_board),
+  m_directions(directions),
+  m_is_rook(is_rook)
 {}
 
 vector<Move> LinePiece::moves(const Position& source,

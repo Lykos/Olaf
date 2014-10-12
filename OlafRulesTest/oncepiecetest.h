@@ -1,24 +1,26 @@
-#ifndef PAWNTEST_H
-#define PAWNTEST_H
+#ifndef ONCEPIECETEST_H
+#define ONCEPIECETEST_H
+
+#include <QObject>
+#include <QtTest/QTest>
 
 #include "OlafRules/chessboard.h"
 #include "OlafRules/piece.h"
-#include "OlafRules/pawn.h"
-#include <QtTest/QTest>
-#include <QObject>
 
-class PawnTest : public QObject
+class OncePieceTest : public QObject
 {
   Q_OBJECT
 
 private:
   ChessBoard m_board;
 
-  Piece::piece_index_t m_pawn_index;
-
   Piece::piece_index_t m_knight_index;
 
-  const Pawn* m_pawn;
+  Piece::piece_index_t m_king_index;
+
+  const Piece* m_knight;
+
+  const Piece* m_king;
 
 private Q_SLOTS:
   void initTestCase();
@@ -33,4 +35,4 @@ private Q_SLOTS:
 
 };
 
-#endif // PAWNTEST_H
+#endif // ONCEPIECETEST_H

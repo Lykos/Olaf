@@ -22,7 +22,12 @@ void CaptureAction::undo(ChessBoard* const chess_board)
   chess_board->noturn_board().piece_board(m_victim_index).set(m_victim_position, true);
 }
 
-
-unique_ptr<MoveAction> CaptureAction::copy() const {
+unique_ptr<MoveAction> CaptureAction::copy() const
+{
   return unique_ptr<MoveAction>(new CaptureAction(*this));
+}
+
+int CaptureAction::priority() const
+{
+  return MoveAction::CAPTURE_ACTION_PRIORITY;
 }

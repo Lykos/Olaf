@@ -1,11 +1,16 @@
 #include "move.h"
-#include "movebuilder.h"
+
+#include <cassert>
+#include <iostream>
+
+#include "pieceset.h"
 
 using namespace std;
 
 static MoveActions copy_move_actions(const MoveActions& move_actions) {
   MoveActions result;
   for (const unique_ptr<MoveAction>& move_action : move_actions) {
+    assert(move_action.get());
     result.push_back(move_action->copy());
   }
   return result;
@@ -23,8 +28,7 @@ Move::Move(MoveActions&& move_actions,
   m_conversion(conversion),
   m_capture(capture),
   m_created_piece(created_piece)
-{
-}
+{}
 
 Move::Move(const Move& move):
   m_move_actions(copy_move_actions(move.m_move_actions)),
@@ -47,18 +51,49 @@ Move::Move(Move&& move):
 Move::~Move()
 {}
 
-void Move::execute(ChessBoard* const chess_board)
+bool Move::is_valid(const ChessBoard& board) const
 {
-  for (auto it = m_move_actions.rbegin(); it < m_move_actions.rend(); ++it) {
-    (*it)->execute(chess_board);
+  const Piece::piece_index_t piece_index =
+      board.turn_board().piece_index(m_source);
+  if (piece_index == Piece::c_no_piece) {
+    cout << "No piece at " << m_source << endl;
+    return false;
+  }
+  if (!m_conversion) {
+    const bool result = board.turn_board().piece(m_source).can_move(m_source,
+                                                       m_destination,
+                                                       board);
+    if (!result) {
+      cout << "Piece " << piece_index << " cannot move from " << m_source << " to " << m_destination << endl;
+    }
+    return result;
+  } else {
+    const Pawn& pawn = PieceSet::instance().pawn();
+    const bool result = piece_index == pawn.piece_index() && pawn.can_move(m_source,
+                                                              m_destination,
+                                                              board,
+                                                              m_created_piece);
+    if (!result) {
+      cout << "Piece " << piece_index << " cannot convert to " << m_created_piece << " from " << m_source << " to " << m_destination << endl;
+    }
+    return result;
   }
 }
 
-void Move::undo(ChessBoard* const chess_board)
+void Move::execute(ChessBoard* const board)
 {
+  assert(is_valid(*board));
   for (auto it = m_move_actions.begin(); it < m_move_actions.end(); ++it) {
-    (*it)->undo(chess_board);
+    (*it)->execute(board);
   }
+}
+
+void Move::undo(ChessBoard* const board)
+{
+  for (auto it = m_move_actions.rbegin(); it < m_move_actions.rend(); ++it) {
+    (*it)->undo(board);
+  }
+  assert(is_valid(*board));
 }
 
 const Position& Move::source() const
@@ -84,4 +119,16 @@ bool Move::is_conversion() const
 Piece::piece_index_t Move::created_piece() const
 {
   return m_created_piece;
+}
+
+std::ostream& operator <<(std::ostream& out, const Move& move)
+{
+  out << "Move(" << move.source() << " " << move.destination();
+  if (move.is_capture()) {
+    out << " capture";
+  }
+  if (move.is_conversion()) {
+    out << " converts to " << move.created_piece();
+  }
+  return out << ")";
 }

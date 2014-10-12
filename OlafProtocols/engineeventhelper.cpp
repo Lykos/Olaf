@@ -101,5 +101,4 @@ void EngineEventHelper::enqueue_move(const Move& move)
 {
   unique_ptr<EngineEvent> move_event(new MoveEvent(move));
   m_engine->enqueue(std::move(move_event));
-  m_board_state->move(move);
 }

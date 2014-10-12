@@ -18,3 +18,7 @@ void EpDisableAction::undo(ChessBoard* const chess_board)
 unique_ptr<MoveAction> EpDisableAction::copy() const {
   return unique_ptr<MoveAction>(new EpDisableAction(*this));
 }
+
+int EpDisableAction::priority() const {
+  return MoveAction::EP_DISABLE_PRIORITY;
+}

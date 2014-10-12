@@ -26,6 +26,8 @@ public:
 
   std::unique_ptr<MoveAction> copy() const override;
 
+  int priority() const override;
+
 private:
   const Position m_position;
 

@@ -31,7 +31,7 @@ private:
 
   static const unsigned int min_depth = 1;
 
-  std::shared_ptr<DepthSearcher> m_searcher;
+  std::unique_ptr<DepthSearcher> m_searcher;
 
   ThinkingWriter* const m_writer;
 

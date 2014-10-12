@@ -17,7 +17,7 @@ ChessBoard BoardState::board()
 
 void BoardState::reset()
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   m_board = create_initial_board();
 }
 
@@ -32,39 +32,15 @@ void BoardState::undo()
 
 void BoardState::move(const Move& move)
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   m_moves.push(move);
   m_moves.top().execute(&m_board);
-  cout << "# " << "board_state.move()" << endl;
-  cout << "# source " << move.source() << endl;
-  cout << "# destination " << move.destination() << endl;
-  for (int i = 7; i >= 0; --i) {
-    cout << "# ";
-    for (int j = 0; j < 8; ++j) {
-      if (m_board.turn_color() == White)
-        cout << (m_board.opponent(Position(i, j)) ? "x" : " ");
-      else
-        cout << (m_board.friendd(Position(i, j)) ? "x" : " ");
-    }
-    cout << endl;
-  }
-  cout << "# bla" << endl;
-  for (int i = 7; i >= 0; --i) {
-    cout << "# ";
-    for (int j = 0; j < 8; ++j) {
-      if (m_board.turn_color() == Black)
-        cout << (m_board.opponent(Position(i, j)) ? "x" : " ");
-      else
-        cout << (m_board.friendd(Position(i, j)) ? "x" : " ");
-    }
-    cout << endl;
-  }
 }
 
 bool BoardState::valid_move(const Position& source,
                             const Position& destination)
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   return m_move_creator->valid_move(m_board, source, destination);
 }
 
@@ -72,14 +48,14 @@ bool BoardState::valid_move(const Position& source,
                             const Position& destination,
                             const Piece::piece_index_t conversion)
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   return m_move_creator->valid_move(m_board, source, destination, conversion);
 }
 
 Move BoardState::create_move(const Position& source,
                              const Position& destination)
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   return m_move_creator->create_move(m_board, source, destination);
 }
 
@@ -87,6 +63,6 @@ Move BoardState::create_move(const Position& source,
                              const Position& destination,
                              const Piece::piece_index_t conversion)
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   return m_move_creator->create_move(m_board, source, destination, conversion);
 }

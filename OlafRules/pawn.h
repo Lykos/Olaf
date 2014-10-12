@@ -12,6 +12,7 @@ class Pawn : public Piece
 {
 public:
   Pawn(piece_index_t piece_index,
+       char symbol,
        const BitBoard& initial_board,
        const std::vector<piece_index_t>& conversions);
 

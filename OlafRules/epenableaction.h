@@ -24,6 +24,8 @@ public:
 
   std::unique_ptr<MoveAction> copy() const override;
 
+  int priority() const override;
+
 private:
   bool m_old_ep_possible;
 

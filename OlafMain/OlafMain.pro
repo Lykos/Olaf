@@ -33,3 +33,5 @@ EXTRA_BINFILES += $$PWD/../start_game.txt
 for (FILE, EXTRA_BINFILES){
     QMAKE_POST_LINK += $$quote(cp $${FILE} $$OUT_PWD$$escape_expand(\n\t))
 }
+
+LIBS += -lgflags

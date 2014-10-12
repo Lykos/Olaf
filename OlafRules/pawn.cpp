@@ -8,9 +8,10 @@
 using namespace std;
 
 Pawn::Pawn(const piece_index_t piece_index,
+           const char symbol,
            const BitBoard& initial_board,
            const std::vector<piece_index_t>& conversions):
-  Piece(piece_index, initial_board),
+  Piece(piece_index, symbol, initial_board),
   m_conversions (conversions)
 {}
 

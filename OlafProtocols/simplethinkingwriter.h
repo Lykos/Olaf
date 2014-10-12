@@ -18,7 +18,7 @@ class SimpleThinkingWriter : public ThinkingWriter
   /**
    * @brief SimpleThinkingWriter does not take ownership of the passed pointer.
    */
-  SimpleThinkingWriter(ProtocolWriter* writer);
+  explicit SimpleThinkingWriter(ProtocolWriter* writer);
 
   void output(const ChessBoard &board,
               const SearchResult &result,
@@ -26,7 +26,7 @@ class SimpleThinkingWriter : public ThinkingWriter
               int depth);
 
 private:
-  std::shared_ptr<ProtocolWriter> m_writer;
+  ProtocolWriter* const m_writer;
 
 };
 

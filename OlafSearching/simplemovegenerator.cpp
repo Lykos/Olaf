@@ -3,6 +3,7 @@
 #include "OlafRules/position.h"
 #include "OlafRules/piece.h"
 #include <memory>
+#include <iostream>
 
 using namespace std;
 

@@ -2,6 +2,7 @@
 #define MOVE_H
 
 #include <memory>
+#include <ostream>
 #include <vector>
 
 #include "piece.h"
@@ -26,15 +27,17 @@ class Move
 
   ~Move();
 
+  bool is_valid(const ChessBoard& board) const;
+
   /**
    * @brief execute executes the moves.
    */
-  void execute(ChessBoard* chessboard);
+  void execute(ChessBoard* board);
 
   /**
    * @brief undo takes back the move actions.
    */
-  void undo(ChessBoard* chessboard);
+  void undo(ChessBoard* board);
 
   const Position& source() const;
 
@@ -59,6 +62,8 @@ private:
 
   const Piece::piece_index_t m_created_piece;
 };
+
+std::ostream& operator <<(std::ostream& out, const Move& move);
 
 #include "moveaction.h"
 

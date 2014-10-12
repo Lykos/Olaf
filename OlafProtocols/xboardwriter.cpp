@@ -10,6 +10,9 @@ XBoardWriter::XBoardWriter(ostream* const out):
   m_out(out)
 {}
 
+XBoardWriter::~XBoardWriter()
+{}
+
 void XBoardWriter::newline()
 {
   unique_lock<mutex> lock(m_mutex);

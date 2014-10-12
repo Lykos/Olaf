@@ -1,10 +1,16 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+#include <array>
+#include <ostream>
+
 #include "color.h"
 #include "colorboard.h"
 #include "position.h"
-#include <array>
+
+class ChessBoard;
+
+std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
 
 /**
  * @brief The ChessBoard class represents the whole chessboard including information about the positions
@@ -12,6 +18,7 @@
  */
 class ChessBoard
 {
+  friend std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
 public:
   /**
    * @brief ChessBoard

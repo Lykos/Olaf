@@ -1,7 +1,9 @@
 #include "engine.h"
+
+#include <cassert>
+
 #include "OlafSearching/stopper.h"
 #include "OlafRules/chessboard.h"
-#include <iostream>
 
 using namespace std;
 
@@ -27,6 +29,9 @@ void Engine::run()
       if (m_state.my_turn() && !m_state.force()) {
         m_searcher->time(m_state.time());
         SearchResult result = m_searcher->search_timed(&board, *m_forced_stopper, *m_weak_stopper);
+        if (result.main_variation().empty()) {
+          return;
+        }
         move(result.main_variation().back());
       } else {
         m_searcher->search_untimed(&board, *m_forced_stopper);
@@ -77,8 +82,7 @@ void Engine::request_quit()
 
 void Engine::move(const Move &move)
 {
-  Move mov(move);
-  m_writer->move(mov);
+  m_writer->move(move);
   m_state.flip_turn();
-  m_state.board_state().move(mov);
+  m_state.board_state().move(move);
 }

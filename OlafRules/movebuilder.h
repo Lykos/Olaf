@@ -77,7 +77,7 @@ private:
 
   bool m_capture = false;
 
-  Piece::piece_index_t m_created_piece;
+  Piece::piece_index_t m_created_piece = Piece::c_no_piece;
 };
 
 #include "chessboard.h"

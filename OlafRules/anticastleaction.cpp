@@ -25,6 +25,12 @@ void AntiCastleAction::undo(ChessBoard* const chess_board)
   color_board.can_castle_k(m_old_can_castle_k);
 }
 
-unique_ptr<MoveAction> AntiCastleAction::copy() const {
+unique_ptr<MoveAction> AntiCastleAction::copy() const
+{
   return unique_ptr<MoveAction>(new AntiCastleAction(*this));
+}
+
+int AntiCastleAction::priority() const
+{
+  return MoveAction::ANTI_CASTLE_ACTION_PRIORITY;
 }
