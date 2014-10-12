@@ -16,7 +16,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafRules -lOlafRules
 
@@ -35,3 +34,6 @@ for (FILE, EXTRA_BINFILES){
 }
 
 LIBS += -lgflags
+
+target.path = /usr/local/bin
+INSTALLS += target
