@@ -7,11 +7,15 @@
 #include "color.h"
 #include <memory>
 
+bool operator ==(const PieceBoard& left, const PieceBoard& right);
+
 /**
  * @brief The PieceBoard class represents a bitboard associated with a given pieceboard.
  */
 class PieceBoard
 {
+  friend bool operator ==(const PieceBoard& left, const PieceBoard& right);
+
 public:
   /**
    * @brief PieceBoard does not take ownership of piece.

@@ -51,8 +51,7 @@ bool parse_leading_int(const string::const_iterator& end,
     *number = to_digit(**it);
   }
   ++*it;
-  CHECK_NOT_END(*it, end);
-  while (is_digit(**it)) {
+  while (*it != end && is_digit(**it)) {
     if (number) {
       *number = *number * 10 + to_digit(**it);
     }
@@ -90,6 +89,7 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
           new_board.add_piece(color, piece->piece_index(), position);
           found = true;
           ++column;
+          break;
         }
         if (!found) {
           return false;
@@ -100,7 +100,7 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
     if (column > Position::c_column_size) {
       return false;
     }
-    if (row < Position::c_row_size - 1) {
+    if (row > 0) {
       CONSUME(c_row_separator, it, end);
     }
   }

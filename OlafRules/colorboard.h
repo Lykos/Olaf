@@ -12,12 +12,17 @@ class BitBoard;
 
 class Piece;
 
+class ColorBoard;
+
+bool operator ==(const ColorBoard& left, const ColorBoard& right);
+
 /**
  * @brief The ColorBoard class represents all the board information about one color, i.e. castling rights and
  * piece positions.
  */
 class ColorBoard
 {
+  friend bool operator ==(const ColorBoard& left, const ColorBoard& right);
 public:
   // Because of cyclic dependencies, we have to redefine it here. :(
   // The original is in Piece.

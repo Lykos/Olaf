@@ -2,6 +2,15 @@
 
 using namespace std;
 
+bool operator ==(const PieceBoard& left, const PieceBoard& right)
+{
+  if (&left == &right) {
+    return true;
+  }
+  return left.m_piece == right.m_piece
+      && left.m_bit_board == right.m_bit_board;
+}
+
 PieceBoard::PieceBoard(const Piece* const piece, const BitBoard& bit_board):
   m_piece(piece),
   m_bit_board(bit_board)

@@ -12,6 +12,8 @@ class ChessBoard;
 
 std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
 
+bool operator ==(const ChessBoard& left, const ChessBoard& right);
+
 // TODO 50 move rule
 /**
  * @brief The ChessBoard class represents the whole chessboard including information about the positions
@@ -20,6 +22,8 @@ std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
 class ChessBoard
 {
   friend std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
+  friend bool operator ==(const ChessBoard& left, const ChessBoard& right);
+
 public:
   /**
    * @brief ChessBoard

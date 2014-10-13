@@ -8,10 +8,11 @@ using namespace std;
 
 static bool can_castle_q(const ChessBoard& board)
 {
+  const Position::row_t ground = ground_line(board.turn_color());
   return board.turn_board().can_castle_q()
-      && !board.occupied(Position(ground_line(board.turn_color()), Position::c_queens_knight_column))
-      && !board.occupied(Position(ground_line(board.turn_color()), Position::c_queens_bishop_column))
-      && !board.occupied(Position(ground_line(board.turn_color()), Position::c_queen_column));
+      && !board.occupied(Position(ground, Position::c_queens_knight_column))
+      && !board.occupied(Position(ground, Position::c_queens_bishop_column))
+      && !board.occupied(Position(ground, Position::c_queen_column));
 }
 
 static bool can_castle_k(const ChessBoard& board)

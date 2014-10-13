@@ -29,10 +29,13 @@ void OncePieceTest::initTestCase()
   m_king_index = m_king->piece_index();
   m_knight_index = m_knight->piece_index();
 
-  PieceBoard& king_board = m_board.turn_board().piece_board(m_king_index);
-  PieceBoard& knight_board = m_board.turn_board().piece_board(m_knight_index);
+  ColorBoard& turn_board = m_board.turn_board();
+  turn_board.can_castle_k(true);
+  turn_board.can_castle_q(true);
+  PieceBoard& king_board = turn_board.piece_board(m_king_index);
+  PieceBoard& knight_board = turn_board.piece_board(m_knight_index);
   PieceBoard& rook_board =
-      m_board.noturn_board().piece_board(PieceSet::instance().rook().piece_index());
+      turn_board.piece_board(PieceSet::instance().rook().piece_index());
   PieceBoard& oknight_board = m_board.noturn_board().piece_board(m_knight_index);
 
   king_board.set(Position("a8"), true);

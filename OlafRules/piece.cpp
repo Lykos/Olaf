@@ -34,9 +34,9 @@ char Piece::symbol(const Color color) const
   return color == Color::White ? m_symbol : toupper(m_symbol);
 }
 
-const BitBoard& Piece::initial_board() const
+BitBoard Piece::initial_board(const Color color) const
 {
-  return m_initial_board;
+  return color == Color::White ? m_initial_board.mirror_rows() : m_initial_board;
 }
 
 Piece::~Piece() {}

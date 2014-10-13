@@ -5,10 +5,22 @@
 
 using namespace std;
 
-ColorBoard::ColorBoard(const std::vector<PieceBoard>& piece_boards, bool can_castle_q, bool can_castle_k):
-  m_piece_boards (piece_boards),
-  m_can_castle_q (can_castle_q),
-  m_can_castle_k (can_castle_k)
+bool operator ==(const ColorBoard& left, const ColorBoard& right)
+{
+  if (&left == &right) {
+    return true;
+  }
+  return left.m_can_castle_k == right.m_can_castle_k
+      && left.m_can_castle_q == right.m_can_castle_q
+      && left.m_piece_boards == right.m_piece_boards;
+}
+
+ColorBoard::ColorBoard(const std::vector<PieceBoard>& piece_boards,
+                       const bool can_castle_q,
+                       const bool can_castle_k):
+  m_piece_boards(piece_boards),
+  m_can_castle_q(can_castle_q),
+  m_can_castle_k(can_castle_k)
 {}
 
 
@@ -83,10 +95,7 @@ ColorBoard ColorBoard::create_initial_color_board(Color color)
 {
   vector<PieceBoard> piece_boards;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
-    BitBoard initial_board = piece->initial_board();
-    if (color == Color::Black) {
-      initial_board = initial_board.mirror_rows();
-    }
+    BitBoard initial_board = piece->initial_board(color);
     const PieceBoard piece_board(piece, initial_board);
     piece_boards.push_back(piece_board);
   }

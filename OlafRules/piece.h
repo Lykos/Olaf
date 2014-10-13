@@ -25,6 +25,13 @@ class Piece
 public:
   typedef int piece_index_t;
 
+  /**
+   * @brief Piece creates a new base piece.
+   * @param piece_index the index of this piece in lists that contain somethin for all pieces.
+   * @param symbol the char which is used to represent this piece.
+   * @param initial_board the bitboard which will serve sa the initial
+   *        board for black. (The black one is easier to add than the white one)
+   */
   Piece(piece_index_t piece_index,
         char symbol,
         const BitBoard& initial_board);
@@ -46,7 +53,7 @@ public:
 
   char symbol(Color color) const;
 
-  const BitBoard& initial_board() const;
+  BitBoard initial_board(Color color) const;
 
   virtual bool can_move(const Position& source,
                         const Position& destination,

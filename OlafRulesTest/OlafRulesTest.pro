@@ -20,14 +20,16 @@ SOURCES += \
     tst_olafrules.cpp \
     boardtest.cpp \
     pawntest.cpp \
-    oncepiecetest.cpp
+    oncepiecetest.cpp \
+    fenparsertest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     boardtest.h \
     pawntest.h \
     oncepiecetest.h \
-    testutil.h
+    testutil.h \
+    fenparsertest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafRules -lOlafRules

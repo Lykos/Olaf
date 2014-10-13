@@ -20,6 +20,19 @@ std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
   return out;
 }
 
+bool operator ==(const ChessBoard& left, const ChessBoard& right)
+{
+  if (&left == &right) {
+    return true;
+  }
+  return left.m_turn_color == right.m_turn_color
+      && left.m_turn_number == right.m_turn_number
+      && left.m_ep_possible == right.m_ep_possible
+      && left.m_ep_capture_position == right.m_ep_capture_position
+      && left.m_ep_victim_position == right.m_ep_victim_position
+      && left.m_color_boards == right.m_color_boards;
+}
+
 ChessBoard::ChessBoard(const array<ColorBoard, 2>& color_boards, Color turn,
                        const bool ep_possible,
                        const Position& ep_capture_position,
