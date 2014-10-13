@@ -2,6 +2,7 @@
 
 #include <cctype>
 #include <string>
+#include <sstream>
 
 #include "chessboard.h"
 #include "pieceset.h"
@@ -173,6 +174,72 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
   }
   *board = new_board;
   return true;
+}
+
+// static
+string FenParser::serialize(const ChessBoard& board)
+{
+  ostringstream result;
+  for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
+    int free_columns = 0;
+    for (Position::column_t column = 0; column < Position::c_column_size; ++column) {
+      const Position pos(row, column);
+      if (board.occupied(pos)) {
+        if (free_columns > 0) {
+          result << free_columns;
+          free_columns = 0;
+        }
+        if (board.friendd(pos)) {
+         result << board.turn_board().piece(pos).symbol(board.turn_color());
+       } else if (board.opponent(pos)) {
+         result << board.noturn_board().piece(pos).symbol(previous(board.turn_color()));
+       }
+      } else {
+        ++free_columns;
+      }
+    }
+    if (free_columns > 0) {
+      result << free_columns;
+    }
+    if (row > 0) {
+      result << c_row_separator;
+    }
+  }
+  result << c_space;
+  result << (board.turn_color() == Color::White ? c_white : c_black);
+  result << c_space;
+  bool castle = false;
+  if (board.color_board(Color::White).can_castle_k()) {
+    result << c_white_castle_k;
+    castle = true;
+  }
+  if (board.color_board(Color::White).can_castle_q()) {
+    result << c_white_castle_q;
+    castle = true;
+  }
+  if (board.color_board(Color::Black).can_castle_k()) {
+    result << c_black_castle_k;
+    castle = true;
+  }
+  if (board.color_board(Color::Black).can_castle_q()) {
+    result << c_black_castle_q;
+    castle = true;
+  }
+  if (!castle) {
+    result << c_dash;
+  }
+  result << c_space;
+  if (board.ep_possible()) {
+    result << board.ep_capture_position();
+  } else {
+    result << c_dash;
+  }
+  result << c_space;
+  // TODO Handle 50 moves rule.
+  result << 0;
+  result << c_space;
+  result << board.turn_number();
+  return result.str();
 }
 
 #undef CONSUME

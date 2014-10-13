@@ -31,4 +31,17 @@ void FenParserTest::test_parse()
   ChessBoard actual_board;
   QVERIFY(FenParser::parse(fen.toStdString(), &actual_board));
   QCOMPARE(board, actual_board);
+  QCOMPARE(FenParser::serialize(board), fen.toStdString());
+}
+
+void FenParserTest::test_serialize_data()
+{
+  test_parse_data();
+}
+
+void FenParserTest::test_serialize()
+{
+  QFETCH(QString, fen);
+  QFETCH(ChessBoard, board);
+  QCOMPARE(FenParser::serialize(board), fen.toStdString());
 }

@@ -25,11 +25,19 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
   if (&left == &right) {
     return true;
   }
+  if (left.m_ep_possible != right.m_ep_possible) {
+    return false;
+  }
+  if (left.m_ep_possible) {
+    const bool ep_equal =
+        left.m_ep_capture_position == right.m_ep_capture_position
+        && left.m_ep_victim_position == right.m_ep_victim_position;
+    if (!ep_equal) {
+      return false;
+    }
+  }
   return left.m_turn_color == right.m_turn_color
       && left.m_turn_number == right.m_turn_number
-      && left.m_ep_possible == right.m_ep_possible
-      && left.m_ep_capture_position == right.m_ep_capture_position
-      && left.m_ep_victim_position == right.m_ep_victim_position
       && left.m_color_boards == right.m_color_boards;
 }
 
