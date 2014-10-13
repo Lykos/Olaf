@@ -17,6 +17,12 @@
 class XBoardWriter : public ProtocolWriter
 {
 public:
+  enum class ErrorType {
+    UNKNOWN_COMMAND,
+    NOT_ENOUGH_ARGUMENTS,
+    INVALID_FEN
+  };
+
   /**
    * @brief XBoardWriter does not take ownership of out.
    * @param out the output stream to which the result should be written.
@@ -37,7 +43,7 @@ public:
 
   void move(const Move& mov) override;
 
-  void error(const std::string& type, const std::string& message);
+  void error(const ErrorType type, const std::string& message);
 
   void resign();
 
@@ -72,6 +78,8 @@ public:
   void thinking_output(int ply, int score, int centiseconds, int nodes, const std::string &moves) override;
 
 private:
+  std::string error_name(ErrorType type) const;
+
   std::mutex m_mutex;
 
   std::ostream* const m_out;

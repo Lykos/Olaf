@@ -108,7 +108,9 @@ void XBoardReader::run()
         }
       }
       const string fen = oss.str();
-      m_engine_helper->set_fen(fen);
+      if (!m_engine_helper->set_fen(fen)) {
+        m_writer->error(XBoardWriter::ErrorType::INVALID_FEN, fen);
+      }
     } else if (command == "usermove") {
       if (!check_args(tokens, 1)) {
         continue;
@@ -217,7 +219,7 @@ bool XBoardReader::check_args(const vector<string>& tokens,
     oss << "Wrong number of arguments for " << tokens.at(0)
         << ": " << args << " needed, " << actual_args
         << " provided.";
-    m_writer->error("invalid_arguments", oss.str());
+    m_writer->error(XBoardWriter::ErrorType::NOT_ENOUGH_ARGUMENTS, oss.str());
   }
   return result;
 }

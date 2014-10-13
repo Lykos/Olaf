@@ -40,7 +40,7 @@ void XBoardWriter::feature(const string& name, const string& value)
 void XBoardWriter::unknown_command(const string &command)
 {
   unique_lock<mutex> lock(m_mutex);
-  error("unknown command", command);
+  error(ErrorType::UNKNOWN_COMMAND, command);
 }
 
 void XBoardWriter::move(const Move& mov)
@@ -147,10 +147,10 @@ void XBoardWriter::pong(int number)
   *m_out << "pong " << number << endl;
 }
 
-void XBoardWriter::error(const string& type, const string& message)
+void XBoardWriter::error(const ErrorType type, const string& message)
 {
   unique_lock<mutex> lock(m_mutex);
-  *m_out << "Error (" << type << "): " << message << endl;
+  *m_out << "Error (" << error_name(type) << "): " << message << endl;
 }
 
 void XBoardWriter::illegal_move(const string& move)
@@ -169,4 +169,17 @@ void XBoardWriter::thinking_output(int ply, int score, int centiseconds, int nod
 {
   unique_lock<mutex> lock(m_mutex);
   *m_out << ply << "\t" << score << "\t" << centiseconds << "\t" << nodes << "\t" << moves << endl;
+}
+
+std::string XBoardWriter::error_name(const ErrorType type) const
+{
+  switch (type) {
+    case ErrorType::UNKNOWN_COMMAND:
+      return "unknown command";
+    case ErrorType::NOT_ENOUGH_ARGUMENTS:
+      return "not enough arguments";
+    case ErrorType::INVALID_FEN:
+      return "invalid fen";
+  }
+  return "";
 }
