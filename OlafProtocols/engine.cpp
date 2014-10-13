@@ -54,7 +54,7 @@ ChessBoard Engine::handle_events()
   }
   m_forced_stopper.reset(new ForcedStopper);
   m_weak_stopper.reset(new ForcedStopper);
-  ChessBoard board = m_state.board_state().board();
+  ChessBoard board = m_state.board_state().copy_board();
   return board;
 }
 

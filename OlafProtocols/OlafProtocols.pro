@@ -29,7 +29,8 @@ SOURCES += \
     settimeevent.cpp \
     engine.cpp \
     engineeventhelper.cpp \
-    simplethinkingwriter.cpp
+    simplethinkingwriter.cpp \
+    setboardevent.cpp
 
 HEADERS +=\
     xboardwriter.h \
@@ -49,7 +50,8 @@ HEADERS +=\
     settimeevent.h \
     engineeventhelper.h \
     engine.h \
-    simplethinkingwriter.h
+    simplethinkingwriter.h \
+    setboardevent.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafProtocols

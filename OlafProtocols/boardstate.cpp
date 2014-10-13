@@ -8,17 +8,22 @@ BoardState::BoardState(unique_ptr<MoveCreator> move_creator):
   m_move_creator(std::move(move_creator))
 {}
 
-ChessBoard BoardState::board()
+ChessBoard BoardState::copy_board() const
 {
   unique_lock<mutex> lock(m_mutex);
   ChessBoard board(m_board);
   return board;
 }
 
-void BoardState::reset()
+void BoardState::set_board(const ChessBoard& board)
 {
   unique_lock<mutex> lock(m_mutex);
-  m_board = create_initial_board();
+  m_board = board;
+}
+
+void BoardState::reset()
+{
+  set_board(create_initial_board());
 }
 
 void BoardState::undo()

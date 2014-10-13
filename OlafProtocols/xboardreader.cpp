@@ -2,6 +2,7 @@
 #include "OlafRules/piece.h"
 #include "OlafRules/position.h"
 #include "OlafRules/pieceset.h"
+#include <cassert>
 #include <sstream>
 #include <istream>
 #include <iostream>
@@ -32,13 +33,13 @@ void XBoardReader::run()
     if (tokens.empty()) {
       continue;
     }
-    string command = tokens[0];
-    ostringstream oss;
-    oss << "Understood command " << command;
-    m_writer->comment(oss.str());
+    string command = tokens.front();
     if (command == "protover") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
       int version;
-      istringstream iss (tokens[1]);
+      istringstream iss(tokens.at(1));
       iss >> version;
       if (version >= 2) {
         write_features();
@@ -65,8 +66,11 @@ void XBoardReader::run()
     } else if (command == "?") {
       m_engine_helper->move_now();
     } else if (command == "ping") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
       int number;
-      istringstream iss (tokens[1]);
+      istringstream iss(tokens.at(1));
       iss >> number;
       m_engine_helper->ping(number);
     } else if (command == "result") {
@@ -78,7 +82,10 @@ void XBoardReader::run()
     } else if (command == "name") {
     } else if (command == "ics") {
     } else if (command == "time") {
-      istringstream iss (tokens[1]);
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      istringstream iss(tokens.at(1));
       int centiseconds;
       iss >> centiseconds;
       m_engine_helper->request_set_time(milliseconds(centiseconds * 10));
@@ -90,9 +97,25 @@ void XBoardReader::run()
       m_engine_helper->post(true);
     } else if (command == "nopost") {
       m_engine_helper->post(false);
+    } else if (command == "setboard") {
+      ostringstream oss;
+      int size = tokens.size();
+      // We have to put the fen back together.
+      for (int i = 1; i < size; ++i) {
+        oss << tokens.at(i);
+        if (i < size - 1) {
+          oss << " ";
+        }
+      }
+      const string fen = oss.str();
+      m_engine_helper->set_fen(fen);
     } else if (command == "usermove") {
-      if (is_move(tokens[1])) {
-        handle_move(tokens[1]);
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      const string& move = tokens.at(1);
+      if (is_move(move)) {
+        handle_move(move);
       } else {
         m_writer->illegal_move(message);
       }
@@ -129,13 +152,11 @@ bool XBoardReader::is_move(const string& command) const
 
 void XBoardReader::handle_move(const std::string& move)
 {
+  assert(is_move(move));
   Position source;
   Position destination;
   istringstream iss(move);
   iss >> source >> destination;
-  ostringstream oss;
-  oss << "Got " << source << " to " << destination;
-  m_writer->comment(oss.str());
   if (move.size() == 4) {
     if (!m_engine_helper->request_move(source, destination)) {
       m_writer->illegal_move(move);
@@ -183,4 +204,20 @@ void XBoardReader::write_features() const
   m_writer->feature("debug", true);
   m_writer->feature("sigint", false);
   m_writer->feature("done", true);
+}
+
+bool XBoardReader::check_args(const vector<string>& tokens,
+                              const int args) const
+{
+  // Note that the first token is the command.
+  const int actual_args = tokens.size() - 1;
+  const bool result = actual_args >= args + 1;
+  if (!result) {
+    ostringstream oss;
+    oss << "Wrong number of arguments for " << tokens.at(0)
+        << ": " << args << " needed, " << actual_args
+        << " provided.";
+    m_writer->error("invalid_arguments", oss.str());
+  }
+  return result;
 }

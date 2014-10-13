@@ -8,6 +8,8 @@
 #include "pingevent.h"
 #include "settimeevent.h"
 #include "OlafRules/move.h"
+#include "OlafRules/fenparser.h"
+#include "setboardevent.h"
 
 using namespace std;
 
@@ -87,13 +89,26 @@ bool EngineEventHelper::request_move(const Position& source, const Position& des
   return true;
 }
 
-bool EngineEventHelper::request_move(const Position& source, const Position& destination, Piece::piece_index_t conversion)
+bool EngineEventHelper::request_move(const Position& source,
+                                     const Position& destination,
+                                     const Piece::piece_index_t conversion)
 {
   if (!m_board_state->valid_move(source, destination, conversion)) {
     return false;
   }
   Move move = m_board_state->create_move(source, destination, conversion);
   enqueue_move(move);
+  return true;
+}
+
+bool EngineEventHelper::set_fen(const string& fen)
+{
+  ChessBoard board;
+  if (!FenParser::parse(fen, &board)) {
+    return false;
+  }
+  unique_ptr<SetBoardEvent> set_board_event(new SetBoardEvent(board));
+  m_engine->enqueue(move(set_board_event));
   return true;
 }
 

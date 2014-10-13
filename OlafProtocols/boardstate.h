@@ -20,7 +20,9 @@ public:
    */
   BoardState(std::unique_ptr<MoveCreator> move_creator);
 
-  ChessBoard board();
+  ChessBoard copy_board() const;
+
+  void set_board(const ChessBoard& board);
 
   void reset();
 
@@ -45,7 +47,7 @@ public:
 private:
   std::unique_ptr<MoveCreator> m_move_creator;
 
-  std::mutex m_mutex;
+  mutable std::mutex m_mutex;
 
   ChessBoard m_board;
 

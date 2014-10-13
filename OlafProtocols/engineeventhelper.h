@@ -48,6 +48,8 @@ public:
 
   void post(bool value);
 
+  bool set_fen(const std::string& fen);
+
 private:
   void enqueue_move(const Move& move);
 
