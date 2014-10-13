@@ -43,7 +43,9 @@ public:
    * @param base_move
    * @param position
    */
-  void add_conversion_moves(std::vector<Move>* moves, const MoveBuilder& base_move, const Position& position) const;
+  void add_conversion_moves(std::vector<Move>* moves,
+                            const MoveBuilder& base_move,
+                            const Position& position) const;
 
 private:
   bool internal_can_move(const Position& source,
@@ -52,5 +54,7 @@ private:
 
   std::vector<piece_index_t> m_conversions;
 };
+
+#include "move.h"
 
 #endif // PAWN_H

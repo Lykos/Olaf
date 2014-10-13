@@ -2,6 +2,7 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 SUBDIRS += \
+    OlafTestUtil \
     OlafRules \
     OlafRulesTest \
     OlafEvaluation \
@@ -10,7 +11,9 @@ SUBDIRS += \
     OlafProtocols \
     OlafMain
 
-OlafRulesTest.depends = OlafRules
+OlafRulesTest.depends = \
+    OlafRules \
+    OlafTestUtil
 
 OlafEvaluation.depends = OlafRules
 

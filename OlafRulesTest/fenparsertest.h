@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtTest/QTest>
+#include "OlafTestUtil/autotest.h"
 
 class FenParserTest : public QObject
 {
@@ -16,5 +17,7 @@ private Q_SLOTS:
 
   void test_parse();
 };
+
+DECLARE_TEST(FenParserTest)
 
 #endif // FENPARSERTEST_H

@@ -1,5 +1,5 @@
-#ifndef TEST_UTIL_H
-#define TEST_UTIL_H
+#ifndef OLAFRULESTEST_TEST_UTIL_H
+#define OLAFRULESTEST_TEST_UTIL_H
 
 #include "gmock/gmock-generated-matchers.h"
 #include <QtTest/qtest.h>
@@ -12,12 +12,4 @@ MATCHER_P(IsSameMove, move, "") {
       && ExplainMatchResult(testing::Eq(move.created_piece()), arg.created_piece(), result_listener);
 }
 
-#define QASSERT_THAT(value, matcher) { \
-  const AssertionResult& result = \
-    testing::internal::MakePredicateFormatterFromMatcher(matcher)(#value, value); \
-  if (!result) { \
-    QFAIL(result.message()); \
-  } \
-}
-
-#endif // TEST_UTIL_H
+#endif // OLAFRULESTEST_TEST_UTIL_H

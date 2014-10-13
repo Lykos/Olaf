@@ -1,4 +1,5 @@
 #include "boardtest.h"
+
 #include "OlafRules/chessboard.h"
 #include "OlafRules/pieceset.h"
 

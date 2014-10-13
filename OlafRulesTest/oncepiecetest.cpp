@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "testutil.h"
+#include "OlafTestUtil/testutil.h"
 #include "OlafRules/pieceset.h"
 #include "OlafRules/move.h"
 #include "OlafRules/position.h"

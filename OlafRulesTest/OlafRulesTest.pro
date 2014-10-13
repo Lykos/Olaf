@@ -34,6 +34,9 @@ HEADERS += \
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafRules -lOlafRules
 
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafTestUtil -lOlafTestUtil
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafTestUtil -lOlafTestUtil
+
 LIBS += -L$$PWD/../../../../Downloads/gmock-1.7.0/build/ -lgmock
 
 INCLUDEPATH += $$PWD/../../../../Downloads/gmock-1.7.0/include

@@ -2,6 +2,7 @@
 #define BOARDTEST_H
 
 #include "OlafRules/piece.h"
+#include "OlafTestUtil/autotest.h"
 #include <QtTest/QtTest>
 #include <QObject>
 
@@ -23,5 +24,7 @@ private Q_SLOTS:
   void test_friends();
   
 };
+
+DECLARE_TEST(BoardTest)
 
 #endif // BOARDTEST_H

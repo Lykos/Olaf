@@ -4,6 +4,7 @@
 #include "OlafRules/chessboard.h"
 #include "OlafRules/piece.h"
 #include "OlafRules/pawn.h"
+#include "OlafTestUtil/autotest.h"
 #include <QtTest/QTest>
 #include <QObject>
 
@@ -32,5 +33,7 @@ private Q_SLOTS:
   void test_moves();
 
 };
+
+DECLARE_TEST(PawnTest)
 
 #endif // PAWNTEST_H
