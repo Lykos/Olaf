@@ -2,7 +2,7 @@
 #define BOARDTEST_H
 
 #include "OlafRules/piece.h"
-#include "OlafTestUtil/autotest.h"
+#include "autotest.h"
 #include <QtTest/QtTest>
 #include <QObject>
 

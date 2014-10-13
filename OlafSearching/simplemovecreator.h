@@ -19,6 +19,15 @@ public:
                   const Position& destination,
                   Piece::piece_index_t conversion) override;
 
+  bool pseudo_valid_move(const ChessBoard& board,
+                         const Position& source,
+                         const Position& destination) override;
+
+  bool pseudo_valid_move(const ChessBoard& board,
+                         const Position& source,
+                         const Position& destination,
+                         Piece::piece_index_t conversion) override;
+
   Move create_move(const ChessBoard& board,
                    const Position& source,
                    const Position& destination) override;
@@ -27,7 +36,8 @@ public:
                    const Position& source,
                    const Position& destination,
                    Piece::piece_index_t conversion) override;
-
+private:
+  bool is_killable(const ChessBoard& board);
 };
 
 #endif // SIMPLEMOVECREATOR_H

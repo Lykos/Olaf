@@ -22,6 +22,15 @@ public:
                           const Position& destination,
                           Piece::piece_index_t conversion) = 0;
 
+  virtual bool pseudo_valid_move(const ChessBoard& board,
+                                 const Position& source,
+                                 const Position& destination) = 0;
+
+  virtual bool pseudo_valid_move(const ChessBoard& board,
+                                 const Position& source,
+                                 const Position& destination,
+                                 Piece::piece_index_t conversion) = 0;
+
   virtual Move create_move(const ChessBoard& board,
                            const Position& source,
                            const Position& destination) = 0;

@@ -17,25 +17,40 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 SOURCES += \
-    tst_olafrules.cpp \
     boardtest.cpp \
     pawntest.cpp \
     oncepiecetest.cpp \
-    fenparsertest.cpp
+    fenparsertest.cpp \
+    main.cpp \
+    materialevaluatortest.cpp \
+    testutil.cc \
+    perft.cpp \
+    movegeneratortest.cpp
+
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     boardtest.h \
     pawntest.h \
     oncepiecetest.h \
+    autotest.h \
     testutil.h \
-    fenparsertest.h
+    fenparsertest.h \
+    materialevaluatortest.h \
+    perft.h \
+    movegeneratortest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafRules -lOlafRules
 
-CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafTestUtil -lOlafTestUtil
-CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafTestUtil -lOlafTestUtil
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafEvaluation -lOlafEvaluation
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafEvaluation -lOlafEvaluation
+
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafSearching -lOlafSearching
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafSearching -lOlafSearching
+
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Release/OlafProtocols -lOlafProtocols
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Desktop-Debug/OlafProtocols -lOlafProtocols
 
 LIBS += -L$$PWD/../../../../Downloads/gmock-1.7.0/build/ -lgmock
 

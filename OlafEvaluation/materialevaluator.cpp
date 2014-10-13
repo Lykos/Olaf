@@ -9,7 +9,7 @@ MaterialEvaluator::MaterialEvaluator():
   m_piece_values[set.knight().piece_index()] = 300;
   m_piece_values[set.bishop().piece_index()] = 300;
   m_piece_values[set.queen().piece_index()] = 900;
-  m_piece_values[set.king().piece_index()] = 1000000;
+  m_piece_values[set.king().piece_index()] = 25000;
   m_piece_values[set.pawn().piece_index()] = 100;
 }
 

@@ -143,6 +143,12 @@ public:
                  Piece::piece_index_t piece_index,
                  const Position& position);
 
+  /**
+   * @brief positions returns all valid positions on the board in the order
+   *        a8, b8, ..., h8, a7, b7, ...
+   */
+  std::vector<Position> positions() const;
+
 private:
   std::array<ColorBoard, 2> m_color_boards;
 

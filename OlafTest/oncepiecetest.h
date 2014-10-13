@@ -6,7 +6,7 @@
 
 #include "OlafRules/chessboard.h"
 #include "OlafRules/piece.h"
-#include "OlafTestUtil/autotest.h"
+#include "autotest.h"
 
 class OncePieceTest : public QObject
 {

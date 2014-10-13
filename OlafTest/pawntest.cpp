@@ -5,7 +5,7 @@
 #include "OlafRules/pieceboard.h"
 #include "OlafRules/pieceset.h"
 #include "OlafRules/move.h"
-#include "OlafRules/fenparser.h"
+#include "testutil.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ Q_DECLARE_METATYPE(Position)
 void PawnTest::initTestCase()
 {
   m_pawn = &(PieceSet::instance().pawn());
-  QVERIFY(FenParser::parse("1n1N4/1PPP4/7N/P4npP/2nN2P1/1p2NP2/PPPPP3/8 w - g6 0 1", &m_board));
+  m_board = parse_fen("1n1N4/1PPP4/7N/P4npP/2nN2P1/1p2NP2/PPPPP3/8 w - g6 0 1");
 }
 
 void PawnTest::test_can_move_data()

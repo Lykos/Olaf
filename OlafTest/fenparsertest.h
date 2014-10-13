@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtTest/QTest>
-#include "OlafTestUtil/autotest.h"
+#include "autotest.h"
 
 class FenParserTest : public QObject
 {

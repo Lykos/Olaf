@@ -4,7 +4,7 @@
 #include "OlafRules/chessboard.h"
 #include "OlafRules/piece.h"
 #include "OlafRules/pawn.h"
-#include "OlafTestUtil/autotest.h"
+#include "autotest.h"
 #include <QtTest/QTest>
 #include <QObject>
 

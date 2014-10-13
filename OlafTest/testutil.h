@@ -1,8 +1,11 @@
-#ifndef OLAFRULESTEST_TEST_UTIL_H
-#define OLAFRULESTEST_TEST_UTIL_H
+#ifndef TEST_UTIL_H
+#define TEST_UTIL_H
+
+#include <QtTest/qtest.h>
+#include <string>
 
 #include "gmock/gmock-generated-matchers.h"
-#include <QtTest/qtest.h>
+#include "OlafRules/chessboard.h"
 
 MATCHER_P(IsSameMove, move, "") {
   return ExplainMatchResult(testing::Eq(move.source()), arg.source(), result_listener)
@@ -12,4 +15,14 @@ MATCHER_P(IsSameMove, move, "") {
       && ExplainMatchResult(testing::Eq(move.created_piece()), arg.created_piece(), result_listener);
 }
 
-#endif // OLAFRULESTEST_TEST_UTIL_H
+#define QASSERT_THAT(value, matcher) { \
+  const AssertionResult& result = \
+    ::testing::internal::MakePredicateFormatterFromMatcher(matcher)(#value, value); \
+  if (!result) { \
+    QFAIL(result.message()); \
+  } \
+}
+
+ChessBoard parse_fen(const std::string& fen);
+
+#endif // TEST_UTIL_H

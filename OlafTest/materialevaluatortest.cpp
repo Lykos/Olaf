@@ -3,6 +3,7 @@
 #include <QtTest/QTest>
 
 #include "OlafRules/chessboard.h"
+#include "testutil.h"
 
 typedef MaterialEvaluator::score_t score_t;
 
@@ -15,6 +16,7 @@ void MaterialEvaluatorTest::test_evaluate_data()
 
   QTest::newRow("empty") << create_empty_board() << 0;
   QTest::newRow("initial") << create_initial_board() << 0;
+  QTest::newRow("middlegame") << parse_fen("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 0 1") << -100;
 }
 
 

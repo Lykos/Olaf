@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtTest/QTest>
 
+#include "autotest.h"
 #include "OlafEvaluation/materialevaluator.h"
 
 class MaterialEvaluatorTest : public QObject
@@ -17,5 +18,7 @@ private Q_SLOTS:
 
   void test_evaluate();
 };
+
+DECLARE_TEST(MaterialEvaluatorTest)
 
 #endif // MATERIALEVALUATORTEST_H
