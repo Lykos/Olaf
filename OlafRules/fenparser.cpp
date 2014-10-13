@@ -152,9 +152,9 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
     }
     Position ep_position(ep_row, column);
     Position victim_position(victim_row, column);
-    board->ep_capture_position(ep_position);
-    board->ep_victim_position(victim_position);
-    board->ep_possible(true);
+    new_board.ep_capture_position(ep_position);
+    new_board.ep_victim_position(victim_position);
+    new_board.ep_possible(true);
   } else if (*it != c_dash) {
     return false;
   }
@@ -169,9 +169,6 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
     return false;
   }
   new_board.turn_number(turn_number);
-  if (it != end) {
-    return false;
-  }
   *board = new_board;
   return true;
 }

@@ -5,6 +5,7 @@
 #include "OlafRules/pieceboard.h"
 #include "OlafRules/pieceset.h"
 #include "OlafRules/move.h"
+#include "OlafRules/fenparser.h"
 
 using namespace std;
 
@@ -13,38 +14,7 @@ Q_DECLARE_METATYPE(Position)
 void PawnTest::initTestCase()
 {
   m_pawn = &(PieceSet::instance().pawn());
-  m_board = create_empty_board();
-  m_pawn_index = m_pawn->piece_index();
-  m_knight_index = PieceSet::instance().knight().piece_index();
-  PieceBoard &pawn_board = m_board.turn_board().piece_board(m_pawn_index);
-  PieceBoard &knight_board = m_board.turn_board().piece_board(m_knight_index);
-  PieceBoard &opawn_board = m_board.noturn_board().piece_board(m_pawn_index);
-  PieceBoard &oknight_board = m_board.noturn_board().piece_board(m_knight_index);
-
-  pawn_board.set(Position("a2"), true);
-  pawn_board.set(Position("a5"), true);
-  pawn_board.set(Position("b2"), true);
-  pawn_board.set(Position("c2"), true);
-  pawn_board.set(Position("d2"), true);
-  pawn_board.set(Position("e2"), true);
-  pawn_board.set(Position("f3"), true);
-  pawn_board.set(Position("g4"), true);
-  pawn_board.set(Position("h5"), true);
-  pawn_board.set(Position("b7"), true);
-  pawn_board.set(Position("c7"), true);
-  pawn_board.set(Position("d7"), true);
-  opawn_board.set(Position("b3"), true);
-  opawn_board.set(Position("g5"), true);
-  knight_board.set(Position("d4"), true);
-  knight_board.set(Position("e3"), true);
-  knight_board.set(Position("h6"), true);
-  knight_board.set(Position("d8"), true);
-  oknight_board.set(Position("c4"), true);
-  oknight_board.set(Position("f5"), true);
-  oknight_board.set(Position("b8"), true);
-  m_board.ep_possible(true);
-  m_board.ep_capture_position(Position("g6"));
-  m_board.ep_victim_position(Position("g5"));
+  QVERIFY(FenParser::parse("1n1N4/1PPP4/7N/P4npP/2nN2P1/1p2NP2/PPPPP3/8 w - g6 0 1", &m_board));
 }
 
 void PawnTest::test_can_move_data()

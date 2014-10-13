@@ -1,12 +1,13 @@
 #include "oncepiecetest.h"
 
 #include <vector>
+#include <iostream>
 
 #include "testutil.h"
 #include "OlafRules/pieceset.h"
 #include "OlafRules/move.h"
 #include "OlafRules/position.h"
-
+#include "OlafRules/fenparser.h"
 #include "gmock/gmock-generated-matchers.h"
 
 using namespace std;
@@ -25,32 +26,9 @@ void OncePieceTest::initTestCase()
 {
   m_king = &(PieceSet::instance().king());
   m_knight = &(PieceSet::instance().knight());
-  m_board = create_empty_board();
+  QVERIFY(FenParser::parse("K6N/nK6/6N1/8/7N/8/6n1/R3K2R w KQ - 0 1", &m_board));
   m_king_index = m_king->piece_index();
   m_knight_index = m_knight->piece_index();
-
-  ColorBoard& turn_board = m_board.turn_board();
-  turn_board.can_castle_k(true);
-  turn_board.can_castle_q(true);
-  PieceBoard& king_board = turn_board.piece_board(m_king_index);
-  PieceBoard& knight_board = turn_board.piece_board(m_knight_index);
-  PieceBoard& rook_board =
-      turn_board.piece_board(PieceSet::instance().rook().piece_index());
-  PieceBoard& oknight_board = m_board.noturn_board().piece_board(m_knight_index);
-
-  king_board.set(Position("a8"), true);
-  king_board.set(Position("b7"), true);
-  king_board.set(Position("e1"), true);
-
-  knight_board.set(Position("h8"), true);
-  knight_board.set(Position("g6"), true);
-  knight_board.set(Position("h4"), true);
-
-  rook_board.set(Position("a1"), true);
-  rook_board.set(Position("h1"), true);
-
-  oknight_board.set(Position("g2"), true);
-  oknight_board.set(Position("a7"), true);
 }
 
 void OncePieceTest::test_can_move_data()
