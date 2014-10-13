@@ -27,7 +27,7 @@ bool operator==(const BitBoard& a, const BitBoard& b)
 
 uint_fast8_t index(const Position& position)
 {
-  return position.row() * Position::COLUMN_SIZE + position.column();
+  return position.row() * Position::c_column_size + position.column();
 }
 
 bool BitBoard::get(const Position& position) const
@@ -47,11 +47,11 @@ void BitBoard::set(const Position& position, bool value)
 BitBoard BitBoard::mirror_rows() const
 {
   bitboard_t bits = 0;
-  static const bitboard_t row_mask = (1 << Position::COLUMN_SIZE) - 1;
-  for (Position::row_t row_index = 0; row_index < Position::ROW_SIZE; ++row_index) {
-    Position::row_t old_row_index = Position::COLUMN_SIZE - 1 - row_index;
-    bitboard_t old_row_content = (m_bits >> old_row_index * Position::COLUMN_SIZE) & row_mask;
-    bits |= old_row_content << row_index * Position::COLUMN_SIZE;
+  static const bitboard_t row_mask = (1 << Position::c_column_size) - 1;
+  for (Position::row_t row_index = 0; row_index < Position::c_row_size; ++row_index) {
+    Position::row_t old_row_index = Position::c_column_size - 1 - row_index;
+    bitboard_t old_row_content = (m_bits >> old_row_index * Position::c_column_size) & row_mask;
+    bits |= old_row_content << row_index * Position::c_column_size;
   }
   return BitBoard(bits);
 }

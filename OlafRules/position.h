@@ -39,18 +39,18 @@ public:
 
   typedef std::int_fast8_t column_t;
 
-  static const row_t ROW_SIZE = 8;
+  static const row_t c_row_size = 8;
 
-  static const column_t COLUMN_SIZE = 8;
+  static const column_t c_column_size = 8;
 
-  static const column_t QUEENS_ROOK_COLUMN = 0;
-  static const column_t QUEENS_KNIGHT_COLUMN = 1;
-  static const column_t QUEENS_BISHOP_COLUMN = 2;
-  static const column_t QUEEN_COLUMN = 3;
-  static const column_t KING_COLUMN = 4;
-  static const column_t KINGS_BISHOP_COLUMN = 5;
-  static const column_t KINGS_KNIGHT_COLUMN = 6;
-  static const column_t KINGS_ROOK_COLUMN = 7;
+  static const column_t c_queens_rook_column = 0;
+  static const column_t c_queens_knight_column = 1;
+  static const column_t c_queens_bishop_column = 2;
+  static const column_t c_queen_column = 3;
+  static const column_t c_king_column = 4;
+  static const column_t c_kings_bishop_column = 5;
+  static const column_t c_kings_knight_column = 6;
+  static const column_t c_kings_rook_column = 7;
 
   static const std::string columns;
 

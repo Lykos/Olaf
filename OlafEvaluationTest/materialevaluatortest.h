@@ -2,17 +2,20 @@
 #define MATERIALEVALUATORTEST_H
 
 #include <QObject>
+#include <QtTest/QTest>
+
+#include "OlafEvaluation/materialevaluator.h"
 
 class MaterialEvaluatorTest : public QObject
 {
   Q_OBJECT
-public:
-  explicit MaterialEvaluatorTest(QObject *parent = 0);
 
-signals:
+  MaterialEvaluator m_evaluator;
 
-public slots:
+private Q_SLOTS:
+  void test_evaluate_data();
 
+  void test_evaluate();
 };
 
 #endif // MATERIALEVALUATORTEST_H

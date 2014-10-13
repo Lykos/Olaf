@@ -34,7 +34,8 @@ SOURCES += \
     bitboard.cpp \
     anticastleaction.cpp \
     movebuilder.cpp \
-    move.cpp
+    move.cpp \
+    fenparser.cpp
 
 HEADERS += \
     moveaction.h \
@@ -59,7 +60,8 @@ HEADERS += \
     anticastleaction.h \
     epenableaction.h \
     movebuilder.h \
-    move.h
+    move.h \
+    fenparser.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafRules

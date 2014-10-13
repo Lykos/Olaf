@@ -12,8 +12,8 @@ const std::string Position::columns = "abcdefgh";
 
 std::ostream& operator<<(std::ostream& out, const Position& position)
 {
-  assert(0 <= position.m_column && position.m_column < Position::COLUMN_SIZE);
-  assert(0 <= position.m_row && position.m_row < Position::ROW_SIZE);
+  assert(0 <= position.m_column && position.m_column < Position::c_column_size);
+  assert(0 <= position.m_row && position.m_row < Position::c_row_size);
   return out << Position::columns[position.column()] << Position::rows[position.row()];
 }
 
@@ -50,7 +50,7 @@ bool Position::in_bounds(const PositionDelta& d_pos) const
 {
   PositionDelta::d_row_t row = static_cast<PositionDelta::d_row_t>(m_row) + d_pos.d_row();
   PositionDelta::d_column_t column = static_cast<PositionDelta::d_column_t>(m_column) + d_pos.d_column();
-  return 0 <= row && row < ROW_SIZE && 0 <= column && column < COLUMN_SIZE;
+  return 0 <= row && row < c_row_size && 0 <= column && column < c_column_size;
 }
 
 Position operator+(const Position &pos, const PositionDelta &d_pos)

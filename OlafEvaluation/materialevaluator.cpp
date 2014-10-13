@@ -13,7 +13,7 @@ MaterialEvaluator::MaterialEvaluator():
   m_piece_values[set.pawn().piece_index()] = 100;
 }
 
-int MaterialEvaluator::evaluate(const ChessBoard& board)
+MaterialEvaluator::score_t MaterialEvaluator::evaluate(const ChessBoard& board)
 {
   int result = 0;
   for (const PieceBoard &piece_board : board.turn_board().piece_boards()) {

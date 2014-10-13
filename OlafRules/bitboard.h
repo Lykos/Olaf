@@ -16,7 +16,7 @@ BitBoard operator&(const BitBoard&, const BitBoard&);
 bool operator==(const BitBoard&, const BitBoard&);
 
 typedef uint64_t bitboard_t;
-static_assert(sizeof(bitboard_t) * CHAR_BIT >= Position::COLUMN_SIZE * Position::ROW_SIZE,
+static_assert(sizeof(bitboard_t) * CHAR_BIT >= Position::c_column_size * Position::c_row_size,
               "Not enough space for a bit board in the used type.");
 
 /**

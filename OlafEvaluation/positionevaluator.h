@@ -6,7 +6,9 @@
 class PositionEvaluator
 {
 public:
-  virtual int evaluate(const ChessBoard& board) = 0;
+  typedef int score_t;
+
+  virtual score_t evaluate(const ChessBoard& board) = 0;
 
   virtual ~PositionEvaluator() {}
 

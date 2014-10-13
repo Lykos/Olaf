@@ -1,15 +1,9 @@
-#include "boardtest.h"
-#include "oncepiecetest.h"
-#include "pawntest.h"
+#include "materialevaluatortest.h"
 #include <QtTest>
 
 int main(int argc, char **argv)
 {
-  BoardTest board_test;
-  QTest::qExec(&board_test, argc, argv);
-  PawnTest pawn_test;
-  QTest::qExec(&pawn_test, argc, argv);
-  OncePieceTest once_piece_test;
-  QTest::qExec(&once_piece_test, argc, argv);
+  MaterialEvaluatorTest material_evaluator_test;
+  QTest::qExec(&material_evaluator_test, argc, argv);
   return 0;
 }

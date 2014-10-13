@@ -83,12 +83,12 @@ bool LinePiece::forbids_castle_q(const Position& source, const ChessBoard& board
   return board.turn_board().can_castle_q()
       && m_is_rook
       && source.row() == ground_line(board.turn_color())
-      && source.column() == Position::QUEENS_ROOK_COLUMN;
+      && source.column() == Position::c_queens_rook_column;
 }
 
 bool LinePiece::forbids_castle_k(const Position& source, const ChessBoard& board) const {
   return board.turn_board().can_castle_k()
       && m_is_rook
       && source.row() == ground_line(board.turn_color())
-      && source.column() == Position::KINGS_ROOK_COLUMN;
+      && source.column() == Position::c_kings_rook_column;
 }
