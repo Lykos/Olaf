@@ -10,7 +10,7 @@ std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
       if (board.friendd(pos)) {
         out << board.turn_board().piece(pos).symbol(board.turn_color());
       } else if (board.opponent(pos)) {
-        out << board.noturn_board().piece(pos).symbol(previous(board.turn_color()));
+        out << board.noturn_board().piece(pos).symbol(board.noturn_color());
       } else {
         out << ".";
       }
@@ -115,6 +115,11 @@ void ChessBoard::ep_victim_position(const Position &position)
 Color ChessBoard::turn_color() const
 {
   return m_turn_color;
+}
+
+Color ChessBoard::noturn_color() const
+{
+  return next(m_turn_color);
 }
 
 void ChessBoard::turn_color(const Color new_color)

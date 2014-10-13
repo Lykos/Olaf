@@ -73,6 +73,8 @@ public:
 
   void ep_victim_position(const Position& position);
 
+  Color noturn_color() const;
+
   Color turn_color() const;
 
   void turn_color(Color new_turn_color);

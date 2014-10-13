@@ -29,8 +29,8 @@ public:
    * @brief Piece creates a new base piece.
    * @param piece_index the index of this piece in lists that contain somethin for all pieces.
    * @param symbol the char which is used to represent this piece.
-   * @param initial_board the bitboard which will serve sa the initial
-   *        board for black. (The black one is easier to add than the white one)
+   * @param initial_board the bitboard which will serve as the initial
+   *        board for white.
    */
   Piece(piece_index_t piece_index,
         char symbol,

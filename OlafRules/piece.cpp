@@ -31,12 +31,12 @@ Piece::piece_index_t Piece::piece_index() const
 
 char Piece::symbol(const Color color) const
 {
-  return color == Color::White ? m_symbol : toupper(m_symbol);
+  return color == Color::White ? toupper(m_symbol) : m_symbol;
 }
 
 BitBoard Piece::initial_board(const Color color) const
 {
-  return color == Color::White ? m_initial_board.mirror_rows() : m_initial_board;
+  return color == Color::White ? m_initial_board : m_initial_board.mirror_rows();
 }
 
 Piece::~Piece() {}
