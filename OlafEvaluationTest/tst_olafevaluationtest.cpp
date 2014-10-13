@@ -1,26 +1,15 @@
-#include <QString>
+#include "boardtest.h"
+#include "oncepiecetest.h"
+#include "pawntest.h"
 #include <QtTest>
 
-class OlafEvaluationTest : public QObject
+int main(int argc, char **argv)
 {
-  Q_OBJECT
-
-public:
-  OlafEvaluationTest();
-
-private Q_SLOTS:
-  void testCase1();
-};
-
-OlafEvaluationTest::OlafEvaluationTest()
-{
+  BoardTest board_test;
+  QTest::qExec(&board_test, argc, argv);
+  PawnTest pawn_test;
+  QTest::qExec(&pawn_test, argc, argv);
+  OncePieceTest once_piece_test;
+  QTest::qExec(&once_piece_test, argc, argv);
+  return 0;
 }
-
-void OlafEvaluationTest::testCase1()
-{
-  QVERIFY2(true, "Failure");
-}
-
-QTEST_APPLESS_MAIN(OlafEvaluationTest)
-
-#include "tst_olafevaluationtest.moc"
