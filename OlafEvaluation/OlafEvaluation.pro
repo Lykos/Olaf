@@ -15,13 +15,13 @@ DEFINES += OLAFEVALUATION_LIBRARY
 SOURCES += \
     materialevaluator.cpp \
     evaluatorfactory.cpp \
-    configreader.cpp
+    config.cpp
 
 HEADERS += \
     positionevaluator.h \
     materialevaluator.h \
     evaluatorfactory.h \
-    configreader.h
+    config.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafEvaluation
