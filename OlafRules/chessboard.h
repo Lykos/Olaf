@@ -12,6 +12,7 @@ class ChessBoard;
 
 std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
 
+// TODO 50 move rule
 /**
  * @brief The ChessBoard class represents the whole chessboard including information about the positions
  * of all the pieces, the player whose turn it is, castling rights, e.p. rights etc.
@@ -30,14 +31,14 @@ public:
    */
   ChessBoard(
       const std::array<ColorBoard, 2> &color_boards = {{ColorBoard(), ColorBoard()}},
-      Color turn = White,
+      Color turn = Color::White,
       bool ep_possible = false,
       const Position &ep_capture_position = Position(),
       const Position &ep_victim_position = Position());
 
-  const ColorBoard& color_board(Color) const;
+  const ColorBoard& color_board(Color color) const;
 
-  ColorBoard& color_board(Color);
+  ColorBoard& color_board(Color color);
 
   const ColorBoard& turn_board() const;
 
@@ -62,15 +63,19 @@ public:
    */
   const Position& ep_victim_position() const;
 
-  void ep_possible(bool);
+  void ep_possible(bool new_ep_possible);
 
-  void ep_capture_position(const Position&);
+  void ep_capture_position(const Position& position);
 
-  void ep_victim_position(const Position&);
+  void ep_victim_position(const Position& position);
 
   Color turn_color() const;
 
+  void turn_color(Color new_turn_color);
+
   int turn_number() const;
+
+  void turn_number(int new_turn_number);
 
   void next_turn();
 
@@ -116,13 +121,21 @@ public:
    * @brief occupied is a shortcut for occupied().get(position)
    * @return
    */
-  bool occupied(const Position&) const;
+  bool occupied(const Position& position) const;
 
   /**
    * @brief finished returns true if the game is finished
    * @return
    */
   bool finished() const;
+
+  /**
+   * @brief add_piece is a shortcut for
+   *        board.color_board(color).piece_board(piece_index).set(position, true)
+   */
+  void add_piece(Color color,
+                 Piece::piece_index_t piece_index,
+                 const Position& position);
 
 private:
   std::array<ColorBoard, 2> m_color_boards;

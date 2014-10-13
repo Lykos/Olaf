@@ -20,7 +20,7 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
   ostringstream oss;
   int turn_number = board.turn_number();
   int ply = 0;
-  if (board.turn_color() == Black) {
+  if (board.turn_color() == Color::Black) {
     oss << turn_number << ". ... ";
     ++turn_number;
     ++ply;
@@ -46,7 +46,7 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
     ++ply;
   }
   m_writer->thinking_output(depth,
-                            (board.turn_color() == White ? result.value() : -result.value()),
+                            (board.turn_color() == Color::White ? result.value() : -result.value()),
                             time.count() / 10,
                             result.nodes(),
                             oss.str());

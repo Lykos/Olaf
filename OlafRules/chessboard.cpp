@@ -4,9 +4,9 @@ using namespace std;
 
 std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
 {
-  for (int i = 7; i >= 0; --i) {
-    for (int j = 0; j < 8; ++j) {
-      const Position pos(i, j);
+  for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
+    for (Position::column_t column = 0; column < Position::c_column_size; ++column) {
+      const Position pos(row, column);
       if (board.friendd(pos)) {
         out << board.turn_board().piece(pos).symbol(board.turn_color());
       } else if (board.opponent(pos)) {
@@ -76,7 +76,7 @@ const Position& ChessBoard::ep_victim_position() const
   return m_ep_victim_position;
 }
 
-void ChessBoard::ep_possible(bool possible)
+void ChessBoard::ep_possible(const bool possible)
 {
   m_ep_possible = possible;
 }
@@ -96,9 +96,19 @@ Color ChessBoard::turn_color() const
   return m_turn_color;
 }
 
+void ChessBoard::turn_color(const Color new_color)
+{
+  m_turn_color = new_color;
+}
+
 int ChessBoard::turn_number() const
 {
   return m_turn_number;
+}
+
+void ChessBoard::turn_number(const int new_turn_number)
+{
+  m_turn_number = new_turn_number;
 }
 
 void ChessBoard::next_turn()
@@ -107,7 +117,7 @@ void ChessBoard::next_turn()
   m_friends_valid = false;
   m_occupied_valid = false;
   m_turn_color = next(m_turn_color);
-  if (m_turn_color == White) {
+  if (m_turn_color == Color::White) {
     ++m_turn_number;
   }
 }
@@ -118,7 +128,7 @@ void ChessBoard::previous_turn()
   m_friends_valid = false;
   m_occupied_valid = false;
   m_turn_color = previous(m_turn_color);
-  if (m_turn_color == Black) {
+  if (m_turn_color == Color::Black) {
     --m_turn_number;
   }
 }
@@ -171,11 +181,18 @@ bool ChessBoard::finished() const
   return false;
 }
 
+void ChessBoard::add_piece(const Color color,
+                           const Piece::piece_index_t piece_index,
+                           const Position& position)
+{
+  color_board(color).piece_board(piece_index).set(position, true);
+}
+
 ChessBoard create_initial_board()
 {
   static const array<ColorBoard, 2> colors{{
-      ColorBoard::create_initial_color_board(White),
-      ColorBoard::create_initial_color_board(Black)}};
+      ColorBoard::create_initial_color_board(Color::White),
+      ColorBoard::create_initial_color_board(Color::Black)}};
   return ChessBoard(colors);
 }
 

@@ -29,7 +29,7 @@ public:
   const BitBoard& bit_board() const;
 
 private:
-  const Piece* const m_piece;
+  const Piece* m_piece;
 
   BitBoard m_bit_board;
 

@@ -84,13 +84,13 @@ ColorBoard ColorBoard::create_initial_color_board(Color color)
   vector<PieceBoard> piece_boards;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
     BitBoard initial_board = piece->initial_board();
-    if (color == Black) {
+    if (color == Color::Black) {
       initial_board = initial_board.mirror_rows();
     }
     const PieceBoard piece_board(piece, initial_board);
     piece_boards.push_back(piece_board);
   }
-  return ColorBoard(piece_boards);
+  return ColorBoard(piece_boards, true, true);
 }
 
 // static
@@ -102,5 +102,5 @@ ColorBoard ColorBoard::create_empty_color_board()
     const PieceBoard piece_board(piece, empty_board);
     piece_boards.push_back(piece_board);
   }
-  return ColorBoard(piece_boards);
+  return ColorBoard(piece_boards, false, false);
 }
