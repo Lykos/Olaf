@@ -9,17 +9,22 @@ using namespace std;
 static bool can_castle_q(const ChessBoard& board)
 {
   const Position::row_t ground = ground_line(board.turn_color());
+  const Position rook_position(ground, Position::c_queens_rook_column);
   return board.turn_board().can_castle_q()
       && !board.occupied(Position(ground, Position::c_queens_knight_column))
       && !board.occupied(Position(ground, Position::c_queens_bishop_column))
-      && !board.occupied(Position(ground, Position::c_queen_column));
+      && !board.occupied(Position(ground, Position::c_queen_column))
+      && board.turn_board().piece_index(rook_position) == PieceSet::instance().rook().piece_index();
 }
 
 static bool can_castle_k(const ChessBoard& board)
 {
+  const Position::row_t ground = ground_line(board.turn_color());
+  const Position rook_position(ground, Position::c_kings_rook_column);
   return board.turn_board().can_castle_k()
-      && !board.occupied(Position(ground_line(board.turn_color()), Position::c_kings_bishop_column))
-      && !board.occupied(Position(ground_line(board.turn_color()), Position::c_kings_knight_column));
+      && !board.occupied(Position(ground, Position::c_kings_bishop_column))
+      && !board.occupied(Position(ground, Position::c_kings_knight_column))
+      && board.turn_board().piece_index(rook_position) == PieceSet::instance().rook().piece_index();
 }
 
 OncePiece::OncePiece(const piece_index_t piece_index,

@@ -1,11 +1,12 @@
-#ifndef PERFT_H
-#define PERFT_H
+#ifndef PERFTTEST_H
+#define PERFTTEST_H
 
 #include <QObject>
 #include <QtTest/QTest>
+#include <memory>
 #include "autotest.h"
 
-class Perft : public QObject
+class PerftTest : public QObject
 {
   Q_OBJECT
 
@@ -15,6 +16,6 @@ private Q_SLOTS:
   void test_perft();
 };
 
-DECLARE_TEST(Perft)
+// DECLARE_TEST(PerftTest)
 
-#endif // PERFT_H
+#endif // PERFTTEST_H

@@ -67,6 +67,11 @@ void FenParserTest::test_parse_data()
       << true
       << true
       << create_empty_board();
+  QTest::newRow("empty board no moves")
+      << "8/8/8/8/8/8/8/8 w - -"
+      << true
+      << false
+      << create_empty_board();
   QTest::newRow("empty board ignores ply")
       << "8/8/8/8/8/8/8/8 w - - 10 1"
       << true

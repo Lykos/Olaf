@@ -6,6 +6,7 @@
 #include "testutil.h"
 #include "OlafRules/pieceset.h"
 #include "OlafRules/move.h"
+#include "OlafRules/oncepiece.h"
 #include "OlafRules/position.h"
 #include "OlafRules/fenparser.h"
 #include "gmock/gmock-generated-matchers.h"
@@ -16,11 +17,6 @@ using namespace testing;
 Q_DECLARE_METATYPE(const Piece*)
 Q_DECLARE_METATYPE(Position)
 Q_DECLARE_METATYPE(vector<Move>)
-
-static Move make_move(const Position& source, const Position& destination, const bool is_capture)
-{
-  return Move({}, source, destination, is_capture, false, Piece::c_no_piece);
-}
 
 void OncePieceTest::initTestCase()
 {

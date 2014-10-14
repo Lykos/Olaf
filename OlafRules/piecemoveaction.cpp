@@ -5,7 +5,7 @@
 
 using namespace std;
 
-PieceMoveAction::PieceMoveAction(const ColorBoard::piece_index_t piece_index,
+PieceMoveAction::PieceMoveAction(const Piece::piece_index_t piece_index,
                                  const Position& source,
                                  const Position& destination):
   m_piece_index(piece_index),

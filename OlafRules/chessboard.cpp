@@ -36,6 +36,13 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
       return false;
     }
   }
+  if (left.m_king_capture_positions != right.m_king_capture_positions) {
+    return false;
+  }
+  if (!left.m_king_capture_positions.empty()
+      && !(left.m_king_victim_position == right.m_king_victim_position)) {
+    return false;
+  }
   return left.m_turn_color == right.m_turn_color
       && left.m_turn_number == right.m_turn_number
       && left.m_color_boards == right.m_color_boards;
@@ -223,6 +230,28 @@ vector<Position> ChessBoard::positions() const
     }
   }
   return result;
+}
+
+const vector<Position>& ChessBoard::king_capture_positions() const
+{
+  return m_king_capture_positions;
+}
+
+void ChessBoard::king_capture_positions(
+    const std::vector<Position>& new_king_capture_positions)
+{
+  m_king_capture_positions = new_king_capture_positions;
+}
+
+const Position& ChessBoard::king_victim_position() const
+{
+  return m_king_victim_position;
+}
+
+void ChessBoard::king_victim_position(
+    const Position& new_king_victim_position)
+{
+  m_king_victim_position = new_king_victim_position;
 }
 
 ChessBoard create_initial_board()

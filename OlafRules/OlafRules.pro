@@ -35,7 +35,8 @@ SOURCES += \
     anticastleaction.cpp \
     movebuilder.cpp \
     move.cpp \
-    fenparser.cpp
+    fenparser.cpp \
+    setkingcapturepositionsaction.cpp
 
 HEADERS += \
     moveaction.h \
@@ -61,7 +62,8 @@ HEADERS += \
     epenableaction.h \
     movebuilder.h \
     move.h \
-    fenparser.h
+    fenparser.h \
+    setkingcapturepositionsaction.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafRules

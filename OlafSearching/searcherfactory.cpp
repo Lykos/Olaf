@@ -79,3 +79,9 @@ unique_ptr<MoveCreator> SearcherFactory::move_creator() const
   unique_ptr<MoveCreator> creator(new SimpleMoveCreator());
   return creator;
 }
+
+unique_ptr<Perft> SearcherFactory::perft() const
+{
+  unique_ptr<Perft> perft(new Perft(move_creator(), move_generator()));
+  return perft;
+}

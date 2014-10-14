@@ -149,6 +149,23 @@ public:
    */
   std::vector<Position> positions() const;
 
+  /**
+   * @brief king_capture_positions returns the squares at which the king can be captured
+   *        except for his own square. This is only non-empty after castling.
+   */
+  const std::vector<Position>& king_capture_positions() const;
+
+  void king_capture_positions(
+      const std::vector<Position>& new_king_capture_positions);
+
+  /**
+   * @brief king_victim_position returns the square of the killed king if he is captured
+   *        via king_capture_positions.
+   */
+  const Position& king_victim_position() const;
+
+  void king_victim_position(const Position& new_king_victim_position);
+
 private:
   std::array<ColorBoard, 2> m_color_boards;
 
@@ -161,6 +178,10 @@ private:
   Position m_ep_capture_position;
 
   Position m_ep_victim_position;
+
+  std::vector<Position> m_king_capture_positions;
+
+  Position m_king_victim_position;
 
   mutable bool m_opponents_valid = false;
 

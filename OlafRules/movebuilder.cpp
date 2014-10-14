@@ -1,6 +1,7 @@
 #include "movebuilder.h"
 
 #include <algorithm>
+#include <cassert>
 
 #include "piecemoveaction.h"
 #include "turnflipaction.h"
@@ -12,6 +13,7 @@
 #include "pieceset.h"
 #include "move.h"
 #include "moveaction.h"
+#include "setkingcapturepositionsaction.h"
 
 using namespace std;
 
@@ -27,23 +29,31 @@ bool CompareMoveActionPriorities(const unique_ptr<MoveAction>& left,
 
 // static
 Move MoveBuilder::castle(const ChessBoard& board,
-                                const Position& source,
-                                const Position& destination)
+                         const Position& source,
+                         const Position& destination)
 {
   MoveBuilder builder(board, source, destination);
-  if (destination.column() == 2) {
-    unique_ptr<MoveAction> rook_move_action(
-          new PieceMoveAction(PieceSet::instance().rook().piece_index(),
-                              Position(source.row(), 0),
-                              Position(source.row(), 3)));
-    builder.m_move_actions.push_back(move(rook_move_action));
-  } else if (destination.column() == 6) {
-    unique_ptr<MoveAction> rook_move_action(
-          new PieceMoveAction(PieceSet::instance().rook().piece_index(),
-                              Position(source.row(), 7),
-                              Position(source.row(), 5)));
-    builder.m_move_actions.push_back(move(rook_move_action));
+  Position::column_t rook_source_column;
+  Position::column_t rook_destination_column;
+  if (destination.column() == Position::c_queens_bishop_column) {
+    rook_source_column = Position::c_queens_rook_column;
+    rook_destination_column = Position::c_queen_column;
+  } else {
+    assert(destination.column() == Position::c_kings_knight_column);
+    rook_source_column = Position::c_kings_rook_column;
+    rook_destination_column = Position::c_kings_bishop_column;
   }
+  Position rook_source(source.row(), rook_source_column);
+  Position rook_destination(source.row(), rook_destination_column);
+  unique_ptr<MoveAction> rook_move_action(
+        new PieceMoveAction(PieceSet::instance().rook().piece_index(),
+                            rook_source,
+                            rook_destination));
+  builder.m_move_actions.push_back(move(rook_move_action));
+  const vector<Position> king_capture_positions{source, rook_destination};
+  unique_ptr<MoveAction> set_king_capture_positions(
+        new SetKingCapturePositionsAction(king_capture_positions, destination));
+  builder.m_move_actions.push_back(move(set_king_capture_positions));
   builder.forbid_castling();
   return builder.build();
 }
@@ -80,13 +90,26 @@ MoveBuilder::MoveBuilder(const ChessBoard& board,
   unique_ptr<MoveAction> piece_move_action(
         new PieceMoveAction(piece_index, source, destination));
   unique_ptr<MoveAction> ep_disable_action(new EpDisableAction());
+  unique_ptr<MoveAction> set_king_capture_positions(
+        new SetKingCapturePositionsAction(vector<Position>(), Position()));
   m_move_actions.push_back(move(turn_flip_action));
   m_move_actions.push_back(move(piece_move_action));
   m_move_actions.push_back(move(ep_disable_action));
+  m_move_actions.push_back(move(set_king_capture_positions));
   if (board.opponent(destination)) {
     unique_ptr<MoveAction> capture_action(
           new CaptureAction(destination,
                             board.noturn_board().piece_index(destination)));
+    m_move_actions.push_back(move(capture_action));
+    m_capture = true;
+  }
+  const vector<Position> king_capture_positions = board.king_capture_positions();
+  if (std::find(king_capture_positions.begin(),
+                king_capture_positions.end(),
+                destination) != king_capture_positions.end()) {
+    unique_ptr<MoveAction> capture_action(
+          new CaptureAction(board.king_victim_position(),
+                            PieceSet::instance().king().piece_index()));
     m_move_actions.push_back(move(capture_action));
     m_capture = true;
   }
@@ -152,6 +175,6 @@ MoveActions MoveBuilder::copy_move_actions() const
   for (const std::unique_ptr<MoveAction>& move_action : m_move_actions) {
     result.push_back(move_action->copy());
   }
-  sort(result.begin(), result.end(), CompareMoveActionPriorities);
+  stable_sort(result.begin(), result.end(), CompareMoveActionPriorities);
   return result;
 }

@@ -11,6 +11,7 @@
 #include "moveorderer.h"
 #include "OlafEvaluation/evaluatorfactory.h"
 #include "thinkingwriter.h"
+#include "perft.h"
 #include <memory>
 
 class SearcherFactory
@@ -42,6 +43,8 @@ public:
   std::unique_ptr<MoveGenerator> move_generator() const;
 
   std::unique_ptr<MoveCreator> move_creator() const;
+
+  std::unique_ptr<Perft> perft() const;
 
 private:
   ThinkingWriter* const m_writer;

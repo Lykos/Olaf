@@ -34,15 +34,16 @@ std::vector<Move> Pawn::moves(const Position& source,
     if (source.row() == conversion_row(color)) {
       add_conversion_moves(&result, builder, simple_move_destination);
     } else {
-      result.push_back(builder.build());
+      result.emplace_back(builder.build());
       // Check if the pawn is at its initial position
       if (source.row() == pawn_row(color)) {
         const Position& double_move_destination =
             simple_move_destination + forward_direction(color);
         // Check if double move field is free.
         if (!board.occupied(double_move_destination)) {
+          MoveBuilder builder(board, source, double_move_destination);
           builder.enable_ep(simple_move_destination);
-          result.push_back(builder.build());
+          result.emplace_back(builder.build());
         }
       }
     }
@@ -141,11 +142,15 @@ bool Pawn::internal_can_move(const Position& source,
   }
   const PositionDelta& delta = forward_direction(board.turn_color());
   const Position& step = source + delta;
-  // Handle valid capture.
+  // Handle capture.
   if (destination.row() == step.row()
-      && abs(destination.column() - step.column()) == 1
-      && board.opponent(destination)) {
-    return true;
+      && abs(destination.column() - step.column()) == 1) {
+    return board.opponent(destination)
+        || (board.ep_possible()
+            && destination == board.ep_capture_position());
+  }
+  if (destination.column() != step.column()) {
+    return false;
   }
   // blocked pawn
   if (board.occupied(step)) {

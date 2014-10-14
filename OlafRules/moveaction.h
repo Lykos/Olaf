@@ -45,8 +45,9 @@ public:
   static const int CONVERSION_ACTION_PRIORITY = 3;
   static const int EP_DISABLE_PRIORITY = 4;
   static const int EP_ENABLE_PRIORITY = 5;
-  static const int ANTI_CASTLE_ACTION_PRIORITY = 6;
-  static const int TURN_FLIP_ACTION_PRIORITY = 7;
+  static const int SET_KING_CAPTURE_POSITIONS_PRIORITY = 7;
+  static const int ANTI_CASTLE_ACTION_PRIORITY = 8;
+  static const int TURN_FLIP_ACTION_PRIORITY = 9;
 };
 
 typedef std::vector<std::unique_ptr<MoveAction>> MoveActions;

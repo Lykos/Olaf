@@ -15,7 +15,7 @@ bool SimpleMoveCreator::valid_move(const ChessBoard& board,
     return false;
   } else {
     ChessBoard try_board(board);
-    Move move = create_move(board, source, destination);
+    Move move = create_move(try_board, source, destination);
     move.execute(&try_board);
     return !is_killable(try_board);
   }
@@ -30,7 +30,7 @@ bool SimpleMoveCreator::valid_move(const ChessBoard& board,
     return false;
   } else {
     ChessBoard try_board(board);
-    Move move = create_move(board, source, destination, conversion);
+    Move move = create_move(try_board, source, destination, conversion);
     move.execute(&try_board);
     return !is_killable(try_board);
   }
@@ -73,28 +73,28 @@ Move SimpleMoveCreator::create_move(const ChessBoard& board,
 
 bool SimpleMoveCreator::is_killable(const ChessBoard& board)
 {
-  bool king_found = false;
-  Position king_position;
+  vector<Position> king_positions = board.king_capture_positions();
   vector<Position> killers;
   for (const Position& position : board.positions()) {
     if (board.friendd(position)) {
-      killers.push_back(position);
+      killers.emplace_back(position);
     } else if (board.opponent(position)
                && board.noturn_board().piece_index(position)
                == PieceSet::instance().king().piece_index()) {
-      king_found = true;
-      king_position = position;
+      king_positions.emplace_back(position);
     }
   }
-  if (!king_found) {
+  if (king_positions.empty()) {
     return false;
   }
-  for (const Position& position : killers) {
-    if (pseudo_valid_move(board, position, king_position)) {
-      return true;
-    } else if (pseudo_valid_move(board, position, king_position,
-                                 PieceSet::instance().queen().piece_index())) {
-      return true;
+  for (const Position& killer : killers) {
+    for (const Position& king_position : king_positions) {
+      if (pseudo_valid_move(board, killer, king_position)) {
+        return true;
+      } else if (pseudo_valid_move(board, killer, king_position,
+                                   PieceSet::instance().queen().piece_index())) {
+        return true;
+      }
     }
   }
   return false;

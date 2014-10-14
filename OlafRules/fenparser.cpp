@@ -159,9 +159,20 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
     return false;
   }
   ++it;
+  if (it == end) {
+    // Technically invalid, but some FENs don't provide the move numbers.
+    *board = new_board;
+    return true;
+  }
   CONSUME(c_space, it, end);
+  CHECK_NOT_END(it, end);
   if (!parse_leading_int(end, &it, nullptr)) {
     return false;
+  }
+  if (it == end) {
+    // Technically invalid, but some FENs don't provide the move numbers.
+    *board = new_board;
+    return true;
   }
   CONSUME(c_space, it, end);
   int turn_number;

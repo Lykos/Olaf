@@ -14,7 +14,7 @@ Q_DECLARE_METATYPE(Position)
 void PawnTest::initTestCase()
 {
   m_pawn = &(PieceSet::instance().pawn());
-  m_board = parse_fen("1n1N4/1PPP4/7N/P4npP/2nN2P1/1p2NP2/PPPPP3/8 w - g6 0 1");
+  m_board = parse_fen("1n1N4/1PPP4/6pN/P4npP/2nN2P1/1p2NP2/PPPPP3/8 w - g6 0 1");
 }
 
 void PawnTest::test_can_move_data()
@@ -45,7 +45,7 @@ void PawnTest::test_can_move_data()
   QTest::newRow("start own capture d2e3") << Position("d2") << Position("e3") << false << false << false;
   QTest::newRow("start empty capture b2a3") << Position("b2") << Position("a3") << false << false << false;
   QTest::newRow("nostart opponent capture g4f5") << Position("g4") << Position("f5") << true << true << false;
-  QTest::newRow("nostart ep capture h5g6") << Position("h5") << Position("g6") << false << false << false;
+  QTest::newRow("nostart ep capture h5g6") << Position("h5") << Position("g6") << true << true << false;
   QTest::newRow("nostart own capture g4h5") << Position("g4") << Position("h5") << false << false << false;
   QTest::newRow("nostart empty capture f3e4") << Position("f3") << Position("e4") << false << false << false;
   QTest::newRow("conversion single move not blocked c7c8") << Position("c7") << Position("c8") << false << false << true;

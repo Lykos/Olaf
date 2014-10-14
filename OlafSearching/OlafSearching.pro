@@ -34,7 +34,8 @@ SOURCES += \
     timedsearcher.cpp \
     nostopper.cpp \
     stopper.cpp \
-    iterativesearcher.cpp
+    iterativesearcher.cpp \
+    perft.cpp
 
 HEADERS += \
     simplemovegenerator.h \
@@ -61,7 +62,8 @@ HEADERS += \
     parallelnegamaxer.h \
     capturegenerator.h \
     thinkingwriter.h \
-    nostopper.h
+    nostopper.h \
+    perft.h
 
 header_files.files = $$HEADERS
 header_files.path = /usr/local/include/OlafSearching
