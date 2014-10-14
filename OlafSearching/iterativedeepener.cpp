@@ -26,7 +26,8 @@ SearchResult IterativeDeepener::internal_search(ChessBoard* const board,
   nodes_searched += result.nodes();
   CompositeStopper composite_stopper{&forced_stopper, &weak_stopper};
   for (int depth = min_depth + 1; depth <= max_depth || infinite; ++depth) {
-    SearchResult next_result = m_searcher->search_depth(board, depth, nodes_searched, composite_stopper);
+    const SearchResult& next_result =
+        m_searcher->search_depth(board, depth, nodes_searched, composite_stopper);
     if (!next_result.valid()) {
       break;
     }

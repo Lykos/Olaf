@@ -35,13 +35,13 @@ unique_ptr<DepthSearcher> SearcherFactory::parallel_depth_searcher() const
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_depth_searcher() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(), move_orderer(), quiescer(), false));
+  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(), move_orderer(), evaluation_searcher(), false));
   return searcher;
 }
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher (new NegaMaxer(capture_generator(), move_orderer(), evaluation_searcher(), true));
+  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(capture_generator(), move_orderer(), evaluation_searcher(), true));
   return searcher;
 }
 

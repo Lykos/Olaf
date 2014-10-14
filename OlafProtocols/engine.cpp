@@ -43,7 +43,7 @@ void Engine::run()
 
 ChessBoard Engine::handle_events()
 {
-  unique_lock<mutex> lock (m_mutex);
+  unique_lock<mutex> lock(m_mutex);
   m_condition_variable.wait(lock, [this] { return !m_event_queue.empty() || m_quit; });
   if (m_quit) {
     return ChessBoard();
