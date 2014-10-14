@@ -3,6 +3,7 @@
 #include <vector>
 #include <QtTest/QTest>
 #include <iostream>
+#include <gmock/gmock-matchers.h>
 
 #include "OlafSearching/movegenerator.h"
 #include "OlafSearching/movecreator.h"
@@ -12,6 +13,7 @@
 #include "testutil.h"
 
 using namespace std;
+using namespace testing;
 
 typedef Perft::PerftResult PerftResult;
 
@@ -25,7 +27,7 @@ void PerftTest::test_perft_data()
   QTest::addColumn<ChessBoard>("board");
   QTest::addColumn<vector<PerftResult>>("expected_results");
 
-  for (const Perft::PerftExample& example : Perft::examples()) {
+  for (Perft::PerftExample example : Perft::examples()) {
     QTest::newRow(example.name.c_str()) << parse_fen(example.fen) << example.expected_results;
   }
 }
@@ -44,10 +46,5 @@ void PerftTest::test_perft()
   // perft->debug_perft(c_depth, board);
   const PerftResult& expected_result = expected_results.at(c_depth);
   const PerftResult& actual_result = perft->perft(c_depth, board);
-  QCOMPARE(int(expected_result.castles), int(actual_result.castles));
-  QCOMPARE(int(expected_result.captures), int(actual_result.captures));
-  QCOMPARE(int(expected_result.ep), int(actual_result.ep));
-  QCOMPARE(int(expected_result.nodes), int(actual_result.nodes));
-  QCOMPARE(int(expected_result.promotions), int(actual_result.promotions));
-  QCOMPARE(int(expected_result.mates), int(actual_result.mates));
+  QASSERT_THAT(actual_result, Eq(expected_result));
 }

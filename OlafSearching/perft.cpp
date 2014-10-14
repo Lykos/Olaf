@@ -177,3 +177,26 @@ vector<Move> Perft::valid_moves(const ChessBoard& board)
   }
   return result;
 }
+
+bool operator ==(const Perft::PerftResult& left, const Perft::PerftResult& right)
+{
+  if (&left == &right) {
+    return true;
+  }
+  return left.nodes == right.nodes
+      && left.captures == right.captures
+      && left.ep == right.ep
+      && left.castles == right.castles
+      && left.promotions == right.promotions
+      && left.mates == right.mates;
+}
+
+std::ostream& operator <<(std::ostream& out, const Perft::PerftResult& perft_result)
+{
+  return out << "PerftResult(nodes = " << perft_result.nodes
+             << ", captures = " << perft_result.captures
+             << ", ep = " << perft_result.ep
+             << ", castles = " << perft_result.castles
+             << ", promotions = " << perft_result.promotions
+             << ", mates = " << perft_result.mates << ")";
+}

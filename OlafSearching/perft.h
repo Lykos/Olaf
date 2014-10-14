@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <ostream>
 #include <vector>
 
 class MoveCreator;
@@ -65,5 +66,9 @@ private:
 
   std::unique_ptr<MoveGenerator> m_generator;
 };
+
+bool operator ==(const Perft::PerftResult& right, const Perft::PerftResult& left);
+
+std::ostream& operator <<(std::ostream& out, const Perft::PerftResult& perft_result);
 
 #endif // PERFT_H
