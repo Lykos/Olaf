@@ -16,6 +16,6 @@ private Q_SLOTS:
   void test_perft();
 };
 
-// DECLARE_TEST(PerftTest)
+DECLARE_TEST(PerftTest)
 
 #endif // PERFTTEST_H

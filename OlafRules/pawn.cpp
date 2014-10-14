@@ -34,10 +34,12 @@ std::vector<Move> Pawn::moves(const Position& source,
       add_conversion_moves(&result, board, source, simple_move_destination);
     } else {
       result.emplace_back(move(source, simple_move_destination, board));
-      const Position& double_move_destination =
-          simple_move_destination + forward_direction(color);
-      if (!board.occupied(double_move_destination)) {
-        result.emplace_back(move(source, double_move_destination, board));
+      if (source.row() == pawn_row(color)) {
+        const Position& double_move_destination =
+            simple_move_destination + forward_direction(color);
+        if (!board.occupied(double_move_destination)) {
+          result.emplace_back(move(source, double_move_destination, board));
+        }
       }
     }
   }
@@ -98,6 +100,9 @@ Move Pawn::move(const Position& source,
   MoveBuilder builder(board, source, destination);
   if (destination == two_step) {
     builder.enable_ep(step);
+  } else if (board.ep_possible()
+             && destination == board.ep_capture_position()) {
+    builder.capture_ep(board);
   }
   return builder.build();
 }

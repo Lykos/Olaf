@@ -34,7 +34,7 @@ void MoveGeneratorTest::test_generate_data()
 {
   QTest::addColumn<ChessBoard>("board");
   QTest::addColumn<vector<Move>>("moves");
-/*
+
   {
     const vector<Move> moves{
       make_move(Position("b1"), Position("a1"), false),
@@ -80,11 +80,6 @@ void MoveGeneratorTest::test_generate_data()
     QTest::newRow("middle game")
          << parse_fen("r3k2r/p1ppqpb1/1n2pnp1/3PN3/1p2P3/2N2Q1p/PPPBbPPP/1R2K2R w Kkq - 0 2")
          << moves;
-  }*/
-  {
-    QTest::newRow("bug")
-         << parse_fen("8/2p5/3p4/KP5r/1R2Pp1k/8/6P1/8 b - - 0 1")
-         << vector<Move>();
   }
 }
 
@@ -100,7 +95,6 @@ void MoveGeneratorTest::test_generate()
   vector<Move> valid_moves;
   for (const Move& move : actual_moves) {
     if (valid_move(board, move, creator.get())) {
-      cout << move << endl;
       valid_moves.push_back(move);
     }
   }
