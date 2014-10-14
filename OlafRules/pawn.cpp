@@ -103,10 +103,10 @@ Move Pawn::move(const Position& source,
                 const Position& destination,
                 const ChessBoard& board) const
 {
-  Position step = source + forward_direction(board.turn_color());
-  Position two_step = step + forward_direction(board.turn_color());
+  const Position& two_step = step + forward_direction(board.turn_color());
   MoveBuilder builder(board, source, destination);
   if (destination == two_step) {
+    const Position& step = source + forward_direction(board.turn_color());
     builder.enable_ep(step);
   }
   return builder.build();
