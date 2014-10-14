@@ -46,8 +46,8 @@ void PerftTest::test_perft()
   const PerftResult& actual_result = perft->perft(c_depth, board);
   QCOMPARE(int(expected_result.mates), int(actual_result.mates));
   QCOMPARE(int(expected_result.castles), int(actual_result.castles));
-  QCOMPARE(int(expected_result.nodes), int(actual_result.nodes));
   QCOMPARE(int(expected_result.captures), int(actual_result.captures));
   QCOMPARE(int(expected_result.ep), int(actual_result.ep));
+  QCOMPARE(int(expected_result.nodes), int(actual_result.nodes));
   QCOMPARE(int(expected_result.promotions), int(actual_result.promotions));
 }

@@ -121,17 +121,22 @@ Perft::PerftResult Perft::internal_perft(const int depth,
   vector<Move> moves = valid_moves(*board);
   for (Move& move : moves) {
     move.execute(board);
+    if (depth > 1) {
+      result += internal_perft(depth - 1, board);
+    }
+    move.undo(board);
     if (depth == 1) {
       ++result.nodes;
       if (move.is_capture()) {
         ++result.captures;
+
         if (board->ep_possible()
             && move.destination() == board->ep_capture_position()) {
           ++result.ep;
         }
       }
       if (abs(move.source().column() - move.destination().column()) == 2
-          && board->noturn_board().piece_index(move.destination())
+          && board->turn_board().piece_index(move.source())
           == PieceSet::instance().king().piece_index()) {
         ++result.castles;
       }
@@ -141,10 +146,7 @@ Perft::PerftResult Perft::internal_perft(const int depth,
       if (valid_moves(*board).empty()) {
         ++result.mates;
       }
-    } else {
-      result += internal_perft(depth - 1, board);
     }
-    move.undo(board);
   }
   return result;
 }
