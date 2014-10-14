@@ -15,7 +15,7 @@ using namespace std;
 
 typedef Perft::PerftResult PerftResult;
 
-const int c_depth = 2;
+const int c_depth = 3;
 
 Q_DECLARE_METATYPE(ChessBoard)
 Q_DECLARE_METATYPE(vector<PerftResult>)
@@ -44,10 +44,10 @@ void PerftTest::test_perft()
   // perft->debug_perft(c_depth, board);
   const PerftResult& expected_result = expected_results.at(c_depth);
   const PerftResult& actual_result = perft->perft(c_depth, board);
-  QCOMPARE(int(expected_result.mates), int(actual_result.mates));
   QCOMPARE(int(expected_result.castles), int(actual_result.castles));
   QCOMPARE(int(expected_result.captures), int(actual_result.captures));
   QCOMPARE(int(expected_result.ep), int(actual_result.ep));
   QCOMPARE(int(expected_result.nodes), int(actual_result.nodes));
   QCOMPARE(int(expected_result.promotions), int(actual_result.promotions));
+  QCOMPARE(int(expected_result.mates), int(actual_result.mates));
 }

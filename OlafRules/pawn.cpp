@@ -30,7 +30,7 @@ std::vector<Move> Pawn::moves(const Position& source,
   // Check if square is free
   if (!board.occupied(simple_move_destination)) {
     // Handle conversion, if necessary.
-    if (source.row() == conversion_row(color)) {
+    if (simple_move_destination.row() == conversion_row(color)) {
       add_conversion_moves(&result, board, source, simple_move_destination);
     } else {
       result.emplace_back(move(source, simple_move_destination, board));
