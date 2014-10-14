@@ -24,7 +24,7 @@ OlafProtocols.depends = \
     OlafRules \
     OlafSearching
 
-OlafRulesTest.depends = \
+OlafTest.depends = \
     OlafRules \
     OlafEvaluation \
     OlafSearching \
