@@ -29,22 +29,15 @@ std::vector<Move> Pawn::moves(const Position& source,
       source + forward_direction(color);
   // Check if square is free
   if (!board.occupied(simple_move_destination)) {
-    MoveBuilder builder(board, source, simple_move_destination);
     // Handle conversion, if necessary.
     if (source.row() == conversion_row(color)) {
-      add_conversion_moves(&result, builder, simple_move_destination);
+      add_conversion_moves(&result, board, source, simple_move_destination);
     } else {
-      result.emplace_back(builder.build());
-      // Check if the pawn is at its initial position
-      if (source.row() == pawn_row(color)) {
-        const Position& double_move_destination =
-            simple_move_destination + forward_direction(color);
-        // Check if double move field is free.
-        if (!board.occupied(double_move_destination)) {
-          MoveBuilder builder(board, source, double_move_destination);
-          builder.enable_ep(simple_move_destination);
-          result.emplace_back(builder.build());
-        }
+      result.emplace_back(move(source, simple_move_destination, board));
+      const Position& double_move_destination =
+          simple_move_destination + forward_direction(color);
+      if (!board.occupied(double_move_destination)) {
+        result.emplace_back(move(source, double_move_destination, board));
       }
     }
   }
@@ -53,18 +46,15 @@ std::vector<Move> Pawn::moves(const Position& source,
       continue;
     }
     Position capture_destination = source + forward_direction(color) + sidewards;
-    MoveBuilder capture_builder(board, source, capture_destination);
     // Check if capture is possible
-    if (board.opponent(capture_destination)) {
+    if (board.opponent(capture_destination)
+        || (board.ep_possible()
+            && capture_destination == board.ep_capture_position())) {
       if (capture_destination.row() == conversion_row(color)) {
-        add_conversion_moves(&result, capture_builder, capture_destination);
+        add_conversion_moves(&result, board, source, capture_destination);
       } else {
-        result.push_back(capture_builder.build());
+        result.emplace_back(move(source, capture_destination, board));
       }
-    // or ep capture is possible
-    } else if (board.ep_possible() && capture_destination == board.ep_capture_position()) {
-      capture_builder.capture_ep(board);
-      result.push_back(capture_builder.build());
     }
   }
   return result;
@@ -103,10 +93,10 @@ Move Pawn::move(const Position& source,
                 const Position& destination,
                 const ChessBoard& board) const
 {
+  const Position& step = source + forward_direction(board.turn_color());
   const Position& two_step = step + forward_direction(board.turn_color());
   MoveBuilder builder(board, source, destination);
   if (destination == two_step) {
-    const Position& step = source + forward_direction(board.turn_color());
     builder.enable_ep(step);
   }
   return builder.build();
@@ -123,13 +113,12 @@ Move Pawn::move(const Position& source,
 }
 
 void Pawn::add_conversion_moves(vector<Move>* const moves,
-                                const MoveBuilder& base_move,
-                                const Position& position) const
+                                const ChessBoard& board,
+                                const Position& source,
+                                const Position& destination) const
 {
   for (piece_index_t piece_index : m_conversions) {
-    MoveBuilder conversion(base_move);
-    conversion.conversion(position, this->piece_index(), piece_index);
-    moves->push_back(conversion.build());
+    moves->emplace_back(move(source, destination, board, piece_index));
   }
 }
 

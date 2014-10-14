@@ -37,17 +37,15 @@ public:
             const ChessBoard& board,
             piece_index_t conversion) const;
 
+private:
   /**
    * @brief add_conversions adds all moves that are based upon the given base move combined with a conversion action.
-   * @param moves
-   * @param base_move
-   * @param position
    */
   void add_conversion_moves(std::vector<Move>* moves,
-                            const MoveBuilder& base_move,
-                            const Position& position) const;
+                            const ChessBoard& board,
+                            const Position& source,
+                            const Position& destination) const;
 
-private:
   bool internal_can_move(const Position& source,
                          const Position& destination,
                          const ChessBoard& board) const;
