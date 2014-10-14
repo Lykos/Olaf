@@ -22,9 +22,7 @@ XBoardReader::XBoardReader(XBoardWriter* const writer,
 
 void XBoardReader::run()
 {
-  m_writer->newline();
   while (!m_in->eof()) {
-    m_writer->comment("Reading command");
     string message;
     getline(*m_in, message);
     istringstream iss (message);
@@ -213,7 +211,7 @@ bool XBoardReader::check_args(const vector<string>& tokens,
 {
   // Note that the first token is the command.
   const int actual_args = tokens.size() - 1;
-  const bool result = actual_args >= args + 1;
+  const bool result = actual_args >= args;
   if (!result) {
     ostringstream oss;
     oss << "Wrong number of arguments for " << tokens.at(0)

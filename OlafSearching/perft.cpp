@@ -70,7 +70,7 @@ const vector<Perft::PerftExample>& Perft::examples()
     PerftResult{1, 0, 0, 0, 0, 0},
     PerftResult{42, 3, 0, 1, 0, 0},
     PerftResult{1352, 95, 0, 0, 0, 0},
-    PerftResult{53392, 969, 0, 0, 0, 0}};
+    PerftResult{53392, 4381, 75, 969, 0, 24}};
 
   static const vector<PerftExample> examples{
     PerftExample{"initial", fen_initial, expected_results_initial},
@@ -114,7 +114,7 @@ void Perft::debug_perft(const int depth,
 Perft::PerftResult Perft::internal_perft(const int depth,
                                          ChessBoard* const board)
 {
-  if (depth == 0) {
+  if (depth <= 0) {
     return {1, 0, 0, 0, 0, 0};
   }
   PerftResult result{0, 0, 0, 0, 0, 0};
@@ -123,6 +123,8 @@ Perft::PerftResult Perft::internal_perft(const int depth,
     move.execute(board);
     if (depth > 1) {
       result += internal_perft(depth - 1, board);
+    } else if (valid_moves(*board).empty()) {
+      ++result.mates;
     }
     move.undo(board);
     if (depth == 1) {
@@ -142,9 +144,6 @@ Perft::PerftResult Perft::internal_perft(const int depth,
       }
       if (move.is_conversion()) {
         ++result.promotions;
-      }
-      if (valid_moves(*board).empty()) {
-        ++result.mates;
       }
     }
   }
