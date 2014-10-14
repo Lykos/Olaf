@@ -25,7 +25,7 @@ void XBoardReader::run()
   while (!m_in->eof()) {
     string message;
     getline(*m_in, message);
-    istringstream iss (message);
+    istringstream iss(message);
     vector<string> tokens;
     copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter<vector<string>>(tokens));
     if (tokens.empty()) {

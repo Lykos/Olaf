@@ -17,7 +17,7 @@ using namespace testing;
 
 typedef Perft::PerftResult PerftResult;
 
-const int c_depth = 3;
+const int c_depth = 2;
 
 Q_DECLARE_METATYPE(ChessBoard)
 Q_DECLARE_METATYPE(vector<PerftResult>)

@@ -30,32 +30,37 @@ SearchResult NegaMaxer::search_alpha_beta(ChessBoard* const board,
     return m_searcher->search_stoppable_alpha_beta(board, depth, nodes_searched, alpha, beta, stopper);
   }
   m_orderer->order_moves(*board, &moves);
-  vector<Move> alpha_variation;
+  vector<Move> best_variation;
+  int best_value = numeric_limits<int>::min() + 1;
   int nodes = 0;
   for (Move& move : moves) {
     move.execute(board);
-    SearchResult result = search_stoppable_alpha_beta(board,
-                                                      depth - 1,
-                                                      nodes_searched + nodes,
-                                                      -beta,
-                                                      -alpha,
-                                                      stopper);
+    const SearchResult& result = search_stoppable_alpha_beta(board,
+                                                             depth - 1,
+                                                             nodes_searched + nodes,
+                                                             -beta,
+                                                             -alpha,
+                                                             stopper);
     if (!result.valid()) {
       return result;
     }
-    int value = -result.value();
+    const int value = -result.value();
     move.undo(board);
     nodes += result.nodes();
-    if (value >= beta) {
-      return SearchResult(nodes, value, result.main_variation());
-    } else if (value > alpha) {
-      alpha = value;
-      alpha_variation.clear();
+    if (value > best_value) {
+      best_value = value;
+      best_variation.clear();
       for (const Move& move : result.main_variation()) {
-        alpha_variation.push_back(move);
+        best_variation.push_back(move);
       }
-      alpha_variation.push_back(move);
+      best_variation.push_back(move);
+    }
+    if (value > alpha) {
+      alpha = value;
+    }
+    if (alpha >= beta) {
+      break;
     }
   }
-  return SearchResult(nodes, alpha, alpha_variation);
+  return SearchResult(nodes, best_value, best_variation);
 }

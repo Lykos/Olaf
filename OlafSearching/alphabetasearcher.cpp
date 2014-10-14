@@ -11,7 +11,7 @@ SearchResult AlphaBetaSearcher::search_depth(ChessBoard* const board,
   return search_alpha_beta(board,
                            depth,
                            nodes_searched,
-                           numeric_limits<int>::min(),
+                           numeric_limits<int>::min() + 1,
                            numeric_limits<int>::max(),
                            stopper);
 }

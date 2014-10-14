@@ -47,7 +47,7 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
   }
   const int value = board.turn_color() == Color::White ? result.value() : -result.value();
   m_writer->thinking_output(depth,
-                            value / 100.0,
+                            value,
                             time.count() / 10,
                             result.nodes(),
                             oss.str());
