@@ -41,8 +41,8 @@ int to_digit(const char c)
 #define CHECK_NOT_END(it, end) if (it == end) { return false; }
 
 bool parse_leading_int(const string::const_iterator& end,
-                      string::const_iterator* const it,
-                      int* const number)
+                       string::const_iterator* const it,
+                       int* const number)
 {
   CHECK_NOT_END(*it, end);
   if (!is_digit(**it)) {
@@ -58,6 +58,23 @@ bool parse_leading_int(const string::const_iterator& end,
     }
     ++*it;
   }
+  return true;
+}
+
+bool parse_move_numbers(const string::const_iterator& end,
+                        string::const_iterator* const it,
+                        ChessBoard* const new_board) {
+  CONSUME(c_space, *it, end);
+  CHECK_NOT_END(*it, end);
+  if (!parse_leading_int(end, it, nullptr)) {
+    return false;
+  }
+  CONSUME(c_space, *it, end);
+  int turn_number;
+  if (!parse_leading_int(end, it, &turn_number)) {
+    return false;
+  }
+  new_board->turn_number(turn_number);
   return true;
 }
 
@@ -159,27 +176,8 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
     return false;
   }
   ++it;
-  if (it == end) {
-    // Technically invalid, but some FENs don't provide the move numbers.
-    *board = new_board;
-    return true;
-  }
-  CONSUME(c_space, it, end);
-  CHECK_NOT_END(it, end);
-  if (!parse_leading_int(end, &it, nullptr)) {
-    return false;
-  }
-  if (it == end) {
-    // Technically invalid, but some FENs don't provide the move numbers.
-    *board = new_board;
-    return true;
-  }
-  CONSUME(c_space, it, end);
-  int turn_number;
-  if (!parse_leading_int(end, &it, &turn_number)) {
-    return false;
-  }
-  new_board.turn_number(turn_number);
+  parse_move_numbers(end, &it, board);
+  // We don't check for validity here. A lot of FENs have invalid or no move numbers.
   *board = new_board;
   return true;
 }
