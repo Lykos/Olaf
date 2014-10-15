@@ -79,11 +79,12 @@ bool parse_move_numbers(const string::const_iterator& end,
 }
 
 // static
-bool FenParser::parse(const string& fen, ChessBoard* const board)
+bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_position)
 {
   ChessBoard new_board = create_empty_board();
-  string::const_iterator it = fen.begin();
-  string::const_iterator end = fen.end();
+  const string::const_iterator begin = fen.begin();
+  string::const_iterator it = begin;
+  const string::const_iterator end = fen.end();
   const PieceSet& piece_set = PieceSet::instance();
   for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
     int column = 0;
@@ -176,9 +177,12 @@ bool FenParser::parse(const string& fen, ChessBoard* const board)
     return false;
   }
   ++it;
-  parse_move_numbers(end, &it, board);
+  parse_move_numbers(end, &it, &new_board);
   // We don't check for validity here. A lot of FENs have invalid or no move numbers.
   *board = new_board;
+  if (end_position) {
+    *end_position = it - begin;
+  }
   return true;
 }
 
