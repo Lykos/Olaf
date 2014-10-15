@@ -7,7 +7,8 @@ SUBDIRS += \
     OlafSearching \
     OlafProtocols \
     OlafTest \
-    OlafMain
+    OlafMain \
+    OlafBenchmark
 
 OlafEvaluation.depends = OlafRules
 
@@ -31,6 +32,12 @@ OlafTest.depends = \
     OlafProtocols
 
 OlafMain.depends = \
+    OlafEvaluation \
+    OlafProtocols \
+    OlafRules \
+    OlafSearching
+
+OlafBenchmark.depends = \
     OlafEvaluation \
     OlafProtocols \
     OlafRules \

@@ -67,11 +67,12 @@ HEADERS += \
     perft.h \
     searchcontext.h
 
-header_files.files = $$HEADERS
-header_files.path = /usr/local/include/OlafSearching
+headers.files = $$HEADERS
+headers.path = /usr/local/include/OlafSearching
 
 target.path = /usr/local/lib
-INSTALLS += target
+
+INSTALLS += target headers
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafRules -lOlafRules

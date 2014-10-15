@@ -65,8 +65,9 @@ HEADERS += \
     fenparser.h \
     setkingcapturepositionsaction.h
 
-header_files.files = $$HEADERS
-header_files.path = /usr/local/include/OlafRules
+headers.files = $$HEADERS
+headers.path = /usr/local/include/OlafRules
 
 target.path = /usr/local/lib
+
 INSTALLS += target

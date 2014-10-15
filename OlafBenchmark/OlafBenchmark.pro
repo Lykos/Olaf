@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2012-11-05T02:03:02
+# Project created by QtCreator 2014-10-14T19:28:55
 #
 #-------------------------------------------------
 
@@ -10,35 +10,31 @@ QT       += testlib
 
 QT       -= gui
 
-TARGET = olaf_test
+TARGET = olaf_benchmark
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
 
+
 SOURCES += \
-    boardtest.cpp \
-    pawntest.cpp \
-    oncepiecetest.cpp \
-    fenparsertest.cpp \
+    perftbenchmark.cpp \
+    testutil.cpp \
+    performanceresult.cpp \
     main.cpp \
-    materialevaluatortest.cpp \
-    movegeneratortest.cpp \
-    perfttest.cpp \
-    testutil.cpp
+    benchmark.cpp \
+    autobenchmark.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
-    boardtest.h \
-    pawntest.h \
-    oncepiecetest.h \
-    autotest.h \
+    perftbenchmark.h \
+    performanceresult.h \
     testutil.h \
-    fenparsertest.h \
-    materialevaluatortest.h \
-    movegeneratortest.h \
-    perfttest.h
+    comparemacros.h \
+    compositeperformanceresult.h \
+    autobenchmark.h \
+    benchmark.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafRules -lOlafRules

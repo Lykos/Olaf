@@ -23,11 +23,12 @@ HEADERS += \
     evaluatorfactory.h \
     config.h
 
-header_files.files = $$HEADERS
-header_files.path = /usr/local/include/OlafEvaluation
+header.files = $$HEADERS
+headers.path = /usr/local/include/OlafEvaluation
 
 target.path = /usr/local/lib
-INSTALLS += target
+
+INSTALLS += target headers
 
 CONFIG(release, debug|release): LIBS += -L../OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L../OlafRules -lOlafRules
