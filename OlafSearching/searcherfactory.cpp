@@ -23,25 +23,35 @@ unique_ptr<TimedSearcher> SearcherFactory::timed_searcher() const
 
 unique_ptr<IterativeSearcher> SearcherFactory::iterative_searcher() const
 {
-  unique_ptr<IterativeSearcher> searcher (new IterativeDeepener(sequential_depth_searcher(), m_writer));
+  unique_ptr<IterativeSearcher> searcher (new IterativeDeepener(sequential_depth_searcher(),
+                                                                m_writer));
   return searcher;
 }
 
 unique_ptr<DepthSearcher> SearcherFactory::parallel_depth_searcher() const
 {
-  unique_ptr<DepthSearcher> searcher(new ParallelNegaMaxer(move_generator(), move_orderer(), sequential_depth_searcher(), sequential_depth));
+  unique_ptr<DepthSearcher> searcher(new ParallelNegaMaxer(move_generator(),
+                                                           move_orderer(),
+                                                           sequential_depth_searcher(),
+                                                           sequential_depth));
   return searcher;
 }
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_depth_searcher() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(), move_orderer(), evaluation_searcher(), false));
+  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
+                                                       move_orderer(),
+                                                       evaluation_searcher(),
+                                                       false));
   return searcher;
 }
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(capture_generator(), move_orderer(), evaluation_searcher(), true));
+  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(capture_generator(),
+                                                       move_orderer(),
+                                                       evaluation_searcher(),
+                                                       true));
   return searcher;
 }
 
@@ -70,7 +80,7 @@ unique_ptr<MoveGenerator> SearcherFactory::capture_generator() const
 
 unique_ptr<MoveGenerator> SearcherFactory::move_generator() const
 {
-  unique_ptr<MoveGenerator> generator(new SimpleMoveGenerator());
+  unique_ptr<MoveGenerator> generator(new SimpleMoveGenerator(move_creator()));
   return generator;
 }
 
@@ -82,6 +92,6 @@ unique_ptr<MoveCreator> SearcherFactory::move_creator() const
 
 unique_ptr<Perft> SearcherFactory::perft() const
 {
-  unique_ptr<Perft> perft(new Perft(move_creator(), move_generator()));
+  unique_ptr<Perft> perft(new Perft(move_generator()));
   return perft;
 }

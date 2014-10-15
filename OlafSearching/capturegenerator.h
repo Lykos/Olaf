@@ -11,11 +11,12 @@ class CaptureGenerator : public MoveGenerator
 public:
   CaptureGenerator(std::unique_ptr<MoveGenerator> generator);
 
-  std::vector<Move> generate_moves(const ChessBoard& board);
+  std::vector<Move> generate_moves(const ChessBoard& board) override;
+
+  std::vector<Move> generate_valid_moves(const ChessBoard& board) override;
 
 private:
   std::unique_ptr<MoveGenerator> m_generator;
-
 };
 
 #endif // CAPTUREGENERATOR_H

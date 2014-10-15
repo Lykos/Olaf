@@ -7,6 +7,10 @@
 
 using namespace std;
 
+SimpleMoveGenerator::SimpleMoveGenerator(unique_ptr<MoveCreator> creator):
+  m_creator(move(creator))
+{}
+
 vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
 {
   vector<Move> moves;
@@ -25,4 +29,31 @@ vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
     }
   }
   return moves;
+}
+
+bool SimpleMoveGenerator::valid_move(const ChessBoard& board,
+                                     const Move& move)
+{
+  if (move.is_conversion()) {
+    return m_creator->valid_move(board,
+                                 move.source(),
+                                 move.destination(),
+                                 move.created_piece());
+  } else {
+    return m_creator->valid_move(board,
+                                 move.source(),
+                                 move.destination());
+  }
+}
+
+vector<Move> SimpleMoveGenerator::generate_valid_moves(const ChessBoard& board)
+{
+  vector<Move> moves = generate_moves(board);
+  vector<Move> result;
+  for (const Move& move : moves) {
+    if (valid_move(board, move)) {
+      result.push_back(move);
+    }
+  }
+  return result;
 }

@@ -81,9 +81,7 @@ const vector<Perft::PerftExample>& Perft::examples()
   return examples;
 }
 
-Perft::Perft(unique_ptr<MoveCreator> creator,
-             unique_ptr<MoveGenerator> generator):
-  m_creator(move(creator)),
+Perft::Perft(unique_ptr<MoveGenerator> generator):
   m_generator(move(generator))
 {}
 
@@ -97,7 +95,7 @@ void Perft::debug_perft(const int depth,
                         const ChessBoard& board)
 {
   ChessBoard try_board(board);
-  vector<Move> moves = valid_moves(try_board);
+  vector<Move> moves = m_generator->generate_valid_moves(try_board);
   int sum = 0;
   for (Move& move : moves) {
     move.execute(&try_board);
@@ -118,12 +116,12 @@ Perft::PerftResult Perft::internal_perft(const int depth,
     return {1, 0, 0, 0, 0, 0};
   }
   PerftResult result{0, 0, 0, 0, 0, 0};
-  vector<Move> moves = valid_moves(*board);
+  vector<Move> moves = m_generator->generate_valid_moves(*board);
   for (Move& move : moves) {
     move.execute(board);
     if (depth > 1) {
       result += internal_perft(depth - 1, board);
-    } else if (valid_moves(*board).empty()) {
+    } else if (m_generator->generate_valid_moves(*board).empty()) {
       ++result.mates;
     }
     move.undo(board);
@@ -145,33 +143,6 @@ Perft::PerftResult Perft::internal_perft(const int depth,
       if (move.is_conversion()) {
         ++result.promotions;
       }
-    }
-  }
-  return result;
-}
-
-bool Perft::valid_move(const ChessBoard& board,
-                       const Move& move)
-{
-  if (move.is_conversion()) {
-    return m_creator->valid_move(board,
-                                 move.source(),
-                                 move.destination(),
-                                 move.created_piece());
-  } else {
-    return m_creator->valid_move(board,
-                                 move.source(),
-                                 move.destination());
-  }
-}
-
-vector<Move> Perft::valid_moves(const ChessBoard& board)
-{
-  vector<Move> moves = m_generator->generate_moves(board);
-  vector<Move> result;
-  for (const Move& move : moves) {
-    if (valid_move(board, move)) {
-      result.push_back(move);
     }
   }
   return result;
