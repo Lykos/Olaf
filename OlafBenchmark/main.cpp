@@ -23,10 +23,17 @@ int main(int argc, char *argv[])
   time(&rawtime);
   timeinfo = localtime(&rawtime);
 
+  // File name
+  string version_name ("First_version");
+  ostringstream oss2;
+  oss2 << "../../Olaf/performance_results/" << version_name << "_" << VERSION << "_" << hostname << "_" << (1900 + timeinfo->tm_year) << "-" << timeinfo->tm_mon << "-"
+      << timeinfo->tm_mday << "_" << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec;
+  string file_name = oss2.str();
+  cout << "Writing results to " << file_name << endl;
+
   // description
-  string version_name ("Benchmark_new_unbalanced_strategy");
   ostringstream oss;
-  oss << version_name << " " << hostname << " " << (1900 + timeinfo->tm_year) << "-" << timeinfo->tm_mon << "-"
+  oss << version_name << " " << VERSION << " " << hostname << " " << (1900 + timeinfo->tm_year) << "-" << timeinfo->tm_mon << "-"
       << timeinfo->tm_mday << " " << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec << endl;
   string description = oss.str();
 
@@ -34,10 +41,6 @@ int main(int argc, char *argv[])
       auto_benchmark::run(argc, argv, description);
 
   // Write result to file
-  ostringstream oss2;
-  oss2 << "../../Olaf/performance_results/" << version_name << "_" << hostname << "_" << (1900 + timeinfo->tm_year) << "-" << timeinfo->tm_mon << "-"
-      << timeinfo->tm_mday << "_" << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec;
-  string file_name = oss2.str();
   ofstream result_file(file_name.c_str());
   result_file << global_result;
   cout << global_result;
