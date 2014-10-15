@@ -36,7 +36,8 @@ SOURCES += \
     stopper.cpp \
     iterativesearcher.cpp \
     perft.cpp \
-    searchcontext.cpp
+    searchcontext.cpp \
+    sanparser.cpp
 
 HEADERS += \
     simplemovegenerator.h \
@@ -65,7 +66,8 @@ HEADERS += \
     thinkingwriter.h \
     nostopper.h \
     perft.h \
-    searchcontext.h
+    searchcontext.h \
+    sanparser.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching
