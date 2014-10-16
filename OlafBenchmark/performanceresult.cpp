@@ -60,9 +60,15 @@ ostream& operator<<(ostream& out, const BenchmarkResult& result)
   return out;
 }
 
-bool CompareMillis::operator()(const BenchmarkResult& a, const BenchmarkResult& b) const
+bool operator <(const BenchmarkResult& a, const BenchmarkResult& b)
 {
-  return a.m_millis < b.m_millis;
+  if (a.m_has_millis && b.m_has_millis && a.m_millis < b.m_millis) {
+    return true;
+  }
+  if (a.m_has_score && b.m_has_score && a.m_score < b.m_score) {
+    return true;
+  }
+  return false;
 }
 
 const unsigned int BenchmarkResult::c_description_size(20);

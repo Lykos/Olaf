@@ -32,7 +32,7 @@ protected:
     Benchmark* const m_benchmark;
     int m_iterations;
     QElapsedTimer m_timer;
-    std::priority_queue<BenchmarkResult, vector<BenchmarkResult>, CompareMillis> m_measurements;
+    std::priority_queue<BenchmarkResult> m_measurements;
   };
 
 private:

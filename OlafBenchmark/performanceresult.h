@@ -9,15 +9,12 @@ class BenchmarkResult;
 
 std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result);
 
-struct CompareMillis
-{
-  bool operator()(const BenchmarkResult& a, const BenchmarkResult& b) const;
-};
+bool operator <(const BenchmarkResult& left, const BenchmarkResult& right);
 
 class BenchmarkResult {
   friend std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result);
 
-  friend CompareMillis;
+  friend bool operator <(const BenchmarkResult& left, const BenchmarkResult& right);
 
 public:
   BenchmarkResult(const std::string& description,
