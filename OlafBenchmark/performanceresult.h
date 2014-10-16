@@ -2,6 +2,8 @@
 #define PERFORMANCERESULT_H
 
 #include <ostream>
+#include <chrono>
+#include <string>
 
 class BenchmarkResult;
 
@@ -18,34 +20,28 @@ class BenchmarkResult {
   friend CompareMillis;
 
 public:
-  BenchmarkResult(const BenchmarkResult& other);
-
-  BenchmarkResult(BenchmarkResult&& other);
-
-  BenchmarkResult& operator=(const BenchmarkResult& other);
-
-  BenchmarkResult& operator=(BenchmarkResult&& other);
-
-  ~BenchmarkResult();
+  BenchmarkResult(const std::string& description,
+                  const std::chrono::milliseconds& millis);
 
   BenchmarkResult(const std::string& description,
-                  long milliseconds,
-                  long score = 0);
-
-  void score(const long score);
-
-  bool has_score() const;
+                  long score);
 
   long score() const;
 
+  bool has_score() const;
+
   const std::string& description() const;
 
-  long milliseconds() const;
+  const std::chrono::milliseconds& millis() const;
+
+  bool has_millis() const;
 
 private:
   std::string m_description;
 
-  long m_milliseconds;
+  std::chrono::milliseconds m_millis;
+
+  bool m_has_millis = false;
 
   long m_score;
 

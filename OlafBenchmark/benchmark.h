@@ -15,7 +15,7 @@ class Benchmark : public QObject
   Q_OBJECT
 
 public:
-  CompositePerformanceResult<BenchmarkResult> accumulate_results() const;
+  CompositeBenchmarkResult<BenchmarkResult> accumulate_results() const;
 
   std::string description() const;
 

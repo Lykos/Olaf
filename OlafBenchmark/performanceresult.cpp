@@ -1,76 +1,59 @@
 #include "performanceresult.h"
-#include <cstring>
 
-BenchmarkResult::BenchmarkResult(const BenchmarkResult& other):
-  m_description (other.m_description),
-  m_milliseconds (other.m_milliseconds)
-{}
+#include <chrono>
+#include <string>
 
-BenchmarkResult::BenchmarkResult(BenchmarkResult&& other):
-  m_description (std::move(other.m_description)),
-  m_milliseconds (other.m_milliseconds)
-{}
+using namespace std;
+using namespace chrono;
 
-BenchmarkResult& BenchmarkResult::operator=(const BenchmarkResult& other)
-{
-  m_description = other.m_description;
-  m_milliseconds = other.m_milliseconds;
-  return *this;
-}
-
-BenchmarkResult& BenchmarkResult::operator=(BenchmarkResult&& other)
-{
-  m_description = std::move(other.m_description);
-  m_milliseconds = other.m_milliseconds;
-  return *this;
-}
-
-BenchmarkResult::~BenchmarkResult()
-{}
-
-BenchmarkResult::BenchmarkResult(const std::string& description,
-                                 const long milliseconds,
+BenchmarkResult::BenchmarkResult(const string& description,
                                  const long score):
   m_description(description),
-  m_milliseconds(milliseconds),
-  m_score(score)
+  m_score(score),
+  m_has_score(true)
 {}
 
-const std::string& BenchmarkResult::description() const
+BenchmarkResult::BenchmarkResult(const string& description,
+                                 const milliseconds& millis):
+  m_description(description),
+  m_millis(millis),
+  m_has_millis(true)
+{}
+
+const string& BenchmarkResult::description() const
 {
   return m_description;
 }
 
-long BenchmarkResult::milliseconds() const
+const milliseconds& BenchmarkResult::millis() const
 {
-  return m_milliseconds;
+  return m_millis;
 }
 
-void BenchmarkResult::score(const long score)
+bool BenchmarkResult::has_millis() const
 {
-  m_score = score;
-  m_has_score = true;
+  return m_has_millis;
 }
 
-static const long c_no_score = -1;
+long BenchmarkResult::score() const
+{
+  return m_score;
+}
 
 bool BenchmarkResult::has_score() const
 {
   return m_has_score;
 }
 
-long BenchmarkResult::score() const
-{
-  return m_has_score ? m_score : c_no_score;
-}
-
-std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result)
+ostream& operator<<(ostream& out, const BenchmarkResult& result)
 {
   out << result.m_description;
   for (unsigned int i = result.m_description.size(); i < BenchmarkResult::c_description_size; ++i) {
     out << " ";
   }
-  out << " time: " << result.m_milliseconds << " ms";
+  if (result.m_has_millis) {
+    out << " time: " << result.m_millis.count() << " ms";
+  }
   if (result.m_has_score) {
     out << " score: " << result.m_score;
   }
@@ -79,7 +62,7 @@ std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result)
 
 bool CompareMillis::operator()(const BenchmarkResult& a, const BenchmarkResult& b) const
 {
-  return a.m_milliseconds < b.m_milliseconds;
+  return a.m_millis < b.m_millis;
 }
 
 const unsigned int BenchmarkResult::c_description_size(20);

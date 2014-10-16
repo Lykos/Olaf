@@ -16,8 +16,8 @@ bool find_benchmark(Benchmark* benchmark);
 
 void add_test(Benchmark* benchmark);
 
-typedef CompositePerformanceResult<BenchmarkResult> ClassResult;
-typedef CompositePerformanceResult<ClassResult> GlobalResult;
+typedef CompositeBenchmarkResult<BenchmarkResult> ClassResult;
+typedef CompositeBenchmarkResult<ClassResult> GlobalResult;
 
 GlobalResult run(int argc, char* argv[], const std::string& description);
 

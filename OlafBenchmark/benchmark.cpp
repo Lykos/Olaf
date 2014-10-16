@@ -1,29 +1,31 @@
 #include "benchmark.h"
 
+#include <chrono>
 #include <string>
 #include <sstream>
 #include <QtTest/QTest>
 #include <iostream>
 
 using namespace std;
+using namespace chrono;
 
 static const int c_iterations = 10;
 static const int c_used_measurements = 2;
 
-CompositePerformanceResult<BenchmarkResult> Benchmark::accumulate_results() const
+CompositeBenchmarkResult<BenchmarkResult> Benchmark::accumulate_results() const
 {
-  CompositePerformanceResult<BenchmarkResult> results(description());
+  CompositeBenchmarkResult<BenchmarkResult> results(description());
   for (vector<BenchmarkResult>::const_iterator it = m_results.begin(); it < m_results.end(); ++it) {
     const string& description = it->description();
-    unsigned long milliseconds = 0;
+    milliseconds millis(0);
     int iterations = 0;
     for (; it < m_results.end() && it->description() == description; ++it) {
-      milliseconds += it->milliseconds();
+      millis += it->millis();
       ++iterations;
     }
     results.add_sub_result(BenchmarkResult(
                              description,
-                             milliseconds / static_cast<double>(iterations)));
+                             millis / iterations));
   }
   return results;
 }
@@ -62,7 +64,7 @@ void Benchmark::PerformanceMeasurer::next()
 {
   ostringstream oss;
   oss << QTest::currentTestFunction() << "(" << QTest::currentDataTag() << ")";
-  m_measurements.push(BenchmarkResult(oss.str(), m_timer.elapsed()));
+  m_measurements.push(BenchmarkResult(oss.str(), std::chrono::milliseconds(m_timer.elapsed())));
   ++m_iterations;
   m_timer.start();
 }

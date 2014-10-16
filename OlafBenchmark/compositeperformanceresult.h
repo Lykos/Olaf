@@ -3,35 +3,40 @@
 
 #include <vector>
 #include <string>
+#include <chrono>
 #include <ostream>
 #include <sstream>
 
 using namespace std;
 
 template <typename T>
-class CompositePerformanceResult;
+class CompositeBenchmarkResult;
 
 template <typename T>
-ostream& operator<<(ostream& out, const CompositePerformanceResult<T>& result);
+ostream& operator<<(ostream& out, const CompositeBenchmarkResult<T>& result);
 
 const char c_indentation[] = "\t";
 
 template <typename T>
-class CompositePerformanceResult
+class CompositeBenchmarkResult
 {
   friend ostream& operator<< <> (ostream& out,
-                                 const CompositePerformanceResult<T>& result);
+                                 const CompositeBenchmarkResult<T>& result);
 
 public:
-  CompositePerformanceResult();
+  CompositeBenchmarkResult();
 
-  explicit CompositePerformanceResult(const string& description);
+  explicit CompositeBenchmarkResult(const string& description);
 
   const string& description() const;
 
   const vector<T>& get_sub_results() const;
 
   void add_sub_result(const T& sub_result);
+
+  const std::chrono::milliseconds& millis() const;
+
+  bool has_millis() const;
 
   long score() const;
 
@@ -42,56 +47,74 @@ private:
 
   vector<T> m_sub_results;
 
-  bool m_has_score = false;
+  std::chrono::milliseconds m_millis;
+
+  bool m_has_millis = false;
 
   long m_score = 0;
 
+  bool m_has_score = false;
 };
 
 template <typename T>
-CompositePerformanceResult<T>::CompositePerformanceResult(const string& description):
-  m_description(description)
+CompositeBenchmarkResult<T>::CompositeBenchmarkResult(const string& description):
+  m_description(description),
+  m_millis(0)
 {}
 
 template <typename T>
-const string& CompositePerformanceResult<T>::description() const
+const string& CompositeBenchmarkResult<T>::description() const
 {
   return m_description;
 }
 
 template <typename T>
-const vector<T>& CompositePerformanceResult<T>::get_sub_results() const
+const vector<T>& CompositeBenchmarkResult<T>::get_sub_results() const
 {
   return m_sub_results;
 }
 
 template <typename T>
-bool CompositePerformanceResult<T>::has_score() const
+const std::chrono::milliseconds& CompositeBenchmarkResult<T>::millis() const
+{
+  return m_millis;
+}
+
+template <typename T>
+bool CompositeBenchmarkResult<T>::has_millis() const
+{
+  return m_has_millis;
+}
+
+template <typename T>
+long CompositeBenchmarkResult<T>::score() const
+{
+  return m_score;
+}
+
+template <typename T>
+bool CompositeBenchmarkResult<T>::has_score() const
 {
   return m_has_score;
 }
 
-static const long c_no_score = -1;
-
 template <typename T>
-long CompositePerformanceResult<T>::score() const
-{
-  return m_has_score ? m_score : c_no_score;
-}
-
-template <typename T>
-void CompositePerformanceResult<T>::add_sub_result(const T& sub_result)
+void CompositeBenchmarkResult<T>::add_sub_result(const T& sub_result)
 {
   m_sub_results.push_back(sub_result);
   if (sub_result.has_score()) {
     m_has_score = true;
     m_score += sub_result.score();
   }
+  if (sub_result.has_millis()) {
+    m_has_millis = true;
+    m_millis += sub_result.millis();
+  }
 }
 
 template <typename T>
 ostream& operator<<(ostream& out,
-                    const CompositePerformanceResult<T>& result)
+                    const CompositeBenchmarkResult<T>& result)
 {
   out << result.m_description << endl;
   for (const T& sub_result : result.m_sub_results) {
@@ -102,8 +125,11 @@ ostream& operator<<(ostream& out,
       out << c_indentation << line << endl;
     }
   }
+  if (result.m_has_millis) {
+    out << "total time: " << result.m_millis.count() << " ms" << endl;
+  }
   if (result.m_has_score) {
-    out << "total score: " << result.m_score;
+    out << "total score: " << result.m_score << endl;
   }
   return out;
 }
