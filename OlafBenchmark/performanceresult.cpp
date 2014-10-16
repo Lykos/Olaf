@@ -65,7 +65,11 @@ std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result)
   for (unsigned int i = result.m_description.size(); i < BenchmarkResult::c_description_size; ++i) {
     out << " ";
   }
-  return out << " " << result.m_milliseconds << " ms";
+  out << " time: " << result.m_milliseconds << " ms";
+  if (result.m_has_score) {
+    out << " score: " << result.m_score;
+  }
+  return out;
 }
 
 bool CompareMillis::operator()(const BenchmarkResult& a, const BenchmarkResult& b) const
