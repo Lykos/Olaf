@@ -33,7 +33,7 @@ public:
 
   bool has_millis() const;
 
-private:
+protected:
   std::string m_description;
 
   std::chrono::milliseconds m_millis;

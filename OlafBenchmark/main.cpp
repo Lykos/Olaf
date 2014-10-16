@@ -5,8 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include "autobenchmark.h"
-#include "compositeperformanceresult.h"
-#include "performanceresult.h"
+#include "compositebenchmarkresult.h"
+#include "benchmarkresult.h"
 
 using namespace std;
 

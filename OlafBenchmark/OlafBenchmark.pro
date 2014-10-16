@@ -20,23 +20,23 @@ TEMPLATE = app
 SOURCES += \
     perftbenchmark.cpp \
     testutil.cpp \
-    performanceresult.cpp \
     main.cpp \
     benchmark.cpp \
     autobenchmark.cpp \
-    epdbenchmark.cpp
+    epdbenchmark.cpp \
+    benchmarkresult.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     perftbenchmark.h \
-    performanceresult.h \
     testutil.h \
     comparemacros.h \
-    compositeperformanceresult.h \
     autobenchmark.h \
     benchmark.h \
-    epdbenchmark.h
+    epdbenchmark.h \
+    benchmarkresult.h \
+    compositebenchmarkresult.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafRules -lOlafRules

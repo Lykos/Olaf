@@ -7,8 +7,8 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include "performanceresult.h"
-#include "compositeperformanceresult.h"
+#include "benchmarkresult.h"
+#include "compositebenchmarkresult.h"
 
 class Benchmark : public QObject
 {
@@ -17,17 +17,23 @@ class Benchmark : public QObject
 public:
   CompositeBenchmarkResult<BenchmarkResult> accumulate_results() const;
 
-  std::string description() const;
+  virtual std::string description() const;
 
   void push_result(const BenchmarkResult& result);
+
+  void push_score(long score);
 
 protected:
   class PerformanceMeasurer {
   public:
     PerformanceMeasurer(Benchmark* const benchmark);
+
     ~PerformanceMeasurer();
+
     bool done() const;
+
     void next();
+
   private:
     Benchmark* const m_benchmark;
     int m_iterations;

@@ -1,4 +1,4 @@
-#include "performanceresult.h"
+#include "benchmarkresult.h"
 
 #include <chrono>
 #include <string>

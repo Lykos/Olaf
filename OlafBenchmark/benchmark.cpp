@@ -30,14 +30,23 @@ CompositeBenchmarkResult<BenchmarkResult> Benchmark::accumulate_results() const
   return results;
 }
 
+string Benchmark::description() const
+{
+  ostringstream oss;
+  oss << objectName().toStdString()
+      << "::" << QTest::currentTestFunction()
+      << "(" << QTest::currentDataTag() << ")";
+  return oss.str();
+}
+
 void Benchmark::push_result(const BenchmarkResult& result)
 {
   m_results.push_back(result);
 }
 
-std::string Benchmark::description() const
+void Benchmark::push_score(const long score)
 {
-  return objectName().toStdString();
+  push_result(BenchmarkResult(description(), score));
 }
 
 Benchmark::PerformanceMeasurer::PerformanceMeasurer(Benchmark* const benchmark):
@@ -62,9 +71,8 @@ bool Benchmark::PerformanceMeasurer::done() const
 
 void Benchmark::PerformanceMeasurer::next()
 {
-  ostringstream oss;
-  oss << QTest::currentTestFunction() << "(" << QTest::currentDataTag() << ")";
-  m_measurements.push(BenchmarkResult(oss.str(), std::chrono::milliseconds(m_timer.elapsed())));
+  m_measurements.push(BenchmarkResult(m_benchmark->description(),
+                                      std::chrono::milliseconds(m_timer.elapsed())));
   ++m_iterations;
   m_timer.start();
 }
