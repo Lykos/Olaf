@@ -59,3 +59,8 @@ INCLUDEPATH += $$PWD/../../../../Downloads/gmock-1.7.0/gtest/include
 DEPENDPATH += $$PWD/../../../../Downloads/gmock-1.7.0/gtest/include
 
 PRE_TARGETDEPS += $$PWD/../../../../Downloads/gmock-1.7.0/build/libgmock.a
+
+epd_files.files = epd_files/*
+epd_files.path = $$OUT_PWD/epd_files
+
+INSTALLS += epd_files

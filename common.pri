@@ -9,3 +9,4 @@ CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 
 OTHER_FILES += \
     ../start_game.txt
+    ../epd_files/*

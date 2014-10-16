@@ -28,10 +28,8 @@ CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafSearchi
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafProtocols -lOlafProtocols
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafProtocols -lOlafProtocols
 
-EXTRA_BINFILES += $$PWD/../start_game.txt
-for (FILE, EXTRA_BINFILES){
-    QMAKE_POST_LINK += $$quote(cp $${FILE} $$OUT_PWD$$escape_expand(\n\t))
-}
+start_game.path = $$OUT_PWD
+start_game.files = $$PWD/../start_game.txt
 
 LIBS += -lgflags
 

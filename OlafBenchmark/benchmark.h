@@ -15,11 +15,11 @@ class Benchmark : public QObject
   Q_OBJECT
 
 public:
-  CompositePerformanceResult<PerformanceResult> accumulate_results() const;
+  CompositePerformanceResult<BenchmarkResult> accumulate_results() const;
 
   std::string description() const;
 
-  void push_result(const PerformanceResult& result);
+  void push_result(const BenchmarkResult& result);
 
 protected:
   class PerformanceMeasurer {
@@ -32,11 +32,11 @@ protected:
     Benchmark* const m_benchmark;
     int m_iterations;
     QElapsedTimer m_timer;
-    std::priority_queue<PerformanceResult, vector<PerformanceResult>, CompareMillis> m_measurements;
+    std::priority_queue<BenchmarkResult, vector<BenchmarkResult>, CompareMillis> m_measurements;
   };
 
 private:
-  std::vector<PerformanceResult> m_results;
+  std::vector<BenchmarkResult> m_results;
 };
 
 #define OLAF_BENCHMARK for (PerformanceMeasurer m(this); !m.done(); m.next())

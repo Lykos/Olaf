@@ -10,10 +10,10 @@ using namespace std;
 static const int c_iterations = 10;
 static const int c_used_measurements = 2;
 
-CompositePerformanceResult<PerformanceResult> Benchmark::accumulate_results() const
+CompositePerformanceResult<BenchmarkResult> Benchmark::accumulate_results() const
 {
-  CompositePerformanceResult<PerformanceResult> results(description());
-  for (vector<PerformanceResult>::const_iterator it = m_results.begin(); it < m_results.end(); ++it) {
+  CompositePerformanceResult<BenchmarkResult> results(description());
+  for (vector<BenchmarkResult>::const_iterator it = m_results.begin(); it < m_results.end(); ++it) {
     const string& description = it->description();
     unsigned long milliseconds = 0;
     int iterations = 0;
@@ -21,14 +21,14 @@ CompositePerformanceResult<PerformanceResult> Benchmark::accumulate_results() co
       milliseconds += it->milliseconds();
       ++iterations;
     }
-    results.add_sub_result(PerformanceResult(
+    results.add_sub_result(BenchmarkResult(
                              description,
                              milliseconds / static_cast<double>(iterations)));
   }
   return results;
 }
 
-void Benchmark::push_result(const PerformanceResult& result)
+void Benchmark::push_result(const BenchmarkResult& result)
 {
   m_results.push_back(result);
 }
@@ -62,7 +62,7 @@ void Benchmark::PerformanceMeasurer::next()
 {
   ostringstream oss;
   oss << QTest::currentTestFunction() << "(" << QTest::currentDataTag() << ")";
-  m_measurements.push(PerformanceResult(oss.str(), m_timer.elapsed()));
+  m_measurements.push(BenchmarkResult(oss.str(), m_timer.elapsed()));
   ++m_iterations;
   m_timer.start();
 }

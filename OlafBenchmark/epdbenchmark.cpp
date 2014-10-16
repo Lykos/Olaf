@@ -4,6 +4,8 @@
 #include <fstream>
 #include <QtTest/QTest>
 #include <chrono>
+#include <dirent.h>
+#include <sstream>
 
 #include "OlafSearching/epdposition.h"
 #include "testutil.h"
@@ -15,6 +17,25 @@ using namespace testing;
 Q_DECLARE_METATYPE(EpdPosition)
 
 static const milliseconds c_max_time(10);
+static const string c_epd_extension = ".epd";
+static const string c_epd_directory = "epd_files";
+
+static vector<string> list_epd_files(const string& dir_name)
+{
+  vector<string> result;
+  DIR* const dir = opendir(dir_name.c_str());
+  if (dir) {
+    const struct dirent* const entry = readdir(dir);
+    while (entry) {
+      const string name = entry->d_name;
+      if (name.rfind(c_epd_extension) == name.size() - c_epd_extension.size()) {
+        result.push_back(name);
+      }
+    }
+    closedir(dir);
+  }
+  return result;
+}
 
 EpdBenchmark::EpdBenchmark():
   m_factory(nullptr)
@@ -42,12 +63,16 @@ void EpdBenchmark::test_epd_data()
 {
   QTest::addColumn<EpdPosition>("position");
 
-  std::unique_ptr<EpdParser> parser = m_factory.epd_parser();
-  ifstream file(epd_file());
-  string line;
-  while (getline(file, line)) {
-    EpdPosition position;
-    assert(parser->parse(line, &position));
-    QTest::newRow(position.id.c_str()) << position;
+  for (const string& epd_file : list_epd_files(c_epd_directory)) {
+    std::unique_ptr<EpdParser> parser = m_factory.epd_parser();
+    ifstream file(epd_file);
+    string line;
+    while (getline(file, line)) {
+      EpdPosition position;
+      assert(parser->parse(line, &position));
+      ostringstream oss;
+      oss << epd_file << " " << position.id.c_str();
+      QTest::newRow(oss.str().c_str()) << position;
+    }
   }
 }

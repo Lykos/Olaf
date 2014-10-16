@@ -4,6 +4,7 @@
 #include <string>
 
 #include "benchmark.h"
+#include "autobenchmark.h"
 #include "OlafSearching/searcherfactory.h"
 #include "OlafSearching/simpletimedsearcher.h"
 
@@ -11,8 +12,6 @@ class EpdBenchmark : public Benchmark
 {
 public:
   EpdBenchmark();
-
-  virtual std::string epd_file() = 0;
 
 private:
   SearcherFactory m_factory;
@@ -26,5 +25,7 @@ private Q_SLOTS:
 
   void test_epd_data();
 };
+
+DECLARE_BENCHMARK(EpdBenchmark)
 
 #endif // EPDBENCHMARK_H

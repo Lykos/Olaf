@@ -3,33 +3,34 @@
 
 #include <ostream>
 
-class PerformanceResult;
+class BenchmarkResult;
 
-std::ostream& operator<<(std::ostream& out, const PerformanceResult& result);
+std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result);
 
 struct CompareMillis
 {
-  bool operator()(const PerformanceResult& a, const PerformanceResult& b) const;
+  bool operator()(const BenchmarkResult& a, const BenchmarkResult& b) const;
 };
 
-class PerformanceResult {
-  friend std::ostream& operator<<(std::ostream& out, const PerformanceResult& result);
+class BenchmarkResult {
+  friend std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result);
 
   friend CompareMillis;
 
 public:
-  PerformanceResult(const PerformanceResult& other);
+  BenchmarkResult(const BenchmarkResult& other);
 
-  PerformanceResult(PerformanceResult&& other);
+  BenchmarkResult(BenchmarkResult&& other);
 
-  PerformanceResult& operator=(const PerformanceResult& other);
+  BenchmarkResult& operator=(const BenchmarkResult& other);
 
-  PerformanceResult& operator=(PerformanceResult&& other);
+  BenchmarkResult& operator=(BenchmarkResult&& other);
 
-  ~PerformanceResult();
+  ~BenchmarkResult();
 
-  PerformanceResult(const std::string& description,
-                    long milliseconds);
+  BenchmarkResult(const std::string& description,
+                  long milliseconds,
+                  long score = 0);
 
   const std::string& description() const;
 
@@ -39,6 +40,8 @@ private:
   std::string m_description;
 
   long m_milliseconds;
+
+  long m_score;
 
   static const unsigned int c_description_size;
 
