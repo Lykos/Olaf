@@ -54,6 +54,11 @@ void BenchmarkResult::score(const long score)
 
 static const long c_no_score = -1;
 
+bool BenchmarkResult::has_score() const
+{
+  return m_has_score;
+}
+
 long BenchmarkResult::score() const
 {
   return m_has_score ? m_score : c_no_score;

@@ -34,6 +34,8 @@ public:
 
   void score(const long score);
 
+  bool has_score() const;
+
   long score() const;
 
   const std::string& description() const;

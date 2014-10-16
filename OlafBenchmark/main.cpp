@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   // description
   ostringstream oss;
   oss << version_name << " " << VERSION << " " << hostname << " " << (1900 + timeinfo->tm_year) << "-" << timeinfo->tm_mon << "-"
-      << timeinfo->tm_mday << " " << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec << endl;
+      << timeinfo->tm_mday << " " << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec;
   string description = oss.str();
 
   const auto_benchmark::GlobalResult& global_result =

@@ -33,10 +33,18 @@ public:
 
   void add_sub_result(const T& sub_result);
 
+  long score() const;
+
+  bool has_score() const;
+
 private:
   string m_description;
 
   vector<T> m_sub_results;
+
+  bool m_has_score = false;
+
+  long m_score = 0;
 
 };
 
@@ -58,9 +66,27 @@ const vector<T>& CompositePerformanceResult<T>::get_sub_results() const
 }
 
 template <typename T>
+bool CompositePerformanceResult<T>::has_score() const
+{
+  return m_has_score;
+}
+
+static const long c_no_score = -1;
+
+template <typename T>
+long CompositePerformanceResult<T>::score() const
+{
+  return m_has_score ? m_score : c_no_score;
+}
+
+template <typename T>
 void CompositePerformanceResult<T>::add_sub_result(const T& sub_result)
 {
   m_sub_results.push_back(sub_result);
+  if (sub_result.has_score()) {
+    m_has_score = true;
+    m_score += sub_result.score();
+  }
 }
 
 template <typename T>
@@ -76,7 +102,10 @@ ostream& operator<<(ostream& out,
       out << c_indentation << line << endl;
     }
   }
-  return out << endl;
+  if (result.m_has_score) {
+    out << "total score: " << result.m_score;
+  }
+  return out;
 }
 
 #endif // COMPOSITEPERFORMANCERESULT_H
