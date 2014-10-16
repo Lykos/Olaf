@@ -23,7 +23,8 @@ SOURCES += \
     performanceresult.cpp \
     main.cpp \
     benchmark.cpp \
-    autobenchmark.cpp
+    autobenchmark.cpp \
+    epdbenchmark.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -34,7 +35,8 @@ HEADERS += \
     comparemacros.h \
     compositeperformanceresult.h \
     autobenchmark.h \
-    benchmark.h
+    benchmark.h \
+    epdbenchmark.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafRules -lOlafRules

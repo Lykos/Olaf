@@ -8,6 +8,7 @@
 #include "OlafRules/chessboard.h"
 #include "OlafRules/position.h"
 #include "OlafRules/move.h"
+#include "OlafSearching/epdposition.h"
 
 MATCHER_P(IsSameMove, move, "") {
   return ExplainMatchResult(testing::Eq(move.source()), arg.source(), result_listener)
@@ -28,5 +29,7 @@ MATCHER_P(IsSameMove, move, "") {
 Move make_move(const Position& source, const Position& destination, const bool is_capture);
 
 ChessBoard parse_fen(const std::string& fen);
+
+EpdPosition parse_epd(const std::string& epd);
 
 #endif // TEST_UTIL_H

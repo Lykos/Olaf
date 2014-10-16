@@ -18,7 +18,7 @@ MATCHER_P(IsSameMove, move, "") {
 }
 
 #define QASSERT_THAT(value, matcher) { \
-  const AssertionResult& result = \
+  const ::testing::AssertionResult& result = \
     ::testing::internal::MakePredicateFormatterFromMatcher(matcher)(#value, value); \
   if (!result) { \
     QFAIL(result.message()); \

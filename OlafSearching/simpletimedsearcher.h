@@ -13,7 +13,8 @@
 class SimpleTimedSearcher : public TimedSearcher
 {
 public:
-  explicit SimpleTimedSearcher(std::unique_ptr<IterativeSearcher> searcher);
+  explicit SimpleTimedSearcher(std::unique_ptr<IterativeSearcher> searcher,
+                               const std::chrono::milliseconds& search_millis);
 
   SearchResult search_timed(ChessBoard* board,
                             const Stopper& forced_stopper,
@@ -24,6 +25,7 @@ public:
 
 private:
   std::unique_ptr<IterativeSearcher> m_searcher;
+  const std::chrono::milliseconds m_search_millis;
 };
 
 #endif // SIMPLETIMEDSEARCHER_H

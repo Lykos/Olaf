@@ -12,6 +12,8 @@
 #include "OlafEvaluation/evaluatorfactory.h"
 #include "thinkingwriter.h"
 #include "perft.h"
+#include "sanparser.h"
+#include "epdparser.h"
 #include <memory>
 
 class SearcherFactory
@@ -46,12 +48,16 @@ public:
 
   std::unique_ptr<Perft> perft() const;
 
+  std::unique_ptr<SanParser> san_parser() const;
+
+  std::unique_ptr<EpdParser> epd_parser() const;
+
 private:
   ThinkingWriter* const m_writer;
 
   EvaluatorFactory m_evaluator_factory;
 
-  static const int sequential_depth = 2;
+  static const int c_sequential_depth = 2;
 
 };
 

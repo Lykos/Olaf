@@ -15,6 +15,8 @@ static MoveActions copy_move_actions(const MoveActions& move_actions) {
   return result;
 }
 
+Move::Move() {}
+
 Move::Move(MoveActions&& move_actions,
            const Position& source,
            const Position& destination,
@@ -46,6 +48,28 @@ Move::Move(Move&& move):
   m_capture(move.m_capture),
   m_created_piece(move.m_created_piece)
 {}
+
+Move& Move::operator =(const Move& move)
+{
+  m_move_actions = copy_move_actions(move.m_move_actions);
+  m_source = move.m_source;
+  m_destination = move.m_destination;
+  m_conversion = move.m_conversion;
+  m_capture = move.m_capture;
+  m_created_piece = move.m_created_piece;
+  return *this;
+}
+
+Move& Move::operator =(Move&& move)
+{
+  m_move_actions = std::move(move.m_move_actions);
+  m_source = std::move(move.m_source);
+  m_destination = std::move(move.m_destination);
+  m_conversion = move.m_conversion;
+  m_capture = move.m_capture;
+  m_created_piece = move.m_created_piece;
+  return *this;
+}
 
 Move::~Move()
 {}

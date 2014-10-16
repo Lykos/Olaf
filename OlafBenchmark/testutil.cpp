@@ -6,6 +6,9 @@
 
 #include "OlafRules/fenparser.h"
 #include "OlafRules/chessboard.h"
+#include "OlafSearching/epdposition.h"
+#include "OlafSearching/epdparser.h"
+#include "OlafSearching/searcherfactory.h"
 
 using namespace std;
 
@@ -19,4 +22,11 @@ ChessBoard parse_fen(const string& fen)
   ChessBoard board;
   assert(FenParser::parse(fen, &board));
   return board;
+}
+
+EpdPosition parse_epd(const string& epd)
+{
+  EpdPosition position;
+  assert(SearcherFactory(nullptr).epd_parser()->parse(epd, &position));
+  return position;
 }

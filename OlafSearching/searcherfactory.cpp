@@ -10,6 +10,7 @@
 #include "simplemovecreator.h"
 
 using namespace std;
+using namespace chrono;
 
 SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
   m_writer(writer)
@@ -17,7 +18,8 @@ SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
 
 unique_ptr<TimedSearcher> SearcherFactory::timed_searcher() const
 {
-  unique_ptr<TimedSearcher> searcher(new SimpleTimedSearcher(iterative_searcher()));
+  unique_ptr<TimedSearcher> searcher(new SimpleTimedSearcher(iterative_searcher(),
+                                                             milliseconds(1000)));
   return searcher;
 }
 
@@ -33,7 +35,7 @@ unique_ptr<DepthSearcher> SearcherFactory::parallel_depth_searcher() const
   unique_ptr<DepthSearcher> searcher(new ParallelNegaMaxer(move_generator(),
                                                            move_orderer(),
                                                            sequential_depth_searcher(),
-                                                           sequential_depth));
+                                                           c_sequential_depth));
   return searcher;
 }
 
@@ -94,4 +96,17 @@ unique_ptr<Perft> SearcherFactory::perft() const
 {
   unique_ptr<Perft> perft(new Perft(move_generator()));
   return perft;
+}
+
+unique_ptr<SanParser> SearcherFactory::san_parser() const
+{
+  unique_ptr<SanParser> parser(new SanParser(move_generator(), move_creator()));
+  return parser;
+}
+
+
+unique_ptr<EpdParser> SearcherFactory::epd_parser() const
+{
+  unique_ptr<EpdParser> parser(new EpdParser(san_parser()));
+  return parser;
 }

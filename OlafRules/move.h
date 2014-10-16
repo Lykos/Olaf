@@ -11,6 +11,8 @@
 class Move
 {
  public:
+  Move();
+
   /**
    * @brief Move consumes move_actions.
    */
@@ -24,6 +26,10 @@ class Move
   Move(const Move& move);
 
   Move(Move&& move);
+
+  Move& operator =(const Move& move);
+
+  Move& operator =(Move&& move);
 
   ~Move();
 
@@ -52,15 +58,15 @@ class Move
 private:
   MoveActions m_move_actions;
 
-  const Position m_source;
+  Position m_source;
 
-  const Position m_destination;
+  Position m_destination;
 
-  const bool m_conversion;
+  bool m_conversion;
 
-  const bool m_capture;
+  bool m_capture;
 
-  const Piece::piece_index_t m_created_piece;
+  Piece::piece_index_t m_created_piece;
 };
 
 std::ostream& operator <<(std::ostream& out, const Move& move);

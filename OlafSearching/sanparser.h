@@ -4,13 +4,15 @@
 #include <memory>
 #include <string>
 #include "movegenerator.h"
+#include "movecreator.h"
 
 class Move;
 
 class SanParser
 {
 public:
-  SanParser(std::unique_ptr<MoveGenerator> generator);
+  SanParser(std::unique_ptr<MoveGenerator> generator,
+            std::unique_ptr<MoveCreator> creator);
 
   bool parse(const std::string& san_move,
              const ChessBoard& board,
@@ -18,6 +20,7 @@ public:
 
 private:
   std::unique_ptr<MoveGenerator> m_generator;
+  std::unique_ptr<MoveCreator> m_creator;
 };
 
-#endif // SANPARSER_
+#endif // SANPARSER_H

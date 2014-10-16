@@ -6,8 +6,10 @@
 using namespace std;
 using namespace chrono;
 
-SimpleTimedSearcher::SimpleTimedSearcher(unique_ptr<IterativeSearcher> searcher):
-  m_searcher(move(searcher))
+SimpleTimedSearcher::SimpleTimedSearcher(unique_ptr<IterativeSearcher> searcher,
+                                         const milliseconds& search_millis):
+  m_searcher(move(searcher)),
+  m_search_millis(search_millis)
 {}
 
 
@@ -15,8 +17,7 @@ SearchResult SimpleTimedSearcher::search_timed(ChessBoard* const board,
                                                const Stopper& forced_stopper,
                                                const Stopper& weak_stopper)
 {
-  static const milliseconds search_milliseconds(1000);
-  TimeStopper time_stopper(search_milliseconds);
+  TimeStopper time_stopper(m_search_millis);
   CompositeStopper composite_stopper{&weak_stopper, &time_stopper};
   return m_searcher->search_infinite(board, forced_stopper, composite_stopper);
 }

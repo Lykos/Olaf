@@ -25,7 +25,9 @@ SOURCES += \
     materialevaluatortest.cpp \
     movegeneratortest.cpp \
     perfttest.cpp \
-    testutil.cpp
+    testutil.cpp \
+    sanparsertest.cpp \
+    epdparsertest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -38,7 +40,9 @@ HEADERS += \
     fenparsertest.h \
     materialevaluatortest.h \
     movegeneratortest.h \
-    perfttest.h
+    perfttest.h \
+    sanparsertest.h \
+    epdparsertest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafRules -lOlafRules
