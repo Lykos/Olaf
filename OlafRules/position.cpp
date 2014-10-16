@@ -33,6 +33,15 @@ bool operator==(const Position& a, const Position& b)
   return a.m_column == b.m_column && a.m_row == b.m_row;
 }
 
+bool operator<(const Position& a, const Position& b)
+{
+  if (a.m_column != b.m_column) {
+    return a.m_column < b.m_column;
+  } else {
+    return a.m_row < b.m_row;
+  }
+}
+
 PositionDelta operator-(const Position& a, const Position& b)
 {
   PositionDelta::d_row_t d_row = static_cast<PositionDelta::d_row_t>(a.m_row) - static_cast<PositionDelta::d_row_t>(b.m_row);

@@ -1,11 +1,13 @@
 #ifndef PIECEBOARD_H
 #define PIECEBOARD_H
 
+#include <memory>
+#include <set>
+
 #include "bitboard.h"
 #include "piece.h"
 #include "position.h"
 #include "color.h"
-#include <memory>
 
 bool operator ==(const PieceBoard& left, const PieceBoard& right);
 
@@ -32,11 +34,14 @@ public:
 
   const BitBoard& bit_board() const;
 
+  const std::set<Position> positions() const;
+
 private:
   const Piece* m_piece;
 
   BitBoard m_bit_board;
 
+  std::set<Position> m_positions;
 };
 
 #endif // PIECEBOARD_H
