@@ -65,7 +65,7 @@ void EpdBenchmark::test_epd()
       push_score(1);
     }
   } else {
-    QVERIFY(!position.avoid_moves.empty());
+    assert(!position.avoid_moves.empty());
     if (!ContainsMove(position.avoid_moves)) {
       push_score(1);
     }
