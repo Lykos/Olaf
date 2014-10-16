@@ -9,6 +9,7 @@
 #include "OlafSearching/epdposition.h"
 #include "OlafSearching/epdparser.h"
 #include "OlafSearching/searcherfactory.h"
+#include "OlafSearching/nothinkingwriter.h"
 
 using namespace std;
 
@@ -27,6 +28,8 @@ ChessBoard parse_fen(const string& fen)
 EpdPosition parse_epd(const string& epd)
 {
   EpdPosition position;
-  assert(SearcherFactory(nullptr).epd_parser()->parse(epd, &position));
+  NoThinkingWriter no_thinking_writer;
+  SearcherFactory factory(&no_thinking_writer);
+  assert(factory.epd_parser()->parse(epd, &position));
   return position;
 }

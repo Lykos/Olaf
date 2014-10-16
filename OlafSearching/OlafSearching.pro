@@ -39,7 +39,8 @@ SOURCES += \
     searchcontext.cpp \
     sanparser.cpp \
     epdparser.cpp \
-    epdposition.cpp
+    epdposition.cpp \
+    nothinkingwriter.cpp
 
 HEADERS += \
     simplemovegenerator.h \
@@ -71,7 +72,8 @@ HEADERS += \
     searchcontext.h \
     sanparser.h \
     epdparser.h \
-    epdposition.h
+    epdposition.h \
+    nothinkingwriter.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

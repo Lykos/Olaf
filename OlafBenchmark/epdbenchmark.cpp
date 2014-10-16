@@ -16,7 +16,7 @@ using namespace testing;
 
 Q_DECLARE_METATYPE(EpdPosition)
 
-static const milliseconds c_max_time(10);
+static const milliseconds c_max_time(120000);
 static const string c_epd_extension = ".epd";
 static const string c_epd_directory = "epd_files";
 
@@ -25,12 +25,13 @@ static vector<string> list_epd_files(const string& dir_name)
   vector<string> result;
   DIR* const dir = opendir(dir_name.c_str());
   if (dir) {
-    const struct dirent* const entry = readdir(dir);
+    const struct dirent* entry = readdir(dir);
     while (entry) {
       const string name = entry->d_name;
       if (name.rfind(c_epd_extension) == name.size() - c_epd_extension.size()) {
-        result.push_back(name);
+        result.push_back(dir_name + "/" + name);
       }
+      entry = readdir(dir);
     }
     closedir(dir);
   }
@@ -38,7 +39,10 @@ static vector<string> list_epd_files(const string& dir_name)
 }
 
 EpdBenchmark::EpdBenchmark():
-  m_factory(nullptr)
+  m_factory(&m_no_thinking_writer)
+{}
+
+EpdBenchmark::~EpdBenchmark()
 {}
 
 void EpdBenchmark::initTestCase()
@@ -53,10 +57,20 @@ void EpdBenchmark::test_epd()
   Move move;
   NoStopper stopper;
   ChessBoard board(position.board);
-  OLAF_BENCHMARK {
-    move = m_searcher->search_timed(&board, stopper, stopper).main_variation().back();
+  move = m_searcher->search_timed(&board, stopper, stopper).main_variation().back();
+  long score = 0;
+  auto ContainsMove = Matches(Contains(IsSameMove(move)));
+  if (!position.best_moves.empty()) {
+    if (ContainsMove(position.best_moves)) {
+      push_score(1);
+    }
+  } else {
+    QVERIFY(!position.avoid_moves.empty());
+    if (!ContainsMove(position.avoid_moves)) {
+      push_score(1);
+    }
   }
-  QASSERT_THAT(position.best_moves, Contains(IsSameMove(move)));
+  push_score(score);
 }
 
 void EpdBenchmark::test_epd_data()

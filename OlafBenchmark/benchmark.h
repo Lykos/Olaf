@@ -15,9 +15,11 @@ class Benchmark : public QObject
   Q_OBJECT
 
 public:
+  virtual ~Benchmark();
+
   CompositeBenchmarkResult<BenchmarkResult> accumulate_results() const;
 
-  virtual std::string description() const;
+  virtual std::string current_test_id() const;
 
   void push_result(const BenchmarkResult& result);
 

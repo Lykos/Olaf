@@ -10,6 +10,7 @@
 struct EpdPosition
 {
   ChessBoard board;
+  std::vector<Move> avoid_moves;
   std::vector<Move> best_moves;
   std::string id;
 };

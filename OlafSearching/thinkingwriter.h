@@ -11,7 +11,7 @@ class ThinkingWriter
 public:
   ThinkingWriter();
 
-  virtual ~ThinkingWriter() = 0;
+  virtual ~ThinkingWriter();
 
   virtual void output(const ChessBoard& board,
                       const SearchResult& result,

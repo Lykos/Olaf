@@ -128,6 +128,9 @@ bool SanParser::parse(const string& san_move,
         || mov.is_conversion() != conversion) {
       continue;
     }
+    if (board.turn_board().piece_index(mov.source()) != piece_index) {
+      continue;
+    }
     if (conversion && mov.created_piece() != conversion_piece_index) {
       continue;
     }

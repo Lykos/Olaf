@@ -6,6 +6,7 @@
 
 #include "OlafSearching/searcherfactory.h"
 #include "OlafSearching/movegenerator.h"
+#include "OlafSearching/nothinkingwriter.h"
 #include "testutil.h"
 
 using namespace std;
@@ -88,7 +89,8 @@ void MoveGeneratorTest::test_generate()
   QFETCH(ChessBoard, board);
   QFETCH(vector<Move>, moves);
 
-  SearcherFactory factory(nullptr);
+  NoThinkingWriter no_thinking_writer;
+  SearcherFactory factory(&no_thinking_writer);
   unique_ptr<MoveGenerator> generator(factory.move_generator());
   unique_ptr<MoveCreator> creator(factory.move_creator());
   const vector<Move>& actual_moves = generator->generate_moves(board);

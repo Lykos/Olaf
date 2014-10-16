@@ -17,6 +17,8 @@ class BenchmarkResult {
   friend bool operator <(const BenchmarkResult& left, const BenchmarkResult& right);
 
 public:
+  static const std::string c_indentation;
+
   BenchmarkResult(const std::string& description,
                   const std::chrono::milliseconds& millis);
 
@@ -34,18 +36,17 @@ public:
   bool has_millis() const;
 
 protected:
+  BenchmarkResult(const std::string& description);
+
   std::string m_description;
 
   std::chrono::milliseconds m_millis;
 
   bool m_has_millis = false;
 
-  long m_score;
+  long m_score = 0;
 
   bool m_has_score = false;
-
-  static const unsigned int c_description_size;
-
 };
 
 #endif // PERFORMANCERESULT_H

@@ -6,6 +6,7 @@
 #include "OlafSearching/searcherfactory.h"
 #include "OlafSearching/epdparser.h"
 #include "OlafSearching/epdposition.h"
+#include "OlafSearching/nothinkingwriter.h"
 #include "testutil.h"
 
 using namespace std;
@@ -13,7 +14,8 @@ using namespace testing;
 
 void EpdParserTest::initTestCase()
 {
-  SearcherFactory factory(nullptr);
+  NoThinkingWriter no_thinking_writer;
+  SearcherFactory factory(&no_thinking_writer);
   m_parser = factory.epd_parser();
 }
 

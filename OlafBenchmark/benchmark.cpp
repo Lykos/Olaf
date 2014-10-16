@@ -12,29 +12,37 @@ using namespace chrono;
 static const int c_iterations = 10;
 static const int c_used_measurements = 2;
 
+Benchmark::~Benchmark()
+{}
+
 CompositeBenchmarkResult<BenchmarkResult> Benchmark::accumulate_results() const
 {
-  CompositeBenchmarkResult<BenchmarkResult> results(description());
+  CompositeBenchmarkResult<BenchmarkResult> results(objectName().toStdString());
   for (vector<BenchmarkResult>::const_iterator it = m_results.begin(); it < m_results.end(); ++it) {
     const string& description = it->description();
-    milliseconds millis(0);
-    int iterations = 0;
-    for (; it < m_results.end() && it->description() == description; ++it) {
-      millis += it->millis();
-      ++iterations;
+    if (it->has_millis()) {
+      milliseconds millis(0);
+      int iterations = 0;
+      for (; it < m_results.end() && it->description() == description; ++it) {
+        millis += it->millis();
+        ++iterations;
+      }
+      results.add_sub_result(BenchmarkResult(
+                               description,
+                               millis / iterations));
+    } else if (it->has_score()) {
+      results.add_sub_result(BenchmarkResult(
+                               description,
+                               it->score()));
     }
-    results.add_sub_result(BenchmarkResult(
-                             description,
-                             millis / iterations));
   }
   return results;
 }
 
-string Benchmark::description() const
+string Benchmark::current_test_id() const
 {
   ostringstream oss;
-  oss << objectName().toStdString()
-      << "::" << QTest::currentTestFunction()
+  oss << QTest::currentTestFunction()
       << "(" << QTest::currentDataTag() << ")";
   return oss.str();
 }
@@ -46,7 +54,7 @@ void Benchmark::push_result(const BenchmarkResult& result)
 
 void Benchmark::push_score(const long score)
 {
-  push_result(BenchmarkResult(description(), score));
+  push_result(BenchmarkResult(current_test_id(), score));
 }
 
 Benchmark::PerformanceMeasurer::PerformanceMeasurer(Benchmark* const benchmark):
@@ -71,8 +79,8 @@ bool Benchmark::PerformanceMeasurer::done() const
 
 void Benchmark::PerformanceMeasurer::next()
 {
-  m_measurements.push(BenchmarkResult(m_benchmark->description(),
-                                      std::chrono::milliseconds(m_timer.elapsed())));
+  m_measurements.push(BenchmarkResult(m_benchmark->current_test_id(),
+                                      milliseconds(m_timer.elapsed())));
   ++m_iterations;
   m_timer.start();
 }

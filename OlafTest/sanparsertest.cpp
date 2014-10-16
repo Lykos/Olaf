@@ -9,6 +9,7 @@
 #include "OlafRules/pieceset.h"
 #include "OlafSearching/sanparser.h"
 #include "OlafSearching/searcherfactory.h"
+#include "OlafSearching/nothinkingwriter.h"
 
 using namespace std;
 
@@ -17,7 +18,8 @@ Q_DECLARE_METATYPE(Move)
 
 void SanParserTest::initTestCase()
 {
-  SearcherFactory factory(nullptr);
+  NoThinkingWriter no_thinking_writer;
+  SearcherFactory factory(&no_thinking_writer);
   m_parser = factory.san_parser();
 }
 

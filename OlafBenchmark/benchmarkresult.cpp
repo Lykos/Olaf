@@ -9,6 +9,7 @@ using namespace chrono;
 BenchmarkResult::BenchmarkResult(const string& description,
                                  const long score):
   m_description(description),
+  m_millis(0),
   m_score(score),
   m_has_score(true)
 {}
@@ -18,6 +19,11 @@ BenchmarkResult::BenchmarkResult(const string& description,
   m_description(description),
   m_millis(millis),
   m_has_millis(true)
+{}
+
+BenchmarkResult::BenchmarkResult(const string& description):
+  m_description(description),
+  m_millis(0)
 {}
 
 const string& BenchmarkResult::description() const
@@ -47,15 +53,12 @@ bool BenchmarkResult::has_score() const
 
 ostream& operator<<(ostream& out, const BenchmarkResult& result)
 {
-  out << result.m_description;
-  for (unsigned int i = result.m_description.size(); i < BenchmarkResult::c_description_size; ++i) {
-    out << " ";
-  }
+  out << result.m_description << ":";
   if (result.m_has_millis) {
-    out << " time: " << result.m_millis.count() << " ms";
+    out << endl << BenchmarkResult::c_indentation << "time: " << result.m_millis.count() << " ms";
   }
   if (result.m_has_score) {
-    out << " score: " << result.m_score;
+    out << endl << BenchmarkResult::c_indentation << "score: " << result.m_score;
   }
   return out;
 }
@@ -71,4 +74,4 @@ bool operator <(const BenchmarkResult& a, const BenchmarkResult& b)
   return false;
 }
 
-const unsigned int BenchmarkResult::c_description_size(20);
+const string BenchmarkResult::c_indentation("  ");

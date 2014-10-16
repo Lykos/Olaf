@@ -8,6 +8,7 @@
 #include "OlafSearching/movegenerator.h"
 #include "OlafSearching/movecreator.h"
 #include "OlafSearching/searcherfactory.h"
+#include "OlafSearching/nothinkingwriter.h"
 #include "OlafRules/chessboard.h"
 #include "OlafSearching/perft.h"
 #include "testutil.h"
@@ -40,7 +41,8 @@ void PerftTest::test_perft()
     return;
   }
 
-  SearcherFactory factory(nullptr);
+  NoThinkingWriter no_thinking_writer;
+  SearcherFactory factory(&no_thinking_writer);
   unique_ptr<Perft> perft = factory.perft();
 
   // perft->debug_perft(c_depth, board);

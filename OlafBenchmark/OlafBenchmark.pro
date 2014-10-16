@@ -60,7 +60,8 @@ DEPENDPATH += $$PWD/../../../../Downloads/gmock-1.7.0/gtest/include
 
 PRE_TARGETDEPS += $$PWD/../../../../Downloads/gmock-1.7.0/build/libgmock.a
 
-epd_files.files = epd_files/*
-epd_files.path = $$OUT_PWD/epd_files
-
-INSTALLS += epd_files
+copy_epd_files.commands = $(COPY_DIR) $$PWD/epd_files $$OUT_PWD
+first.depends = $(first) copy_epd_files
+export(first.depends)
+export(copy_epd_files.commands)
+QMAKE_EXTRA_TARGETS += first copy_epd_files
