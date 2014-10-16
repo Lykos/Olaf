@@ -81,12 +81,14 @@ void EpdBenchmark::test_epd_data()
     std::unique_ptr<EpdParser> parser = m_factory.epd_parser();
     ifstream file(epd_file);
     string line;
+    int i = 1;
     while (getline(file, line)) {
       EpdPosition position;
       assert(parser->parse(line, &position));
       ostringstream oss;
       oss << epd_file << " " << position.id.c_str();
       QTest::newRow(oss.str().c_str()) << position;
+      ++i;
     }
   }
 }
