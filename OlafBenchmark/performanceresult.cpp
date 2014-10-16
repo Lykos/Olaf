@@ -46,6 +46,19 @@ long BenchmarkResult::milliseconds() const
   return m_milliseconds;
 }
 
+void BenchmarkResult::score(const long score)
+{
+  m_score = score;
+  m_has_score = true;
+}
+
+static const long c_no_score = -1;
+
+long BenchmarkResult::score() const
+{
+  return m_has_score ? m_score : c_no_score;
+}
+
 std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result)
 {
   out << result.m_description;

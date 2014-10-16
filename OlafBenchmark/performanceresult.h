@@ -32,6 +32,10 @@ public:
                   long milliseconds,
                   long score = 0);
 
+  void score(const long score);
+
+  long score() const;
+
   const std::string& description() const;
 
   long milliseconds() const;
@@ -42,6 +46,8 @@ private:
   long m_milliseconds;
 
   long m_score;
+
+  bool m_has_score = false;
 
   static const unsigned int c_description_size;
 
