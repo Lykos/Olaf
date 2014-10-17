@@ -70,8 +70,6 @@ SearchResult AlphaBetaSearcher::recurse_move(const SearchState& current_state,
   return result;
 }
 
-#include <iostream>
-
 AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     const Move& move,
     SearchResult* const recursive_result,
