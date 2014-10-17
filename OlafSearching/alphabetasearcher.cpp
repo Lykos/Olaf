@@ -23,9 +23,10 @@ AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<AlphaBetaSearcher> sub_sear
 SearchResult AlphaBetaSearcher::search(SearchContext* const context)
 {
   assert(context->depth_mode == SearchContext::DepthMode::FIXED_DEPTH);
+  // We increment the depth by 1 because it gets immediately decremented again.
   SearchState initial_state{-numeric_limits<int>::max(),
                             numeric_limits<int>::max(),
-                            context->search_depth};
+                            context->search_depth + 1};
   return recurse_alpha_beta(initial_state, context);
 }
 
@@ -38,15 +39,16 @@ SearchResult AlphaBetaSearcher::recurse_sub_searcher(const SearchState& current_
 SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_state,
                                                    SearchContext* const context)
 {
+  const int recurse_depth = current_state.depth - 1;
   if (context->forced_stopper->should_stop()) {
     return SearchResult::invalid();
-  } else if ((!m_ignore_depth && current_state.depth - 1 <= m_sub_searcher_depth)
+  } else if ((!m_ignore_depth && recurse_depth <= m_sub_searcher_depth)
              || context->board.finished()) {
     return recurse_sub_searcher(current_state, context);
   } else {
     SearchState state{-current_state.beta,
                       -current_state.alpha,
-                      current_state.depth - 1};
+                      recurse_depth};
     return alpha_beta(&state, context);
   }
 }
@@ -68,9 +70,10 @@ SearchResult AlphaBetaSearcher::recurse_move(const SearchState& current_state,
   return result;
 }
 
+#include <iostream>
 
 AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
-    Move* const move,
+    const Move& move,
     SearchResult* const recursive_result,
     SearchState* const state,
     SearchResult* const result) const
@@ -83,7 +86,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   if (recursive_score > result->score) {
     result->score = recursive_score;
     result->main_variation = std::move(recursive_result->main_variation);
-    result->main_variation.emplace_back(std::move(*move));
+    result->main_variation.emplace_back(move);
   }
   if (recursive_score > state->alpha) {
     state->alpha = result->score;

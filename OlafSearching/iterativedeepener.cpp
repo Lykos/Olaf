@@ -2,6 +2,7 @@
 #include "compositestopper.h"
 #include "searchcontext.h"
 #include <chrono>
+#include <cassert>
 
 using namespace std;
 using namespace chrono;
@@ -13,7 +14,6 @@ IterativeDeepener::IterativeDeepener(unique_ptr<AlphaBetaSearcher> searcher,
   m_writer(writer),
   m_min_depth(min_depth)
 {}
-
 
 SearchResult IterativeDeepener::search(SearchContext* context)
 {
@@ -29,6 +29,10 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   }
 
   SearchResult result = m_searcher->search(context);
+  if (!result.valid()) {
+    return SearchResult::invalid();
+  }
+  assert(!result.main_variation.empty());
   milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
   m_writer->output(context->board, result, time, m_min_depth);
   if (mode == SearchContext::DepthMode::FIXED_DEPTH) {
@@ -44,9 +48,10 @@ SearchResult IterativeDeepener::search(SearchContext* context)
     if (!next_result.valid()) {
       break;
     }
+    assert(!result.main_variation.empty());
     result.nodes += next_result.nodes;
     result.score = next_result.score;
-    result.main_variation = move(next_result.main_variation);
+    result.main_variation = std::move(next_result.main_variation);
     milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
     m_writer->output(context->board, result, time, context->search_depth);
   }

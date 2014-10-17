@@ -30,7 +30,7 @@ void Engine::run()
                                                             m_weak_stopper.get());
       SearchResult result = m_searcher->search(&context);
       if (!result.valid()) {
-        return;
+        continue;
       }
       move(result.main_variation.back());
     }

@@ -75,7 +75,11 @@ public:
 
   void illegal_move(const std::string& reason, const std::string& move);
 
-  void thinking_output(int ply, int score, int centiseconds, int nodes, const std::string &moves) override;
+  void thinking_output(int ply,
+                       int score,
+                       int centiseconds,
+                       int nodes,
+                       const std::string& moves) override;
 
 private:
   std::string error_name(ErrorType type) const;

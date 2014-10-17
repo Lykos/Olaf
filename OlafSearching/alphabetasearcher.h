@@ -88,7 +88,7 @@ public:
    *         CONTINUE if the search should continue as normal.
    *         RETURN if the result should be returned now.
    */
-  ResultReaction update_result(Move* move,
+  ResultReaction update_result(const Move& move,
                                SearchResult* recursive_result,
                                SearchState* search_state,
                                SearchResult* result) const;

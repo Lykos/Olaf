@@ -41,7 +41,7 @@ SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
   SearchResult result;
   Move* const move = &(*it);
   SearchResult first_result = recurse_move(*state, context, move);
-  switch (update_result(move, &first_result, state, &result)) {
+  switch (update_result(*move, &first_result, state, &result)) {
     case ResultReaction::INVALID:
       return SearchResult::invalid();
     case ResultReaction::RETURN:
@@ -60,7 +60,7 @@ SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
     pair<Move*, SearchResult> fut_res = fut.get();
     Move* const move = fut_res.first;
     SearchResult& current_result = fut_res.second;
-    switch (update_result(move, &current_result, state, &result)) {
+    switch (update_result(*move, &current_result, state, &result)) {
       case ResultReaction::INVALID:
         return SearchResult::invalid();
       case ResultReaction::RETURN:
