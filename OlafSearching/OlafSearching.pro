@@ -11,9 +11,13 @@ QT       -= core gui
 TARGET = OlafSearching
 TEMPLATE = lib
 
+QMAKE_CXXFLAGS += -march=native -mtune=native
 DEFINES += OLAFSEARCHING_LIBRARY
 
 SOURCES += \
+    materialevaluator.cpp \
+    evaluatorfactory.cpp \
+    config.cpp \
     simplemovegenerator.cpp \
     nomoveorderer.cpp \
     negamaxer.cpp \
@@ -38,9 +42,35 @@ SOURCES += \
     searcher.cpp \
     searchresult.cpp \
     searchcontext.cpp \
-    alphabetasearcher.cpp
+    alphabetasearcher.cpp \
+    linepiece.cpp \
+    epenableaction.cpp \
+    epdisableaction.cpp \
+    conversionaction.cpp \
+    turnflipaction.cpp \
+    positiondelta.cpp \
+    position.cpp \
+    pieceset.cpp \
+    piecemoveaction.cpp \
+    pieceboard.cpp \
+    piece.cpp \
+    pawn.cpp \
+    oncepiece.cpp \
+    colorboard.cpp \
+    chessboard.cpp \
+    captureaction.cpp \
+    bitboard.cpp \
+    anticastleaction.cpp \
+    movebuilder.cpp \
+    move.cpp \
+    fenparser.cpp \
+    setkingcapturepositionsaction.cpp
 
 HEADERS += \
+    positionevaluator.h \
+    materialevaluator.h \
+    evaluatorfactory.h \
+    config.h \
     simplemovegenerator.h \
     searchresult.h \
     nomoveorderer.h \
@@ -68,7 +98,32 @@ HEADERS += \
     epdposition.h \
     nothinkingwriter.h \
     searcher.h \
-    alphabetasearcher.h
+    alphabetasearcher.h \
+    moveaction.h \
+    linepiece.h \
+    epdisableaction.h \
+    conversionaction.h \
+    positionevaluator.h \
+    positiondelta.h \
+    position.h \
+    pieceset.h \
+    piecemoveaction.h \
+    pieceboard.h \
+    piece.h \
+    pawn.h \
+    oncepiece.h \
+    turnflipaction.h \
+    colorboard.h \
+    color.h \
+    chessboard.h \
+    captureaction.h \
+    bitboard.h \
+    anticastleaction.h \
+    epenableaction.h \
+    movebuilder.h \
+    move.h \
+    fenparser.h \
+    setkingcapturepositionsaction.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching
