@@ -8,6 +8,7 @@
 #include <sstream>
 
 #include "OlafSearching/epdposition.h"
+#include "OlafSearching/nostopper.h"
 #include "testutil.h"
 
 using namespace std;
@@ -54,10 +55,13 @@ void EpdBenchmark::test_epd()
 {
   QFETCH(EpdPosition, position);
 
-  Move move;
+  SearchContext context;
+  context.board = position.board;
+  context.time_mode = SearchContext::TimeMode::BOUNDED;
   NoStopper stopper;
-  ChessBoard board(position.board);
-  move = m_searcher->search_timed(&board, stopper, stopper).main_variation().back();
+  context.forced_stopper = &stopper;
+  context.weak_stopper = &stopper;
+  Move move = m_searcher->search(&context).main_variation.back();
   long score = 0;
   auto ContainsMove = Matches(Contains(IsSameMove(move)));
   if (!position.best_moves.empty()) {
