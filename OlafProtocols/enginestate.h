@@ -3,6 +3,8 @@
 
 #include <chrono>
 
+#include "OlafSearching/searchcontext.h"
+
 class BoardState;
 
 /**
@@ -37,6 +39,9 @@ public:
   const BoardState& board_state() const;
 
   BoardState& board_state();
+
+  SearchContext create_search_context(const Stopper* forced_stopper,
+                                      const Stopper* weak_stopper) const;
 
 private:
   BoardState* const m_board_state;

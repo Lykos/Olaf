@@ -7,96 +7,67 @@ using namespace std;
 
 ParallelNegaMaxer::ParallelNegaMaxer(unique_ptr<MoveGenerator> generator,
                                      unique_ptr<MoveOrderer> orderer,
-                                     unique_ptr<AlphaBetaSearcher> searcher,
-                                     const int sequential_depth):
+                                     unique_ptr<AlphaBetaSearcher> sub_searcher,
+                                     const int sub_searcher_depth,
+                                     const bool ignore_depth):
+  AlphaBetaSearcher(move(sub_searcher), sub_searcher_depth, ignore_depth),
   m_generator(move(generator)),
-  m_orderer(move(orderer)),
-  m_searcher(move(searcher)),
-  m_sequential_depth(sequential_depth)
+  m_orderer(move(orderer))
 {}
 
 
-static SearchResult eval_move(ParallelNegaMaxer *nega_maxer,
-                              const ChessBoard& board,
-                              const int depth,
-                              const int nodes_searched,
-                              const int alpha,
-                              const int beta,
-                              const Stopper* const stopper,
-                              Move* const move)
+static pair<Move*, SearchResult> eval_move(ParallelNegaMaxer* const searcher,
+                                           const AlphaBetaSearcher::SearchState& state,
+                                           const SearchContext& context,
+                                           Move* const move)
 {
-  ChessBoard board_copy(board);
-  move->execute(&board_copy);
-  SearchResult result =
-      nega_maxer->search_stoppable_alpha_beta(&board_copy,
-                                              depth - 1,
-                                              nodes_searched,
-                                              -beta,
-                                              -alpha,
-                                              *stopper);
-  result.add_move(*move);
-  return result;
+  // Note that the stoppers are pointers, so they will still point
+  // to the same object in the copy. The rest of the state, however,
+  // will be copied. We need this because we cannot use the same board.
+  SearchContext context_copy(context);
+  return {move, searcher->recurse_move_noundo(state, &context_copy, move)};
 }
 
-SearchResult ParallelNegaMaxer::search_alpha_beta(ChessBoard* const board,
-                                                  const int depth,
-                                                  const int nodes_searched,
-                                                  int alpha,
-                                                  const int beta,
-                                                  const Stopper& stopper)
+SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
+                                           SearchContext* const context)
 {
-  if (depth <= m_sequential_depth || board->finished()) {
-    return m_searcher->search_stoppable_alpha_beta(board, depth, nodes_searched, alpha, beta, stopper);
-  }
-  vector<Move> moves = m_generator->generate_moves(*board);
+  vector<Move> moves = m_generator->generate_moves(context->board);
   if (moves.empty()) {
-    return m_searcher->search_stoppable_alpha_beta(board, depth, nodes_searched, alpha, beta, stopper);
+    return recurse_sub_searcher(*state, context);
   }
-  m_orderer->order_moves(*board, &moves);
-  vector<Move> alpha_variation;
+  m_orderer->order_moves(context->board, &moves);
   auto it = moves.begin();
   // Do the first one synchronously
+  SearchResult result;
   Move* const move = &(*it);
-  SearchResult first_result = eval_move(this, *board, depth, nodes_searched, alpha, beta, &stopper, move);
-  if (!first_result.valid()) {
-    return first_result;
+  SearchResult first_result = recurse_move(*state, context, move);
+  switch (update_result(move, &first_result, state, &result)) {
+    case ResultReaction::INVALID:
+      return SearchResult::invalid();
+    case ResultReaction::RETURN:
+      return result;
+    case ResultReaction::CONTINUE:
+      break;
   }
   ++it;
-  int value = -first_result.value();
-  unsigned int nodes = first_result.nodes();
-  if (value >= beta) {
-    return first_result;
-  } else if (value > alpha) {
-    alpha = value;
-    alpha_variation.clear();
-    for (const Move& move : first_result.main_variation()) {
-      alpha_variation.push_back(move);
-    }
-  }
-  vector<future<SearchResult>> other_results;
+  vector<future<pair<Move*, SearchResult>>> other_results;
   for (; it < moves.end(); ++it) {
     Move* const move = &(*it);
-    other_results.push_back(async(launch::async, eval_move, this, *board, depth, nodes_searched + nodes, alpha, beta, &stopper, move));
+    other_results.push_back(async(launch::async, eval_move, this, *state, *context, move));
   }
-  bool valid = true;
-  for (future<SearchResult> &fut : other_results) {
+  for (future<pair<Move*, SearchResult>>& fut : other_results) {
     fut.wait();
-    SearchResult result = fut.get();
-    valid &= result.valid();
-    nodes += result.nodes();
-    int value = -result.value();
-    if (value >= beta) {
-      return SearchResult(nodes, value, result.main_variation());
-    } else if (value > alpha) {
-      alpha = value;
-      alpha_variation.clear();
-      for (const Move& move : result.main_variation()) {
-        alpha_variation.push_back(move);
-      }
+    pair<Move*, SearchResult> fut_res = fut.get();
+    Move* const move = fut_res.first;
+    SearchResult& current_result = fut_res.second;
+    switch (update_result(move, &current_result, state, &result)) {
+      case ResultReaction::INVALID:
+        return SearchResult::invalid();
+      case ResultReaction::RETURN:
+        return result;
+      case ResultReaction::CONTINUE:
+        break;
     }
   }
-  if (!valid) {
-    return SearchResult();
-  }
-  return SearchResult(nodes, alpha, alpha_variation);
+  return result;
 }

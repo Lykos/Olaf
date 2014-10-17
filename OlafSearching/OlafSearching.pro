@@ -15,32 +15,30 @@ DEFINES += OLAFSEARCHING_LIBRARY
 
 SOURCES += \
     simplemovegenerator.cpp \
-    searchresult.cpp \
     nomoveorderer.cpp \
     negamaxer.cpp \
     searcherfactory.cpp \
-    alphabetasearcher.cpp \
     iterativedeepener.cpp \
     simpletimedsearcher.cpp \
     compositestopper.cpp \
     simplemovecreator.cpp \
     timestopper.cpp \
     forcedstopper.cpp \
-    nodestopper.cpp \
     evaluatorsearcher.cpp \
     parallelnegamaxer.cpp \
     capturegenerator.cpp \
     thinkingwriter.cpp \
-    timedsearcher.cpp \
     nostopper.cpp \
     stopper.cpp \
-    iterativesearcher.cpp \
     perft.cpp \
-    searchcontext.cpp \
     sanparser.cpp \
     epdparser.cpp \
     epdposition.cpp \
-    nothinkingwriter.cpp
+    nothinkingwriter.cpp \
+    searcher.cpp \
+    searchresult.cpp \
+    searchcontext.cpp \
+    alphabetasearcher.cpp
 
 HEADERS += \
     simplemovegenerator.h \
@@ -50,9 +48,6 @@ HEADERS += \
     moveorderer.h \
     movegenerator.h \
     searcherfactory.h \
-    depthsearcher.h \
-    alphabetasearcher.h \
-    timedsearcher.h \
     iterativedeepener.h \
     simpletimedsearcher.h \
     stopper.h \
@@ -61,9 +56,7 @@ HEADERS += \
     simplemovecreator.h \
     timestopper.h \
     forcedstopper.h \
-    nodestopper.h \
     evaluatorsearcher.h \
-    iterativesearcher.h \
     parallelnegamaxer.h \
     capturegenerator.h \
     thinkingwriter.h \
@@ -73,7 +66,9 @@ HEADERS += \
     sanparser.h \
     epdparser.h \
     epdposition.h \
-    nothinkingwriter.h
+    nothinkingwriter.h \
+    searcher.h \
+    alphabetasearcher.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

@@ -19,7 +19,7 @@ public:
    */
   CompositeStopper(const std::initializer_list<const Stopper*>& sub_stoppers);
 
-  bool should_stop(int nodes_searched) const override;
+  bool should_stop() const override;
 
 private:
   std::vector<const Stopper*> m_sub_stoppers;

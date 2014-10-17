@@ -16,34 +16,37 @@ SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
   m_writer(writer)
 {}
 
-unique_ptr<TimedSearcher> SearcherFactory::timed_searcher() const
+unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
-  unique_ptr<TimedSearcher> searcher(new SimpleTimedSearcher(iterative_searcher(),
-                                                             milliseconds(1000)));
+  unique_ptr<Searcher> searcher(new SimpleTimedSearcher(iterative_searcher(),
+                                                        milliseconds(1000)));
   return searcher;
 }
 
-unique_ptr<IterativeSearcher> SearcherFactory::iterative_searcher() const
+unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
 {
-  unique_ptr<IterativeSearcher> searcher (new IterativeDeepener(sequential_depth_searcher(),
-                                                                m_writer));
+  unique_ptr<Searcher> searcher (new IterativeDeepener(sequential_alpha_beta_searcher(),
+                                                       m_writer,
+                                                       c_min_depth));
   return searcher;
 }
 
-unique_ptr<DepthSearcher> SearcherFactory::parallel_depth_searcher() const
+unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() const
 {
-  unique_ptr<DepthSearcher> searcher(new ParallelNegaMaxer(move_generator(),
-                                                           move_orderer(),
-                                                           sequential_depth_searcher(),
-                                                           c_sequential_depth));
+  unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(move_generator(),
+                                                               move_orderer(),
+                                                               sequential_alpha_beta_searcher(),
+                                                               c_sequential_depth,
+                                                               false));
   return searcher;
 }
 
-unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_depth_searcher() const
+unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() const
 {
   unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
                                                        move_orderer(),
                                                        evaluation_searcher(),
+                                                       0,
                                                        false));
   return searcher;
 }
@@ -53,6 +56,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
   unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(capture_generator(),
                                                        move_orderer(),
                                                        evaluation_searcher(),
+                                                       0,
                                                        true));
   return searcher;
 }

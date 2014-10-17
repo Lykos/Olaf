@@ -5,7 +5,7 @@
 #include "engineevent.h"
 #include "enginestate.h"
 #include "boardstate.h"
-#include "OlafSearching/timedsearcher.h"
+#include "OlafSearching/searcher.h"
 #include "OlafSearching/forcedstopper.h"
 #include <memory>
 #include <thread>
@@ -25,7 +25,7 @@ public:
    */
   Engine(ProtocolWriter* writer,
          BoardState* board_state,
-         std::unique_ptr<TimedSearcher> searcher);
+         std::unique_ptr<Searcher> searcher);
 
   void run();
 
@@ -36,7 +36,7 @@ public:
   void request_quit();
 
 private:
-  ChessBoard handle_events();
+  void handle_events();
 
   void move(const Move& move);
 
@@ -52,7 +52,7 @@ private:
 
   ProtocolWriter* const m_writer;
 
-  std::unique_ptr<TimedSearcher> m_searcher;
+  std::unique_ptr<Searcher> m_searcher;
 
   std::queue<std::unique_ptr<EngineEvent>> m_event_queue;
 

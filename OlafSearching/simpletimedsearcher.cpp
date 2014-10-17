@@ -1,29 +1,31 @@
 #include "simpletimedsearcher.h"
 #include "timestopper.h"
 #include "compositestopper.h"
+#include <memory>
 #include <vector>
 
 using namespace std;
 using namespace chrono;
 
-SimpleTimedSearcher::SimpleTimedSearcher(unique_ptr<IterativeSearcher> searcher,
+SimpleTimedSearcher::SimpleTimedSearcher(unique_ptr<Searcher> sub_searcher,
                                          const milliseconds& search_millis):
-  m_searcher(move(searcher)),
+  m_sub_searcher(move(sub_searcher)),
   m_search_millis(search_millis)
 {}
 
 
-SearchResult SimpleTimedSearcher::search_timed(ChessBoard* const board,
-                                               const Stopper& forced_stopper,
-                                               const Stopper& weak_stopper)
+SearchResult SimpleTimedSearcher::search(SearchContext* const context)
 {
-  TimeStopper time_stopper(m_search_millis);
-  CompositeStopper composite_stopper{&weak_stopper, &time_stopper};
-  return m_searcher->search_infinite(board, forced_stopper, composite_stopper);
-}
-
-SearchResult SimpleTimedSearcher::search_untimed(ChessBoard* const board,
-                                                 const Stopper& forced_stopper)
-{
-  return m_searcher->search_infinite(board, forced_stopper);
+  unique_ptr<TimeStopper> time_stopper;
+  unique_ptr<CompositeStopper> composite_stopper;
+  switch (context->time_mode) {
+    case SearchContext::TimeMode::BOUNDED:
+      time_stopper.reset(new TimeStopper(m_search_millis));
+      composite_stopper.reset(new CompositeStopper{context->weak_stopper, time_stopper.get()});
+      context->weak_stopper = composite_stopper.get();
+      break;
+    case SearchContext::TimeMode::INFINITE:
+      break;
+  }
+  return m_sub_searcher->search(context);
 }

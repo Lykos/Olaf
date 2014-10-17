@@ -1,55 +1,54 @@
 #include "iterativedeepener.h"
 #include "compositestopper.h"
+#include "searchcontext.h"
 #include <chrono>
 
 using namespace std;
 using namespace chrono;
 
-IterativeDeepener::IterativeDeepener(unique_ptr<DepthSearcher> searcher,
-                                     ThinkingWriter* const writer):
+IterativeDeepener::IterativeDeepener(unique_ptr<AlphaBetaSearcher> searcher,
+                                     ThinkingWriter* const writer,
+                                     const int min_depth):
   m_searcher(move(searcher)),
-  m_writer(writer)
+  m_writer(writer),
+  m_min_depth(min_depth)
 {}
 
 
-SearchResult IterativeDeepener::internal_search(ChessBoard* const board,
-                                                const Stopper& forced_stopper,
-                                                const Stopper& weak_stopper,
-                                                const int max_depth,
-                                                const bool infinite)
+SearchResult IterativeDeepener::search(SearchContext* context)
 {
   steady_clock::time_point start = steady_clock::now();
-  int nodes_searched = 0;
-  SearchResult result = m_searcher->search_depth(board, min_depth, nodes_searched, forced_stopper);
+  const SearchContext::DepthMode mode = context->depth_mode;
+  switch (mode) {
+    case SearchContext::DepthMode::ITERATIVE:
+      context->search_depth = m_min_depth;
+      context->depth_mode = SearchContext::DepthMode::FIXED_DEPTH;
+      break;
+    case SearchContext::DepthMode::FIXED_DEPTH:
+      break;
+  }
+
+  SearchResult result = m_searcher->search(context);
   milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
-  m_writer->output(*board, result, time, min_depth);
-  nodes_searched += result.nodes();
-  CompositeStopper composite_stopper{&forced_stopper, &weak_stopper};
-  for (int depth = min_depth + 1; depth <= max_depth || infinite; ++depth) {
+  m_writer->output(context->board, result, time, m_min_depth);
+  if (mode == SearchContext::DepthMode::FIXED_DEPTH) {
+    return result;
+  }
+  // Now we have one move and can be more brutal for the weak stopper.
+  CompositeStopper composite_stopper{context->forced_stopper, context->weak_stopper};
+  context->forced_stopper = &composite_stopper;
+  while (true) {
+    ++context->search_depth;
     const SearchResult& next_result =
-        m_searcher->search_depth(board, depth, nodes_searched, composite_stopper);
+        m_searcher->search(context);
     if (!next_result.valid()) {
       break;
     }
-    nodes_searched += result.nodes();
-    result = SearchResult(nodes_searched, next_result.value(), next_result.main_variation());
+    result.nodes += next_result.nodes;
+    result.score = next_result.score;
+    result.main_variation = move(next_result.main_variation);
     milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
-    m_writer->output(*board, result, time, depth);
+    m_writer->output(context->board, result, time, context->search_depth);
   }
   return result;
-}
-
-SearchResult IterativeDeepener::search_infinite(ChessBoard* const board,
-                                                const Stopper& forced_stopper,
-                                                const Stopper& weak_stopper)
-{
-  return internal_search(board, forced_stopper, weak_stopper, 0, true);
-}
-
-SearchResult IterativeDeepener::search_bounded(ChessBoard* const board,
-                                               const int max_depth,
-                                               const Stopper& forced_stopper,
-                                               const Stopper& weak_stopper)
-{
-  return internal_search(board, forced_stopper, weak_stopper, max_depth, false);
 }

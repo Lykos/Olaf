@@ -1,18 +1,19 @@
 #include "evaluatorsearcher.h"
 
+#include <cassert>
+
 using namespace std;
 
 EvaluatorSearcher::EvaluatorSearcher(unique_ptr<PositionEvaluator> evaluator):
   m_evaluator(move(evaluator))
 {}
 
-SearchResult EvaluatorSearcher::search_alpha_beta(ChessBoard* const board,
-                                                  const int /* depth */,
-                                                  const int /* nodes_searched */,
-                                                  const int /* alpha */,
-                                                  const int /* beta */,
-                                                  const Stopper& /* stopper */)
+SearchResult EvaluatorSearcher::alpha_beta(SearchState* const state,
+                                           SearchContext* const context)
 {
-  const int value = m_evaluator->evaluate(*board);
-  return SearchResult(1, value);
+  assert(state->depth == 0);
+  SearchResult result;
+  result.nodes = 1;
+  result.score = m_evaluator->evaluate(context->board);
+  return result;
 }

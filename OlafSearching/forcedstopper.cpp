@@ -9,7 +9,7 @@ void ForcedStopper::request_stop()
   m_stop = true;
 }
 
-bool ForcedStopper::should_stop(int /* nodes_searched */) const
+bool ForcedStopper::should_stop() const
 {
   return m_stop;
 }
