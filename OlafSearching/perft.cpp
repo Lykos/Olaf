@@ -5,9 +5,9 @@
 
 #include "movecreator.h"
 #include "movegenerator.h"
-#include "OlafRules/move.h"
-#include "OlafRules/pieceset.h"
-#include "OlafRules/fenparser.h"
+#include "move.h"
+#include "pieceset.h"
+#include "fenparser.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 #define MOVEEVENT_H
 
 #include "engineevent.h"
-#include "OlafRules/move.h"
+#include "OlafSearching/move.h"
 
 /**
  * @brief The MoveEvent class is an event representing a move received

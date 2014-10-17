@@ -1,8 +1,8 @@
 #ifndef MOVEORDERER_H
 #define MOVEORDERER_H
 
-#include "OlafRules/chessboard.h"
-#include "OlafRules/move.h"
+#include "chessboard.h"
+#include "move.h"
 #include <vector>
 
 /**

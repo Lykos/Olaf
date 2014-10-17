@@ -5,8 +5,8 @@
 #include <iostream>
 
 #include "testutil.h"
-#include "OlafRules/chessboard.h"
-#include "OlafRules/pieceset.h"
+#include "OlafSearching/chessboard.h"
+#include "OlafSearching/pieceset.h"
 #include "OlafSearching/sanparser.h"
 #include "OlafSearching/searcherfactory.h"
 #include "OlafSearching/nothinkingwriter.h"

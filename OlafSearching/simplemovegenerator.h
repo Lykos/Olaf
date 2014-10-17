@@ -3,9 +3,9 @@
 
 #include "movegenerator.h"
 #include "movecreator.h"
-#include "OlafRules/move.h"
-#include "OlafRules/chessboard.h"
-#include "OlafRules/piece.h"
+#include "move.h"
+#include "chessboard.h"
+#include "piece.h"
 #include <vector>
 #include <memory>
 

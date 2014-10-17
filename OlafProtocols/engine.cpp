@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include "OlafSearching/stopper.h"
-#include "OlafRules/chessboard.h"
+#include "OlafSearching/chessboard.h"
 
 using namespace std;
 

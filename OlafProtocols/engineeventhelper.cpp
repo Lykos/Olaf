@@ -7,8 +7,8 @@
 #include "myturnflipevent.h"
 #include "pingevent.h"
 #include "settimeevent.h"
-#include "OlafRules/move.h"
-#include "OlafRules/fenparser.h"
+#include "OlafSearching/move.h"
+#include "OlafSearching/fenparser.h"
 #include "setboardevent.h"
 
 using namespace std;

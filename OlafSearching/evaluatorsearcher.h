@@ -2,7 +2,7 @@
 #define EVALUATORSEARCHER_H
 
 #include "alphabetasearcher.h"
-#include "OlafEvaluation/positionevaluator.h"
+#include "positionevaluator.h"
 #include <memory>
 
 /**

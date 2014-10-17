@@ -2,7 +2,7 @@
 #define ITERATIVEDEEPENER_H
 
 #include "searcher.h"
-#include "OlafRules/chessboard.h"
+#include "chessboard.h"
 #include "alphabetasearcher.h"
 #include "thinkingwriter.h"
 #include <memory>

@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QtTest/QTest>
 
-#include "OlafRules/chessboard.h"
-#include "OlafRules/piece.h"
+#include "OlafSearching/chessboard.h"
+#include "OlafSearching/piece.h"
 #include "autotest.h"
 
 class OncePieceTest : public QObject

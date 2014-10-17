@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "OlafRules/pawn.h"
-#include "OlafRules/pieceset.h"
+#include "pawn.h"
+#include "pieceset.h"
 
 using namespace std;
 

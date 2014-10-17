@@ -2,7 +2,7 @@
 #define SIMPLETIMEDSEARCHER_H
 
 #include "searcher.h"
-#include "OlafRules/chessboard.h"
+#include "chessboard.h"
 #include "stopper.h"
 #include "searchresult.h"
 #include "timestopper.h"

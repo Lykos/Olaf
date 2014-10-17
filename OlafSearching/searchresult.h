@@ -1,7 +1,7 @@
 #ifndef SEARCHRESULT_H
 #define SEARCHRESULT_H
 
-#include "OlafRules/move.h"
+#include "move.h"
 #include <vector>
 
 struct SearchResult

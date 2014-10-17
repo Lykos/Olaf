@@ -2,7 +2,7 @@
 #define MATERIALEVALUATOR_H
 
 #include "positionevaluator.h"
-#include "OlafRules/chessboard.h"
+#include "chessboard.h"
 #include <vector>
 
 class MaterialEvaluator : public PositionEvaluator {

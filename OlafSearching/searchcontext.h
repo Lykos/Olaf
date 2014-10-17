@@ -1,7 +1,7 @@
 #ifndef SEARCHCONTEXT_H
 #define SEARCHCONTEXT_H
 
-#include "OlafRules/chessboard.h"
+#include "chessboard.h"
 #include "stopper.h"
 #include "searchresult.h"
 

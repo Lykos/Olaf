@@ -9,7 +9,7 @@
 #include "OlafSearching/movecreator.h"
 #include "OlafSearching/searcherfactory.h"
 #include "OlafSearching/nothinkingwriter.h"
-#include "OlafRules/chessboard.h"
+#include "OlafSearching/chessboard.h"
 #include "OlafSearching/perft.h"
 #include "testutil.h"
 

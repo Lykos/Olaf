@@ -1,7 +1,7 @@
 #ifndef SETBOARDEVENT_H
 #define SETBOARDEVENT_H
 
-#include "OlafRules/chessboard.h"
+#include "OlafSearching/chessboard.h"
 #include "engineevent.h"
 
 class SetBoardEvent : public EngineEvent

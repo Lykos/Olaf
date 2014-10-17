@@ -1,5 +1,5 @@
 #include "materialevaluator.h"
-#include "OlafRules/pieceset.h"
+#include "pieceset.h"
 
 MaterialEvaluator::MaterialEvaluator():
   m_piece_values (PieceSet::instance().pieces().size())

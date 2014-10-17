@@ -5,9 +5,9 @@
 #include <string>
 
 #include "gmock/gmock-generated-matchers.h"
-#include "OlafRules/chessboard.h"
-#include "OlafRules/position.h"
-#include "OlafRules/move.h"
+#include "OlafSearching/chessboard.h"
+#include "OlafSearching/position.h"
+#include "OlafSearching/move.h"
 
 MATCHER_P(IsSameMove, move, "") {
   return ExplainMatchResult(testing::Eq(move.source()), arg.source(), result_listener)

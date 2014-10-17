@@ -2,10 +2,10 @@
 #define SIMPLEMOVECREATOR_H
 
 #include "movecreator.h"
-#include "OlafRules/piece.h"
-#include "OlafRules/move.h"
-#include "OlafRules/chessboard.h"
-#include "OlafRules/position.h"
+#include "piece.h"
+#include "move.h"
+#include "chessboard.h"
+#include "position.h"
 
 class SimpleMoveCreator : public MoveCreator
 {

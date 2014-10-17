@@ -1,9 +1,9 @@
 #ifndef MOVEGENERATOR_H
 #define MOVEGENERATOR_H
 
-#include "OlafRules/move.h"
-#include "OlafRules/chessboard.h"
-#include "OlafRules/piece.h"
+#include "move.h"
+#include "chessboard.h"
+#include "piece.h"
 #include <vector>
 
 class MoveGenerator

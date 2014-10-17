@@ -8,7 +8,7 @@
 
 #include "protocolwriter.h"
 #include "result.h"
-#include "OlafRules/move.h"
+#include "OlafSearching/move.h"
 
 /**
  * @brief The XBoardWriter class sends answers to the chess interface program

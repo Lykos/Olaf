@@ -1,5 +1,5 @@
 #include "parallelnegamaxer.h"
-#include "OlafRules/move.h"
+#include "move.h"
 #include <limits>
 #include <future>
 

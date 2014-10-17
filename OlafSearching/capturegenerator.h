@@ -2,7 +2,7 @@
 #define CAPTUREGENERATOR_H
 
 #include "movegenerator.h"
-#include "OlafRules/move.h"
+#include "move.h"
 #include <memory>
 #include <vector>
 

@@ -2,7 +2,7 @@
 #define THINKINGWRITER_H
 
 #include "searchresult.h"
-#include "OlafRules/chessboard.h"
+#include "chessboard.h"
 #include <chrono>
 #include <atomic>
 

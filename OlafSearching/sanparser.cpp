@@ -4,9 +4,9 @@
 #include <string>
 #include <memory>
 
-#include "OlafRules/piece.h"
-#include "OlafRules/pieceset.h"
-#include "OlafRules/move.h"
+#include "piece.h"
+#include "pieceset.h"
+#include "move.h"
 
 using namespace std;
 
