@@ -64,11 +64,6 @@ Benchmark::PerformanceMeasurer::PerformanceMeasurer(Benchmark* const benchmark):
   m_timer.start();
 }
 
-Benchmark::PerformanceMeasurer::~PerformanceMeasurer()
-{
-  m_benchmark->push_result(m_result);
-}
-
 bool Benchmark::PerformanceMeasurer::done() const
 {
   return m_done;
@@ -76,7 +71,7 @@ bool Benchmark::PerformanceMeasurer::done() const
 
 void Benchmark::PerformanceMeasurer::next()
 {
-  m_result = BenchmarkResult(m_benchmark->current_test_id(),
-                             milliseconds(m_timer.elapsed()));
+  m_benchmark->push_result(BenchmarkResult(m_benchmark->current_test_id(),
+                                           milliseconds(m_timer.elapsed())));
   m_done = true;
 }

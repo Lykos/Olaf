@@ -8,7 +8,7 @@ EvaluatorSearcher::EvaluatorSearcher(unique_ptr<PositionEvaluator> evaluator):
   m_evaluator(move(evaluator))
 {}
 
-SearchResult EvaluatorSearcher::alpha_beta(SearchState* const state,
+SearchResult EvaluatorSearcher::alpha_beta(SearchState* const /* state */,
                                            SearchContext* const context)
 {
   SearchResult result;
