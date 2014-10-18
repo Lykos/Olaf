@@ -1,7 +1,7 @@
 #ifndef PROTOCOLWRITER_H
 #define PROTOCOLWRITER_H
 
-#include "OlafRules/move.h"
+#include "OlafSearching/move.h"
 
 /**
  * @brief The ProtocolWriter class is an abstract class which is

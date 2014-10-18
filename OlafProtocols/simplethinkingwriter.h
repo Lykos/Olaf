@@ -4,7 +4,7 @@
 #include "protocolwriter.h"
 #include "OlafSearching/thinkingwriter.h"
 #include "OlafSearching/searchresult.h"
-#include "OlafRules/chessboard.h"
+#include "OlafSearching/chessboard.h"
 #include <chrono>
 #include <memory>
 

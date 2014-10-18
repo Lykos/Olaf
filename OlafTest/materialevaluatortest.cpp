@@ -2,7 +2,7 @@
 
 #include <QtTest/QTest>
 
-#include "OlafRules/chessboard.h"
+#include "OlafSearching/chessboard.h"
 #include "testutil.h"
 
 typedef MaterialEvaluator::score_t score_t;

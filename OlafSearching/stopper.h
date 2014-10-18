@@ -4,7 +4,7 @@
 class Stopper
 {
 public:
-  virtual bool should_stop(int nodes_searched) const = 0;
+  virtual bool should_stop() const = 0;
 
   virtual ~Stopper() = 0;
 

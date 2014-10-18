@@ -1,7 +1,7 @@
 #include "boardtest.h"
 
-#include "OlafRules/chessboard.h"
-#include "OlafRules/pieceset.h"
+#include "OlafSearching/chessboard.h"
+#include "OlafSearching/pieceset.h"
 
 BoardTest::BoardTest():
   m_bishop(PieceSet::instance().bishop().piece_index())

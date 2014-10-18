@@ -6,7 +6,7 @@
 class NoStopper : public Stopper
 {
 public:
-  bool should_stop(int nodes_searched) const override;
+  bool should_stop() const override;
 };
 
 #endif // NOSTOPPER_H

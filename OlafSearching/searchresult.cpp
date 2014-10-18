@@ -1,41 +1,25 @@
 #include "searchresult.h"
 
+#include <limits>
+
 using namespace std;
 
-SearchResult::SearchResult(const unsigned int nodes,
-                           const int value,
-                           const vector<Move>& main_variation):
-  m_nodes(nodes),
-  m_value(value),
-  m_main_variation(main_variation)
-{}
-
-SearchResult SearchResult::operator-() const
+// static
+const SearchResult& SearchResult::invalid()
 {
-  return SearchResult(m_nodes, -m_value, m_main_variation);
+  static const SearchResult c_invalid;
+  return c_invalid;
 }
+
+// We use -max because numeric_limits is asymmetric and min
+// would not work.
+
+SearchResult::SearchResult():
+  nodes(0),
+  score(-numeric_limits<int>::max())
+{}
 
 bool SearchResult::valid() const
 {
-  return m_nodes != 0;
-}
-
-unsigned int SearchResult::nodes() const
-{
-  return m_nodes;
-}
-
-int SearchResult::value() const
-{
-  return m_value;
-}
-
-const vector<Move>& SearchResult::main_variation() const
-{
-  return m_main_variation;
-}
-
-void SearchResult::add_move(const Move& move)
-{
-  m_main_variation.push_back(move);
+  return nodes > 0;
 }

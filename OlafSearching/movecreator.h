@@ -1,10 +1,10 @@
 #ifndef MOVECREATOR_H
 #define MOVECREATOR_H
 
-#include "OlafRules/chessboard.h"
-#include "OlafRules/position.h"
-#include "OlafRules/move.h"
-#include "OlafRules/piece.h"
+#include "chessboard.h"
+#include "position.h"
+#include "move.h"
+#include "piece.h"
 
 /**
  * @brief The MoveCreator class is responsible for checking moves from the user and

@@ -1,7 +1,8 @@
 INCLUDEPATH += . ..
 DEPENDPATH += . ..
 
-VERSION=0.0.2
+VERSION=0.0.3
+
 DEFINES += "VERSION=\\\"$$VERSION\\\""
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -Werror -pedantic

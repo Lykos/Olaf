@@ -1,7 +1,7 @@
 #include "simplemovegenerator.h"
-#include "OlafRules/bitboard.h"
-#include "OlafRules/position.h"
-#include "OlafRules/piece.h"
+#include "bitboard.h"
+#include "position.h"
+#include "piece.h"
 #include <memory>
 #include <iostream>
 

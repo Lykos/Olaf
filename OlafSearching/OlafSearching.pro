@@ -11,38 +11,66 @@ QT       -= core gui
 TARGET = OlafSearching
 TEMPLATE = lib
 
+QMAKE_CXXFLAGS += -march=native -mtune=native
 DEFINES += OLAFSEARCHING_LIBRARY
 
 SOURCES += \
+    materialevaluator.cpp \
+    evaluatorfactory.cpp \
+    config.cpp \
     simplemovegenerator.cpp \
-    searchresult.cpp \
     nomoveorderer.cpp \
     negamaxer.cpp \
     searcherfactory.cpp \
-    alphabetasearcher.cpp \
     iterativedeepener.cpp \
     simpletimedsearcher.cpp \
     compositestopper.cpp \
     simplemovecreator.cpp \
     timestopper.cpp \
     forcedstopper.cpp \
-    nodestopper.cpp \
     evaluatorsearcher.cpp \
     parallelnegamaxer.cpp \
     capturegenerator.cpp \
     thinkingwriter.cpp \
-    timedsearcher.cpp \
     nostopper.cpp \
     stopper.cpp \
-    iterativesearcher.cpp \
     perft.cpp \
-    searchcontext.cpp \
     sanparser.cpp \
     epdparser.cpp \
     epdposition.cpp \
-    nothinkingwriter.cpp
+    nothinkingwriter.cpp \
+    searcher.cpp \
+    searchresult.cpp \
+    searchcontext.cpp \
+    alphabetasearcher.cpp \
+    linepiece.cpp \
+    epenableaction.cpp \
+    epdisableaction.cpp \
+    conversionaction.cpp \
+    turnflipaction.cpp \
+    positiondelta.cpp \
+    position.cpp \
+    pieceset.cpp \
+    piecemoveaction.cpp \
+    pieceboard.cpp \
+    piece.cpp \
+    pawn.cpp \
+    oncepiece.cpp \
+    colorboard.cpp \
+    chessboard.cpp \
+    captureaction.cpp \
+    bitboard.cpp \
+    anticastleaction.cpp \
+    movebuilder.cpp \
+    move.cpp \
+    fenparser.cpp \
+    setkingcapturepositionsaction.cpp
 
 HEADERS += \
+    positionevaluator.h \
+    materialevaluator.h \
+    evaluatorfactory.h \
+    config.h \
     simplemovegenerator.h \
     searchresult.h \
     nomoveorderer.h \
@@ -50,9 +78,6 @@ HEADERS += \
     moveorderer.h \
     movegenerator.h \
     searcherfactory.h \
-    depthsearcher.h \
-    alphabetasearcher.h \
-    timedsearcher.h \
     iterativedeepener.h \
     simpletimedsearcher.h \
     stopper.h \
@@ -61,9 +86,7 @@ HEADERS += \
     simplemovecreator.h \
     timestopper.h \
     forcedstopper.h \
-    nodestopper.h \
     evaluatorsearcher.h \
-    iterativesearcher.h \
     parallelnegamaxer.h \
     capturegenerator.h \
     thinkingwriter.h \
@@ -73,7 +96,34 @@ HEADERS += \
     sanparser.h \
     epdparser.h \
     epdposition.h \
-    nothinkingwriter.h
+    nothinkingwriter.h \
+    searcher.h \
+    alphabetasearcher.h \
+    moveaction.h \
+    linepiece.h \
+    epdisableaction.h \
+    conversionaction.h \
+    positionevaluator.h \
+    positiondelta.h \
+    position.h \
+    pieceset.h \
+    piecemoveaction.h \
+    pieceboard.h \
+    piece.h \
+    pawn.h \
+    oncepiece.h \
+    turnflipaction.h \
+    colorboard.h \
+    color.h \
+    chessboard.h \
+    captureaction.h \
+    bitboard.h \
+    anticastleaction.h \
+    epenableaction.h \
+    movebuilder.h \
+    move.h \
+    fenparser.h \
+    setkingcapturepositionsaction.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching
@@ -81,6 +131,8 @@ headers.path = /usr/local/include/OlafSearching
 target.path = /usr/local/lib
 
 INSTALLS += target headers
+
+LIBS += -lyaml-cpp
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafRules -lOlafRules
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafRules -lOlafRules

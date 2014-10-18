@@ -2,7 +2,7 @@
 #define EVALUATORSEARCHER_H
 
 #include "alphabetasearcher.h"
-#include "OlafEvaluation/positionevaluator.h"
+#include "positionevaluator.h"
 #include <memory>
 
 /**
@@ -13,12 +13,7 @@ class EvaluatorSearcher : public AlphaBetaSearcher
 public:
   EvaluatorSearcher(std::unique_ptr<PositionEvaluator> evaluator);
 
-  SearchResult search_alpha_beta(ChessBoard* board,
-                                 int depth,
-                                 int nodes_searched,
-                                 int alpha,
-                                 int beta,
-                                 const Stopper& stopper) final;
+  SearchResult alpha_beta(SearchState* state, SearchContext* context) final;
 
 private:
   std::unique_ptr<PositionEvaluator> m_evaluator;

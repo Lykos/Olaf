@@ -1,13 +1,15 @@
 #include "xboardreader.h"
-#include "OlafRules/piece.h"
-#include "OlafRules/position.h"
-#include "OlafRules/pieceset.h"
+
 #include <cassert>
 #include <sstream>
 #include <istream>
 #include <iostream>
 #include <iterator>
 #include <chrono>
+
+#include "OlafSearching/piece.h"
+#include "OlafSearching/position.h"
+#include "OlafSearching/pieceset.h"
 
 using namespace std;
 using namespace chrono;

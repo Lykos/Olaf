@@ -2,9 +2,9 @@
 #define BOARDSTATE_H
 
 #include "OlafSearching/movecreator.h"
-#include "OlafRules/chessboard.h"
-#include "OlafRules/piece.h"
-#include "OlafRules/position.h"
+#include "OlafSearching/chessboard.h"
+#include "OlafSearching/piece.h"
+#include "OlafSearching/position.h"
 #include <memory>
 #include <mutex>
 #include <stack>

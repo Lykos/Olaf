@@ -8,7 +8,7 @@
 #include <memory>
 
 /**
- * @brief The NegaMaxer class is an abstract class which implements the Negamax algorithm.
+ * @brief The NegaMaxer class is a class which implements the Negamax algorithm sequentially.
  *        It calls its sub searcher for the leaves.
  */
 class NegaMaxer : public AlphaBetaSearcher
@@ -16,25 +16,19 @@ class NegaMaxer : public AlphaBetaSearcher
 public:
   NegaMaxer(std::unique_ptr<MoveGenerator> generator,
             std::unique_ptr<MoveOrderer> orderer,
-            std::unique_ptr<AlphaBetaSearcher> searcher,
+            std::unique_ptr<AlphaBetaSearcher> sub_searcher,
+            int sub_searcher_depth,
             bool ignore_depth);
 
-  SearchResult search_alpha_beta(ChessBoard* board,
-                                 int depth,
-                                 int nodes_searched,
-                                 int alpha,
-                                 int beta,
-                                 const Stopper& stopper) final;
+  SearchResult alpha_beta(SearchState* state,
+                          SearchContext* context) final;
 
 private:
   std::unique_ptr<MoveGenerator> m_generator;
 
   std::unique_ptr<MoveOrderer> m_orderer;
 
-  std::unique_ptr<AlphaBetaSearcher> m_searcher;
-
   bool m_ignore_depth;
-
 };
 
 #endif // NEGAMAXER_H

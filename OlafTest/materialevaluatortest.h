@@ -5,7 +5,7 @@
 #include <QtTest/QTest>
 
 #include "autotest.h"
-#include "OlafEvaluation/materialevaluator.h"
+#include "OlafSearching/materialevaluator.h"
 
 class MaterialEvaluatorTest : public QObject
 {

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "OlafRules/pieceset.h"
+#include "OlafSearching/pieceset.h"
 
 using namespace std;
 
@@ -47,8 +47,8 @@ void XBoardWriter::move(const Move& mov)
 {
   unique_lock<mutex> lock(m_mutex);
   *m_out << "move "
-       << mov.source()
-       << mov.destination();
+         << mov.source()
+         << mov.destination();
   if (mov.is_conversion()) {
     if (mov.created_piece() == PieceSet::instance().bishop().piece_index()) {
       *m_out << "b";
@@ -165,7 +165,11 @@ void XBoardWriter::illegal_move(const string& reason, const string& move)
   *m_out << "Illegal move(" << reason << "): " << move << endl;
 }
 
-void XBoardWriter::thinking_output(int ply, int score, int centiseconds, int nodes, const string& moves)
+void XBoardWriter::thinking_output(const int ply,
+                                   const int score,
+                                   const int centiseconds,
+                                   const int nodes,
+                                   const string& moves)
 {
   unique_lock<mutex> lock(m_mutex);
   *m_out << ply << "\t" << score << "\t" << centiseconds << "\t" << nodes << "\t" << moves << endl;

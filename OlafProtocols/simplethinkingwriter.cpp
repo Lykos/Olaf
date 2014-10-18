@@ -3,7 +3,7 @@
 #include <sstream>
 #include <algorithm>
 
-#include "OlafRules/pieceset.h"
+#include "OlafSearching/pieceset.h"
 
 using namespace std;
 using namespace chrono;
@@ -25,7 +25,7 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
     ++turn_number;
     ++ply;
   }
-  const vector<Move>& moves = result.main_variation();
+  const vector<Move>& moves = result.main_variation;
   for (auto it = moves.crbegin(); it != moves.crend(); ++it) {
     const Move& move = *it;
     if (ply % 2 == 0) {
@@ -45,10 +45,10 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
     }
     ++ply;
   }
-  const int value = board.turn_color() == Color::White ? result.value() : -result.value();
+  const int score = board.turn_color() == Color::White ? result.score : -result.score;
   m_writer->thinking_output(depth,
-                            value,
+                            score,
                             time.count() / 10,
-                            result.nodes(),
+                            result.nodes,
                             oss.str());
 }

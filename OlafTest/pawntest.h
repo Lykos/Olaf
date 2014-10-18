@@ -1,9 +1,9 @@
 #ifndef PAWNTEST_H
 #define PAWNTEST_H
 
-#include "OlafRules/chessboard.h"
-#include "OlafRules/piece.h"
-#include "OlafRules/pawn.h"
+#include "OlafSearching/chessboard.h"
+#include "OlafSearching/piece.h"
+#include "OlafSearching/pawn.h"
 #include "autotest.h"
 #include <QtTest/QTest>
 #include <QObject>

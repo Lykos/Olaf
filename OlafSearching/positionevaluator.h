@@ -1,7 +1,7 @@
 #ifndef POSITIONEVALUATOR_H
 #define POSITIONEVALUATOR_H
 
-#include "OlafRules/chessboard.h"
+#include "chessboard.h"
 
 class PositionEvaluator
 {

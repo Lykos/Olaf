@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include "epdposition.h"
-#include "OlafRules/fenparser.h"
+#include "fenparser.h"
 #include "sanparser.h"
 
 using namespace std;

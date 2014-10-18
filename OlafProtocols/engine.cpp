@@ -3,13 +3,13 @@
 #include <cassert>
 
 #include "OlafSearching/stopper.h"
-#include "OlafRules/chessboard.h"
+#include "OlafSearching/chessboard.h"
 
 using namespace std;
 
 Engine::Engine(ProtocolWriter* const writer,
                BoardState* board_state,
-               unique_ptr<TimedSearcher> searcher):
+               unique_ptr<Searcher> searcher):
   m_state(board_state),
   m_forced_stopper(new ForcedStopper),
   m_weak_stopper(new ForcedStopper),
@@ -21,32 +21,29 @@ Engine::Engine(ProtocolWriter* const writer,
 void Engine::run()
 {
   while (!m_quit) {
-    ChessBoard board = handle_events();
+    handle_events();
     if (m_quit) {
       return;
     }
     if (m_state.pondering() || m_state.my_turn()) {
-      if (m_state.my_turn() && !m_state.force()) {
-        m_searcher->time(m_state.time());
-        SearchResult result = m_searcher->search_timed(&board, *m_forced_stopper, *m_weak_stopper);
-        if (result.main_variation().empty()) {
-          return;
-        }
-        move(result.main_variation().back());
-      } else {
-        m_searcher->search_untimed(&board, *m_forced_stopper);
+      SearchContext context = m_state.create_search_context(m_forced_stopper.get(),
+                                                            m_weak_stopper.get());
+      SearchResult result = m_searcher->search(&context);
+      if (!result.valid()) {
+        continue;
       }
+      move(result.main_variation.back());
     }
 
   }
 }
 
-ChessBoard Engine::handle_events()
+void Engine::handle_events()
 {
   unique_lock<mutex> lock(m_mutex);
   m_condition_variable.wait(lock, [this] { return !m_event_queue.empty() || m_quit; });
   if (m_quit) {
-    return ChessBoard();
+    return;
   }
   while (!m_event_queue.empty()) {
     m_event_queue.front()->execute(&m_state);
@@ -54,8 +51,6 @@ ChessBoard Engine::handle_events()
   }
   m_forced_stopper.reset(new ForcedStopper);
   m_weak_stopper.reset(new ForcedStopper);
-  ChessBoard board = m_state.board_state().copy_board();
-  return board;
 }
 
 void Engine::enqueue(unique_ptr<EngineEvent> event)

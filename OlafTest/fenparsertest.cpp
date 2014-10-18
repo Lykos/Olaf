@@ -4,10 +4,10 @@
 #include <iostream>
 #include <string>
 
-#include "OlafRules/fenparser.h"
-#include "OlafRules/chessboard.h"
-#include "OlafRules/pieceset.h"
-#include "OlafRules/piece.h"
+#include "OlafSearching/fenparser.h"
+#include "OlafSearching/chessboard.h"
+#include "OlafSearching/pieceset.h"
+#include "OlafSearching/piece.h"
 
 using namespace std;
 

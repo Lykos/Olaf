@@ -12,24 +12,16 @@ class ParallelNegaMaxer : public AlphaBetaSearcher
 public:
   ParallelNegaMaxer(std::unique_ptr<MoveGenerator> generator,
                     std::unique_ptr<MoveOrderer> orderer,
-                    std::unique_ptr<AlphaBetaSearcher> searcher,
-                    int sequential_depth);
+                    std::unique_ptr<AlphaBetaSearcher> sub_searcher,
+                    int sub_searcher_depth,
+                    bool ignore_depth);
 
-  SearchResult search_alpha_beta(ChessBoard* board,
-                                 int depth,
-                                 int nodes_searched,
-                                 int alpha,
-                                 int beta,
-                                 const Stopper& stopper);
+  SearchResult alpha_beta(SearchState* state, SearchContext* context);
 
 private:
   std::unique_ptr<MoveGenerator> m_generator;
 
   std::unique_ptr<MoveOrderer> m_orderer;
-
-  std::unique_ptr<AlphaBetaSearcher> m_searcher;
-
-  int m_sequential_depth;
 
 };
 

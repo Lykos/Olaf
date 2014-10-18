@@ -1,15 +1,13 @@
 #ifndef ENGINEFACTORY_H
 #define ENGINEFACTORY_H
 
-#include "timedsearcher.h"
-#include "iterativesearcher.h"
-#include "depthsearcher.h"
+#include "searcher.h"
 #include "alphabetasearcher.h"
 #include "movecreator.h"
-#include "OlafEvaluation/positionevaluator.h"
+#include "positionevaluator.h"
 #include "movegenerator.h"
 #include "moveorderer.h"
-#include "OlafEvaluation/evaluatorfactory.h"
+#include "evaluatorfactory.h"
 #include "thinkingwriter.h"
 #include "perft.h"
 #include "sanparser.h"
@@ -24,13 +22,13 @@ public:
    */
   SearcherFactory(ThinkingWriter* writer);
 
-  std::unique_ptr<TimedSearcher> timed_searcher() const;
+  std::unique_ptr<Searcher> timed_searcher() const;
 
-  std::unique_ptr<IterativeSearcher> iterative_searcher() const;
+  std::unique_ptr<Searcher> iterative_searcher() const;
 
-  std::unique_ptr<DepthSearcher> parallel_depth_searcher() const;
+  std::unique_ptr<AlphaBetaSearcher> parallel_alpha_beta_searcher() const;
 
-  std::unique_ptr<AlphaBetaSearcher> sequential_depth_searcher() const;
+  std::unique_ptr<AlphaBetaSearcher> sequential_alpha_beta_searcher() const;
 
   std::unique_ptr<AlphaBetaSearcher> quiescer() const;
 
@@ -58,6 +56,8 @@ private:
   EvaluatorFactory m_evaluator_factory;
 
   static const int c_sequential_depth = 2;
+
+  static const int c_min_depth = 1;
 
 };
 

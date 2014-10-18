@@ -1,31 +1,31 @@
 #ifndef SIMPLETIMEDSEARCHER_H
 #define SIMPLETIMEDSEARCHER_H
 
-#include "timedsearcher.h"
-#include "OlafRules/chessboard.h"
+#include "searcher.h"
+#include "chessboard.h"
 #include "stopper.h"
 #include "searchresult.h"
-#include "iterativesearcher.h"
 #include "timestopper.h"
 #include <memory>
 #include <chrono>
 
-class SimpleTimedSearcher : public TimedSearcher
+/**
+ * @brief The SimpleTimedSearcher class adds time bounds to the SearchContext unless
+ *        it is an infinite search.
+ */
+class SimpleTimedSearcher : public Searcher
 {
 public:
-  explicit SimpleTimedSearcher(std::unique_ptr<IterativeSearcher> searcher,
+  explicit SimpleTimedSearcher(std::unique_ptr<Searcher> sub_searcher,
                                const std::chrono::milliseconds& search_millis);
 
-  SearchResult search_timed(ChessBoard* board,
-                            const Stopper& forced_stopper,
-                            const Stopper& weak_stopper);
-
-  SearchResult search_untimed(ChessBoard* board,
-                              const Stopper& forced_stopper);
+  SearchResult search(SearchContext* context) override;
 
 private:
-  std::unique_ptr<IterativeSearcher> m_searcher;
+  std::unique_ptr<Searcher> m_sub_searcher;
+
   const std::chrono::milliseconds m_search_millis;
+
 };
 
 #endif // SIMPLETIMEDSEARCHER_H

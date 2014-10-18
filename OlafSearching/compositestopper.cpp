@@ -11,10 +11,10 @@ CompositeStopper::CompositeStopper(const initializer_list<const Stopper*>& sub_s
 {}
 
 
-bool CompositeStopper::should_stop(const int nodes_searched) const
+bool CompositeStopper::should_stop() const
 {
   for (const Stopper* const stopper : m_sub_stoppers) {
-    if (stopper->should_stop(nodes_searched)) {
+    if (stopper->should_stop()) {
       return true;
     }
   }

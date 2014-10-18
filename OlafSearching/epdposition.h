@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "OlafRules/chessboard.h"
-#include "OlafRules/move.h"
+#include "chessboard.h"
+#include "move.h"
 
 struct EpdPosition
 {
