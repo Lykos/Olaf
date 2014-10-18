@@ -89,6 +89,8 @@ void EpdBenchmark::test_epd_data()
     while (getline(file, line)) {
       EpdPosition position;
       assert(parser->parse(line, &position));
+      if (position.id != "LCTII.FIN.0")
+        continue;
       ostringstream oss;
       oss << epd_file << " " << position.id.c_str();
       QTest::newRow(oss.str().c_str()) << position;
