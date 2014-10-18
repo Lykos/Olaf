@@ -11,7 +11,6 @@ EvaluatorSearcher::EvaluatorSearcher(unique_ptr<PositionEvaluator> evaluator):
 SearchResult EvaluatorSearcher::alpha_beta(SearchState* const state,
                                            SearchContext* const context)
 {
-  assert(state->depth == 0);
   SearchResult result;
   result.nodes = 1;
   result.score = m_evaluator->evaluate(context->board);
