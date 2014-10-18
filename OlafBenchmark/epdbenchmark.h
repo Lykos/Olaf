@@ -33,6 +33,6 @@ private Q_SLOTS:
   void test_epd_data();
 };
 
-// DECLARE_BENCHMARK(EpdBenchmark)
+DECLARE_BENCHMARK(EpdBenchmark)
 
 #endif // EPDBENCHMARK_H
