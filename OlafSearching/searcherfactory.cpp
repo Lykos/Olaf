@@ -45,7 +45,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() 
 {
   unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
                                                        move_orderer(),
-                                                       evaluation_searcher(),
+                                                       quiescer(),
                                                        0,
                                                        false));
   return searcher;
