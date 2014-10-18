@@ -26,6 +26,8 @@ public:
                     int sub_searcher_depth,
                     bool ignore_depth);
 
+  virtual ~AlphaBetaSearcher();
+
   /**
    * @brief search is the entry point which sets up the initial search state and starts the search.
    */

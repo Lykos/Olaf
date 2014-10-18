@@ -13,7 +13,7 @@ class MoveAction;
 class ChessBoard;
 
 /**
- * @brief The Move class represents a move that encapsulates a possible move action
+ * @brief The MoveBuilder class is used to build a move.
  */
 class MoveBuilder
 {

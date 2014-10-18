@@ -13,6 +13,9 @@
 using namespace std;
 using namespace chrono;
 
+// static
+const milliseconds SearcherFactory::c_search_time(2000);
+
 SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
   m_writer(writer)
 {}
@@ -20,7 +23,7 @@ SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
 unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
   unique_ptr<Searcher> searcher(new SimpleTimedSearcher(iterative_searcher(),
-                                                        milliseconds(1000)));
+                                                        c_search_time));
   return searcher;
 }
 

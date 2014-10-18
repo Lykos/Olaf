@@ -30,7 +30,8 @@ SOURCES += \
     engine.cpp \
     engineeventhelper.cpp \
     simplethinkingwriter.cpp \
-    setboardevent.cpp
+    setboardevent.cpp \
+    protocolreader.cpp
 
 HEADERS +=\
     xboardwriter.h \

@@ -12,6 +12,7 @@ class ChessBoard;
 class MoveAction
 {
 public:
+  virtual ~MoveAction();
 
   /**
    * @attention Should not be called if the move has already been executed and not undone and the behaviour
@@ -37,8 +38,6 @@ public:
    * @brief copy returns a copy of the move action.
    */
   virtual std::unique_ptr<MoveAction> copy() const = 0;
-
-  virtual ~MoveAction() {}
 
   static const int CAPTURE_ACTION_PRIORITY = 1;
   static const int PIECE_MOVE_ACTION_PRIORITY = 2;

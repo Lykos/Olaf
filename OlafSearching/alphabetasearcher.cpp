@@ -23,6 +23,9 @@ AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
   m_ignore_depth(ignore_depth)
 {}
 
+AlphaBetaSearcher::~AlphaBetaSearcher()
+{}
+
 vector<Move> AlphaBetaSearcher::generate_ordered_moves(const SearchContext& context)
 {
   vector<Move> moves = m_generator->generate_moves(context.board);
@@ -78,7 +81,8 @@ SearchResult AlphaBetaSearcher::recurse_move(const SearchState& current_state,
                                              SearchContext* const context,
                                              Move* const move)
 {
-  const SearchResult& result = recurse_move_noundo(current_state, context, move);
+  move->execute(&(context->board));
+  const SearchResult& result = recurse_alpha_beta(current_state, context);
   move->undo(&(context->board));
   return result;
 }
@@ -94,17 +98,15 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   result->nodes += recursive_result->nodes;
   const int recursive_score = -recursive_result->score;
-  if (recursive_score > result->score) {
+  if (recursive_score > state->alpha) {
     result->score = recursive_score;
-    // TODO This can probably be saved for nodes that are not in the alpha beta window.
+    if (recursive_score >= state->beta) {
+      result->main_variation.clear();
+      return ResultReaction::RETURN;
+    }
+    state->alpha = recursive_score;
     result->main_variation = std::move(recursive_result->main_variation);
     result->main_variation.emplace_back(move);
-  }
-  if (recursive_score > state->alpha) {
-    state->alpha = recursive_score;
-  }
-  if (state->alpha >= state->beta) {
-    return ResultReaction::RETURN;
   }
   return ResultReaction::CONTINUE;
 }

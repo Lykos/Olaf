@@ -36,6 +36,8 @@ const vector<Perft::PerftExample>& Perft::examples()
     PerftResult{119060324, 2812008, 5248, 0, 0, 10828}};
 
   static const string fen_position2 = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
+  //static const string fen_position2 = "r3k2r/p1ppqpb1/bn2Pnp1/4N3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1";
+  //static const string fen_position2 = "r3k2r/p1ppqpb1/b3Pnp1/4N3/np2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 2";
   static const vector<PerftResult> expected_results_position2{
     PerftResult{1, 0, 0, 0, 0, 0},
     PerftResult{48, 8, 0, 2, 0, 0},

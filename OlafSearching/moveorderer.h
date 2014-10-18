@@ -11,6 +11,8 @@
 class MoveOrderer
 {
 public:
+  virtual ~MoveOrderer();
+
   virtual void order_moves(const ChessBoard& board, std::vector<Move>* moves) = 0;
 };
 

@@ -210,8 +210,8 @@ bool ChessBoard::occupied(const Position &position) const
 
 bool ChessBoard::finished() const
 {
-  // TODO
-  return false;
+  // TODO 50 moves rule, repetition
+  return m_color_boards[0].finished() || m_color_boards[1].finished();
 }
 
 void ChessBoard::add_piece(const Color color,

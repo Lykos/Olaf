@@ -65,7 +65,12 @@ SOURCES += \
     move.cpp \
     fenparser.cpp \
     setkingcapturepositionsaction.cpp \
-    quiescer.cpp
+    quiescer.cpp \
+    movecreator.cpp \
+    moveaction.cpp \
+    moveorderer.cpp \
+    movegenerator.cpp \
+    positionevaluator.cpp
 
 HEADERS += \
     positionevaluator.h \

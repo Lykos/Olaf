@@ -27,6 +27,7 @@ SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
   auto it = moves.begin();
   // Do the first one synchronously
   SearchResult result;
+  result.score = state->alpha;
   Move* const move = &(*it);
   SearchResult first_result = recurse_move(*state, context, move);
   switch (update_result(*move, &first_result, state, &result)) {

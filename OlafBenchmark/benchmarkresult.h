@@ -27,6 +27,8 @@ public:
   BenchmarkResult(const std::string& description,
                   long score);
 
+  virtual ~BenchmarkResult();
+
   long score() const;
 
   bool has_score() const;

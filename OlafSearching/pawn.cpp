@@ -1,5 +1,7 @@
 #include "pawn.h"
 
+#include <algorithm>
+
 #include "move.h"
 #include "epenableaction.h"
 #include "pieceset.h"
@@ -141,7 +143,10 @@ bool Pawn::internal_can_move(const Position& source,
       && abs(destination.column() - step.column()) == 1) {
     return board.opponent(destination)
         || (board.ep_possible()
-            && destination == board.ep_capture_position());
+            && destination == board.ep_capture_position())
+        || find(board.king_capture_positions().begin(),
+                board.king_capture_positions().end(),
+                destination) != board.king_capture_positions().end();
   }
   if (destination.column() != step.column()) {
     return false;

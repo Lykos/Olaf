@@ -5,7 +5,8 @@
 #include "chessboard.h"
 #include <vector>
 
-class MaterialEvaluator : public PositionEvaluator {
+class MaterialEvaluator : public PositionEvaluator
+{
 public:
   MaterialEvaluator();
 
