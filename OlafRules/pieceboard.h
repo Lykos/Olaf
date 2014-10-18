@@ -34,14 +34,10 @@ public:
 
   const BitBoard& bit_board() const;
 
-  const std::set<Position> positions() const;
-
 private:
   const Piece* m_piece;
 
   BitBoard m_bit_board;
-
-  std::set<Position> m_positions;
 };
 
 #endif // PIECEBOARD_H
