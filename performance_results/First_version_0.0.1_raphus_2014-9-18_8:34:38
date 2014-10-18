@@ -1,16 +1,14 @@
 First_version 0.0.1 raphus 2014-9-16 17:13:33:
   PerftBenchmark:
     test_perft(initial):
-      time: 5 ms
+      time: 53666 ms
     test_perft(position2):
-      time: 23 ms
+      time: 2109756 ms
     test_perft(position3):
-      time: 2 ms
+      time: 5795 ms
     test_perft(position4):
-      time: 4 ms
-    test_perft(position5):
-      time: 14 ms
-  total time: 48 ms
+      time: 177028 ms
+  total time: 2346245 ms
   EpdBenchmark:
     test_epd(epd_files/lct2.epd LCTII.POS.01):
       score: 0
@@ -251,5 +249,5 @@ First_version 0.0.1 raphus 2014-9-16 17:13:33:
     test_epd(epd_files/ccr.epd CCR25):
       score: 0
   total score: 11
-total time: 48 ms
+total time: 2346293 ms
 total score: 11
