@@ -6,6 +6,11 @@
 using namespace std;
 using namespace chrono;
 
+BenchmarkResult::BenchmarkResult():
+  m_description(""),
+  m_millis(0)
+{}
+
 BenchmarkResult::BenchmarkResult(const string& description,
                                  const long score):
   m_description(description),
