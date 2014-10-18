@@ -10,11 +10,7 @@
 class ParallelNegaMaxer : public AlphaBetaSearcher
 {
 public:
-  ParallelNegaMaxer(std::unique_ptr<MoveGenerator> generator,
-                    std::unique_ptr<MoveOrderer> orderer,
-                    std::unique_ptr<AlphaBetaSearcher> sub_searcher,
-                    int sub_searcher_depth,
-                    bool ignore_depth);
+  using AlphaBetaSearcher::AlphaBetaSearcher;
 
   SearchResult alpha_beta(SearchState* state, SearchContext* context);
 

@@ -64,7 +64,8 @@ SOURCES += \
     movebuilder.cpp \
     move.cpp \
     fenparser.cpp \
-    setkingcapturepositionsaction.cpp
+    setkingcapturepositionsaction.cpp \
+    quiescer.cpp
 
 HEADERS += \
     positionevaluator.h \
@@ -123,7 +124,8 @@ HEADERS += \
     movebuilder.h \
     move.h \
     fenparser.h \
-    setkingcapturepositionsaction.h
+    setkingcapturepositionsaction.h \
+    quiescer.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

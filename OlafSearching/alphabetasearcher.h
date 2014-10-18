@@ -3,7 +3,11 @@
 
 #include "stopper.h"
 #include "searcher.h"
+#include "movegenerator.h"
+#include "moveorderer.h"
+#include "move.h"
 #include <memory>
+#include <vector>
 
 /**
  * @brief The RecursiveSearcher class is an abstract searcher which provides
@@ -16,9 +20,16 @@ class AlphaBetaSearcher : public Searcher
 public:
   AlphaBetaSearcher();
 
-  AlphaBetaSearcher(std::unique_ptr<AlphaBetaSearcher> sub_searcher,
+  AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
+                    std::unique_ptr<MoveOrderer> orderer,
+                    std::unique_ptr<AlphaBetaSearcher> sub_searcher,
                     int sub_searcher_depth,
                     bool ignore_depth);
+
+  /**
+   * @brief search is the entry point which sets up the initial search state and starts the search.
+   */
+  SearchResult search(SearchContext* context) final;
 
   /**
    * @brief The SearchState struct represents the current state of the search.
@@ -31,11 +42,6 @@ public:
     int beta;
     int depth;
   };
-
-  /**
-   * @brief search is the entry point which sets up the initial search state and starts the search.
-   */
-  SearchResult search(SearchContext* context) final;
 
   /**
    * @brief recurse_alpha_beta should be called internally to recurse to the sub searcher.
@@ -67,6 +73,9 @@ public:
   SearchResult recurse_move(const SearchState& current_state,
                             SearchContext* context,
                             Move* move);
+
+protected:
+  std::vector<Move> generate_ordered_moves(const SearchContext& context);
 
   /**
    * @brief The ResultReaction enum tells the searcher what to do after update_result has returned.
@@ -101,7 +110,12 @@ public:
   virtual SearchResult alpha_beta(SearchState* state, SearchContext* context) = 0;
 
 private:
+  std::unique_ptr<MoveGenerator> m_generator;
+
+  std::unique_ptr<MoveOrderer> m_orderer;
+
   std::unique_ptr<AlphaBetaSearcher> m_sub_searcher;
+
   const int m_sub_searcher_depth;
   bool m_ignore_depth;
 };

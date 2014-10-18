@@ -8,6 +8,7 @@
 #include "simplemovegenerator.h"
 #include "nomoveorderer.h"
 #include "simplemovecreator.h"
+#include "quiescer.h"
 
 using namespace std;
 using namespace chrono;
@@ -53,11 +54,12 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() 
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(capture_generator(),
-                                                       move_orderer(),
-                                                       evaluation_searcher(),
-                                                       0,
-                                                       true));
+  unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(position_evaluator(),
+                                                      capture_generator(),
+                                                      move_orderer(),
+                                                      evaluation_searcher(),
+                                                      0,
+                                                      true));
   return searcher;
 }
 

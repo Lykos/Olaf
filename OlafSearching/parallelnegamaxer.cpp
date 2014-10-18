@@ -5,17 +5,6 @@
 
 using namespace std;
 
-ParallelNegaMaxer::ParallelNegaMaxer(unique_ptr<MoveGenerator> generator,
-                                     unique_ptr<MoveOrderer> orderer,
-                                     unique_ptr<AlphaBetaSearcher> sub_searcher,
-                                     const int sub_searcher_depth,
-                                     const bool ignore_depth):
-  AlphaBetaSearcher(move(sub_searcher), sub_searcher_depth, ignore_depth),
-  m_generator(move(generator)),
-  m_orderer(move(orderer))
-{}
-
-
 static pair<Move*, SearchResult> eval_move(ParallelNegaMaxer* const searcher,
                                            const AlphaBetaSearcher::SearchState& state,
                                            const SearchContext& context,
@@ -31,11 +20,10 @@ static pair<Move*, SearchResult> eval_move(ParallelNegaMaxer* const searcher,
 SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
                                            SearchContext* const context)
 {
-  vector<Move> moves = m_generator->generate_moves(context->board);
+  vector<Move> moves = generate_ordered_moves(*context);
   if (moves.empty()) {
     return recurse_sub_searcher(*state, context);
   }
-  m_orderer->order_moves(context->board, &moves);
   auto it = moves.begin();
   // Do the first one synchronously
   SearchResult result;
