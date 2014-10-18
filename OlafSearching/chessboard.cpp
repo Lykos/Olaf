@@ -221,17 +221,6 @@ void ChessBoard::add_piece(const Color color,
   color_board(color).piece_board(piece_index).set(position, true);
 }
 
-vector<Position> ChessBoard::positions() const
-{
-  vector<Position> result;
-  for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
-    for (Position::column_t column = 0; column < Position::c_column_size; ++column) {
-      result.emplace_back(row, column);
-    }
-  }
-  return result;
-}
-
 const vector<Position>& ChessBoard::king_capture_positions() const
 {
   return m_king_capture_positions;

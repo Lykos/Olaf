@@ -75,7 +75,7 @@ bool SimpleMoveCreator::is_killable(const ChessBoard& board)
 {
   vector<Position> king_positions = board.king_capture_positions();
   vector<Position> killers;
-  for (const Position& position : board.positions()) {
+  for (const Position& position : Position::all_positions()) {
     if (board.friendd(position)) {
       killers.emplace_back(position);
     } else if (board.opponent(position)

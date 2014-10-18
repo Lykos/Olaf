@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <ostream>
 #include <istream>
+#include <vector>
 #include <string>
 
 class Position;
@@ -59,6 +60,12 @@ public:
   static const std::string columns;
 
   static const std::string rows;
+
+  /**
+   * @brief positions returns all valid positions on the board in the order
+   *        a8, b8, ..., h8, a7, b7, ...
+   */
+  static const std::vector<Position>& all_positions();
 
   /**
    * @brief Position
