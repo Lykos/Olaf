@@ -34,19 +34,9 @@ bool PieceBoard::get(const Position& position) const
 void PieceBoard::set(const Position& position, const bool value)
 {
   m_bit_board.set(position, value);
-  if (value) {
-    m_positions.insert(position);
-  } else {
-    m_positions.erase(position);
-  }
 }
 
 const BitBoard& PieceBoard::bit_board() const
 {
   return m_bit_board;
-}
-
-const set<Position> PieceBoard::positions() const
-{
-  return m_positions;
 }
