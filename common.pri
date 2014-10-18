@@ -1,7 +1,7 @@
 INCLUDEPATH += . ..
 DEPENDPATH += . ..
 
-VERSION=0.0.4
+VERSION=0.0.3
 
 DEFINES += "VERSION=\\\"$$VERSION\\\""
 
