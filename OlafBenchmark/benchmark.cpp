@@ -9,7 +9,7 @@
 using namespace std;
 using namespace chrono;
 
-static const int c_iterations = 10;
+static const int c_iterations = 5;
 static const int c_used_measurements = 2;
 
 Benchmark::~Benchmark()

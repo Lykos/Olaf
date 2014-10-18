@@ -13,7 +13,9 @@ std::ostream& operator<<(std::ostream &out, const Position &position);
 
 std::istream& operator>>(std::istream &in, Position &position);
 
-bool operator==(const Position&, const Position&);
+bool operator==(const Position& left, const Position& right);
+
+bool operator<(const Position& left, const Position& right);
 
 PositionDelta operator-(const Position&, const Position&);
 
@@ -26,7 +28,9 @@ class Position
 
   friend std::istream& operator>>(std::istream &in, Position &position);
 
-  friend bool operator==(const Position&, const Position&);
+  friend bool operator==(const Position& left, const Position& right);
+
+  friend bool operator<(const Position& left, const Position& right);
 
   friend Position operator+(const Position&, const PositionDelta&);
 

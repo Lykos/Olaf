@@ -65,7 +65,7 @@ Move SimpleMoveCreator::create_move(const ChessBoard& board,
 Move SimpleMoveCreator::create_move(const ChessBoard& board,
                                     const Position& source,
                                     const Position& destination,
-                                    Piece::piece_index_t conversion)
+                                    const Piece::piece_index_t conversion)
 {
   const Pawn& pawn = PieceSet::instance().pawn();
   return pawn.move(source, destination, board, conversion);
@@ -74,26 +74,18 @@ Move SimpleMoveCreator::create_move(const ChessBoard& board,
 bool SimpleMoveCreator::is_killable(const ChessBoard& board)
 {
   vector<Position> king_positions = board.king_capture_positions();
-  vector<Position> killers;
-  for (const Position& position : board.positions()) {
-    if (board.friendd(position)) {
-      killers.emplace_back(position);
-    } else if (board.opponent(position)
-               && board.noturn_board().piece_index(position)
-               == PieceSet::instance().king().piece_index()) {
-      king_positions.emplace_back(position);
-    }
-  }
-  if (king_positions.empty()) {
-    return false;
-  }
-  for (const Position& killer : killers) {
-    for (const Position& king_position : king_positions) {
-      if (pseudo_valid_move(board, killer, king_position)) {
-        return true;
-      } else if (pseudo_valid_move(board, killer, king_position,
-                                   PieceSet::instance().queen().piece_index())) {
-        return true;
+  set<Position> kings = board.noturn_board().piece_board(
+        PieceSet::instance().king().piece_index()).positions();
+  king_positions.insert(king_positions.end(), kings.begin(), kings.end());
+  for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
+    for (const Position& killer : piece_board.positions()) {
+      for (const Position& king_position : king_positions) {
+        if (pseudo_valid_move(board, killer, king_position)) {
+          return true;
+        } else if (pseudo_valid_move(board, killer, king_position,
+                                     PieceSet::instance().queen().piece_index())) {
+          return true;
+        }
       }
     }
   }
