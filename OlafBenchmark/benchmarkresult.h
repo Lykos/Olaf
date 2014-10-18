@@ -19,6 +19,8 @@ class BenchmarkResult {
 public:
   static const std::string c_indentation;
 
+  BenchmarkResult();
+
   BenchmarkResult(const std::string& description,
                   const std::chrono::milliseconds& millis);
 

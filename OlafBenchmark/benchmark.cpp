@@ -9,7 +9,7 @@
 using namespace std;
 using namespace chrono;
 
-static const int c_iterations = 10;
+static const int c_iterations = 5;
 static const int c_used_measurements = 2;
 
 Benchmark::~Benchmark()
@@ -59,28 +59,24 @@ void Benchmark::push_score(const long score)
 
 Benchmark::PerformanceMeasurer::PerformanceMeasurer(Benchmark* const benchmark):
   m_benchmark(benchmark),
-  m_iterations(0)
+  m_done(false)
 {
   m_timer.start();
 }
 
 Benchmark::PerformanceMeasurer::~PerformanceMeasurer()
 {
-  for (int i = 0; i < c_used_measurements; ++i) {
-    m_benchmark->push_result(m_measurements.top());
-    m_measurements.pop();
-  }
+  m_benchmark->push_result(m_result);
 }
 
 bool Benchmark::PerformanceMeasurer::done() const
 {
-  return m_iterations >= c_iterations;
+  return m_done;
 }
 
 void Benchmark::PerformanceMeasurer::next()
 {
-  m_measurements.push(BenchmarkResult(m_benchmark->current_test_id(),
-                                      milliseconds(m_timer.elapsed())));
-  ++m_iterations;
-  m_timer.start();
+  m_result = BenchmarkResult(m_benchmark->current_test_id(),
+                             milliseconds(m_timer.elapsed()));
+  m_done = true;
 }

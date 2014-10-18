@@ -6,7 +6,6 @@
 #include <QtTest/QtTest>
 #include <string>
 #include <vector>
-#include <queue>
 #include "benchmarkresult.h"
 #include "compositebenchmarkresult.h"
 
@@ -38,9 +37,12 @@ protected:
 
   private:
     Benchmark* const m_benchmark;
-    int m_iterations;
+
+    bool m_done;
+
     QElapsedTimer m_timer;
-    std::priority_queue<BenchmarkResult> m_measurements;
+
+    BenchmarkResult m_result;
   };
 
 private:

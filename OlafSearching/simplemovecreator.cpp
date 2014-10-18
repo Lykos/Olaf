@@ -65,7 +65,7 @@ Move SimpleMoveCreator::create_move(const ChessBoard& board,
 Move SimpleMoveCreator::create_move(const ChessBoard& board,
                                     const Position& source,
                                     const Position& destination,
-                                    Piece::piece_index_t conversion)
+                                    const Piece::piece_index_t conversion)
 {
   const Pawn& pawn = PieceSet::instance().pawn();
   return pawn.move(source, destination, board, conversion);

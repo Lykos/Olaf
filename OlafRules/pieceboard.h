@@ -1,11 +1,13 @@
 #ifndef PIECEBOARD_H
 #define PIECEBOARD_H
 
+#include <memory>
+#include <set>
+
 #include "bitboard.h"
 #include "piece.h"
 #include "position.h"
 #include "color.h"
-#include <memory>
 
 bool operator ==(const PieceBoard& left, const PieceBoard& right);
 
@@ -36,7 +38,6 @@ private:
   const Piece* m_piece;
 
   BitBoard m_bit_board;
-
 };
 
 #endif // PIECEBOARD_H
