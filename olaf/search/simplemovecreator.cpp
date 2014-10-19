@@ -1,4 +1,4 @@
-#include "simplerules/movecreator.h"
+#include "olaf/search/simplemovecreator.h"
 
 #include <cassert>
 #include <vector>
