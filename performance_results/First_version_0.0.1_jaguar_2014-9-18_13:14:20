@@ -1,17 +1,63 @@
-First_version 0.0.1 raphus 2014-9-16 17:13:33:
+First_version 0.0.1 jaguar 2014-9-18 13:14:20:
   PerftBenchmark:
     test_perft(initial):
-      time: 5 ms
-    test_perft(position2):
-      time: 23 ms
+      time: 46638 ms
     test_perft(position3):
-      time: 2 ms
-    test_perft(position4):
-      time: 4 ms
-    test_perft(position5):
-      time: 14 ms
-  total time: 48 ms
+      time: 5459 ms
+  total time: 52097 ms
   EpdBenchmark:
+    test_epd(epd_files/bk.epd BK.01):
+      score: 0
+    test_epd(epd_files/bk.epd BK.02):
+      score: 0
+    test_epd(epd_files/bk.epd BK.03):
+      score: 0
+    test_epd(epd_files/bk.epd BK.04):
+      score: 0
+    test_epd(epd_files/bk.epd BK.05):
+      score: 0
+    test_epd(epd_files/bk.epd BK.06):
+      score: 0
+    test_epd(epd_files/bk.epd BK.07):
+      score: 0
+    test_epd(epd_files/bk.epd BK.08):
+      score: 0
+    test_epd(epd_files/bk.epd BK.09):
+      score: 0
+    test_epd(epd_files/bk.epd BK.10):
+      score: 0
+    test_epd(epd_files/bk.epd BK.11):
+      score: 0
+    test_epd(epd_files/bk.epd BK.12):
+      score: 1
+    test_epd(epd_files/bk.epd BK.12):
+      score: 0
+    test_epd(epd_files/bk.epd BK.13):
+      score: 0
+    test_epd(epd_files/bk.epd BK.14):
+      score: 0
+    test_epd(epd_files/bk.epd BK.15):
+      score: 1
+    test_epd(epd_files/bk.epd BK.15):
+      score: 0
+    test_epd(epd_files/bk.epd BK.16):
+      score: 0
+    test_epd(epd_files/bk.epd BK.17):
+      score: 0
+    test_epd(epd_files/bk.epd BK.18):
+      score: 0
+    test_epd(epd_files/bk.epd BK.19):
+      score: 0
+    test_epd(epd_files/bk.epd BK.20):
+      score: 0
+    test_epd(epd_files/bk.epd BK.21):
+      score: 0
+    test_epd(epd_files/bk.epd BK.22):
+      score: 0
+    test_epd(epd_files/bk.epd BK.23):
+      score: 0
+    test_epd(epd_files/bk.epd BK.24):
+      score: 0
     test_epd(epd_files/lct2.epd LCTII.POS.01):
       score: 0
     test_epd(epd_files/lct2.epd LCTII.POS.02):
@@ -88,57 +134,67 @@ First_version 0.0.1 raphus 2014-9-16 17:13:33:
       score: 0
     test_epd(epd_files/lct2.epd LCTII.FIN.09):
       score: 0
-    test_epd(epd_files/bk.epd BK.01):
+    test_epd(epd_files/ccr.epd CCR01):
       score: 0
-    test_epd(epd_files/bk.epd BK.02):
+    test_epd(epd_files/ccr.epd CCR02):
       score: 0
-    test_epd(epd_files/bk.epd BK.03):
+    test_epd(epd_files/ccr.epd CCR03):
       score: 0
-    test_epd(epd_files/bk.epd BK.04):
+    test_epd(epd_files/ccr.epd CCR04):
       score: 0
-    test_epd(epd_files/bk.epd BK.05):
+    test_epd(epd_files/ccr.epd CCR05):
       score: 0
-    test_epd(epd_files/bk.epd BK.06):
-      score: 0
-    test_epd(epd_files/bk.epd BK.07):
-      score: 0
-    test_epd(epd_files/bk.epd BK.08):
-      score: 0
-    test_epd(epd_files/bk.epd BK.09):
-      score: 0
-    test_epd(epd_files/bk.epd BK.10):
-      score: 0
-    test_epd(epd_files/bk.epd BK.11):
-      score: 0
-    test_epd(epd_files/bk.epd BK.12):
+    test_epd(epd_files/ccr.epd CCR06):
       score: 1
-    test_epd(epd_files/bk.epd BK.12):
+    test_epd(epd_files/ccr.epd CCR06):
       score: 0
-    test_epd(epd_files/bk.epd BK.13):
+    test_epd(epd_files/ccr.epd CCR07):
       score: 0
-    test_epd(epd_files/bk.epd BK.14):
+    test_epd(epd_files/ccr.epd CCR08):
       score: 0
-    test_epd(epd_files/bk.epd BK.15):
+    test_epd(epd_files/ccr.epd CCR09):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR10):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR11):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR12):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR13):
       score: 1
-    test_epd(epd_files/bk.epd BK.15):
+    test_epd(epd_files/ccr.epd CCR13):
       score: 0
-    test_epd(epd_files/bk.epd BK.16):
+    test_epd(epd_files/ccr.epd CCR14):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR14):
       score: 0
-    test_epd(epd_files/bk.epd BK.17):
+    test_epd(epd_files/ccr.epd CCR15):
       score: 0
-    test_epd(epd_files/bk.epd BK.18):
+    test_epd(epd_files/ccr.epd CCR16):
       score: 0
-    test_epd(epd_files/bk.epd BK.19):
+    test_epd(epd_files/ccr.epd CCR17):
       score: 0
-    test_epd(epd_files/bk.epd BK.20):
+    test_epd(epd_files/ccr.epd CCR18):
       score: 0
-    test_epd(epd_files/bk.epd BK.21):
+    test_epd(epd_files/ccr.epd CCR19):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR19):
       score: 0
-    test_epd(epd_files/bk.epd BK.22):
+    test_epd(epd_files/ccr.epd CCR20):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR20):
       score: 0
-    test_epd(epd_files/bk.epd BK.23):
+    test_epd(epd_files/ccr.epd CCR21):
       score: 0
-    test_epd(epd_files/bk.epd BK.24):
+    test_epd(epd_files/ccr.epd CCR22):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR23):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR24):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR25):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR25):
       score: 0
     test_epd(epd_files/kaufman.epd position 01):
       score: 0
@@ -192,64 +248,6 @@ First_version 0.0.1 raphus 2014-9-16 17:13:33:
       score: 0
     test_epd(epd_files/kaufman.epd position 25):
       score: 0
-    test_epd(epd_files/ccr.epd CCR01):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR02):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR03):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR04):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR05):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR06):
-      score: 1
-    test_epd(epd_files/ccr.epd CCR06):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR07):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR08):
-      score: 0
-    test_epd(epd_files/ccr.epd ):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR10):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR11):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR12):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR14):
-      score: 1
-    test_epd(epd_files/ccr.epd CCR14):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR15):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR16):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR17):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR18):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR19):
-      score: 1
-    test_epd(epd_files/ccr.epd CCR19):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR20):
-      score: 1
-    test_epd(epd_files/ccr.epd CCR20):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR21):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR22):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR23):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR24):
-      score: 0
-    test_epd(epd_files/ccr.epd CCR25):
-      score: 1
-    test_epd(epd_files/ccr.epd CCR25):
-      score: 0
-  total score: 11
-total time: 48 ms
-total score: 11
+  total score: 12
+total time: 52097 ms
+total score: 12

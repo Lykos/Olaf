@@ -6,6 +6,17 @@
 
 using namespace std;
 
+static vector<Position> generate_all_positions()
+{
+  vector<Position> result;
+  for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
+    for (Position::column_t column = 0; column < Position::c_column_size; ++column) {
+      result.emplace_back(row, column);
+    }
+  }
+  return result;
+}
+
 const std::string Position::rows = "12345678";
 
 const std::string Position::columns = "abcdefgh";
@@ -40,6 +51,12 @@ bool operator<(const Position& a, const Position& b)
   } else {
     return a.m_row < b.m_row;
   }
+}
+
+const vector<Position>& Position::all_positions()
+{
+  static const vector<Position> positions = generate_all_positions();
+  return positions;
 }
 
 PositionDelta operator-(const Position& a, const Position& b)

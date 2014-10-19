@@ -27,9 +27,7 @@ public:
 protected:
   class PerformanceMeasurer {
   public:
-    PerformanceMeasurer(Benchmark* const benchmark);
-
-    ~PerformanceMeasurer();
+    explicit PerformanceMeasurer(Benchmark* const benchmark);
 
     bool done() const;
 

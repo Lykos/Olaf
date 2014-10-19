@@ -144,12 +144,6 @@ public:
                  const Position& position);
 
   /**
-   * @brief positions returns all valid positions on the board in the order
-   *        a8, b8, ..., h8, a7, b7, ...
-   */
-  std::vector<Position> positions() const;
-
-  /**
    * @brief king_capture_positions returns the squares at which the king can be captured
    *        except for his own square. This is only non-empty after castling.
    */
