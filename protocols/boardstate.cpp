@@ -1,6 +1,6 @@
 #include "boardstate.h"
-#include <iostream>
-#include "olaf/searcherfactory.h"
+
+#include "olaf/search/searcherfactory.h"
 
 using namespace std;
 

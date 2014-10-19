@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "olaf/pieceset.h"
+#include "olaf/rules/pieceset.h"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #ifndef PROTOCOLWRITER_H
 #define PROTOCOLWRITER_H
 
-#include "olaf/move.h"
+#include "olaf/rules/move.h"
 
 namespace olaf
 {

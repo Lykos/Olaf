@@ -5,12 +5,12 @@
 #include <iostream>
 #include <gmock/gmock-matchers.h>
 
-#include "olaf/movegenerator.h"
-#include "olaf/movecreator.h"
-#include "olaf/searcherfactory.h"
-#include "olaf/nothinkingwriter.h"
-#include "olaf/chessboard.h"
-#include "olaf/perft.h"
+#include "olaf/search/movegenerator.h"
+#include "olaf/rules/movecreator.h"
+#include "olaf/search/searcherfactory.h"
+#include "olaf/search/nothinkingwriter.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/search/perft.h"
 #include "testutil.h"
 #include "benchmark.h"
 

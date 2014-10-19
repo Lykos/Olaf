@@ -8,7 +8,7 @@
 
 #include "protocolwriter.h"
 #include "result.h"
-#include "olaf/move.h"
+#include "olaf/rules/move.h"
 
 namespace olaf
 {

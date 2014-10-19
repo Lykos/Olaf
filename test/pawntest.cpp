@@ -1,11 +1,11 @@
 #include "pawntest.h"
 
-#include "olaf/position.h"
-#include "olaf/pawn.h"
-#include "olaf/colorboard.h"
-#include "olaf/pieceboard.h"
-#include "olaf/pieceset.h"
-#include "olaf/move.h"
+#include "olaf/rules/position.h"
+#include "olaf/rules/pawn.h"
+#include "olaf/rules/colorboard.h"
+#include "olaf/rules/pieceboard.h"
+#include "olaf/rules/pieceset.h"
+#include "olaf/rules/move.h"
 #include "testutil.h"
 
 using namespace std;

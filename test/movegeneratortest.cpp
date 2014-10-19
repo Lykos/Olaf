@@ -4,9 +4,9 @@
 #include <iostream>
 #include <QtTest/QTest>
 
-#include "olaf/searcherfactory.h"
-#include "olaf/movegenerator.h"
-#include "olaf/nothinkingwriter.h"
+#include "olaf/search/searcherfactory.h"
+#include "olaf/search/movegenerator.h"
+#include "olaf/search/nothinkingwriter.h"
 #include "testutil.h"
 
 using namespace std;

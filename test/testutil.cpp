@@ -4,8 +4,8 @@
 #include <string>
 #include <sstream>
 
-#include "olaf/fenparser.h"
-#include "olaf/chessboard.h"
+#include "olaf/parse/fenparser.h"
+#include "olaf/rules/chessboard.h"
 
 using namespace std;
 

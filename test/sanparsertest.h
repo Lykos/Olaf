@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "autotest.h"
-#include "olaf/sanparser.h"
+#include "olaf/parse/sanparser.h"
 
 namespace olaf
 {

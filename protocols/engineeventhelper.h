@@ -4,7 +4,7 @@
 #include "protocolwriter.h"
 #include "engine.h"
 #include "boardstate.h"
-#include "olaf/thinkingwriter.h"
+#include "olaf/search/thinkingwriter.h"
 #include <memory>
 #include <chrono>
 

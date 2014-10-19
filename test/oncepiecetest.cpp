@@ -4,11 +4,10 @@
 #include <iostream>
 
 #include "testutil.h"
-#include "olaf/pieceset.h"
-#include "olaf/move.h"
-#include "olaf/oncepiece.h"
-#include "olaf/position.h"
-#include "olaf/fenparser.h"
+#include "olaf/rules/pieceset.h"
+#include "olaf/rules/move.h"
+#include "olaf/rules/oncepiece.h"
+#include "olaf/rules/position.h"
 #include "gmock/gmock-generated-matchers.h"
 
 using namespace std;

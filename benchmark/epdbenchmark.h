@@ -6,9 +6,9 @@
 
 #include "benchmark.h"
 #include "autobenchmark.h"
-#include "olaf/searcherfactory.h"
-#include "olaf/simpletimedsearcher.h"
-#include "olaf/nothinkingwriter.h"
+#include "olaf/search/searcherfactory.h"
+#include "olaf/search/simpletimedsearcher.h"
+#include "olaf/search/nothinkingwriter.h"
 
 namespace olaf
 {

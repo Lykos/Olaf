@@ -1,7 +1,7 @@
 #ifndef BOARDTEST_H
 #define BOARDTEST_H
 
-#include "olaf/piece.h"
+#include "olaf/rules/piece.h"
 #include "autotest.h"
 #include <QtTest/QtTest>
 #include <QObject>

@@ -5,11 +5,11 @@
 #include <iostream>
 
 #include "testutil.h"
-#include "olaf/chessboard.h"
-#include "olaf/pieceset.h"
-#include "olaf/sanparser.h"
-#include "olaf/searcherfactory.h"
-#include "olaf/nothinkingwriter.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/rules/pieceset.h"
+#include "olaf/parse/sanparser.h"
+#include "olaf/search/searcherfactory.h"
+#include "olaf/search/nothinkingwriter.h"
 
 using namespace std;
 

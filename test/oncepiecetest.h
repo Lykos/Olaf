@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QtTest/QTest>
 
-#include "olaf/chessboard.h"
-#include "olaf/piece.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/rules/piece.h"
 #include "autotest.h"
 
 namespace olaf

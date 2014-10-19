@@ -2,7 +2,7 @@
 #define MOVEEVENT_H
 
 #include "engineevent.h"
-#include "olaf/move.h"
+#include "olaf/rules/move.h"
 
 namespace olaf
 {

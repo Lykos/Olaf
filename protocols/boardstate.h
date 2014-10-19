@@ -1,10 +1,10 @@
 #ifndef BOARDSTATE_H
 #define BOARDSTATE_H
 
-#include "olaf/movecreator.h"
-#include "olaf/chessboard.h"
-#include "olaf/piece.h"
-#include "olaf/position.h"
+#include "olaf/rules/movecreator.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/rules/piece.h"
+#include "olaf/rules/position.h"
 #include <memory>
 #include <mutex>
 #include <stack>

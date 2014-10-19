@@ -4,12 +4,12 @@
 #include <string>
 #include <sstream>
 
-#include "olaf/fenparser.h"
-#include "olaf/chessboard.h"
-#include "olaf/epdposition.h"
-#include "olaf/epdparser.h"
-#include "olaf/searcherfactory.h"
-#include "olaf/nothinkingwriter.h"
+#include "olaf/parse/fenparser.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/parse/epdposition.h"
+#include "olaf/parse/epdparser.h"
+#include "olaf/search/searcherfactory.h"
+#include "olaf/search/nothinkingwriter.h"
 
 using namespace std;
 

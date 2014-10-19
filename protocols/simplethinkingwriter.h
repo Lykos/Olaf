@@ -2,9 +2,9 @@
 #define SIMPLETHINKINGWRITER_H
 
 #include "protocolwriter.h"
-#include "olaf/thinkingwriter.h"
-#include "olaf/searchresult.h"
-#include "olaf/chessboard.h"
+#include "olaf/search/thinkingwriter.h"
+#include "olaf/search/searchresult.h"
+#include "olaf/rules/chessboard.h"
 #include <chrono>
 #include <memory>
 
@@ -23,8 +23,8 @@ class SimpleThinkingWriter : public ThinkingWriter
    */
   explicit SimpleThinkingWriter(ProtocolWriter* writer);
 
-  void output(const ChessBoard &board,
-              const SearchResult &result,
+  void output(const ChessBoard& board,
+              const SearchResult& result,
               const std::chrono::milliseconds &time,
               int depth);
 

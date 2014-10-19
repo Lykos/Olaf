@@ -7,9 +7,9 @@
 #include <iterator>
 #include <chrono>
 
-#include "olaf/piece.h"
-#include "olaf/position.h"
-#include "olaf/pieceset.h"
+#include "olaf/rules/piece.h"
+#include "olaf/rules/position.h"
+#include "olaf/rules/pieceset.h"
 
 using namespace std;
 using namespace chrono;

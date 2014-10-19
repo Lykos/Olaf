@@ -3,7 +3,7 @@
 #include <sstream>
 #include <algorithm>
 
-#include "olaf/pieceset.h"
+#include "olaf/rules/pieceset.h"
 
 using namespace std;
 using namespace chrono;

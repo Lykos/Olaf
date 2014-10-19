@@ -1,6 +1,6 @@
 #include "setboardevent.h"
 
-#include "olaf/chessboard.h"
+#include "olaf/rules/chessboard.h"
 #include "enginestate.h"
 #include "boardstate.h"
 

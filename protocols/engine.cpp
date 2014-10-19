@@ -2,8 +2,8 @@
 
 #include <cassert>
 
-#include "olaf/stopper.h"
-#include "olaf/chessboard.h"
+#include "olaf/search/stopper.h"
+#include "olaf/rules/chessboard.h"
 
 using namespace std;
 

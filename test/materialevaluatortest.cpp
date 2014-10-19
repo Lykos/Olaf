@@ -2,7 +2,7 @@
 
 #include <QtTest/QTest>
 
-#include "olaf/chessboard.h"
+#include "olaf/rules/chessboard.h"
 #include "testutil.h"
 
 Q_DECLARE_METATYPE(olaf::ChessBoard)

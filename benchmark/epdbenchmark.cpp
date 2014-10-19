@@ -7,8 +7,8 @@
 #include <dirent.h>
 #include <sstream>
 
-#include "olaf/epdposition.h"
-#include "olaf/nostopper.h"
+#include "olaf/parse/epdposition.h"
+#include "olaf/search/nostopper.h"
 #include "testutil.h"
 
 using namespace std;

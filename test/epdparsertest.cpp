@@ -3,10 +3,10 @@
 #include <QtTest/QTest>
 #include <string>
 
-#include "olaf/searcherfactory.h"
-#include "olaf/epdparser.h"
-#include "olaf/epdposition.h"
-#include "olaf/nothinkingwriter.h"
+#include "olaf/search/searcherfactory.h"
+#include "olaf/parse/epdparser.h"
+#include "olaf/parse/epdposition.h"
+#include "olaf/search/nothinkingwriter.h"
 #include "testutil.h"
 
 using namespace std;

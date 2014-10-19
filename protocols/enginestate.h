@@ -3,7 +3,7 @@
 
 #include <chrono>
 
-#include "olaf/searchcontext.h"
+#include "olaf/search/searchcontext.h"
 
 namespace olaf
 {

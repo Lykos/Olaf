@@ -5,8 +5,8 @@
 #include "engineevent.h"
 #include "enginestate.h"
 #include "boardstate.h"
-#include "olaf/searcher.h"
-#include "olaf/forcedstopper.h"
+#include "olaf/search/searcher.h"
+#include "olaf/search/forcedstopper.h"
 #include <memory>
 #include <thread>
 #include <mutex>

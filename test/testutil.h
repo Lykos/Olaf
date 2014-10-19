@@ -5,9 +5,9 @@
 #include <string>
 
 #include "gmock/gmock-generated-matchers.h"
-#include "olaf/chessboard.h"
-#include "olaf/position.h"
-#include "olaf/move.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/rules/position.h"
+#include "olaf/rules/move.h"
 
 namespace olaf
 {

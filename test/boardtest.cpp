@@ -1,7 +1,7 @@
 #include "boardtest.h"
 
-#include "olaf/chessboard.h"
-#include "olaf/pieceset.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/rules/pieceset.h"
 
 namespace olaf
 {

@@ -5,7 +5,7 @@
 #include <ostream>
 #include <gflags/gflags.h>
 
-#include "olaf/searcherfactory.h"
+#include "olaf/search/searcherfactory.h"
 #include "protocols/protocolreader.h"
 #include "protocols/protocolwriter.h"
 #include "protocols/xboardreader.h"
@@ -13,7 +13,7 @@
 #include "protocols/engine.h"
 #include "protocols/engineeventhelper.h"
 #include "protocols/simplethinkingwriter.h"
-#include "olaf/thinkingwriter.h"
+#include "olaf/search/thinkingwriter.h"
 
 using namespace std;
 using namespace olaf;

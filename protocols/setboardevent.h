@@ -1,7 +1,7 @@
 #ifndef SETBOARDEVENT_H
 #define SETBOARDEVENT_H
 
-#include "olaf/chessboard.h"
+#include "olaf/rules/chessboard.h"
 #include "engineevent.h"
 
 namespace olaf

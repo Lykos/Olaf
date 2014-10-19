@@ -5,7 +5,7 @@
 #include <QtTest/QTest>
 
 #include "autotest.h"
-#include "olaf/materialevaluator.h"
+#include "olaf/evaluation/materialevaluator.h"
 
 namespace olaf
 {
