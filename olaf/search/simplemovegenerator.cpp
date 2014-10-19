@@ -25,7 +25,7 @@ vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
     for (Position source : piece_board.positions()) {
       vector<Move> piece_moves = piece.moves(source, board);
       for (Move& move : piece_moves) {
-        moves.push_back(std::move(move));
+        moves.emplace_back(std::move(move));
       }
     }
   }

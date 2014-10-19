@@ -76,8 +76,17 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
         SearchResult result;
         result.nodes = 1;
         result.score = entry->score;
-        if (entry->best_move) {
-          result.main_variation.emplace_back(*(entry->best_move));
+        if (entry->has_best_move) {
+          if (entry->best_move_is_conversion) {
+            result.main_variation.emplace_back(m_creator.create_move(context->board,
+                                                                     entry->best_move_source,
+                                                                     entry->best_move_destination));
+          } else {
+            result.main_variation.emplace_back(m_creator.create_move(context->board,
+                                                                     entry->best_move_source,
+                                                                     entry->best_move_destination,
+                                                                     entry->best_move_created_piece));
+          }
         }
       }
     }
@@ -123,9 +132,16 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   entry.score = recursive_score;
   entry.depth = state->depth - 1;
   if (recursive_result->main_variation.empty()) {
-    entry.best_move.reset(nullptr);
+    entry.has_best_move = false;
   } else {
-    entry.best_move.reset(new Move(recursive_result->main_variation.back()));
+    entry.has_best_move = true;
+    const Move& move = recursive_result->main_variation.back();
+    entry.best_move_source = move.source();
+    entry.best_move_destination = move.destination();
+    entry.best_move_is_conversion = move.is_conversion();
+    if (entry.best_move_is_conversion) {
+      entry.best_move_created_piece = move.created_piece();
+    }
   }
   if (recursive_score > state->alpha) {
     result->score = recursive_score;

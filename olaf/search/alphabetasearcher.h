@@ -5,6 +5,7 @@
 #include "olaf/search/searcher.h"
 #include "olaf/search/movegenerator.h"
 #include "olaf/search/moveorderer.h"
+#include "olaf/search/simplemovecreator.h"
 #include "olaf/rules/move.h"
 #include <memory>
 #include <vector>
@@ -121,6 +122,8 @@ private:
   std::unique_ptr<MoveOrderer> m_orderer;
 
   std::unique_ptr<AlphaBetaSearcher> m_sub_searcher;
+
+  SimpleMoveCreator m_creator;
 
   const int m_sub_searcher_depth;
   bool m_ignore_depth;
