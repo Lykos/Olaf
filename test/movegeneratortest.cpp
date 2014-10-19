@@ -18,18 +18,17 @@ namespace test
 {
 
 static bool valid_move(const ChessBoard& board,
-                       const Move& move,
-                       MoveCreator* const creator)
+                       const Move& move)
 {
   if (move.is_conversion()) {
-    return creator->valid_move(board,
-                               move.source(),
-                               move.destination(),
-                               move.created_piece());
+    return MoveCreator::valid_move(board,
+                                   move.source(),
+                                   move.destination(),
+                                   move.created_piece());
   } else {
-    return creator->valid_move(board,
-                               move.source(),
-                               move.destination());
+    return MoveCreator::valid_move(board,
+                                   move.source(),
+                                   move.destination());
   }
 }
 
@@ -94,11 +93,10 @@ void MoveGeneratorTest::test_generate()
   NoThinkingWriter no_thinking_writer;
   SearcherFactory factory(&no_thinking_writer);
   unique_ptr<MoveGenerator> generator(factory.move_generator());
-  unique_ptr<MoveCreator> creator(factory.move_creator());
   const vector<Move>& actual_moves = generator->generate_moves(board);
   vector<Move> valid_moves;
   for (const Move& move : actual_moves) {
-    if (valid_move(board, move, creator.get())) {
+    if (valid_move(board, move)) {
       valid_moves.push_back(move);
     }
   }

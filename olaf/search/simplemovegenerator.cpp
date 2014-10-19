@@ -4,6 +4,7 @@
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceboard.h"
 #include "olaf/rules/chessboard.h"
+#include "olaf/rules/movecreator.h"
 
 #include <memory>
 #include <iostream>
@@ -12,10 +13,6 @@ using namespace std;
 
 namespace olaf
 {
-
-SimpleMoveGenerator::SimpleMoveGenerator(unique_ptr<MoveCreator> creator):
-  m_creator(move(creator))
-{}
 
 vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
 {
@@ -36,14 +33,14 @@ bool SimpleMoveGenerator::valid_move(const ChessBoard& board,
                                      const Move& move)
 {
   if (move.is_conversion()) {
-    return m_creator->valid_move(board,
-                                 move.source(),
-                                 move.destination(),
-                                 move.created_piece());
+    return MoveCreator::valid_move(board,
+                                   move.source(),
+                                   move.destination(),
+                                   move.created_piece());
   } else {
-    return m_creator->valid_move(board,
-                                 move.source(),
-                                 move.destination());
+    return MoveCreator::valid_move(board,
+                                   move.source(),
+                                   move.destination());
   }
 }
 

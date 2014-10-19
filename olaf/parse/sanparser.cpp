@@ -7,6 +7,7 @@
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/move.h"
+#include "olaf/rules/movecreator.h"
 
 using namespace std;
 
@@ -18,10 +19,8 @@ static const string c_castle_q = "O-O-O";
 static const string c_capture_symbols = ":x";
 static const char c_promotion_symbol = '=';
 
-SanParser::SanParser(unique_ptr<MoveGenerator> generator,
-                     unique_ptr<MoveCreator> creator):
-  m_generator(move(generator)),
-  m_creator(move(creator))
+SanParser::SanParser(unique_ptr<MoveGenerator> generator):
+  m_generator(move(generator))
 {}
 
 bool SanParser::parse(const string& san_move,
@@ -37,10 +36,10 @@ bool SanParser::parse(const string& san_move,
         : Position::c_kings_knight_column;
     Position source(ground_line(board.turn_color()), Position::c_king_column);
     Position destination(ground_line(board.turn_color()), destination_column);
-    if (!m_creator->valid_move(board, source, destination)) {
+    if (!MoveCreator::valid_move(board, source, destination)) {
       return false;
     }
-    *move = m_creator->create_move(board, source, destination);
+    *move = MoveCreator::create_move(board, source, destination);
     return true;
   }
   const string::const_iterator begin = san_move.begin();

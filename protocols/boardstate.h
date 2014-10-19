@@ -18,11 +18,6 @@ namespace olaf
 class BoardState
 {
 public:
-  /**
-   * @brief BoardState takes ownership of move_creator.
-   */
-  BoardState(std::unique_ptr<MoveCreator> move_creator);
-
   ChessBoard copy_board() const;
 
   void set_board(const ChessBoard& board);
@@ -48,8 +43,6 @@ public:
                    Piece::piece_index_t conversion);
 
 private:
-  std::unique_ptr<MoveCreator> m_move_creator;
-
   mutable std::mutex m_mutex;
 
   ChessBoard m_board;

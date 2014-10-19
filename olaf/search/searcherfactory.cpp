@@ -7,8 +7,6 @@
 #include "olaf/search/capturegenerator.h"
 #include "olaf/search/simplemovegenerator.h"
 #include "olaf/search/moveorderer.h"
-#include "olaf/search/nomoveorderer.h"
-#include "olaf/search/simplemovecreator.h"
 #include "olaf/search/quiescer.h"
 #include "olaf/transposition_table/transpositiontable.h"
 
@@ -43,7 +41,6 @@ unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
 unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() const
 {
   unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(move_generator(),
-                                                               move_orderer(),
                                                                sequential_alpha_beta_searcher(),
                                                                c_sequential_depth,
                                                                false));
@@ -53,7 +50,6 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() co
 unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() const
 {
   unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
-                                                       move_orderer(),
                                                        quiescer(),
                                                        0,
                                                        false));
@@ -64,7 +60,6 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
   unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(position_evaluator(),
                                                       capture_generator(),
-                                                      move_orderer(),
                                                       evaluation_searcher(),
                                                       0,
                                                       true));
@@ -82,12 +77,6 @@ unique_ptr<PositionEvaluator> SearcherFactory::position_evaluator() const
   return m_evaluator_factory.evaluator();
 }
 
-unique_ptr<MoveOrderer> SearcherFactory::move_orderer() const
-{
-  unique_ptr<MoveOrderer> orderer(new NoMoveOrderer());
-  return orderer;
-}
-
 unique_ptr<MoveGenerator> SearcherFactory::capture_generator() const
 {
   unique_ptr<MoveGenerator> generator(new CaptureGenerator(move_generator()));
@@ -96,14 +85,8 @@ unique_ptr<MoveGenerator> SearcherFactory::capture_generator() const
 
 unique_ptr<MoveGenerator> SearcherFactory::move_generator() const
 {
-  unique_ptr<MoveGenerator> generator(new SimpleMoveGenerator(move_creator()));
+  unique_ptr<MoveGenerator> generator(new SimpleMoveGenerator);
   return generator;
-}
-
-unique_ptr<MoveCreator> SearcherFactory::move_creator() const
-{
-  unique_ptr<MoveCreator> creator(new SimpleMoveCreator());
-  return creator;
 }
 
 unique_ptr<Perft> SearcherFactory::perft() const
@@ -114,7 +97,7 @@ unique_ptr<Perft> SearcherFactory::perft() const
 
 unique_ptr<SanParser> SearcherFactory::san_parser() const
 {
-  unique_ptr<SanParser> parser(new SanParser(move_generator(), move_creator()));
+  unique_ptr<SanParser> parser(new SanParser(move_generator()));
   return parser;
 }
 

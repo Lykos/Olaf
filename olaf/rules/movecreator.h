@@ -16,34 +16,35 @@ namespace olaf
 class MoveCreator
 {
 public:
-  virtual ~MoveCreator();
+  static bool valid_move(const ChessBoard& board,
+                         const Position& source,
+                         const Position& destination);
 
-  virtual bool valid_move(const ChessBoard& board,
+  static bool valid_move(const ChessBoard& board,
+                         const Position& source,
+                         const Position& destination,
+                         Piece::piece_index_t conversion);
+
+  static bool pseudo_valid_move(const ChessBoard& board,
+                                const Position& source,
+                                const Position& destination);
+
+  static bool pseudo_valid_move(const ChessBoard& board,
+                                const Position& source,
+                                const Position& destination,
+                                Piece::piece_index_t conversion);
+
+  static Move create_move(const ChessBoard& board,
                           const Position& source,
-                          const Position& destination) = 0;
+                          const Position& destination);
 
-  virtual bool valid_move(const ChessBoard& board,
+  static Move create_move(const ChessBoard& board,
                           const Position& source,
                           const Position& destination,
-                          Piece::piece_index_t conversion) = 0;
+                          Piece::piece_index_t conversion);
 
-  virtual bool pseudo_valid_move(const ChessBoard& board,
-                                 const Position& source,
-                                 const Position& destination) = 0;
-
-  virtual bool pseudo_valid_move(const ChessBoard& board,
-                                 const Position& source,
-                                 const Position& destination,
-                                 Piece::piece_index_t conversion) = 0;
-
-  virtual Move create_move(const ChessBoard& board,
-                           const Position& source,
-                           const Position& destination) = 0;
-
-  virtual Move create_move(const ChessBoard& board,
-                           const Position& source,
-                           const Position& destination,
-                           Piece::piece_index_t conversion) = 0;
+private:
+  static bool is_killable(const ChessBoard& board);
 };
 
 } // namespace olaf

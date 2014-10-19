@@ -2,6 +2,8 @@
 
 #include "olaf/search/searchcontext.h"
 #include "olaf/transposition_table/transpositiontable.h"
+#include "olaf/rules/movecreator.h"
+
 #include <cassert>
 #include <limits>
 
@@ -17,12 +19,10 @@ AlphaBetaSearcher::AlphaBetaSearcher():
 {}
 
 AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
-                                     std::unique_ptr<MoveOrderer> orderer,
                                      std::unique_ptr<AlphaBetaSearcher> sub_searcher,
                                      const int sub_searcher_depth,
                                      const bool ignore_depth):
   m_generator(move(generator)),
-  m_orderer(move(orderer)),
   m_sub_searcher(move(sub_searcher)),
   m_sub_searcher_depth(sub_searcher_depth),
   m_ignore_depth(ignore_depth)
@@ -37,7 +37,7 @@ vector<Move> AlphaBetaSearcher::generate_ordered_moves(const SearchContext& cont
   if (moves.empty()) {
     return moves;
   }
-  m_orderer->order_moves(context.board, &moves);
+  MoveOrderer::order_moves(context, &moves);
   return moves;
 }
 
@@ -78,14 +78,16 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
         result.score = entry->score;
         if (entry->has_best_move) {
           if (entry->best_move_is_conversion) {
-            result.main_variation.emplace_back(m_creator.create_move(context->board,
-                                                                     entry->best_move_source,
-                                                                     entry->best_move_destination));
+            result.main_variation.emplace_back(MoveCreator::create_move(
+                                                 context->board,
+                                                 entry->best_move_source,
+                                                 entry->best_move_destination));
           } else {
-            result.main_variation.emplace_back(m_creator.create_move(context->board,
-                                                                     entry->best_move_source,
-                                                                     entry->best_move_destination,
-                                                                     entry->best_move_created_piece));
+            result.main_variation.emplace_back(MoveCreator::create_move(
+                                                 context->board,
+                                                 entry->best_move_source,
+                                                 entry->best_move_destination,
+                                                 entry->best_move_created_piece));
           }
         }
       }

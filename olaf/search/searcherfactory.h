@@ -3,10 +3,8 @@
 
 #include "olaf/search/searcher.h"
 #include "olaf/search/alphabetasearcher.h"
-#include "olaf/rules/movecreator.h"
 #include "olaf/evaluation/positionevaluator.h"
 #include "olaf/search/movegenerator.h"
-#include "olaf/search/moveorderer.h"
 #include "olaf/evaluation/evaluatorfactory.h"
 #include "olaf/search/thinkingwriter.h"
 #include "olaf/search/perft.h"
@@ -39,13 +37,9 @@ public:
 
   std::unique_ptr<PositionEvaluator> position_evaluator() const;
 
-  std::unique_ptr<MoveOrderer> move_orderer() const;
-
   std::unique_ptr<MoveGenerator> capture_generator() const;
 
   std::unique_ptr<MoveGenerator> move_generator() const;
-
-  std::unique_ptr<MoveCreator> move_creator() const;
 
   std::unique_ptr<Perft> perft() const;
 

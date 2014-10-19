@@ -33,7 +33,6 @@ SOURCES += \
     search/capturegenerator.cpp \
     search/thinkingwriter.cpp \
     search/nostopper.cpp \
-    search/nomoveorderer.cpp \
     search/stopper.cpp \
     search/perft.cpp \
     search/nothinkingwriter.cpp \
@@ -43,7 +42,6 @@ SOURCES += \
     search/quiescer.cpp \
     search/movegenerator.cpp \
     search/alphabetasearcher.cpp \
-    search/simplemovecreator.cpp \
     parse/sanparser.cpp \
     parse/epdparser.cpp \
     parse/epdposition.cpp \
@@ -98,13 +96,11 @@ HEADERS += \
     search/capturegenerator.h \
     search/thinkingwriter.h \
     search/nostopper.h \
-    search/nomoveorderer.h \
     search/perft.h \
     search/searchcontext.h \
     search/nothinkingwriter.h \
     search/searcher.h \
     search/alphabetasearcher.h \
-    search/simplemovecreator.h \
     parse/sanparser.h \
     parse/epdparser.h \
     parse/epdposition.h \

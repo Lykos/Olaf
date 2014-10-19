@@ -8,15 +8,16 @@
 namespace olaf
 {
 
+class SearchContext;
+
 /**
  * @brief The MoveOrderer class is responsible for ordering moves.
  */
 class MoveOrderer
 {
 public:
-  virtual ~MoveOrderer();
-
-  virtual void order_moves(const ChessBoard& board, std::vector<Move>* moves) = 0;
+  static void order_moves(const SearchContext& context,
+                          std::vector<Move>* moves);
 };
 
 } // namespace olaf

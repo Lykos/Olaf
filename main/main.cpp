@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
   SimpleThinkingWriter thinking_writer(writer.get());
   SearcherFactory factory(&thinking_writer);
   auto searcher = factory.timed_searcher();
-  BoardState board_state(factory.move_creator());
+  BoardState board_state;
   unique_ptr<ProtocolReader> reader;
   Engine engine(writer.get(), factory.transposition_table(), &board_state, move(searcher));
   std::unique_ptr<EngineEventHelper> engine_helper(

@@ -14,8 +14,7 @@ class Move;
 class SanParser
 {
 public:
-  SanParser(std::unique_ptr<MoveGenerator> generator,
-            std::unique_ptr<MoveCreator> creator);
+  explicit SanParser(std::unique_ptr<MoveGenerator> generator);
 
   bool parse(const std::string& san_move,
              const ChessBoard& board,
@@ -23,7 +22,6 @@ public:
 
 private:
   std::unique_ptr<MoveGenerator> m_generator;
-  std::unique_ptr<MoveCreator> m_creator;
 };
 
 } // namespace olaf
