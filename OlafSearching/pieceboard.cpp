@@ -40,3 +40,8 @@ const BitBoard& PieceBoard::bit_board() const
 {
   return m_bit_board;
 }
+
+vector<Position> PieceBoard::positions() const
+{
+  return m_bit_board.positions();
+}

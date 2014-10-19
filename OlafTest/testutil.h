@@ -18,10 +18,10 @@ MATCHER_P(IsSameMove, move, "") {
 }
 
 #define QASSERT_THAT(value, matcher) { \
-  const ::testing::AssertionResult& result = \
+  const ::testing::AssertionResult& __gmock_assertion_result = \
     ::testing::internal::MakePredicateFormatterFromMatcher(matcher)(#value, value); \
-  if (!result) { \
-    QFAIL(result.message()); \
+  if (!__gmock_assertion_result) { \
+    QFAIL(__gmock_assertion_result.message()); \
   } \
 }
 

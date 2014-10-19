@@ -43,8 +43,9 @@ public:
 
   std::uint_fast8_t number() const;
 
-private:
+  std::vector<Position> positions() const;
 
+private:
   bitboard_t m_bits;
 };
 
@@ -54,5 +55,7 @@ private:
  * @return
  */
 std::uint_fast8_t index(const Position& position);
+
+Position reverse_index(std::uint_fast8_t position);
 
 #endif // BITBOARD_H

@@ -2,6 +2,7 @@
 #define PIECEBOARD_H
 
 #include <memory>
+#include <vector>
 #include <set>
 
 #include "bitboard.h"
@@ -33,6 +34,8 @@ public:
   void set(const Position& position, bool value);
 
   const BitBoard& bit_board() const;
+
+  std::vector<Position> positions() const;
 
 private:
   const Piece* m_piece;

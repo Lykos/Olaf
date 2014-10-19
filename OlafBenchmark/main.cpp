@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
   timeinfo = localtime(&rawtime);
 
   // File name
-  string version_name ("Refactor_search");
+  string version_name ("Bitboard_position_lists");
   ostringstream oss2;
   oss2 << "../../Olaf/performance_results/" << version_name << "_" << VERSION << "_" << hostname << "_" << (1900 + timeinfo->tm_year) << "-" << timeinfo->tm_mon << "-"
       << timeinfo->tm_mday << "_" << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec;
