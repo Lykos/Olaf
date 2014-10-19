@@ -72,7 +72,9 @@ SOURCES += \
     rules/movecreator.cpp \
     rules/moveaction.cpp \
     transposition_table/zobristhash.cpp \
-    transposition_table/transpositiontable.cpp
+    transposition_table/transpositiontable.cpp \
+    evaluation/incrementalevaluator.cpp \
+    evaluation/incrementalupdater.cpp
 
 HEADERS += \
     config.h \
@@ -135,7 +137,9 @@ HEADERS += \
     rules/setkingcapturepositionsaction.h \
     transposition_table/zobristhash.h \
     transposition_table/lrucache.h \
-    transposition_table/transpositiontable.h
+    transposition_table/transpositiontable.h \
+    evaluation/incrementalevaluator.h \
+    evaluation/incrementalupdater.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching
