@@ -13,9 +13,6 @@
 
 using namespace std;
 
-Q_DECLARE_METATYPE(olaf::ChessBoard)
-Q_DECLARE_METATYPE(olaf::Move)
-
 namespace olaf
 {
 namespace test

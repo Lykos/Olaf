@@ -10,8 +10,6 @@
 
 using namespace std;
 
-Q_DECLARE_METATYPE(olaf::Position)
-
 namespace olaf
 {
 namespace test
@@ -88,14 +86,10 @@ void PawnTest::test_can_move()
 }
 
 void PawnTest::test_moves_data()
-{
-
-}
+{}
 
 void PawnTest::test_moves()
-{
-
+{}
 
 } // namespace test
 } // namespace olaf
-}

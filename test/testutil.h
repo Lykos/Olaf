@@ -3,11 +3,21 @@
 
 #include <QtTest/qtest.h>
 #include <string>
+#include <vector>
 
 #include "gmock/gmock-generated-matchers.h"
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/position.h"
 #include "olaf/rules/move.h"
+#include "olaf/rules/piece.h"
+#include "olaf/search/perft.h"
+
+Q_DECLARE_METATYPE(olaf::ChessBoard)
+Q_DECLARE_METATYPE(olaf::Position)
+Q_DECLARE_METATYPE(std::vector<olaf::Perft::PerftResult>)
+Q_DECLARE_METATYPE(std::vector<olaf::Move>)
+Q_DECLARE_METATYPE(const olaf::Piece*)
+Q_DECLARE_METATYPE(olaf::Move)
 
 namespace olaf
 {

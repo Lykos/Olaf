@@ -4,10 +4,12 @@
 #include <memory>
 
 #include "olaf/rules/moveaction.h"
-#include "olaf/rules/chessboard.h"
+#include "olaf/rules/position.h"
 
 namespace olaf
 {
+
+class ChessBoard;
 
 class EpDisableAction : public MoveAction
 {
@@ -22,6 +24,10 @@ public:
 
 private:
   bool m_old_ep_possible;
+
+  Position m_old_ep_capture_position;
+
+  Position m_old_ep_victim_position;
 };
 
 } // namespace olaf

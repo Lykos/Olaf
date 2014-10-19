@@ -104,13 +104,6 @@ void ChessBoard::disable_ep()
   }
 }
 
-void ChessBoard::enable_ep()
-{
-  assert(!m_ep_possible);
-  m_ep_possible = true;
-  ZobristHash::update_ep(m_ep_capture_position, this);
-}
-
 void ChessBoard::enable_ep(const Position& victim_position,
                            const Position& capture_position)
 {
@@ -136,7 +129,10 @@ Color ChessBoard::noturn_color() const
 
 void ChessBoard::turn_color(const Color new_color)
 {
-  m_turn_color = new_color;
+  if (new_color != m_turn_color) {
+    m_turn_color = new_color;
+    ZobristHash::update_turn_color(this);
+  }
 }
 
 int ChessBoard::turn_number() const
@@ -155,6 +151,7 @@ void ChessBoard::next_turn()
   m_friends_valid = false;
   m_occupied_valid = false;
   m_turn_color = next(m_turn_color);
+  ZobristHash::update_turn_color(this);
   if (m_turn_color == Color::White) {
     ++m_turn_number;
   }
@@ -166,6 +163,7 @@ void ChessBoard::previous_turn()
   m_friends_valid = false;
   m_occupied_valid = false;
   m_turn_color = previous(m_turn_color);
+  ZobristHash::update_turn_color(this);
   if (m_turn_color == Color::Black) {
     --m_turn_number;
   }
@@ -278,16 +276,6 @@ void ChessBoard::king_victim_position(
 ZobristHash::hash_t ChessBoard::zobrist_hash() const
 {
   return m_zobrist_hash;
-}
-
-void ChessBoard::zobrist_hash(ZobristHash::hash_t new_zobrist_hash)
-{
-  m_zobrist_hash = new_zobrist_hash;
-}
-
-void ChessBoard::xor_zobrist_hash(ZobristHash::hash_t zobrist_hash)
-{
-  m_zobrist_hash ^= zobrist_hash;
 }
 
 ChessBoard create_initial_board()

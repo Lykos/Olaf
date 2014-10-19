@@ -13,10 +13,6 @@
 using namespace std;
 using namespace testing;
 
-Q_DECLARE_METATYPE(const olaf::Piece*)
-Q_DECLARE_METATYPE(olaf::Position)
-Q_DECLARE_METATYPE(vector<olaf::Move>)
-
 namespace olaf
 {
 namespace test

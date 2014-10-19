@@ -29,6 +29,8 @@ public:
   static void update_castle_q(Color color, ChessBoard* board);
 
   static void update_ep(const Position& position, ChessBoard* board);
+
+  static void update_turn_color(ChessBoard* board);
 };
 
 }  // namespace olaf

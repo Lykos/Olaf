@@ -8,10 +8,9 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/piece.h"
+#include "testutil.h"
 
 using namespace std;
-
-Q_DECLARE_METATYPE(olaf::ChessBoard)
 
 namespace olaf
 {

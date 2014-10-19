@@ -16,9 +16,6 @@
 using namespace std;
 using namespace testing;
 
-Q_DECLARE_METATYPE(olaf::ChessBoard)
-Q_DECLARE_METATYPE(vector<olaf::Perft::PerftResult>)
-
 namespace olaf
 {
 namespace test

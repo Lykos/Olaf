@@ -5,8 +5,6 @@
 #include "olaf/rules/chessboard.h"
 #include "testutil.h"
 
-Q_DECLARE_METATYPE(olaf::ChessBoard)
-
 namespace olaf
 {
 namespace test

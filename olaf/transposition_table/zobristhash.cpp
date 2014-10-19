@@ -855,10 +855,12 @@ static ZobristHash::hash_t c_ep_randomness[64] = {
   0xa46b0025f0bcb0e7ULL
 };
 
+static const ZobristHash::hash_t c_turn_color_randomness = 0xa54667dc48b2ca29ULL;
+
 // static
 void ZobristHash::calculate(ChessBoard* const board)
 {
-  board->zobrist_hash(0);
+  board->m_zobrist_hash = 0;
   for (const Color color : {Color::Black, Color::White}) {
     for (const PieceBoard& piece_board : board->color_board(color).piece_boards()) {
       const Piece::piece_index_t piece_index =
@@ -867,6 +869,18 @@ void ZobristHash::calculate(ChessBoard* const board)
         update(color, piece_index, position, board);
       }
     }
+    if (board->color_board(color).can_castle_k()) {
+      update_castle_k(color, board);
+    }
+    if (board->color_board(color).can_castle_q()) {
+      update_castle_q(color, board);
+    }
+  }
+  if (board->ep_possible()) {
+    update_ep(board->ep_capture_position(), board);
+  }
+  if (board->turn_color() == Color::Black) {
+    update_turn_color(board);
   }
 }
 
@@ -877,27 +891,36 @@ void ZobristHash::update(Color color,
                          ChessBoard* board)
 {
   const int color_index = static_cast<int>(color);
-  board->xor_zobrist_hash(c_piece_randomness[color_index * 384 + piece_index * 64 + index(position)]);
+  board->m_zobrist_hash ^= c_piece_randomness[color_index * 384 + piece_index * 64 + index(position)];
 }
 
 // static
-void ZobristHash::update_castle_k(const Color color, ChessBoard* const board)
+void ZobristHash::update_castle_k(const Color color,
+                                  ChessBoard* const board)
 {
   const int color_index = static_cast<int>(color);
-  board->xor_zobrist_hash(c_castle_k_randomness[color_index]);
+  board->m_zobrist_hash ^= c_castle_k_randomness[color_index];
 }
 
 // static
-void ZobristHash::update_castle_q(const Color color, ChessBoard* const board)
+void ZobristHash::update_castle_q(const Color color,
+                                  ChessBoard* const board)
 {
   const int color_index = static_cast<int>(color);
-  board->xor_zobrist_hash(c_castle_q_randomness[color_index]);
+  board->m_zobrist_hash ^= c_castle_q_randomness[color_index];
 }
 
 // static
-void ZobristHash::update_ep(const Position& position, ChessBoard* const board)
+void ZobristHash::update_ep(const Position& position,
+                            ChessBoard* const board)
 {
-  board->xor_zobrist_hash(c_ep_randomness[index(position)]);
+  board->m_zobrist_hash ^= c_ep_randomness[index(position)];
+}
+
+// static
+void ZobristHash::update_turn_color(ChessBoard* const board)
+{
+  board->m_zobrist_hash ^= c_turn_color_randomness;
 }
 
 } // namespace olaf

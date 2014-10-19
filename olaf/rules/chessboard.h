@@ -29,6 +29,7 @@ class ChessBoard
 {
   friend std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
   friend bool operator ==(const ChessBoard& left, const ChessBoard& right);
+  friend class ZobristHash;
 
 public:
   /**
@@ -68,11 +69,6 @@ public:
   const Position& ep_victim_position() const;
 
   void disable_ep();
-
-  /**
-   * @brief enable_ep enables en passent at the position it was last enabled.
-   */
-  void enable_ep();
 
   void enable_ep(const Position& victim_position,
                  const Position& capture_position);
@@ -181,13 +177,6 @@ public:
   void king_victim_position(const Position& new_king_victim_position);
 
   ZobristHash::hash_t zobrist_hash() const;
-
-  void zobrist_hash(ZobristHash::hash_t new_zobrist_hash);
-
-  /**
-   * @brief xor_zobrist_hash xors the parameter to the zobrist hash.
-   */
-  void xor_zobrist_hash(ZobristHash::hash_t zobrist_hash);
 
 private:
   std::array<ColorBoard, 2> m_color_boards;
