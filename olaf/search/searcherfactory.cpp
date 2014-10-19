@@ -10,6 +10,7 @@
 #include "olaf/search/nomoveorderer.h"
 #include "olaf/search/simplemovecreator.h"
 #include "olaf/search/quiescer.h"
+#include "olaf/transposition_table/transpositiontable.h"
 
 using namespace std;
 using namespace chrono;
@@ -117,11 +118,16 @@ unique_ptr<SanParser> SearcherFactory::san_parser() const
   return parser;
 }
 
-
 unique_ptr<EpdParser> SearcherFactory::epd_parser() const
 {
   unique_ptr<EpdParser> parser(new EpdParser(san_parser()));
   return parser;
+}
+
+std::unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
+{
+  unique_ptr<TranspositionTable> table(new TranspositionTable(c_transposition_table_size));
+  return table;
+}
 
 } // namespace olaf
-}

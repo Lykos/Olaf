@@ -71,7 +71,8 @@ SOURCES += \
     rules/setkingcapturepositionsaction.cpp \
     rules/movecreator.cpp \
     rules/moveaction.cpp \
-    transposition_table/zobristhash.cpp
+    transposition_table/zobristhash.cpp \
+    transposition_table/transpositiontable.cpp
 
 HEADERS += \
     config.h \
@@ -133,7 +134,8 @@ HEADERS += \
     rules/move.h \
     rules/setkingcapturepositionsaction.h \
     transposition_table/zobristhash.h \
-    transposition_table/lrucache.h
+    transposition_table/lrucache.h \
+    transposition_table/transpositiontable.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

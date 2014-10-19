@@ -2,11 +2,12 @@
 #define SEARCHCONTEXT_H
 
 #include "olaf/rules/chessboard.h"
-#include "olaf/search/stopper.h"
-#include "olaf/search/searchresult.h"
+#include "olaf/transposition_table/transpositiontable.h"
 
 namespace olaf
 {
+
+class Stopper;
 
 /**
  * @brief The SearchContext struct holds information about the search/search being performed.
@@ -66,6 +67,8 @@ struct SearchContext
    * @brief search/search_depth the depth for FIXED_DEPTH mode.
    */
   int search_depth;
+
+  TranspositionTable* transposition_table;
 };
 
 } // namespace olaf

@@ -104,7 +104,8 @@ protected:
    */
   ResultReaction update_result(const Move& move,
                                SearchResult* recursive_result,
-                               SearchState* search_state,
+                               SearchContext* const context,
+                               SearchState* state,
                                SearchResult* result) const;
 
   /**

@@ -53,6 +53,8 @@ public:
 
   std::unique_ptr<EpdParser> epd_parser() const;
 
+  std::unique_ptr<TranspositionTable> transposition_table() const;
+
 private:
   ThinkingWriter* const m_writer;
 
@@ -63,6 +65,8 @@ private:
   static const int c_sequential_depth = 2;
 
   static const int c_min_depth = 1;
+
+  static const long c_transposition_table_size = 0x10000;
 
 };
 

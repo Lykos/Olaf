@@ -1,5 +1,7 @@
 #include "olaf/search/alphabetasearcher.h"
+
 #include "olaf/search/searchcontext.h"
+#include "olaf/transposition_table/transpositiontable.h"
 #include <cassert>
 #include <limits>
 
@@ -65,6 +67,20 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
              || context->board.finished()) {
     return recurse_sub_searcher(current_state, context);
   } else {
+    const TranspositionTableEntry* const entry =
+        context->transposition_table->get(context->board.zobrist_hash());
+    if (entry != nullptr && entry->depth >= current_state.depth) {
+      if (entry->node_type == NodeType::PvNode
+          || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
+          || (entry->node_type == NodeType::CutNode && entry->score >= current_state.beta)) {
+        SearchResult result;
+        result.nodes = 1;
+        result.score = entry->score;
+        if (entry->best_move) {
+          result.main_variation.emplace_back(*(entry->best_move));
+        }
+      }
+    }
     SearchState state{-current_state.beta,
                       -current_state.alpha,
                       recurse_depth};
@@ -93,25 +109,43 @@ SearchResult AlphaBetaSearcher::recurse_move(const SearchState& current_state,
 AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     const Move& move,
     SearchResult* const recursive_result,
+    SearchContext* const context,
     SearchState* const state,
     SearchResult* const result) const
 {
   if (!recursive_result->valid()) {
     return ResultReaction::INVALID;
   }
+  ResultReaction reaction;
   result->nodes += recursive_result->nodes;
   const int recursive_score = -recursive_result->score;
+  TranspositionTableEntry entry;
+  entry.score = recursive_score;
+  entry.depth = state->depth - 1;
+  if (recursive_result->main_variation.empty()) {
+    entry.best_move.reset(nullptr);
+  } else {
+    entry.best_move.reset(new Move(recursive_result->main_variation.back()));
+  }
   if (recursive_score > state->alpha) {
     result->score = recursive_score;
     if (recursive_score >= state->beta) {
       result->main_variation.clear();
-      return ResultReaction::RETURN;
+      entry.node_type = NodeType::CutNode;
+      reaction = ResultReaction::RETURN;
+    } else {
+      state->alpha = recursive_score;
+      result->main_variation = std::move(recursive_result->main_variation);
+      result->main_variation.emplace_back(move);
+      entry.node_type = NodeType::PvNode;
+      reaction = ResultReaction::CONTINUE;
     }
-    state->alpha = recursive_score;
-    result->main_variation = std::move(recursive_result->main_variation);
-    result->main_variation.emplace_back(move);
+  } else {
+    entry.node_type = NodeType::AllNode;
+    reaction = ResultReaction::CONTINUE;
   }
-  return ResultReaction::CONTINUE;
+  context->transposition_table->put(context->board.zobrist_hash(), std::move(entry));
+  return reaction;
 
 } // namespace olaf
 }
