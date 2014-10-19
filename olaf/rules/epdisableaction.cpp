@@ -7,15 +7,15 @@ using namespace std;
 namespace olaf
 {
 
-void EpDisableAction::execute(ChessBoard* const chess_board)
+void EpDisableAction::execute(ChessBoard* const board)
 {
-  m_old_ep_possible = chess_board->ep_possible();
-  chess_board->ep_possible(false);
+  m_old_ep_possible = board->ep_possible();
+  board->disable_ep();
 }
 
-void EpDisableAction::undo(ChessBoard* const chess_board)
+void EpDisableAction::undo(ChessBoard* const board)
 {
-  chess_board->ep_possible(m_old_ep_possible);
+  board->enable_ep();
 }
 
 unique_ptr<MoveAction> EpDisableAction::copy() const {

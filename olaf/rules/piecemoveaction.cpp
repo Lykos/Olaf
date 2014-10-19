@@ -20,17 +20,19 @@ PieceMoveAction::PieceMoveAction(const Piece::piece_index_t piece_index,
   m_destination(destination)
 {}
 
-void PieceMoveAction::execute(ChessBoard* const chess_board)
+void PieceMoveAction::execute(ChessBoard* const board)
 {
-  assert(chess_board->turn_board().piece_index(m_source) == m_piece_index);
-  chess_board->turn_board().piece_board(m_piece_index).set(m_source, false);
-  chess_board->turn_board().piece_board(m_piece_index).set(m_destination, true);
+  assert(board->turn_board().piece_index(m_source) == m_piece_index);
+  const Color color = board->turn_color();
+  board->remove_piece(color, m_piece_index, m_source);
+  board->add_piece(color, m_piece_index, m_destination);
 }
 
-void PieceMoveAction::undo(ChessBoard* const chess_board)
+void PieceMoveAction::undo(ChessBoard* const board)
 {
-  chess_board->turn_board().piece_board(m_piece_index).set(m_destination, false);
-  chess_board->turn_board().piece_board(m_piece_index).set(m_source, true);
+  const Color color = board->turn_color();
+  board->remove_piece(color, m_piece_index, m_destination);
+  board->add_piece(color, m_piece_index, m_source);
 }
 
 std::unique_ptr<MoveAction> PieceMoveAction::copy() const

@@ -14,16 +14,18 @@ ConversionAction::ConversionAction(const Position &position,
   m_created_piece(created_piece)
 {}
 
-void ConversionAction::execute(ChessBoard* const chess_board)
+void ConversionAction::execute(ChessBoard* const board)
 {
-  chess_board->turn_board().piece_board(m_removed_piece).set(m_position, false);
-  chess_board->turn_board().piece_board(m_created_piece).set(m_position, true);
+  const Color color = board->turn_color();
+  board->remove_piece(color, m_removed_piece, m_position);
+  board->add_piece(color, m_created_piece, m_position);
 }
 
-void ConversionAction::undo(ChessBoard* const chess_board)
+void ConversionAction::undo(ChessBoard* const board)
 {
-  chess_board->turn_board().piece_board(m_created_piece).set(m_position, false);
-  chess_board->turn_board().piece_board(m_removed_piece).set(m_position, true);
+  const Color color = board->turn_color();
+  board->remove_piece(color, m_created_piece, m_position);
+  board->add_piece(color, m_removed_piece, m_position);
 }
 
 std::unique_ptr<MoveAction> ConversionAction::copy() const

@@ -14,15 +14,17 @@ CaptureAction::CaptureAction(const Position& victim_position,
   m_victim_index(victim_index)
 {}
 
-void CaptureAction::execute(ChessBoard* const chess_board)
+void CaptureAction::execute(ChessBoard* const board)
 {
-  assert(chess_board->noturn_board().piece_board(m_victim_index).get(m_victim_position));
-  chess_board->noturn_board().piece_board(m_victim_index).set(m_victim_position, false);
+  assert(board->noturn_board().piece_board(m_victim_index).get(m_victim_position));
+  const Color color = board->noturn_color();
+  board->remove_piece(color, m_victim_index, m_victim_position);
 }
 
-void CaptureAction::undo(ChessBoard* const chess_board)
+void CaptureAction::undo(ChessBoard* const board)
 {
-  chess_board->noturn_board().piece_board(m_victim_index).set(m_victim_position, true);
+  const Color color = board->noturn_color();
+  board->add_piece(color, m_victim_index, m_victim_position);
 }
 
 unique_ptr<MoveAction> CaptureAction::copy() const

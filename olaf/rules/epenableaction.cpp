@@ -16,21 +16,23 @@ EpEnableAction::EpEnableAction(const Position& new_ep_capture_position,
   m_new_ep_victim_position(new_ep_victim_position)
 {}
 
-void EpEnableAction::execute(ChessBoard* const chess_board)
+void EpEnableAction::execute(ChessBoard* const board)
 {
-  m_old_ep_possible = chess_board->ep_possible();
-  m_old_ep_capture_position = chess_board->ep_capture_position();
-  m_old_ep_victim_position = chess_board->ep_victim_position();
-  chess_board->ep_possible(true);
-  chess_board->ep_capture_position(m_new_ep_capture_position);
-  chess_board->ep_victim_position(m_new_ep_victim_position);
+  m_old_ep_possible = board->ep_possible();
+  if (m_old_ep_possible) {
+    m_old_ep_capture_position = board->ep_capture_position();
+    m_old_ep_victim_position = board->ep_victim_position();
+  }
+  board->enable_ep(m_new_ep_victim_position, m_new_ep_capture_position);
 }
 
-void EpEnableAction::undo(ChessBoard* const chess_board)
+void EpEnableAction::undo(ChessBoard* const board)
 {
-  chess_board->ep_capture_position(m_old_ep_capture_position);
-  chess_board->ep_victim_position(m_old_ep_victim_position);
-  chess_board->ep_possible(m_old_ep_possible);
+  if (m_old_ep_possible) {
+    board->enable_ep(m_old_ep_victim_position, m_old_ep_capture_position);
+  } else {
+    board->disable_ep();
+  }
 }
 
 int EpEnableAction::priority() const {

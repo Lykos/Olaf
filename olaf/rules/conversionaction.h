@@ -23,9 +23,9 @@ public:
                    PieceSet::piece_index_t removed_piece,
                    PieceSet::piece_index_t created_piece);
 
-  void execute(ChessBoard* chess_board) override;
+  void execute(ChessBoard* board) override;
 
-  void undo(ChessBoard* chess_board) override;
+  void undo(ChessBoard* board) override;
 
   std::unique_ptr<MoveAction> copy() const override;
 

@@ -15,20 +15,29 @@ AntiCastleAction::AntiCastleAction(const bool forbid_castle_q, const bool forbid
   m_forbid_castle_k(forbid_castle_k)
 {}
 
-void AntiCastleAction::execute(ChessBoard* const chess_board)
+void AntiCastleAction::execute(ChessBoard* const board)
 {
-  ColorBoard& color_board = chess_board->turn_board();
-  m_old_can_castle_q = color_board.can_castle_q();
-  m_old_can_castle_k = color_board.can_castle_k();
-  color_board.can_castle_q(m_old_can_castle_q && !m_forbid_castle_q);
-  color_board.can_castle_k(m_old_can_castle_k && !m_forbid_castle_k);
+  const Color color = board->turn_color();
+  const ColorBoard& color_board = board->turn_board();
+  if (m_forbid_castle_k) {
+    m_old_can_castle_k = color_board.can_castle_k();
+    board->can_castle_k(color, false);
+  }
+  if (m_forbid_castle_q) {
+    m_old_can_castle_q = color_board.can_castle_q();
+    board->can_castle_q(color, false);
+  }
 }
 
-void AntiCastleAction::undo(ChessBoard* const chess_board)
+void AntiCastleAction::undo(ChessBoard* const board)
 {
-  ColorBoard& color_board = chess_board->turn_board();
-  color_board.can_castle_q(m_old_can_castle_q);
-  color_board.can_castle_k(m_old_can_castle_k);
+  const Color color = board->turn_color();
+  if (m_forbid_castle_k) {
+    board->can_castle_k(color, m_old_can_castle_k);
+  }
+  if (m_forbid_castle_q) {
+    board->can_castle_q(color, m_old_can_castle_q);
+  }
 }
 
 unique_ptr<MoveAction> AntiCastleAction::copy() const

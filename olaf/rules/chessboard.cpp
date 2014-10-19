@@ -1,5 +1,7 @@
 #include "olaf/rules/chessboard.h"
 
+#include <cassert>
+
 using namespace std;
 
 namespace olaf
@@ -60,14 +62,11 @@ ChessBoard::ChessBoard(const array<ColorBoard, 2>& color_boards, Color turn,
   m_ep_possible (ep_possible),
   m_ep_capture_position (ep_capture_position),
   m_ep_victim_position (ep_victim_position)
-{}
-
-const ColorBoard& ChessBoard::color_board(Color color) const
 {
-  return m_color_boards[static_cast<uint_fast8_t>(color)];
+  ZobristHash::calculate(this);
 }
 
-ColorBoard& ChessBoard::color_board(Color color)
+const ColorBoard& ChessBoard::color_board(Color color) const
 {
   return m_color_boards[static_cast<uint_fast8_t>(color)];
 }
@@ -77,17 +76,7 @@ const ColorBoard& ChessBoard::turn_board() const
   return m_color_boards[static_cast<uint_fast8_t>(m_turn_color)];
 }
 
-ColorBoard& ChessBoard::turn_board()
-{
-  return m_color_boards[static_cast<uint_fast8_t>(m_turn_color)];
-}
-
 const ColorBoard& ChessBoard::noturn_board() const
-{
-  return m_color_boards[1 - static_cast<uint_fast8_t>(m_turn_color)];
-}
-
-ColorBoard& ChessBoard::noturn_board()
 {
   return m_color_boards[1 - static_cast<uint_fast8_t>(m_turn_color)];
 }
@@ -107,19 +96,32 @@ const Position& ChessBoard::ep_victim_position() const
   return m_ep_victim_position;
 }
 
-void ChessBoard::ep_possible(const bool possible)
+void ChessBoard::disable_ep()
 {
-  m_ep_possible = possible;
+  if (m_ep_possible) {
+    m_ep_possible = false;
+    ZobristHash::update_ep(m_ep_capture_position, this);
+  }
 }
 
-void ChessBoard::ep_capture_position(const Position &position)
+void ChessBoard::enable_ep()
 {
-  m_ep_capture_position = position;
+  assert(!m_ep_possible);
+  m_ep_possible = true;
+  ZobristHash::update_ep(m_ep_capture_position, this);
 }
 
-void ChessBoard::ep_victim_position(const Position &position)
+void ChessBoard::enable_ep(const Position& victim_position,
+                           const Position& capture_position)
 {
-  m_ep_victim_position = position;
+  if (m_ep_possible) {
+    ZobristHash::update_ep(m_ep_capture_position, this);
+  } else {
+    m_ep_possible = true;
+  }
+  m_ep_capture_position = capture_position;
+  m_ep_victim_position = victim_position;
+  ZobristHash::update_ep(capture_position, this);
 }
 
 Color ChessBoard::turn_color() const
@@ -221,7 +223,34 @@ void ChessBoard::add_piece(const Color color,
                            const Piece::piece_index_t piece_index,
                            const Position& position)
 {
-  color_board(color).piece_board(piece_index).set(position, true);
+  m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, true);
+  ZobristHash::update(color, piece_index, position, this);
+}
+
+void ChessBoard::remove_piece(const Color color,
+                              const Piece::piece_index_t piece_index,
+                              const Position& position)
+{
+  m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, false);
+  ZobristHash::update(color, piece_index, position, this);
+}
+
+void ChessBoard::can_castle_k(const Color color, const bool new_can_castle_k)
+{
+  ColorBoard& color_board = m_color_boards[static_cast<int>(color)];
+  if (color_board.can_castle_k() != new_can_castle_k) {
+    color_board.can_castle_k(new_can_castle_k);
+    ZobristHash::update_castle_k(color, this);
+  }
+}
+
+void ChessBoard::can_castle_q(const Color color, const bool new_can_castle_q)
+{
+  ColorBoard& color_board = m_color_boards[static_cast<int>(color)];
+  if (color_board.can_castle_q() != new_can_castle_q) {
+    color_board.can_castle_q(new_can_castle_q);
+    ZobristHash::update_castle_q(color, this);
+  }
 }
 
 const vector<Position>& ChessBoard::king_capture_positions() const

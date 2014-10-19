@@ -139,13 +139,13 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
     CHECK_NOT_END(it, end);
     const char c = *it;
     if (c == c_white_castle_k) {
-      new_board.color_board(Color::White).can_castle_k(true);
+      new_board.can_castle_k(Color::White, true);
     } else if (c == c_white_castle_q) {
-      new_board.color_board(Color::White).can_castle_q(true);
+      new_board.can_castle_q(Color::White, true);
     } else if (c == c_black_castle_k) {
-      new_board.color_board(Color::Black).can_castle_k(true);
+      new_board.can_castle_k(Color::Black, true);
     } else if (c == c_black_castle_q) {
-      new_board.color_board(Color::Black).can_castle_q(true);
+      new_board.can_castle_q(Color::Black, true);
     } else {
       if (c == c_dash) {
         ++it;
@@ -173,9 +173,7 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
     }
     Position ep_position(ep_row, column);
     Position victim_position(victim_row, column);
-    new_board.ep_capture_position(ep_position);
-    new_board.ep_victim_position(victim_position);
-    new_board.ep_possible(true);
+    new_board.enable_ep(victim_position, ep_position);
   } else if (*it != c_dash) {
     return false;
   }

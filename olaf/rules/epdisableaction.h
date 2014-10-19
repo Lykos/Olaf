@@ -12,9 +12,9 @@ namespace olaf
 class EpDisableAction : public MoveAction
 {
 public:
-  void execute(ChessBoard* chess_board) override;
+  void execute(ChessBoard* board) override;
 
-  void undo(ChessBoard* chess_board) override;
+  void undo(ChessBoard* board) override;
 
   std::unique_ptr<MoveAction> copy() const override;
 

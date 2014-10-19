@@ -23,6 +23,12 @@ public:
                      Piece::piece_index_t piece_index,
                      const Position& position,
                      ChessBoard* board);
+
+  static void update_castle_k(Color color, ChessBoard* board);
+
+  static void update_castle_q(Color color, ChessBoard* board);
+
+  static void update_ep(const Position& position, ChessBoard* board);
 };
 
 }  // namespace olaf

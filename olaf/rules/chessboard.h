@@ -48,15 +48,9 @@ public:
 
   const ColorBoard& color_board(Color color) const;
 
-  ColorBoard& color_board(Color color);
-
   const ColorBoard& turn_board() const;
 
-  ColorBoard& turn_board();
-
   const ColorBoard& noturn_board() const;
-
-  ColorBoard& noturn_board();
 
   /**
    * @brief ep_possible returns true  if en passent is possible.
@@ -73,11 +67,15 @@ public:
    */
   const Position& ep_victim_position() const;
 
-  void ep_possible(bool new_ep_possible);
+  void disable_ep();
 
-  void ep_capture_position(const Position& position);
+  /**
+   * @brief enable_ep enables en passent at the position it was last enabled.
+   */
+  void enable_ep();
 
-  void ep_victim_position(const Position& position);
+  void enable_ep(const Position& victim_position,
+                 const Position& capture_position);
 
   Color noturn_color() const;
 
@@ -142,12 +140,28 @@ public:
   bool finished() const;
 
   /**
-   * @brief add_piece is a shortcut for
-   *        board.color_board(color).piece_board(piece_index).set(position, true)
+   * @brief add_piece adds a piece at the specific location.
    */
   void add_piece(Color color,
                  Piece::piece_index_t piece_index,
                  const Position& position);
+
+  /**
+   * @brief remove_piece removes a piece at the location in question.
+   */
+  void remove_piece(Color color,
+                    Piece::piece_index_t piece_index,
+                    const Position& position);
+
+  /**
+   * @brief can_castle_k sets the king castling right for the given color.
+   */
+  void can_castle_k(Color color, bool new_can_castle_k);
+
+  /**
+   * @brief can_castle_k sets the queen castling right for the given color.
+   */
+  void can_castle_q(Color color, bool new_can_castle_q);
 
   /**
    * @brief king_capture_positions returns the squares at which the king can be captured

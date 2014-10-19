@@ -778,6 +778,83 @@ static ZobristHash::hash_t c_piece_randomness[768] = {
   0xb742eaab80a03d95ULL
 };
 
+static ZobristHash::hash_t c_castle_k_randomness[2] = {
+  0xc73c6ac0aea30b6bULL,
+  0x290dfff4b2e6d920ULL
+};
+
+static ZobristHash::hash_t c_castle_q_randomness[2] = {
+  0xbf3b7b35c09f8629ULL,
+  0x03159920464f4cdbULL
+};
+
+static ZobristHash::hash_t c_ep_randomness[64] = {
+  0x16cf6ee7cf003194ULL,
+  0x106d7c9ac96b69dbULL,
+  0x6f69d291ce3e3868ULL,
+  0x652ea1dd8bd3f91dULL,
+  0x8f6299cb7fc96995ULL,
+  0x9b8e59ee80b9b8abULL,
+  0xccf3329fafe0b47bULL,
+  0xe314204458900847ULL,
+  0x31e6c777061e24a9ULL,
+  0x8a6830ba82d44b7eULL,
+  0x84af209a4951e739ULL,
+  0x2772f2684a478acfULL,
+  0xc06ce48c41b5f6b7ULL,
+  0x1c0107bda922e9aaULL,
+  0x22240bbf66910114ULL,
+  0x60ca6500114339acULL,
+  0xf03ecb73514e87b7ULL,
+  0x398afadfaa9fb5c2ULL,
+  0x40347fb9feac7036ULL,
+  0xe4815caa5a53c962ULL,
+  0xafb372271087ca13ULL,
+  0x52fbad230c3847eaULL,
+  0x3fd54b26742472dfULL,
+  0x0bcb756c68ba29fcULL,
+  0x6b960184f0a1d3a5ULL,
+  0xa71ad910fdcc010fULL,
+  0x0fd8d152f74289a5ULL,
+  0x10def859a1ecf474ULL,
+  0x7705acfbc923f41fULL,
+  0xeb9ce823fdd30cf4ULL,
+  0x1942e7a8500dad4eULL,
+  0x4e91d9f708399266ULL,
+  0x4eea090a3203d705ULL,
+  0xe5eb558281ecfd61ULL,
+  0x09e17b4baab1e2fdULL,
+  0xdd9ef8ccbebc9d8aULL,
+  0x0b9c03f28c964b65ULL,
+  0x892ddcc87d9197f3ULL,
+  0x6f2163b98a4a7199ULL,
+  0x876f4e83e6d73b84ULL,
+  0x58128421c009c657ULL,
+  0xd062c674b2f50417ULL,
+  0xa6e1138e10ccb5c3ULL,
+  0x57fe0123e1f1a477ULL,
+  0x6e025ca5448a429fULL,
+  0xaae61023771a8fa7ULL,
+  0x62616101dcac1aaaULL,
+  0xe7aae6d9f4157ff3ULL,
+  0x7890e4332cfe6811ULL,
+  0xa775ff96c02ef7f7ULL,
+  0x698a9f4482b53a23ULL,
+  0xaa851334e9235ce6ULL,
+  0x1679586a6f710437ULL,
+  0x5817ef0bf459c2b0ULL,
+  0x8de58e7164bf59cfULL,
+  0x808986f512c42dd9ULL,
+  0x4795d18694ffb33eULL,
+  0x1fde3f73ab9df4b3ULL,
+  0x7417e3ee6efbd64dULL,
+  0x4cb530c247792651ULL,
+  0x8cc0fcc703b1dd0fULL,
+  0x6c8fada9be3972b0ULL,
+  0x52f679b18e1fd586ULL,
+  0xa46b0025f0bcb0e7ULL
+};
+
 // static
 void ZobristHash::calculate(ChessBoard* const board)
 {
@@ -801,6 +878,26 @@ void ZobristHash::update(Color color,
 {
   const int color_index = static_cast<int>(color);
   board->xor_zobrist_hash(c_piece_randomness[color_index * 384 + piece_index * 64 + index(position)]);
+}
+
+// static
+void ZobristHash::update_castle_k(const Color color, ChessBoard* const board)
+{
+  const int color_index = static_cast<int>(color);
+  board->xor_zobrist_hash(c_castle_k_randomness[color_index]);
+}
+
+// static
+void ZobristHash::update_castle_q(const Color color, ChessBoard* const board)
+{
+  const int color_index = static_cast<int>(color);
+  board->xor_zobrist_hash(c_castle_q_randomness[color_index]);
+}
+
+// static
+void ZobristHash::update_ep(const Position& position, ChessBoard* const board)
+{
+  board->xor_zobrist_hash(c_ep_randomness[index(position)]);
 }
 
 } // namespace olaf
