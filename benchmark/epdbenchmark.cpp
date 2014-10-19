@@ -66,6 +66,8 @@ void EpdBenchmark::test_epd()
   NoStopper stopper;
   context.forced_stopper = &stopper;
   context.weak_stopper = &stopper;
+  TranspositionTable transposition_table(0x1000);
+  context.transposition_table = &transposition_table;
   Move move = m_searcher->search(&context).main_variation.back();
   long score = 0;
   auto ContainsMove = Matches(Contains(IsSameMove(move)));
