@@ -18,8 +18,8 @@ bool find_test(QObject* const test)
   if (find(list.begin(), list.end(), test) != list.end()) {
     return true;
   }
-  for (QObject* const test : list) {
-    if (test->objectName() == test->objectName()) {
+  for (QObject* const test2 : list) {
+    if (test2->objectName() == test->objectName()) {
       return true;
     }
   }

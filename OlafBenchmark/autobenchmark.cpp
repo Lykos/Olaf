@@ -20,8 +20,8 @@ bool find_benchmark(Benchmark* const benchmark)
   if (find(list.begin(), list.end(), benchmark) != list.end()) {
     return true;
   }
-  for (Benchmark* const benchmark : list) {
-    if (benchmark->objectName() == benchmark->objectName()) {
+  for (Benchmark* const benchmark2 : list) {
+    if (benchmark2->objectName() == benchmark->objectName()) {
       return true;
     }
   }
