@@ -12,6 +12,14 @@
 using namespace std;
 using namespace testing;
 
+Q_DECLARE_METATYPE(olaf::ChessBoard)
+Q_DECLARE_METATYPE(vector<olaf::Move>)
+
+namespace olaf
+{
+namespace test
+{
+
 static bool valid_move(const ChessBoard& board,
                        const Move& move,
                        MoveCreator* const creator)
@@ -27,9 +35,6 @@ static bool valid_move(const ChessBoard& board,
                                move.destination());
   }
 }
-
-Q_DECLARE_METATYPE(ChessBoard)
-Q_DECLARE_METATYPE(vector<Move>)
 
 void MoveGeneratorTest::test_generate_data()
 {
@@ -105,4 +110,7 @@ void MoveGeneratorTest::test_generate()
     move_matchers.push_back(IsSameMove(move));
   }
   QASSERT_THAT(valid_moves, UnorderedElementsAreArray(move_matchers));
+
+} // namespace test
+} // namespace olaf
 }

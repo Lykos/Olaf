@@ -2,6 +2,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 Quiescer::Quiescer(unique_ptr<PositionEvaluator> evaluator,
                    unique_ptr<MoveGenerator> generator,
                    unique_ptr<MoveOrderer> orderer,
@@ -46,4 +49,6 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
     }
   }
   return result;
+
+} // namespace olaf
 }

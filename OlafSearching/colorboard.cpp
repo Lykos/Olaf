@@ -5,6 +5,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 bool operator ==(const ColorBoard& left, const ColorBoard& right)
 {
   if (&left == &right) {
@@ -118,4 +121,6 @@ ColorBoard ColorBoard::create_empty_color_board()
     piece_boards.push_back(piece_board);
   }
   return ColorBoard(piece_boards, false, false);
+
+} // namespace olaf
 }

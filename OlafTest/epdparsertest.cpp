@@ -12,6 +12,11 @@
 using namespace std;
 using namespace testing;
 
+namespace olaf
+{
+namespace test
+{
+
 void EpdParserTest::initTestCase()
 {
   NoThinkingWriter no_thinking_writer;
@@ -27,4 +32,7 @@ void EpdParserTest::test_parse()
   QVERIFY(m_parser->parse(epd, &position));
   QASSERT_THAT(position.id, Eq(string("BK.01")));
   QASSERT_THAT(position.best_moves, ElementsAre(IsSameMove(move)));
+
+} // namespace test
+} // namespace olaf
 }

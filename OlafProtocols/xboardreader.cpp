@@ -14,6 +14,9 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+
 XBoardReader::XBoardReader(XBoardWriter* const writer,
                            unique_ptr<EngineEventHelper> engine_helper,
                            istream* const in):
@@ -222,4 +225,6 @@ bool XBoardReader::check_args(const vector<string>& tokens,
     m_writer->error(XBoardWriter::ErrorType::NOT_ENOUGH_ARGUMENTS, oss.str());
   }
   return result;
+
+} // namespace olaf
 }

@@ -4,6 +4,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 BoardState::BoardState(unique_ptr<MoveCreator> move_creator):
   m_move_creator(std::move(move_creator))
 {}
@@ -70,4 +73,6 @@ Move BoardState::create_move(const Position& source,
 {
   unique_lock<mutex> lock(m_mutex);
   return m_move_creator->create_move(m_board, source, destination, conversion);
+
+} // namespace olaf
 }

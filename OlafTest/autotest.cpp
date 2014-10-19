@@ -4,6 +4,11 @@
 #include <string>
 #include <QTest>
 
+namespace olaf
+{
+namespace test
+{
+
 namespace auto_test {
 
 TestList& test_list()
@@ -42,4 +47,7 @@ int run(int argc, char *argv[])
   }
   return ret;
 }
+
+} // namespace test
+} // namespace olaf
 } // namespace auto_test

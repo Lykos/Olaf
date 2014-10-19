@@ -7,6 +7,11 @@
 #include "autotest.h"
 #include "OlafSearching/materialevaluator.h"
 
+namespace olaf
+{
+namespace test
+{
+
 class MaterialEvaluatorTest : public QObject
 {
   Q_OBJECT
@@ -20,5 +25,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(MaterialEvaluatorTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // MATERIALEVALUATORTEST_H

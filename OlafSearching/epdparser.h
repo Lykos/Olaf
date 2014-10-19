@@ -6,6 +6,9 @@
 
 #include "sanparser.h"
 
+namespace olaf
+{
+
 class EpdPosition;
 
 class EpdParser
@@ -24,5 +27,7 @@ private:
 
   std::unique_ptr<SanParser> m_san_parser;
 };
+
+} // namespace olaf
 
 #endif // EPDPARSER_H

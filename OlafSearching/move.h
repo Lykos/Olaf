@@ -8,6 +8,9 @@
 #include "piece.h"
 #include "moveaction.h"
 
+namespace olaf
+{
+
 class Move
 {
  public:
@@ -71,6 +74,6 @@ private:
 
 std::ostream& operator <<(std::ostream& out, const Move& move);
 
-#include "moveaction.h"
+} // namespace olaf
 
 #endif // MOVE_H

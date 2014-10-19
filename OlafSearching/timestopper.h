@@ -4,6 +4,9 @@
 #include "stopper.h"
 #include <chrono>
 
+namespace olaf
+{
+
 /**
  * @brief The TimeStopper class represents a class that stops the searching after a certain time.
  */
@@ -20,5 +23,7 @@ private:
   const std::chrono::milliseconds m_millis;
 
 };
+
+} // namespace olaf
 
 #endif // TIMESTOPPER_H

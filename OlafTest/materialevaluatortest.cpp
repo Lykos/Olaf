@@ -5,9 +5,14 @@
 #include "OlafSearching/chessboard.h"
 #include "testutil.h"
 
-typedef MaterialEvaluator::score_t score_t;
+Q_DECLARE_METATYPE(olaf::ChessBoard)
 
-Q_DECLARE_METATYPE(ChessBoard)
+namespace olaf
+{
+namespace test
+{
+
+typedef MaterialEvaluator::score_t score_t;
 
 void MaterialEvaluatorTest::test_evaluate_data()
 {
@@ -26,4 +31,7 @@ void MaterialEvaluatorTest::test_evaluate()
   QFETCH(score_t, score);
 
   QCOMPARE(m_evaluator.evaluate(board), score);
+
+} // namespace test
+} // namespace olaf
 }

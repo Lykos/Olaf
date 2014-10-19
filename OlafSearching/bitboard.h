@@ -3,7 +3,11 @@
 
 #include <cstdint>
 #include <climits>
+
 #include "position.h"
+
+namespace olaf
+{
 
 typedef uint64_t bitboard_t;
 static_assert(sizeof(bitboard_t) * CHAR_BIT >= Position::c_column_size * Position::c_row_size,
@@ -62,5 +66,7 @@ private:
  * @return
  */
 std::uint_fast8_t index(const Position& position);
+
+} // namespace olaf
 
 #endif // BITBOARD_H

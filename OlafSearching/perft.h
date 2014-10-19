@@ -6,6 +6,9 @@
 #include <ostream>
 #include <vector>
 
+namespace olaf
+{
+
 class MoveGenerator;
 class ChessBoard;
 class Move;
@@ -61,5 +64,7 @@ private:
 bool operator ==(const Perft::PerftResult& right, const Perft::PerftResult& left);
 
 std::ostream& operator <<(std::ostream& out, const Perft::PerftResult& perft_result);
+
+} // namespace olaf
 
 #endif // PERFT_H

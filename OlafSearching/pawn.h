@@ -6,7 +6,10 @@
 #include <vector>
 #include <cstddef>
 
-class MoveBuilder;
+namespace olaf
+{
+
+class Move;
 
 class Pawn : public Piece
 {
@@ -52,6 +55,8 @@ private:
 
   std::vector<piece_index_t> m_conversions;
 };
+
+} // namespace olaf
 
 #include "move.h"
 

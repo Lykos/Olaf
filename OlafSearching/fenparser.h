@@ -5,6 +5,9 @@
 
 #include "chessboard.h"
 
+namespace olaf
+{
+
 class FenParser
 {
 public:
@@ -21,5 +24,7 @@ public:
 
   FenParser() = delete;
 };
+
+} // namespace olaf
 
 #endif // FENPARSER_H

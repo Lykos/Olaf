@@ -2,6 +2,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 CompositeStopper::CompositeStopper(const vector<const Stopper*>& sub_stoppers):
   m_sub_stoppers(sub_stoppers)
 {}
@@ -19,4 +22,6 @@ bool CompositeStopper::should_stop() const
     }
   }
   return false;
+
+} // namespace olaf
 }

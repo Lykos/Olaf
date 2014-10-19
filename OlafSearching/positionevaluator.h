@@ -3,6 +3,9 @@
 
 #include "chessboard.h"
 
+namespace olaf
+{
+
 class PositionEvaluator
 {
 public:
@@ -13,5 +16,7 @@ public:
   virtual ~PositionEvaluator();
 
 };
+
+} // namespace olaf
 
 #endif // POSITIONEVALUATOR_H

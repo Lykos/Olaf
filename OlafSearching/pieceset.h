@@ -6,6 +6,9 @@
 #include <vector>
 #include <memory>
 
+namespace olaf
+{
+
 class PieceSet
 {
 public:
@@ -53,5 +56,7 @@ private:
   std::vector<const Piece*> m_pieces;
 
 };
+
+} // namespace olaf
 
 #endif // PIECESET_H

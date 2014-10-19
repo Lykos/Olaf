@@ -4,6 +4,9 @@
 #include "stopper.h"
 #include <atomic>
 
+namespace olaf
+{
+
 class ForcedStopper : public Stopper
 {
 public:
@@ -17,5 +20,7 @@ private:
   std::atomic<bool> m_stop;
 
 };
+
+} // namespace olaf
 
 #endif // FORCEDSTOPPER_H

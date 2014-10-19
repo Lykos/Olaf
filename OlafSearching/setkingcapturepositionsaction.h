@@ -7,6 +7,9 @@
 #include "moveaction.h"
 #include "position.h"
 
+namespace olaf
+{
+
 class SetKingCapturePositionsAction : public MoveAction
 {
 public:
@@ -30,5 +33,7 @@ private:
 
   Position m_old_king_victim_position;
 };
+
+} // namespace olaf
 
 #endif // SETKINGCAPTUREPOSITIONSACTION_H

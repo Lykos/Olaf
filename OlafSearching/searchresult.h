@@ -4,6 +4,9 @@
 #include "move.h"
 #include <vector>
 
+namespace olaf
+{
+
 struct SearchResult
 {
   static const SearchResult& invalid();
@@ -18,5 +21,7 @@ struct SearchResult
 
   bool valid() const;
 };
+
+} // namespace olaf
 
 #endif // SEARCHRESULT_H

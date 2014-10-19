@@ -7,6 +7,11 @@
 #include "color.h"
 #include "colorboard.h"
 #include "position.h"
+#include "bitboard.h"
+#include "piece.h"
+
+namespace olaf
+{
 
 class ChessBoard;
 
@@ -194,5 +199,7 @@ private:
 ChessBoard create_initial_board();
 
 ChessBoard create_empty_board();
+
+} // namespace olaf
 
 #endif // CHESSBOARD_H

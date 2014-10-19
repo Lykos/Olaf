@@ -16,6 +16,7 @@
 #include "OlafSearching/thinkingwriter.h"
 
 using namespace std;
+using namespace olaf;
 
 DEFINE_string(input_file, "", "If this is non-empty, the input will be read from here instead of stdin.");
 

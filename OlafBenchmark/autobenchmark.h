@@ -6,6 +6,11 @@
 #include <memory>
 #include "benchmark.h"
 
+namespace olaf
+{
+namespace benchmark
+{
+
 namespace auto_benchmark
 {
 
@@ -31,12 +36,15 @@ public:
   BenchmarkHolder(const char* const name) : child(new T)
   {
     child->setObjectName(name);
-    auto_benchmark::add_benchmark(child.get());
+    ::olaf::benchmark::auto_benchmark::add_benchmark(child.get());
   }
 };
 
 } // namespace auto_benchmark
 
-#define DECLARE_BENCHMARK(className) static ::auto_benchmark::BenchmarkHolder<className> t(#className);
+#define DECLARE_BENCHMARK(className) static ::olaf::benchmark::auto_benchmark::BenchmarkHolder<className> t(#className);
+
+} // namespace benchmark
+} // namespace olaf
 
 #endif // AUTOBENCHMARK_H

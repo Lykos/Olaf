@@ -5,6 +5,9 @@
 #include "stopper.h"
 #include "searchresult.h"
 
+namespace olaf
+{
+
 /**
  * @brief The SearchContext struct holds information about the search being performed.
  *        It holds options and may be modified by the searchers.
@@ -64,5 +67,7 @@ struct SearchContext
    */
   int search_depth;
 };
+
+} // namespace olaf
 
 #endif // SEARCHCONTEXT_H

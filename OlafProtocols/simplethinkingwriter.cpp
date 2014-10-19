@@ -8,6 +8,9 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+
 SimpleThinkingWriter::SimpleThinkingWriter(ProtocolWriter* const writer):
   m_writer(writer)
 {}
@@ -51,4 +54,6 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
                             time.count() / 10,
                             result.nodes,
                             oss.str());
+
+} // namespace olaf
 }

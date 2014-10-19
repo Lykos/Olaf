@@ -7,6 +7,9 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+
 EngineState::EngineState(BoardState* const board_state):
   m_board_state(board_state)
 {
@@ -88,4 +91,6 @@ SearchContext EngineState::create_search_context(const Stopper* const forced_sto
     context.time_mode = SearchContext::TimeMode::INFINITE;
   }
   return context;
+
+} // namespace olaf
 }

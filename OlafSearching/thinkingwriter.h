@@ -6,6 +6,9 @@
 #include <chrono>
 #include <atomic>
 
+namespace olaf
+{
+
 class ThinkingWriter
 {
 public:
@@ -25,5 +28,7 @@ public:
 private:
   std::atomic<bool> m_post;
 };
+
+} // namespace olaf
 
 #endif // THINKINGWRITER_H

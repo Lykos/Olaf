@@ -7,6 +7,9 @@
 #include "move.h"
 #include <vector>
 
+namespace olaf
+{
+
 /**
  * @brief The LinePiece class represents pieces that move along a line like the rook, the queen or the bishop.
  */
@@ -39,5 +42,7 @@ private:
 
   const bool m_is_rook;
 };
+
+} // namespace olaf
 
 #endif // LINEPIECE_H

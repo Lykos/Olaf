@@ -11,18 +11,23 @@
 #include "OlafSearching/nothinkingwriter.h"
 #include "OlafSearching/chessboard.h"
 #include "OlafSearching/perft.h"
-#include "OlafTest/testutil.h"
+#include "testutil.h"
 #include "benchmark.h"
 
 using namespace std;
 using namespace testing;
 
+Q_DECLARE_METATYPE(olaf::ChessBoard)
+Q_DECLARE_METATYPE(vector<olaf::Perft::PerftResult>)
+
+namespace olaf
+{
+namespace benchmark
+{
+
 typedef Perft::PerftResult PerftResult;
 
 const int c_depth = 4;
-
-Q_DECLARE_METATYPE(ChessBoard)
-Q_DECLARE_METATYPE(vector<PerftResult>)
 
 void PerftBenchmark::test_perft_data()
 {
@@ -53,4 +58,7 @@ void PerftBenchmark::test_perft()
     actual_result = perft->perft(c_depth, board);
   }
   QASSERT_THAT(actual_result, Eq(expected_result));
+
+} // namespace benchmark
+} // namespace olaf
 }

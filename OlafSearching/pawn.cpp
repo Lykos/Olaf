@@ -9,6 +9,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 Pawn::Pawn(const piece_index_t piece_index,
            const char symbol,
            const BitBoard& initial_board,
@@ -168,4 +171,6 @@ bool Pawn::internal_can_move(const Position& source,
   }
   const Position& two_step = step + delta;
   return destination == two_step;
+
+} // namespace olaf
 }

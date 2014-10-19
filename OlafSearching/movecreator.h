@@ -6,6 +6,9 @@
 #include "move.h"
 #include "piece.h"
 
+namespace olaf
+{
+
 /**
  * @brief The MoveCreator class is responsible for checking moves from the user and
  * creating the move objects.
@@ -42,5 +45,7 @@ public:
                            const Position& destination,
                            Piece::piece_index_t conversion) = 0;
 };
+
+} // namespace olaf
 
 #endif // MOVECREATOR_H

@@ -8,6 +8,11 @@
 #include "OlafSearching/piece.h"
 #include "autotest.h"
 
+namespace olaf
+{
+namespace test
+{
+
 class OncePieceTest : public QObject
 {
   Q_OBJECT
@@ -37,5 +42,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(OncePieceTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // ONCEPIECETEST_H

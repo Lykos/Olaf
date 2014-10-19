@@ -15,7 +15,12 @@ using namespace std;
 using namespace chrono;
 using namespace testing;
 
-Q_DECLARE_METATYPE(EpdPosition)
+Q_DECLARE_METATYPE(olaf::EpdPosition)
+
+namespace olaf
+{
+namespace benchmark
+{
 
 static const milliseconds c_max_time(120000);
 static const string c_epd_extension = ".epd";
@@ -95,4 +100,7 @@ void EpdBenchmark::test_epd_data()
       ++i;
     }
   }
+
+} // namespace benchmark
+} // namespace olaf
 }

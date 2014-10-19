@@ -7,6 +7,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 Engine::Engine(ProtocolWriter* const writer,
                BoardState* board_state,
                unique_ptr<Searcher> searcher):
@@ -80,4 +83,6 @@ void Engine::move(const Move &move)
   m_writer->move(move);
   m_state.flip_turn();
   m_state.board_state().move(move);
+
+} // namespace olaf
 }

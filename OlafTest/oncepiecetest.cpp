@@ -14,9 +14,14 @@
 using namespace std;
 using namespace testing;
 
-Q_DECLARE_METATYPE(const Piece*)
-Q_DECLARE_METATYPE(Position)
-Q_DECLARE_METATYPE(vector<Move>)
+Q_DECLARE_METATYPE(const olaf::Piece*)
+Q_DECLARE_METATYPE(olaf::Position)
+Q_DECLARE_METATYPE(vector<olaf::Move>)
+
+namespace olaf
+{
+namespace test
+{
 
 void OncePieceTest::initTestCase()
 {
@@ -153,4 +158,7 @@ void OncePieceTest::test_moves()
     move_matchers.push_back(IsSameMove(move));
   }
   QASSERT_THAT(actual_moves, UnorderedElementsAreArray(move_matchers));
+
+} // namespace test
+} // namespace olaf
 }

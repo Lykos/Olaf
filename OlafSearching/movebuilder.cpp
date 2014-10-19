@@ -17,6 +17,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 namespace {
 
 bool CompareMoveActionPriorities(const unique_ptr<MoveAction>& left,
@@ -177,4 +180,6 @@ MoveActions MoveBuilder::copy_move_actions() const
   }
   stable_sort(result.begin(), result.end(), CompareMoveActionPriorities);
   return result;
+
+} // namespace olaf
 }

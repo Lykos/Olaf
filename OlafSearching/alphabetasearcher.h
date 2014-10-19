@@ -9,6 +9,9 @@
 #include <memory>
 #include <vector>
 
+namespace olaf
+{
+
 /**
  * @brief The RecursiveSearcher class is an abstract searcher which provides
  *        the method recursive_search which can be called by subclasses.
@@ -121,5 +124,7 @@ private:
   const int m_sub_searcher_depth;
   bool m_ignore_depth;
 };
+
+} // namespace olaf
 
 #endif // ALPHABETASEARCHER_H

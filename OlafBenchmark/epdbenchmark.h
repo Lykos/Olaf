@@ -10,6 +10,11 @@
 #include "OlafSearching/simpletimedsearcher.h"
 #include "OlafSearching/nothinkingwriter.h"
 
+namespace olaf
+{
+namespace benchmark
+{
+
 class EpdBenchmark : public Benchmark
 {
   Q_OBJECT
@@ -34,5 +39,8 @@ private Q_SLOTS:
 };
 
 DECLARE_BENCHMARK(EpdBenchmark)
+
+} // namespace benchmark
+} // namespace olaf
 
 #endif // EPDBENCHMARK_H

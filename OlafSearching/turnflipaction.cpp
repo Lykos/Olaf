@@ -1,5 +1,8 @@
 #include "turnflipaction.h"
 
+namespace olaf
+{
+
 void TurnFlipAction::execute(ChessBoard* const chess_board)
 {
   chess_board->next_turn();
@@ -19,4 +22,6 @@ int TurnFlipAction::priority() const
 {
   return MoveAction::TURN_FLIP_ACTION_PRIORITY;
 }
+
+} // namespace olaf
 

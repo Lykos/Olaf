@@ -9,6 +9,11 @@
 #include "benchmarkresult.h"
 #include "compositebenchmarkresult.h"
 
+namespace olaf
+{
+namespace benchmark
+{
+
 class Benchmark : public QObject
 {
   Q_OBJECT
@@ -48,5 +53,8 @@ private:
 };
 
 #define OLAF_BENCHMARK for (PerformanceMeasurer m(this); !m.done(); m.next())
+
+} // namespace benchmark
+} // namespace olaf
 
 #endif // BENCHMARK_H

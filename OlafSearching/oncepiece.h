@@ -6,6 +6,9 @@
 #include "piece.h"
 #include "color.h"
 
+namespace olaf
+{
+
 /**
  * @brief The OncePiece class represents a piece that can move only once in each
  *        direction, e.g. king or knight.
@@ -52,5 +55,7 @@ private:
 
   bool m_is_king;
 };
+
+} // namespace olaf
 
 #endif // ONCEPIECE_H

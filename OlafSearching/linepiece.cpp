@@ -8,6 +8,9 @@
 using namespace std;
 using namespace rel_ops;
 
+namespace olaf
+{
+
 LinePiece::LinePiece(const piece_index_t piece_index,
                      const char symbol,
                      const BitBoard& initial_board,
@@ -91,4 +94,6 @@ bool LinePiece::forbids_castle_k(const Position& source, const ChessBoard& board
       && m_is_rook
       && source.row() == ground_line(board.turn_color())
       && source.column() == Position::c_kings_rook_column;
+
+} // namespace olaf
 }

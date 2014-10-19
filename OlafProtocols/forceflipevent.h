@@ -4,6 +4,9 @@
 #include "engineevent.h"
 #include "enginestate.h"
 
+namespace olaf
+{
+
 /**
  * @brief The ForceFlipEvent class that flips the "force" flag.
  */
@@ -17,5 +20,7 @@ public:
 private:
   const bool m_value;
 };
+
+} // namespace olaf
 
 #endif // FORCEFLIPEVENT_H

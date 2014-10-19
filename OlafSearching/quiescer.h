@@ -6,6 +6,9 @@
 #include "alphabetasearcher.h"
 #include "positionevaluator.h"
 
+namespace olaf
+{
+
 class Quiescer : public AlphaBetaSearcher
 {
 public:
@@ -22,5 +25,7 @@ public:
 private:
   std::unique_ptr<PositionEvaluator> m_evaluator;
 };
+
+} // namespace olaf
 
 #endif // QUIESCER_H

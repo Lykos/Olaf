@@ -13,6 +13,11 @@
 
 using namespace std;
 
+namespace olaf
+{
+namespace benchmark
+{
+
 Move make_move(const Position& source, const Position& destination, const bool is_capture)
 {
   return Move({}, source, destination, is_capture, false, Piece::c_no_piece);
@@ -32,4 +37,7 @@ EpdPosition parse_epd(const string& epd)
   SearcherFactory factory(&no_thinking_writer);
   assert(factory.epd_parser()->parse(epd, &position));
   return position;
+
+} // namespace benchmark
+} // namespace olaf
 }

@@ -6,6 +6,11 @@
 #include <memory>
 #include "autotest.h"
 
+namespace olaf
+{
+namespace test
+{
+
 class PerftTest : public QObject
 {
   Q_OBJECT
@@ -17,5 +22,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(PerftTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // PERFTTEST_H

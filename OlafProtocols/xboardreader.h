@@ -10,6 +10,9 @@
 #include "protocolreader.h"
 #include "xboardwriter.h"
 
+namespace olaf
+{
+
 class XBoardReader : public ProtocolReader
 {
 public:
@@ -36,5 +39,7 @@ private:
 
   std::istream* const m_in;
 };
+
+} // namespace olaf
 
 #endif // XBOARDREADER_H

@@ -6,6 +6,11 @@
 #include <QtTest/QtTest>
 #include <QObject>
 
+namespace olaf
+{
+namespace test
+{
+
 class BoardTest : public QObject
 {
   Q_OBJECT
@@ -26,5 +31,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(BoardTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // BOARDTEST_H

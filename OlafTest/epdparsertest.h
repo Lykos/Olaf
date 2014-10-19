@@ -7,6 +7,11 @@
 #include "autotest.h"
 #include "OlafSearching/epdparser.h"
 
+namespace olaf
+{
+namespace test
+{
+
 class EpdParserTest : public QObject
 {
   Q_OBJECT
@@ -22,5 +27,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(EpdParserTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // EPDPARSERTEST_H

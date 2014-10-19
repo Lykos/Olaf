@@ -6,6 +6,9 @@
 #include <initializer_list>
 #include <memory>
 
+namespace olaf
+{
+
 class CompositeStopper : public Stopper
 {
 public:
@@ -25,5 +28,7 @@ private:
   std::vector<const Stopper*> m_sub_stoppers;
 
 };
+
+} // namespace olaf
 
 #endif // COMPOSITESTOPPER_H

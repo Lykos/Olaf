@@ -4,7 +4,12 @@
 #include <cctype>
 #include <sstream>
 
+#include "positiondelta.h"
+
 using namespace std;
+
+namespace olaf
+{
 
 static vector<Position> generate_all_positions()
 {
@@ -87,4 +92,6 @@ Position operator+(const Position &pos, const PositionDelta &d_pos)
 Position operator+(const PositionDelta &d_pos, const Position &pos)
 {
   return operator+(pos, d_pos);
+
+} // namespace olaf
 }

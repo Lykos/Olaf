@@ -5,6 +5,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 AlphaBetaSearcher::AlphaBetaSearcher():
   m_sub_searcher(nullptr),
   m_sub_searcher_depth(0),
@@ -109,4 +112,6 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     result->main_variation.emplace_back(move);
   }
   return ResultReaction::CONTINUE;
+
+} // namespace olaf
 }

@@ -7,6 +7,9 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+
 IterativeDeepener::IterativeDeepener(unique_ptr<AlphaBetaSearcher> searcher,
                                      ThinkingWriter* const writer,
                                      const int min_depth):
@@ -56,4 +59,6 @@ SearchResult IterativeDeepener::search(SearchContext* context)
     m_writer->output(context->board, result, time, context->search_depth);
   }
   return result;
+
+} // namespace olaf
 }

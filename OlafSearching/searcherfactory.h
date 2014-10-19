@@ -14,6 +14,9 @@
 #include "epdparser.h"
 #include <memory>
 
+namespace olaf
+{
+
 class SearcherFactory
 {
 public:
@@ -62,5 +65,7 @@ private:
   static const int c_min_depth = 1;
 
 };
+
+} // namespace olaf
 
 #endif // ENGINEFACTORY_H

@@ -16,12 +16,17 @@
 using namespace std;
 using namespace testing;
 
+Q_DECLARE_METATYPE(olaf::ChessBoard)
+Q_DECLARE_METATYPE(vector<olaf::Perft::PerftResult>)
+
+namespace olaf
+{
+namespace test
+{
+
 typedef Perft::PerftResult PerftResult;
 
 const int c_depth = 1;
-
-Q_DECLARE_METATYPE(ChessBoard)
-Q_DECLARE_METATYPE(vector<PerftResult>)
 
 void PerftTest::test_perft_data()
 {
@@ -49,4 +54,7 @@ void PerftTest::test_perft()
   const PerftResult& expected_result = expected_results.at(c_depth);
   const PerftResult& actual_result = perft->perft(c_depth, board);
   QASSERT_THAT(actual_result, Eq(expected_result));
+
+} // namespace test
+} // namespace olaf
 }

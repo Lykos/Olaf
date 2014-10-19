@@ -2,6 +2,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 bool operator ==(const PieceBoard& left, const PieceBoard& right)
 {
   if (&left == &right) {
@@ -39,4 +42,6 @@ void PieceBoard::set(const Position& position, const bool value)
 const BitBoard& PieceBoard::bit_board() const
 {
   return m_bit_board;
+
+} // namespace olaf
 }

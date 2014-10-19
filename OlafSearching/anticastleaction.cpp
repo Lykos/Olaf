@@ -2,7 +2,13 @@
 
 #include <memory>
 
+#include "chessboard.h"
+#include "colorboard.h"
+
 using namespace std;
+
+namespace olaf
+{
 
 AntiCastleAction::AntiCastleAction(const bool forbid_castle_q, const bool forbid_castle_k):
   m_forbid_castle_q(forbid_castle_q),
@@ -33,4 +39,6 @@ unique_ptr<MoveAction> AntiCastleAction::copy() const
 int AntiCastleAction::priority() const
 {
   return MoveAction::ANTI_CASTLE_ACTION_PRIORITY;
+
+} // namespace olaf
 }

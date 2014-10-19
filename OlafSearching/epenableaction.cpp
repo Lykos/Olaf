@@ -2,7 +2,13 @@
 
 #include <memory>
 
+#include "chessboard.h"
+#include "position.h"
+
 using namespace std;
+
+namespace olaf
+{
 
 EpEnableAction::EpEnableAction(const Position& new_ep_capture_position,
                                const Position& new_ep_victim_position):
@@ -33,4 +39,6 @@ int EpEnableAction::priority() const {
 
 unique_ptr<MoveAction> EpEnableAction::copy() const {
   return unique_ptr<MoveAction>(new EpEnableAction(*this));
+
+} // namespace olaf
 }

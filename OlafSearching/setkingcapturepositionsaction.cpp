@@ -9,6 +9,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 SetKingCapturePositionsAction::SetKingCapturePositionsAction(
     const std::vector<Position>& king_capture_positions,
     const Position& king_victim_position):
@@ -36,4 +39,6 @@ int SetKingCapturePositionsAction::priority() const {
 
 unique_ptr<MoveAction> SetKingCapturePositionsAction::copy() const {
   return unique_ptr<MoveAction>(new SetKingCapturePositionsAction(*this));
+
+} // namespace olaf
 }

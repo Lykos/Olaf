@@ -14,6 +14,9 @@
 #include <queue>
 #include <atomic>
 
+namespace olaf
+{
+
 /**
  * @brief The Engine class runs the algorithms to find moves and reacts to events.
  */
@@ -58,5 +61,7 @@ private:
 
   std::atomic<bool> m_quit;
 };
+
+} // namespace olaf
 
 #endif // ENGINE_H

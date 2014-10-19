@@ -1,6 +1,9 @@
 #include "materialevaluator.h"
 #include "pieceset.h"
 
+namespace olaf
+{
+
 MaterialEvaluator::MaterialEvaluator():
   m_piece_values (PieceSet::instance().pieces().size())
 {
@@ -23,4 +26,6 @@ MaterialEvaluator::score_t MaterialEvaluator::evaluate(const ChessBoard& board)
     result -= piece_board.bit_board().number() * m_piece_values[piece_board.piece().piece_index()];
   }
   return result;
+
+} // namespace olaf
 }

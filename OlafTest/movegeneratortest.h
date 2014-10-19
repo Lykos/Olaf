@@ -6,6 +6,11 @@
 
 #include "autotest.h"
 
+namespace olaf
+{
+namespace test
+{
+
 class MoveGeneratorTest : public QObject
 {
   Q_OBJECT
@@ -16,5 +21,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(MoveGeneratorTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // MOVEGENERATORTEST_H

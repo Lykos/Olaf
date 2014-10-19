@@ -5,6 +5,9 @@
 
 #include "OlafSearching/searchcontext.h"
 
+namespace olaf
+{
+
 class BoardState;
 
 /**
@@ -57,5 +60,7 @@ private:
   std::chrono::milliseconds m_time;
 
 };
+
+} // namespace olaf
 
 #endif // ENGINESTATE_H

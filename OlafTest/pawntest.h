@@ -8,6 +8,11 @@
 #include <QtTest/QTest>
 #include <QObject>
 
+namespace olaf
+{
+namespace test
+{
+
 class PawnTest : public QObject
 {
   Q_OBJECT
@@ -35,5 +40,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(PawnTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // PAWNTEST_H

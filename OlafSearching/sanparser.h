@@ -6,6 +6,9 @@
 #include "movegenerator.h"
 #include "movecreator.h"
 
+namespace olaf
+{
+
 class Move;
 
 class SanParser
@@ -22,5 +25,7 @@ private:
   std::unique_ptr<MoveGenerator> m_generator;
   std::unique_ptr<MoveCreator> m_creator;
 };
+
+} // namespace olaf
 
 #endif // SANPARSER_H

@@ -3,6 +3,9 @@
 
 #include "OlafSearching/move.h"
 
+namespace olaf
+{
+
 /**
  * @brief The ProtocolWriter class is an abstract class which is
  *        responsible for writing answers to the chess program interface.
@@ -20,5 +23,7 @@ public:
 
   virtual ~ProtocolWriter();
 };
+
+} // namespace olaf
 
 #endif // PROTOCOLWRITER_H

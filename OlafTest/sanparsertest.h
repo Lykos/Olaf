@@ -7,6 +7,11 @@
 #include "autotest.h"
 #include "OlafSearching/sanparser.h"
 
+namespace olaf
+{
+namespace test
+{
+
 class SanParserTest : public QObject
 {
   Q_OBJECT
@@ -22,5 +27,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(SanParserTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // SANPARSERTEST_H

@@ -3,6 +3,9 @@
 
 #include "enginestate.h"
 
+namespace olaf
+{
+
 /**
  * @brief The EngineEvent class is an abstract class for events sent to the engine.
  */
@@ -13,5 +16,7 @@ public:
 
   virtual ~EngineEvent() = 0;
 };
+
+} // namespace olaf
 
 #endif // ENGINEEVENT_H

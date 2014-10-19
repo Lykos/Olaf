@@ -8,6 +8,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 static const string c_id = "id";
 static const string c_am = "am";
 static const string c_bm = "bm";
@@ -82,4 +85,6 @@ void EpdParser::parse_bm(const string& bm, EpdPosition* const position) const
   if (m_san_parser->parse(bm, position->board, &move)) {
     position->best_moves.push_back(move);
   }
+
+} // namespace olaf
 }

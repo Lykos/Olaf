@@ -3,6 +3,11 @@
 #include "OlafSearching/chessboard.h"
 #include "OlafSearching/pieceset.h"
 
+namespace olaf
+{
+namespace test
+{
+
 BoardTest::BoardTest():
   m_bishop(PieceSet::instance().bishop().piece_index())
 {}
@@ -36,4 +41,7 @@ void BoardTest::test_occupied()
   result.set(Position(4, 4), true);
   result.set(Position(5, 2), true);
   QCOMPARE(result, board.occupied());
+
+} // namespace test
+} // namespace olaf
 }

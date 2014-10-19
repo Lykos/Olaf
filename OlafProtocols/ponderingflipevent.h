@@ -3,6 +3,9 @@
 
 #include "engineevent.h"
 
+namespace olaf
+{
+
 /**
  * @brief The PonderingFlipEvent class is an event representing a flip of the
  *        boolean that indicates whether pondering is on or off.
@@ -17,5 +20,7 @@ public:
 private:
   const bool m_value;
 };
+
+} // namespace olaf
 
 #endif // PONDERINGFLIP_H

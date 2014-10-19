@@ -3,6 +3,9 @@
 
 #include <cstdint>
 
+namespace olaf
+{
+
 class Position;
 class PositionDelta;
 
@@ -42,6 +45,8 @@ private:
 
   const d_column_t m_d_column;
 };
+
+} // namespace olaf
 
 #include "position.h"
 

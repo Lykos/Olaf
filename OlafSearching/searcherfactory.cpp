@@ -13,6 +13,9 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+
 // static
 const milliseconds SearcherFactory::c_search_time(2000);
 
@@ -118,4 +121,6 @@ unique_ptr<EpdParser> SearcherFactory::epd_parser() const
 {
   unique_ptr<EpdParser> parser(new EpdParser(san_parser()));
   return parser;
+
+} // namespace olaf
 }

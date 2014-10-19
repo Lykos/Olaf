@@ -3,9 +3,11 @@
 
 #include <memory>
 
-#include "colorboard.h"
-#include "moveaction.h"
 #include "position.h"
+#include "moveaction.h"
+
+namespace olaf
+{
 
 class ChessBoard;
 
@@ -39,6 +41,6 @@ private:
 
 };
 
-#include "chessboard.h"
+} // namespace olaf
 
 #endif // EPENABLEACTION_H

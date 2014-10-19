@@ -2,10 +2,16 @@
 #include "bitboard.h"
 #include "position.h"
 #include "piece.h"
+#include "pieceboard.h"
+#include "chessboard.h"
+
 #include <memory>
 #include <iostream>
 
 using namespace std;
+
+namespace olaf
+{
 
 SimpleMoveGenerator::SimpleMoveGenerator(unique_ptr<MoveCreator> creator):
   m_creator(move(creator))
@@ -56,4 +62,6 @@ vector<Move> SimpleMoveGenerator::generate_valid_moves(const ChessBoard& board)
     }
   }
   return result;
+
+} // namespace olaf
 }

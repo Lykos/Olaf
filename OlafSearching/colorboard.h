@@ -1,16 +1,17 @@
 #ifndef COLORBOARD_H
 #define COLORBOARD_H
 
-#include "color.h"
-#include "position.h"
 #include <vector>
 #include <memory>
 
-class PieceBoard;
+#include "color.h"
+#include "position.h"
+#include "pieceboard.h"
+#include "piece.h"
+#include "bitboard.h"
 
-class BitBoard;
-
-class Piece;
+namespace olaf
+{
 
 class ColorBoard;
 
@@ -86,8 +87,6 @@ private:
 
 };
 
-#include "pieceboard.h"
-#include "piece.h"
-#include "bitboard.h"
+} // namespace olaf
 
 #endif // COLORBOARD_H

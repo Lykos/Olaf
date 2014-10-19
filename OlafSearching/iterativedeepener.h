@@ -8,6 +8,9 @@
 #include <memory>
 #include <mutex>
 
+namespace olaf
+{
+
 class SearchContext;
 
 class IterativeDeepener : public Searcher
@@ -26,5 +29,7 @@ private:
 
   const int m_min_depth = 1;
 };
+
+} // namespace olaf
 
 #endif // ITERATIVEDEEPENER_H

@@ -5,6 +5,11 @@
 #include <QtTest/QTest>
 #include "autotest.h"
 
+namespace olaf
+{
+namespace test
+{
+
 class FenParserTest : public QObject
 {
   Q_OBJECT
@@ -19,5 +24,8 @@ private Q_SLOTS:
 };
 
 DECLARE_TEST(FenParserTest)
+
+} // namespace test
+} // namespace olaf
 
 #endif // FENPARSERTEST_H

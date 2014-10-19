@@ -13,8 +13,13 @@
 
 using namespace std;
 
-Q_DECLARE_METATYPE(ChessBoard)
-Q_DECLARE_METATYPE(Move)
+Q_DECLARE_METATYPE(olaf::ChessBoard)
+Q_DECLARE_METATYPE(olaf::Move)
+
+namespace olaf
+{
+namespace test
+{
 
 void SanParserTest::initTestCase()
 {
@@ -175,4 +180,7 @@ void SanParserTest::test_parse()
   Move actual_move;
   QVERIFY(m_parser->parse(san.toStdString(), board, &actual_move));
   QASSERT_THAT(actual_move, IsSameMove(move));
+
+} // namespace test
+} // namespace olaf
 }

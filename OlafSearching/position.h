@@ -1,14 +1,17 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include "positiondelta.h"
 #include <cstdint>
 #include <ostream>
 #include <istream>
 #include <vector>
 #include <string>
 
+namespace olaf
+{
+
 class Position;
+class PositionDelta;
 
 std::ostream& operator<<(std::ostream &out, const Position &position);
 
@@ -92,5 +95,9 @@ private:
 
   column_t m_column;
 };
+
+} // namespace olaf
+
+#include "positiondelta.h"
 
 #endif // POSITION_H

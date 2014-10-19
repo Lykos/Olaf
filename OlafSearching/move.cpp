@@ -3,8 +3,12 @@
 #include <cassert>
 
 #include "pieceset.h"
+#include "chessboard.h"
 
 using namespace std;
+
+namespace olaf
+{
 
 static MoveActions copy_move_actions(const MoveActions& move_actions) {
   MoveActions result;
@@ -145,4 +149,6 @@ std::ostream& operator <<(std::ostream& out, const Move& move)
     out << " converts to " << move.created_piece();
   }
   return out << ")";
+
+} // namespace olaf
 }

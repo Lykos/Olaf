@@ -7,6 +7,9 @@
 #include "chessboard.h"
 #include "position.h"
 
+namespace olaf
+{
+
 class SimpleMoveCreator : public MoveCreator
 {
 public:
@@ -39,5 +42,7 @@ public:
 private:
   bool is_killable(const ChessBoard& board);
 };
+
+} // namespace olaf
 
 #endif // SIMPLEMOVECREATOR_H

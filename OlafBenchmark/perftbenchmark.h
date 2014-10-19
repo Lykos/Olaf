@@ -6,6 +6,11 @@
 #include "autobenchmark.h"
 #include "benchmark.h"
 
+namespace olaf
+{
+namespace benchmark
+{
+
 class PerftBenchmark : public Benchmark
 {
   Q_OBJECT
@@ -17,5 +22,8 @@ private Q_SLOTS:
 };
 
 DECLARE_BENCHMARK(PerftBenchmark)
+
+} // namespace benchmark
+} // namespace olaf
 
 #endif // PERFTBENCHMARK_H

@@ -6,6 +6,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 XBoardWriter::XBoardWriter(ostream* const out):
   m_out(out)
 {}
@@ -186,4 +189,6 @@ std::string XBoardWriter::error_name(const ErrorType type) const
       return "invalid fen";
   }
   return "";
+
+} // namespace olaf
 }

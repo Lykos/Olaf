@@ -5,6 +5,9 @@
 #include "protocolwriter.h"
 #include <memory>
 
+namespace olaf
+{
+
 /**
  * @brief The PingEvent class is an event representing a ping from the
  */
@@ -24,5 +27,7 @@ private:
   const int m_number;
 
 };
+
+} // namespace olaf
 
 #endif // PINGEVENT_H

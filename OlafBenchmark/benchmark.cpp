@@ -9,6 +9,11 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+namespace benchmark
+{
+
 static const int c_iterations = 5;
 static const int c_used_measurements = 2;
 
@@ -74,4 +79,7 @@ void Benchmark::PerformanceMeasurer::next()
   m_benchmark->push_result(BenchmarkResult(m_benchmark->current_test_id(),
                                            milliseconds(m_timer.elapsed())));
   m_done = true;
+
+} // namespace benchmark
+} // namespace olaf
 }

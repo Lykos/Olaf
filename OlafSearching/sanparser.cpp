@@ -10,6 +10,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 static const string c_castle_k = "O-O";
 static const string c_castle_q = "O-O-O";
 static const string c_capture_symbols = ":x";
@@ -153,4 +156,6 @@ bool SanParser::parse(const string& san_move,
   *move = *found_move;
   return true;
 #undef CHECK_END
+
+} // namespace olaf
 }

@@ -4,6 +4,9 @@
 #include <string>
 #include <yaml-cpp/yaml.h>
 
+namespace olaf
+{
+
 class Config
 {
 public:
@@ -12,5 +15,7 @@ public:
 private:
   const YAML::Node m_config;
 };
+
+} // namespace olaf
 
 #endif // CONFIG_H

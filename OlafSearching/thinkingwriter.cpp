@@ -1,5 +1,8 @@
 #include "thinkingwriter.h"
 
+namespace olaf
+{
+
 ThinkingWriter::ThinkingWriter():
   m_post (true)
 {}
@@ -14,4 +17,6 @@ void ThinkingWriter::post(const bool value)
 bool ThinkingWriter::post() const
 {
   return m_post;
+
+} // namespace olaf
 }

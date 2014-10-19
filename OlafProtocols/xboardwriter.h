@@ -10,6 +10,9 @@
 #include "result.h"
 #include "OlafSearching/move.h"
 
+namespace olaf
+{
+
 /**
  * @brief The XBoardWriter class sends answers to the chess interface program
  *        using the XBoard protocol.
@@ -88,5 +91,7 @@ private:
 
   std::ostream* const m_out;
 };
+
+} // namespace olaf
 
 #endif // XBOARDWRITER_H

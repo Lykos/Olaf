@@ -8,6 +8,9 @@
 #include <memory>
 #include <chrono>
 
+namespace olaf
+{
+
 /**
  * @brief The EngineEventHelper class is a helper class for the class that
  *        reads the input received from the chess interface program. It creates
@@ -61,5 +64,7 @@ private:
 
   ThinkingWriter* const m_thinking_writer;
 };
+
+} // namespace olaf
 
 #endif // ENGINEEVENTHELPER_H

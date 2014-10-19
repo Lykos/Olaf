@@ -8,6 +8,9 @@
 #include <chrono>
 #include <memory>
 
+namespace olaf
+{
+
 /**
  * @brief The SimpleThinkingWriter class is a very simple class
  *        that creates pondering output.
@@ -29,5 +32,7 @@ private:
   ProtocolWriter* const m_writer;
 
 };
+
+} // namespace olaf
 
 #endif // SIMPLETHINKINGWRITER_H

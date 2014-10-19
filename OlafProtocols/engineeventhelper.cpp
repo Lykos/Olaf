@@ -13,6 +13,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 EngineEventHelper::EngineEventHelper(ProtocolWriter* const writer,
                                      BoardState* const board_state,
                                      Engine* const engine,
@@ -116,4 +119,6 @@ void EngineEventHelper::enqueue_move(const Move& move)
 {
   unique_ptr<EngineEvent> move_event(new MoveEvent(move));
   m_engine->enqueue(std::move(move_event));
+
+} // namespace olaf
 }

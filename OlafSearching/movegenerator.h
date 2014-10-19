@@ -6,6 +6,9 @@
 #include "piece.h"
 #include <vector>
 
+namespace olaf
+{
+
 /**
  * @brief The MoveGenerator class is responsible for generating moves in a position for
  *        the engine.
@@ -25,5 +28,7 @@ public:
    */
   virtual std::vector<Move> generate_valid_moves(const ChessBoard& board) = 0;
 };
+
+} // namespace olaf
 
 #endif // MOVEGENERATOR_H

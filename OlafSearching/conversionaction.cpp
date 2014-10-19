@@ -1,5 +1,10 @@
 #include "conversionaction.h"
+
 #include "pieceset.h"
+#include "chessboard.h"
+
+namespace olaf
+{
 
 ConversionAction::ConversionAction(const Position &position,
                                    const PieceSet::piece_index_t removed_piece,
@@ -29,4 +34,6 @@ std::unique_ptr<MoveAction> ConversionAction::copy() const
 int ConversionAction::priority() const
 {
   return MoveAction::CONVERSION_ACTION_PRIORITY;
+
+} // namespace olaf
 }

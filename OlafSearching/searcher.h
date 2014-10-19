@@ -4,6 +4,9 @@
 #include "searchcontext.h"
 #include "searchresult.h"
 
+namespace olaf
+{
+
 class Searcher
 {
 public:
@@ -11,5 +14,7 @@ public:
 
   virtual ~Searcher();
 };
+
+} // namespace olaf
 
 #endif // SEARCHER_H

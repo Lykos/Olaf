@@ -8,6 +8,9 @@
 #include "colorboard.h"
 #include "pieceset.h"
 
+namespace olaf
+{
+
 class ChessBoard;
 
 /**
@@ -42,6 +45,6 @@ private:
   const Position m_destination;
 };
 
-#include "chessboard.h"
+} // namespace olaf
 
 #endif // PIECEMOVEACTION_H

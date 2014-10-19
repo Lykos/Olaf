@@ -4,6 +4,9 @@
 #include "position.h"
 #include "positiondelta.h"
 
+namespace olaf
+{
+
 /**
  * @brief The Color enum represents the colors of the chess players. They are guaranteed
  * to be White = 0 and Black = 1, so they can be used as indices safely.
@@ -42,5 +45,7 @@ constexpr Position::row_t conversion_row(Color color)
 {
   return color == Color::White ? 7 : 0;
 }
+
+} // namespace olaf
 
 #endif // COLOR_H

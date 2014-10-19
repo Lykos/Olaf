@@ -4,6 +4,9 @@
 #include "OlafSearching/chessboard.h"
 #include "engineevent.h"
 
+namespace olaf
+{
+
 class SetBoardEvent : public EngineEvent
 {
 public:
@@ -14,5 +17,7 @@ public:
 private:
   ChessBoard m_board;
 };
+
+} // namespace olaf
 
 #endif // SETBOARDEVENT_H

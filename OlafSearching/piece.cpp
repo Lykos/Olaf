@@ -4,8 +4,12 @@
 #include <cctype>
 
 #include "color.h"
+#include "chessboard.h"
 
 using namespace std;
+
+namespace olaf
+{
 
 bool operator==(const Piece &a, const Piece &b)
 {
@@ -48,4 +52,6 @@ bool Piece::can_move(const Position& source,
   return board.friendd(source)
       && !board.friendd(destination)
       && board.turn_board().piece_index(source) == m_piece_index;
+
+} // namespace olaf
 }

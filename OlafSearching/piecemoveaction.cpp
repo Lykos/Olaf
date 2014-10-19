@@ -3,7 +3,14 @@
 #include <cassert>
 #include <vector>
 
+#include "piece.h"
+#include "position.h"
+#include "chessboard.h"
+
 using namespace std;
+
+namespace olaf
+{
 
 PieceMoveAction::PieceMoveAction(const Piece::piece_index_t piece_index,
                                  const Position& source,
@@ -34,4 +41,6 @@ std::unique_ptr<MoveAction> PieceMoveAction::copy() const
 int PieceMoveAction::priority() const
 {
   return MoveAction::PIECE_MOVE_ACTION_PRIORITY;
+
+} // namespace olaf
 }

@@ -9,6 +9,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 static const char c_row_separator = '/';
 static const char c_zero = '0';
 static const char c_one = '1';
@@ -253,4 +256,6 @@ string FenParser::serialize(const ChessBoard& board)
 }
 
 #undef CONSUME
+
+} // namespace olaf
 #undef CHECK_NOT_END

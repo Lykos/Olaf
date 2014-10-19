@@ -5,6 +5,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 static pair<Move*, SearchResult> eval_move(ParallelNegaMaxer* const searcher,
                                            const AlphaBetaSearcher::SearchState& state,
                                            const SearchContext& context,
@@ -59,4 +62,6 @@ SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
     }
   }
   return result;
+
+} // namespace olaf
 }

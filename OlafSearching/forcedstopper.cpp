@@ -1,5 +1,8 @@
 #include "forcedstopper.h"
 
+namespace olaf
+{
+
 ForcedStopper::ForcedStopper():
   m_stop (false)
 {}
@@ -12,4 +15,6 @@ void ForcedStopper::request_stop()
 bool ForcedStopper::should_stop() const
 {
   return m_stop;
+
+} // namespace olaf
 }

@@ -9,6 +9,9 @@
 #include "colorboard.h"
 #include "move.h"
 
+namespace olaf
+{
+
 class MoveAction;
 class ChessBoard;
 
@@ -79,6 +82,8 @@ private:
 
   Piece::piece_index_t m_created_piece = Piece::c_no_piece;
 };
+
+} // namespace olaf
 
 #include "chessboard.h"
 #include "moveaction.h"

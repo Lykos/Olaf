@@ -9,6 +9,9 @@
 #include <mutex>
 #include <stack>
 
+namespace olaf
+{
+
 /**
  * @brief The BoardState class is the engines interface to the chess board.
  */
@@ -53,5 +56,7 @@ private:
 
   std::stack<Move> m_moves;
 };
+
+} // namespace olaf
 
 #endif // BOARDSTATE_H

@@ -7,6 +7,9 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+
 SimpleTimedSearcher::SimpleTimedSearcher(unique_ptr<Searcher> sub_searcher,
                                          const milliseconds& search_millis):
   m_sub_searcher(move(sub_searcher)),
@@ -28,4 +31,6 @@ SearchResult SimpleTimedSearcher::search(SearchContext* const context)
       break;
   }
   return m_sub_searcher->search(context);
+
+} // namespace olaf
 }

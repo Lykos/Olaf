@@ -6,6 +6,11 @@
 
 using namespace std;
 
+namespace olaf
+{
+namespace benchmark
+{
+
 namespace auto_benchmark {
 
 BenchmarkList& benchmark_list()
@@ -46,4 +51,7 @@ GlobalResult run(const int argc, char* argv[], const string& description)
   return global_result;
 }
 
+
+} // namespace benchmark
+} // namespace olaf
 } // namespace auto_benchmark

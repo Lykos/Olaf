@@ -4,6 +4,9 @@
 #include "moveaction.h"
 #include "chessboard.h"
 
+namespace olaf
+{
+
 class TurnFlipAction : public MoveAction
 {
 public:
@@ -15,5 +18,7 @@ public:
 
   int priority() const override;
 };
+
+} // namespace olaf
 
 #endif // TURNFLIPACTION_H

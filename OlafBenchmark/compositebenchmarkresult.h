@@ -11,6 +11,11 @@
 
 using namespace std;
 
+namespace olaf
+{
+namespace benchmark
+{
+
 template <typename T>
 class CompositeBenchmarkResult;
 
@@ -82,5 +87,8 @@ ostream& operator <<(ostream& out,
   }
   return out;
 }
+
+} // namespace benchmark
+} // namespace olaf
 
 #endif // COMPOSITEPERFORMANCERESULT_H

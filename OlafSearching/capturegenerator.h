@@ -6,6 +6,9 @@
 #include <memory>
 #include <vector>
 
+namespace olaf
+{
+
 class CaptureGenerator : public MoveGenerator
 {
 public:
@@ -18,5 +21,7 @@ public:
 private:
   std::unique_ptr<MoveGenerator> m_generator;
 };
+
+} // namespace olaf
 
 #endif // CAPTUREGENERATOR_H

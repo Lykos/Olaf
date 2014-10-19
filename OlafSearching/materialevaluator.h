@@ -5,6 +5,9 @@
 #include "chessboard.h"
 #include <vector>
 
+namespace olaf
+{
+
 class MaterialEvaluator : public PositionEvaluator
 {
 public:
@@ -16,5 +19,7 @@ private:
   std::vector<int> m_piece_values;
 
 };
+
+} // namespace olaf
 
 #endif // MATERIALEVALUATOR_H

@@ -1,9 +1,13 @@
 #include "bitboard.h"
+
 #ifdef __POPCNT__
 #include <popcntintrin.h>
 #endif
 
 using namespace std;
+
+namespace olaf
+{
 
 BitBoard operator|(const BitBoard& a, const BitBoard& b)
 {
@@ -87,4 +91,7 @@ uint_fast8_t BitBoard::number() const
   x = (x + (x >> 4)) & m4;
   return (x * h01) >> 56;
 }
+
 #endif
+
+} // namespace olaf

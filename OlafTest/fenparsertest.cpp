@@ -11,7 +11,12 @@
 
 using namespace std;
 
-Q_DECLARE_METATYPE(ChessBoard)
+Q_DECLARE_METATYPE(olaf::ChessBoard)
+
+namespace olaf
+{
+namespace test
+{
 
 static ChessBoard create_ep_board()
 {
@@ -158,4 +163,7 @@ void FenParserTest::test_serialize()
     QFETCH(ChessBoard, board);
     QCOMPARE(FenParser::serialize(board), fen.toStdString());
   }
+
+} // namespace test
+} // namespace olaf
 }

@@ -2,12 +2,16 @@
 #define PIECEBOARD_H
 
 #include <memory>
-#include <set>
 
 #include "bitboard.h"
 #include "piece.h"
 #include "position.h"
 #include "color.h"
+
+namespace olaf
+{
+
+class PieceBoard;
 
 bool operator ==(const PieceBoard& left, const PieceBoard& right);
 
@@ -39,5 +43,7 @@ private:
 
   BitBoard m_bit_board;
 };
+
+} // namespace olaf
 
 #endif // PIECEBOARD_H

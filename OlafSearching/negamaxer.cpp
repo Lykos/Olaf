@@ -1,9 +1,14 @@
 #include "negamaxer.h"
-#include "move.h"
+
 #include <limits>
-#include <future>
+#include <vector>
+
+#include "move.h"
 
 using namespace std;
+
+namespace olaf
+{
 
 SearchResult NegaMaxer::alpha_beta(SearchState* const state,
                                    SearchContext* const context)
@@ -27,3 +32,5 @@ SearchResult NegaMaxer::alpha_beta(SearchState* const state,
   }
   return result;
 }
+
+} // namespace olaf

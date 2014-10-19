@@ -3,6 +3,9 @@
 
 #include "engineevent.h"
 
+namespace olaf
+{
+
 /**
  * @brief The MyTurnFlipEvent class is an event that flips the boolean "my turn".
  */
@@ -16,5 +19,7 @@ public:
 private:
   const bool m_value;
 };
+
+} // namespace olaf
 
 #endif // MYTURNFLIP_H

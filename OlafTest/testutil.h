@@ -9,6 +9,11 @@
 #include "OlafSearching/position.h"
 #include "OlafSearching/move.h"
 
+namespace olaf
+{
+namespace test
+{
+
 MATCHER_P(IsSameMove, move, "") {
   return ExplainMatchResult(testing::Eq(move.source()), arg.source(), result_listener)
       && ExplainMatchResult(testing::Eq(move.destination()), arg.destination(), result_listener)
@@ -28,5 +33,8 @@ MATCHER_P(IsSameMove, move, "") {
 Move make_move(const Position& source, const Position& destination, const bool is_capture);
 
 ChessBoard parse_fen(const std::string& fen);
+
+} // namespace test
+} // namespace olaf
 
 #endif // TEST_UTIL_H

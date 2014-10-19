@@ -9,6 +9,9 @@
 #include <memory>
 #include <chrono>
 
+namespace olaf
+{
+
 /**
  * @brief The SimpleTimedSearcher class adds time bounds to the SearchContext unless
  *        it is an infinite search.
@@ -27,5 +30,7 @@ private:
   const std::chrono::milliseconds m_search_millis;
 
 };
+
+} // namespace olaf
 
 #endif // SIMPLETIMEDSEARCHER_H

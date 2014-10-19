@@ -6,6 +6,11 @@
 using namespace std;
 using namespace chrono;
 
+namespace olaf
+{
+namespace benchmark
+{
+
 BenchmarkResult::BenchmarkResult():
   m_description(""),
   m_millis(0)
@@ -83,3 +88,6 @@ bool operator <(const BenchmarkResult& a, const BenchmarkResult& b)
 }
 
 const string BenchmarkResult::c_indentation("  ");
+
+} // namespace benchmark
+} // namespace olaf

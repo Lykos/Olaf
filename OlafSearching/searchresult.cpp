@@ -4,6 +4,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 // static
 const SearchResult& SearchResult::invalid()
 {
@@ -22,4 +25,6 @@ SearchResult::SearchResult():
 bool SearchResult::valid() const
 {
   return nodes > 0;
+
+} // namespace olaf
 }

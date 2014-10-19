@@ -5,6 +5,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 CaptureAction::CaptureAction(const Position& victim_position,
                              const ColorBoard::piece_index_t victim_index):
   m_victim_position(victim_position),
@@ -30,4 +33,6 @@ unique_ptr<MoveAction> CaptureAction::copy() const
 int CaptureAction::priority() const
 {
   return MoveAction::CAPTURE_ACTION_PRIORITY;
+
+} // namespace olaf
 }

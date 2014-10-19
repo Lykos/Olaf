@@ -7,6 +7,9 @@
 #include "chessboard.h"
 #include "move.h"
 
+namespace olaf
+{
+
 struct EpdPosition
 {
   ChessBoard board;
@@ -14,5 +17,7 @@ struct EpdPosition
   std::vector<Move> best_moves;
   std::string id;
 };
+
+} // namespace olaf
 
 #endif // EPDPOSITION_H

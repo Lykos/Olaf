@@ -7,6 +7,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 bool SimpleMoveCreator::valid_move(const ChessBoard& board,
                                    const Position& source,
                                    const Position& destination)
@@ -98,4 +101,6 @@ bool SimpleMoveCreator::is_killable(const ChessBoard& board)
     }
   }
   return false;
+
+} // namespace olaf
 }

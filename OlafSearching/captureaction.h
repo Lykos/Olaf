@@ -6,6 +6,9 @@
 #include "chessboard.h"
 #include "pieceset.h"
 
+namespace olaf
+{
+
 /**
  * @brief The CaptureAction class represents the action
  *        of capturing a piece.
@@ -29,5 +32,7 @@ private:
 
   const PieceSet::piece_index_t m_victim_index;
 };
+
+} // namespace olaf
 
 #endif // CAPTUREACTION_H

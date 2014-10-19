@@ -7,6 +7,9 @@
 #include "moveorderer.h"
 #include <memory>
 
+namespace olaf
+{
+
 class ParallelNegaMaxer : public AlphaBetaSearcher
 {
 public:
@@ -20,5 +23,7 @@ private:
   std::unique_ptr<MoveOrderer> m_orderer;
 
 };
+
+} // namespace olaf
 
 #endif // PARALLELNEGAMAXER_H

@@ -11,6 +11,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 Perft::PerftResult& Perft::PerftResult::operator +=(const PerftResult& right)
 {
   nodes += right.nodes;
@@ -171,4 +174,6 @@ std::ostream& operator <<(std::ostream& out, const Perft::PerftResult& perft_res
              << ", castles = " << perft_result.castles
              << ", promotions = " << perft_result.promotions
              << ", mates = " << perft_result.mates << ")";
+
+} // namespace olaf
 }

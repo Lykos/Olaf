@@ -9,6 +9,8 @@
 #include "benchmarkresult.h"
 
 using namespace std;
+using namespace olaf;
+using namespace benchmark;
 
 int main(int argc, char *argv[])
 {

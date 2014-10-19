@@ -1,7 +1,6 @@
 #!/usr/bin/ruby
 
 namespaces = ARGV
-puts namespaces
 
 Dir.foreach('.') do |item|
   next unless item =~ /.+\.(h|cpp)/

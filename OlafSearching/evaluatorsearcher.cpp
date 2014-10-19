@@ -4,6 +4,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 EvaluatorSearcher::EvaluatorSearcher(unique_ptr<PositionEvaluator> evaluator):
   m_evaluator(move(evaluator))
 {}
@@ -15,4 +18,6 @@ SearchResult EvaluatorSearcher::alpha_beta(SearchState* const /* state */,
   result.nodes = 1;
   result.score = m_evaluator->evaluate(context->board);
   return result;
+
+} // namespace olaf
 }

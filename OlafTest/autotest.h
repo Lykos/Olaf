@@ -6,8 +6,13 @@
 #include <string>
 #include <memory>
 
+namespace olaf
+{
+namespace test
+{
 namespace auto_test
 {
+
 typedef std::vector<QObject*> TestList;
 
 TestList& test_list();
@@ -32,13 +37,15 @@ struct TestHolder
 };
 
 } // namespace auto_test
+} // namespace test
+} // namespace olaf
 
-#define DECLARE_TEST(className) static ::auto_test::TestHolder<className> t(#className);
+#define DECLARE_TEST(className) static ::olaf::test::auto_test::TestHolder<className> t(#className);
 
 #define AUTOTEST_MAIN \
   int main(int argc, char *argv[]) \
   { \
-      return ::auto_test::run(argc, argv); \
+      return ::olaf::test::auto_test::run(argc, argv); \
   }
 
 #endif // AUTOTEST_H

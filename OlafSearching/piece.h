@@ -7,6 +7,9 @@
 #include "color.h"
 #include "bitboard.h"
 
+namespace olaf
+{
+
 class Move;
 
 class ChessBoard;
@@ -73,7 +76,8 @@ private:
   const BitBoard m_initial_board;
 };
 
-#include "chessboard.h"
+} // namespace olaf
+
 #include "move.h"
 
 #endif // PIECETYPE_H

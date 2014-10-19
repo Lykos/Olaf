@@ -7,6 +7,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 static const vector<PositionDelta> c_queen_directions = {
   PositionDelta(0, -1),
   PositionDelta(0, 1),
@@ -132,4 +135,6 @@ const PieceSet& PieceSet::instance()
 {
   static PieceSet instance;
   return instance;
+
+} // namespace olaf
 }

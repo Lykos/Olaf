@@ -5,6 +5,11 @@
 #include <chrono>
 #include <string>
 
+namespace olaf
+{
+namespace benchmark
+{
+
 class BenchmarkResult;
 
 std::ostream& operator<<(std::ostream& out, const BenchmarkResult& result);
@@ -52,5 +57,8 @@ protected:
 
   bool m_has_score = false;
 };
+
+} // namespace benchmark
+} // namespace olaf
 
 #endif // PERFORMANCERESULT_H

@@ -4,6 +4,9 @@
 #include <memory>
 #include <vector>
 
+namespace olaf
+{
+
 class ChessBoard;
 
 /**
@@ -51,6 +54,6 @@ public:
 
 typedef std::vector<std::unique_ptr<MoveAction>> MoveActions;
 
-#include "chessboard.h"
+} // namespace olaf
 
 #endif // MOVEACTION_H

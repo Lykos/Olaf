@@ -5,6 +5,9 @@
 #include "positionevaluator.h"
 #include <memory>
 
+namespace olaf
+{
+
 /**
  * @brief The EvaluatorSearcher class is a searcher wrapper which just evaluates the position.
  */
@@ -18,5 +21,7 @@ public:
 private:
   std::unique_ptr<PositionEvaluator> m_evaluator;
 };
+
+} // namespace olaf
 
 #endif // EVALUATORSEARCHER_H

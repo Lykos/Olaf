@@ -6,6 +6,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 static bool can_castle_q(const ChessBoard& board)
 {
   const Position::row_t ground = ground_line(board.turn_color());
@@ -118,4 +121,6 @@ bool OncePiece::forbids_castle(const Position& source, const ChessBoard& board) 
   return board.turn_board().can_castle()
       && is_king_at_initial_position(source, board);
 }
+
+} // namespace olaf
 

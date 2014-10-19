@@ -4,6 +4,9 @@
 #include "moveaction.h"
 #include "pieceset.h"
 
+namespace olaf
+{
+
 /**
  * @brief The ConversionAction class represents the action of converting a pawn to another piece.
  */
@@ -36,5 +39,7 @@ private:
   const PieceSet::piece_index_t m_created_piece;
 
 };
+
+} // namespace olaf
 
 #endif // CONVERSIONACTION_H

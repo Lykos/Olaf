@@ -7,6 +7,9 @@
 #include "moveorderer.h"
 #include <memory>
 
+namespace olaf
+{
+
 /**
  * @brief The NegaMaxer class is a class which implements the Negamax algorithm sequentially.
  *        It calls its sub searcher for the leaves.
@@ -19,5 +22,7 @@ public:
   SearchResult alpha_beta(SearchState* state,
                           SearchContext* context) final;
 };
+
+} // namespace olaf
 
 #endif // NEGAMAXER_H

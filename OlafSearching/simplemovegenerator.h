@@ -9,6 +9,9 @@
 #include <vector>
 #include <memory>
 
+namespace olaf
+{
+
 class SimpleMoveGenerator : public MoveGenerator
 {
 public:
@@ -23,5 +26,7 @@ private:
 
   std::unique_ptr<MoveCreator> m_creator;
 };
+
+} // namespace olaf
 
 #endif // SIMPLEMOVEGENERATOR_H

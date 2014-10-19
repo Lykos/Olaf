@@ -2,6 +2,9 @@
 
 using namespace std;
 
+namespace olaf
+{
+
 std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
 {
   for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
@@ -257,4 +260,6 @@ ChessBoard create_empty_board()
       ColorBoard::create_empty_color_board(),
       ColorBoard::create_empty_color_board()}};
   return ChessBoard(colors);
+
+} // namespace olaf
 }

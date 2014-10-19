@@ -6,6 +6,9 @@
 #include "moveaction.h"
 #include "chessboard.h"
 
+namespace olaf
+{
+
 class EpDisableAction : public MoveAction
 {
 public:
@@ -20,5 +23,7 @@ public:
 private:
   bool m_old_ep_possible;
 };
+
+} // namespace olaf
 
 #endif // EPDISABLEACTION_H

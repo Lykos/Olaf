@@ -3,6 +3,9 @@
 
 #include "thinkingwriter.h"
 
+namespace olaf
+{
+
 class NoThinkingWriter : public ThinkingWriter
 {
 public:
@@ -11,5 +14,7 @@ public:
               const std::chrono::milliseconds& time,
               int depth) override;
 };
+
+} // namespace olaf
 
 #endif // NOTHINKINGWRITER_H

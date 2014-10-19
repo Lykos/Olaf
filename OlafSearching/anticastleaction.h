@@ -4,7 +4,9 @@
 #include <memory>
 
 #include "moveaction.h"
-#include "colorboard.h"
+
+namespace olaf
+{
 
 class ChessBoard;
 
@@ -41,6 +43,6 @@ private:
   const bool m_forbid_castle_k;
 };
 
-#include "chessboard.h"
+} // namespace olaf
 
 #endif // ANTICASTLEMOVE_H

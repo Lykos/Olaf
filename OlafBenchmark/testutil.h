@@ -10,6 +10,11 @@
 #include "OlafSearching/move.h"
 #include "OlafSearching/epdposition.h"
 
+namespace olaf
+{
+namespace benchmark
+{
+
 MATCHER_P(IsSameMove, move, "") {
   return ExplainMatchResult(testing::Eq(move.source()), arg.source(), result_listener)
       && ExplainMatchResult(testing::Eq(move.destination()), arg.destination(), result_listener)
@@ -31,5 +36,8 @@ Move make_move(const Position& source, const Position& destination, const bool i
 ChessBoard parse_fen(const std::string& fen);
 
 EpdPosition parse_epd(const std::string& epd);
+
+} // namespace benchmark
+} // namespace olaf
 
 #endif // TEST_UTIL_H
