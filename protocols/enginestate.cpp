@@ -10,7 +10,9 @@ using namespace chrono;
 namespace olaf
 {
 
-EngineState::EngineState(BoardState* const board_state):
+EngineState::EngineState(unique_ptr<TranspositionTable> transposition_table,
+                         BoardState* const board_state):
+  m_transposition_table(move(transposition_table)),
   m_board_state(board_state)
 {
   assert(board_state);
@@ -90,6 +92,7 @@ SearchContext EngineState::create_search_context(const Stopper* const forced_sto
   } else {
     context.time_mode = SearchContext::TimeMode::INFINITE;
   }
+  context.transposition_table = m_transposition_table.get();
   return context;
 
 } // namespace olaf

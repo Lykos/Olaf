@@ -11,9 +11,10 @@ namespace olaf
 {
 
 Engine::Engine(ProtocolWriter* const writer,
-               BoardState* board_state,
+               unique_ptr<TranspositionTable> transposition_table,
+               BoardState* const board_state,
                unique_ptr<Searcher> searcher):
-  m_state(board_state),
+  m_state(std::move(transposition_table), board_state),
   m_forced_stopper(new ForcedStopper),
   m_weak_stopper(new ForcedStopper),
   m_writer(writer),

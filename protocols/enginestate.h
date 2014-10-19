@@ -2,8 +2,10 @@
 #define ENGINESTATE_H
 
 #include <chrono>
+#include <memory>
 
 #include "olaf/search/searchcontext.h"
+#include "olaf/transposition_table/transpositiontable.h"
 
 namespace olaf
 {
@@ -17,7 +19,8 @@ class BoardState;
 class EngineState
 {
 public:
-  explicit EngineState(BoardState* board_state);
+  explicit EngineState(std::unique_ptr<TranspositionTable> transposition_table,
+                       BoardState* board_state);
 
   bool pondering() const;
 
@@ -47,6 +50,8 @@ public:
                                       const Stopper* weak_stopper) const;
 
 private:
+  std::unique_ptr<TranspositionTable> m_transposition_table;
+
   BoardState* const m_board_state;
 
   bool m_my_turn = false;

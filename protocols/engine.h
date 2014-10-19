@@ -23,10 +23,8 @@ namespace olaf
 class Engine
 {
 public:
-  /**
-   * @brief Engine takes ownership of searcher, but not of the two others.
-   */
   Engine(ProtocolWriter* writer,
+         std::unique_ptr<TranspositionTable> transposition_table,
          BoardState* board_state,
          std::unique_ptr<Searcher> searcher);
 
