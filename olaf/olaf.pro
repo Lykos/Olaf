@@ -8,7 +8,7 @@ include(../common.pri)
 
 QT       -= core gui
 
-TARGET = OlafSearching
+TARGET = olaf
 TEMPLATE = lib
 
 QMAKE_CXXFLAGS += -march=native -mtune=native

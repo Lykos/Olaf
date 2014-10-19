@@ -8,7 +8,7 @@ include(../common.pri)
 
 QT       -= core gui
 
-TARGET = OlafProtocols
+TARGET = olafprotocols
 TEMPLATE = lib
 
 DEFINES += OLAFPROTOCOLS_LIBRARY
@@ -61,5 +61,5 @@ target.path = /usr/local/lib
 
 INSTALLS += target headers
 
-CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafSearching -lOlafSearching
-CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafSearching -lOlafSearching
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf

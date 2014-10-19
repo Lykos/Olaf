@@ -16,11 +16,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafSearching -lOlafSearching
-CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafSearching -lOlafSearching
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf
 
-CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafProtocols -lOlafProtocols
-CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafProtocols -lOlafProtocols
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/protocols -lolafprotocols
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/protocols -lolafprotocols
 
 start_game.path = $$OUT_PWD
 start_game.files = $$PWD/../start_game.txt
