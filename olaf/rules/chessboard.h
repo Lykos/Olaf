@@ -9,6 +9,7 @@
 #include "olaf/rules/position.h"
 #include "olaf/rules/bitboard.h"
 #include "olaf/rules/piece.h"
+#include "olaf/transposition_table/zobristhash.h"
 
 namespace olaf
 {
@@ -165,6 +166,15 @@ public:
 
   void king_victim_position(const Position& new_king_victim_position);
 
+  ZobristHash::hash_t zobrist_hash() const;
+
+  void zobrist_hash(ZobristHash::hash_t new_zobrist_hash);
+
+  /**
+   * @brief xor_zobrist_hash xors the parameter to the zobrist hash.
+   */
+  void xor_zobrist_hash(ZobristHash::hash_t zobrist_hash);
+
 private:
   std::array<ColorBoard, 2> m_color_boards;
 
@@ -181,6 +191,8 @@ private:
   std::vector<Position> m_king_capture_positions;
 
   Position m_king_victim_position;
+
+  ZobristHash::hash_t m_zobrist_hash;
 
   mutable bool m_opponents_valid = false;
 

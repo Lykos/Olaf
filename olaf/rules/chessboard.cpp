@@ -246,6 +246,21 @@ void ChessBoard::king_victim_position(
   m_king_victim_position = new_king_victim_position;
 }
 
+ZobristHash::hash_t ChessBoard::zobrist_hash() const
+{
+  return m_zobrist_hash;
+}
+
+void ChessBoard::zobrist_hash(ZobristHash::hash_t new_zobrist_hash)
+{
+  m_zobrist_hash = new_zobrist_hash;
+}
+
+void ChessBoard::xor_zobrist_hash(ZobristHash::hash_t zobrist_hash)
+{
+  m_zobrist_hash ^= zobrist_hash;
+}
+
 ChessBoard create_initial_board()
 {
   static const array<ColorBoard, 2> colors{{

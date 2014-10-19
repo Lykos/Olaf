@@ -68,7 +68,8 @@ SOURCES += \
     rules/move.cpp \
     rules/setkingcapturepositionsaction.cpp \
     rules/movecreator.cpp \
-    rules/moveaction.cpp
+    rules/moveaction.cpp \
+    transposition_table/zobristhash.cpp
 
 HEADERS += \
     config.h \
@@ -126,7 +127,8 @@ HEADERS += \
     rules/epenableaction.h \
     rules/movebuilder.h \
     rules/move.h \
-    rules/setkingcapturepositionsaction.h
+    rules/setkingcapturepositionsaction.h \
+    transposition_table/zobristhash.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching
