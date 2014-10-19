@@ -42,11 +42,11 @@ void PieceBoard::set(const Position& position, const bool value)
 const BitBoard& PieceBoard::bit_board() const
 {
   return m_bit_board;
-
-} // namespace olaf
 }
 
 vector<Position> PieceBoard::positions() const
 {
   return m_bit_board.positions();
 }
+
+} // namespace olaf
