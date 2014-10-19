@@ -8,29 +8,29 @@ using namespace std;
 
 namespace auto_benchmark {
 
-TestList& test_list()
+BenchmarkList& benchmark_list()
 {
-  static TestList list;
+  static BenchmarkList list;
   return list;
 }
 
 bool find_benchmark(Benchmark* const benchmark)
 {
-  TestList& list = test_list();
+  BenchmarkList& list = benchmark_list();
   if (find(list.begin(), list.end(), benchmark) != list.end()) {
     return true;
   }
-  for (Benchmark* const test : list) {
-    if (test->objectName() == benchmark->objectName()) {
+  for (Benchmark* const benchmark : list) {
+    if (benchmark->objectName() == benchmark->objectName()) {
       return true;
     }
   }
   return false;
 }
 
-void add_test(Benchmark* const benchmark)
+void add_benchmark(Benchmark* const benchmark)
 {
-  TestList& list = test_list();
+  BenchmarkList& list = benchmark_list();
   if (!find_benchmark(benchmark)) {
     list.push_back(benchmark);
   }
@@ -39,12 +39,10 @@ void add_test(Benchmark* const benchmark)
 GlobalResult run(const int argc, char* argv[], const string& description)
 {
   GlobalResult global_result(description);
-
-  for (Benchmark* const test : test_list()) {
+  for (Benchmark* const test : benchmark_list()) {
     QTest::qExec(test, argc, argv);
     global_result.add_sub_result(test->accumulate_results());
   }
-
   return global_result;
 }
 
