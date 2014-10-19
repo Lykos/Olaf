@@ -1,11 +1,11 @@
 INCLUDEPATH += . ..
 DEPENDPATH += . ..
 
-VERSION=0.0.7
+VERSION=0.0.8
 
 DEFINES += \
     VERSION=\\\"$$VERSION\\\" \
-    VERSION_NAME=\\\"Transposition_table\\\"
+    VERSION_NAME=\\\"Piece_square_tables\\\"
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -Werror -pedantic
 CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
