@@ -59,7 +59,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
   if (context->forced_stopper->should_stop()) {
     return SearchResult::invalid();
   } else if ((!m_ignore_depth && recurse_depth <= m_sub_searcher_depth)
-             || context->board.finished()) {
+             || (m_sub_searcher != nullptr && context->board.finished())) {
     return recurse_sub_searcher(current_state, context);
   } else {
     SearchState state{-current_state.beta,
