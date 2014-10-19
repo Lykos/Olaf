@@ -19,6 +19,8 @@ void PawnTest::initTestCase()
 {
   m_pawn = &(PieceSet::instance().pawn());
   m_board = parse_fen("1n1N4/1PPP4/6pN/P4npP/2nN2P1/1p2NP2/PPPPP3/8 w - g6 0 1");
+  m_pawn_index = m_pawn->piece_index();
+  m_knight_index = PieceSet::instance().knight().piece_index();
 }
 
 void PawnTest::test_can_move_data()

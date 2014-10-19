@@ -132,7 +132,8 @@ HEADERS += \
     rules/movebuilder.h \
     rules/move.h \
     rules/setkingcapturepositionsaction.h \
-    transposition_table/zobristhash.h
+    transposition_table/zobristhash.h \
+    transposition_table/lrucache.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

@@ -29,7 +29,8 @@ SOURCES += \
     sanparsertest.cpp \
     epdparsertest.cpp \
     autotest.cpp \
-    zobristhashtest.cpp
+    zobristhashtest.cpp \
+    lrucachetest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -45,7 +46,8 @@ HEADERS += \
     perfttest.h \
     sanparsertest.h \
     epdparsertest.h \
-    zobristhashtest.h
+    zobristhashtest.h \
+    lrucachetest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf
