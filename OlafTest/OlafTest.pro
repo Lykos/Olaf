@@ -27,7 +27,8 @@ SOURCES += \
     perfttest.cpp \
     testutil.cpp \
     sanparsertest.cpp \
-    epdparsertest.cpp
+    epdparsertest.cpp \
+    autotest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
