@@ -68,7 +68,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     return recurse_sub_searcher(current_state, context);
   } else {
     const TranspositionTableEntry* const entry =
-        context->transposition_table->get(context->board.zobrist_hash());
+        context->get();
     if (entry != nullptr && entry->depth >= current_state.depth) {
       if (entry->node_type == NodeType::PvNode
           || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
@@ -162,7 +162,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     entry.node_type = NodeType::AllNode;
     reaction = ResultReaction::CONTINUE;
   }
-  context->transposition_table->put(context->board.zobrist_hash(), std::move(entry));
+  context->put(std::move(entry));
   return reaction;
 
 } // namespace olaf

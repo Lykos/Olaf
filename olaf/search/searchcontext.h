@@ -69,6 +69,17 @@ struct SearchContext
   int search_depth;
 
   TranspositionTable* transposition_table;
+
+  /**
+   * @brief get is a shortcut for transpotition_table->get(board.zobrist_hash())
+   */
+  const TranspositionTableEntry* get() const;
+
+  /**
+   * @brief put is a shortcut for transpotition_table->put(board.zobrist_hash(), x)
+   */
+  void put(const TranspositionTableEntry& entry);
+  void put(TranspositionTableEntry&& entry);
 };
 
 } // namespace olaf
