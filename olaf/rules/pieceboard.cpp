@@ -45,3 +45,8 @@ const BitBoard& PieceBoard::bit_board() const
 
 } // namespace olaf
 }
+
+vector<Position> PieceBoard::positions() const
+{
+  return m_bit_board.positions();
+}

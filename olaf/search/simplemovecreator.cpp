@@ -1,5 +1,6 @@
 #include "simplerules/movecreator.h"
 
+#include <cassert>
 #include <vector>
 
 #include "olaf/rules/pawn.h"
@@ -76,27 +77,31 @@ Move SimpleMoveCreator::create_move(const ChessBoard& board,
 
 bool SimpleMoveCreator::is_killable(const ChessBoard& board)
 {
-  vector<Position> king_positions = board.king_capture_positions();
-  vector<Position> killers;
-  for (const Position& position : Position::all_positions()) {
-    if (board.friendd(position)) {
-      killers.emplace_back(position);
-    } else if (board.opponent(position)
-               && board.noturn_board().piece_index(position)
-               == PieceSet::instance().king().piece_index()) {
-      king_positions.emplace_back(position);
-    }
-  }
+  static const Piece::piece_index_t king_index =
+      PieceSet::instance().king().piece_index();
+  vector<Position> king_positions = board.noturn_board().piece_board(king_index).positions();
+  assert(king_positions.size() <= 1);
+  const vector<Position>& king_capture_positions = board.king_capture_positions();
+  king_positions.insert(king_positions.end(),
+                        king_capture_positions.begin(),
+                        king_capture_positions.end());
   if (king_positions.empty()) {
     return false;
   }
-  for (const Position& killer : killers) {
-    for (const Position& king_position : king_positions) {
-      if (pseudo_valid_move(board, killer, king_position)) {
-        return true;
-      } else if (pseudo_valid_move(board, killer, king_position,
-                                   PieceSet::instance().queen().piece_index())) {
-        return true;
+  for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
+    const Piece& piece = piece_board.piece();
+    for (Position source : piece_board.positions()) {
+      for (const Position& king_position : king_positions) {
+        static const Pawn& pawn = PieceSet::instance().pawn();
+        static const Piece::piece_index_t queen_index =
+            PieceSet::instance().queen().piece_index();
+        if (piece.can_move(source, king_position, board)) {
+          return true;
+        } else if (&piece == &pawn
+                   && pawn.can_move(source, king_position, board,
+                                    queen_index)) {
+          return true;
+        }
       }
     }
   }

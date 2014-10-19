@@ -29,6 +29,7 @@ SOURCES += \
     sanparsertest.cpp \
     epdparsertest.cpp \
     autotest.cpp
+    bitboardtest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -43,7 +44,8 @@ HEADERS += \
     movegeneratortest.h \
     perfttest.h \
     sanparsertest.h \
-    epdparsertest.h
+    epdparsertest.h \
+    bitboardtest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/OlafSearching -lOlafSearching
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/OlafSearching -lOlafSearching
