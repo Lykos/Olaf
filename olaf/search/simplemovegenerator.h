@@ -1,0 +1,32 @@
+#ifndef SIMPLEMOVEGENERATOR_H
+#define SIMPLEMOVEGENERATOR_H
+
+#include "olaf/search/movegenerator.h"
+#include "olaf/rules/movecreator.h"
+#include "olaf/rules/move.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/rules/piece.h"
+#include <vector>
+#include <memory>
+
+namespace olaf
+{
+
+class SimpleMoveGenerator : public MoveGenerator
+{
+public:
+  SimpleMoveGenerator(std::unique_ptr<MoveCreator> creator);
+
+  std::vector<Move> generate_moves(const ChessBoard& board) override;
+
+  std::vector<Move> generate_valid_moves(const ChessBoard& board) override;
+
+private:
+  bool valid_move(const ChessBoard& board, const Move& move);
+
+  std::unique_ptr<MoveCreator> m_creator;
+};
+
+} // namespace olaf
+
+#endif // SIMPLEMOVEGENERATOR_H
