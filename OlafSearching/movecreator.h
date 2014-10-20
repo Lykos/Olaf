@@ -13,6 +13,8 @@
 class MoveCreator
 {
 public:
+  virtual ~MoveCreator();
+
   virtual bool valid_move(const ChessBoard& board,
                           const Position& source,
                           const Position& destination) = 0;
@@ -39,7 +41,6 @@ public:
                            const Position& source,
                            const Position& destination,
                            Piece::piece_index_t conversion) = 0;
-
 };
 
 #endif // MOVECREATOR_H

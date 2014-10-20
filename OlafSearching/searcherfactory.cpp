@@ -8,9 +8,13 @@
 #include "simplemovegenerator.h"
 #include "nomoveorderer.h"
 #include "simplemovecreator.h"
+#include "quiescer.h"
 
 using namespace std;
 using namespace chrono;
+
+// static
+const milliseconds SearcherFactory::c_search_time(2000);
 
 SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
   m_writer(writer)
@@ -19,7 +23,7 @@ SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
 unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
   unique_ptr<Searcher> searcher(new SimpleTimedSearcher(iterative_searcher(),
-                                                        milliseconds(1000)));
+                                                        c_search_time));
   return searcher;
 }
 
@@ -45,7 +49,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() 
 {
   unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
                                                        move_orderer(),
-                                                       evaluation_searcher(),
+                                                       quiescer(),
                                                        0,
                                                        false));
   return searcher;
@@ -53,11 +57,12 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() 
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(capture_generator(),
-                                                       move_orderer(),
-                                                       evaluation_searcher(),
-                                                       0,
-                                                       true));
+  unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(position_evaluator(),
+                                                      capture_generator(),
+                                                      move_orderer(),
+                                                      evaluation_searcher(),
+                                                      0,
+                                                      true));
   return searcher;
 }
 

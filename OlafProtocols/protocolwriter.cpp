@@ -1,3 +1,4 @@
 #include "protocolwriter.h"
 
-ProtocolWriter::~ProtocolWriter() {}
+ProtocolWriter::~ProtocolWriter()
+{}

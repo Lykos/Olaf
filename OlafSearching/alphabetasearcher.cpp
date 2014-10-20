@@ -11,14 +11,30 @@ AlphaBetaSearcher::AlphaBetaSearcher():
   m_ignore_depth(true)
 {}
 
-AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<AlphaBetaSearcher> sub_searcher,
+AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
+                                     std::unique_ptr<MoveOrderer> orderer,
+                                     std::unique_ptr<AlphaBetaSearcher> sub_searcher,
                                      const int sub_searcher_depth,
                                      const bool ignore_depth):
+  m_generator(move(generator)),
+  m_orderer(move(orderer)),
   m_sub_searcher(move(sub_searcher)),
   m_sub_searcher_depth(sub_searcher_depth),
   m_ignore_depth(ignore_depth)
 {}
 
+AlphaBetaSearcher::~AlphaBetaSearcher()
+{}
+
+vector<Move> AlphaBetaSearcher::generate_ordered_moves(const SearchContext& context)
+{
+  vector<Move> moves = m_generator->generate_moves(context.board);
+  if (moves.empty()) {
+    return moves;
+  }
+  m_orderer->order_moves(context.board, &moves);
+  return moves;
+}
 
 SearchResult AlphaBetaSearcher::search(SearchContext* const context)
 {
@@ -43,7 +59,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
   if (context->forced_stopper->should_stop()) {
     return SearchResult::invalid();
   } else if ((!m_ignore_depth && recurse_depth <= m_sub_searcher_depth)
-             || context->board.finished()) {
+             || (m_sub_searcher != nullptr && context->board.finished())) {
     return recurse_sub_searcher(current_state, context);
   } else {
     SearchState state{-current_state.beta,
@@ -65,7 +81,8 @@ SearchResult AlphaBetaSearcher::recurse_move(const SearchState& current_state,
                                              SearchContext* const context,
                                              Move* const move)
 {
-  const SearchResult& result = recurse_move_noundo(current_state, context, move);
+  move->execute(&(context->board));
+  const SearchResult& result = recurse_alpha_beta(current_state, context);
   move->undo(&(context->board));
   return result;
 }
@@ -81,16 +98,15 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   result->nodes += recursive_result->nodes;
   const int recursive_score = -recursive_result->score;
-  if (recursive_score > result->score) {
+  if (recursive_score > state->alpha) {
     result->score = recursive_score;
+    if (recursive_score >= state->beta) {
+      result->main_variation.clear();
+      return ResultReaction::RETURN;
+    }
+    state->alpha = recursive_score;
     result->main_variation = std::move(recursive_result->main_variation);
     result->main_variation.emplace_back(move);
-  }
-  if (recursive_score > state->alpha) {
-    state->alpha = result->score;
-  }
-  if (state->alpha >= state->beta) {
-    return ResultReaction::RETURN;
   }
   return ResultReaction::CONTINUE;
 }

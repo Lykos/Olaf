@@ -83,11 +83,17 @@ void ColorBoard::can_castle_k(const bool new_can_castle_k)
 
 BitBoard ColorBoard::occupied() const
 {
-  BitBoard bla (0);
-  for (const PieceBoard &piece_board : m_piece_boards) {
+  BitBoard bla(0);
+  for (const PieceBoard& piece_board : m_piece_boards) {
     bla = bla | piece_board;
   }
   return bla;
+}
+
+bool ColorBoard::finished() const
+{
+  static const Piece::piece_index_t king_index = PieceSet::instance().king().piece_index();
+  return m_piece_boards[king_index].bit_board() == 0;
 }
 
 // static

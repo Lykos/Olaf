@@ -28,7 +28,7 @@ void PerftTest::test_perft_data()
   QTest::addColumn<ChessBoard>("board");
   QTest::addColumn<vector<PerftResult>>("expected_results");
 
-  for (Perft::PerftExample example : Perft::examples()) {
+  for (const Perft::PerftExample& example : Perft::examples()) {
     QTest::newRow(example.name.c_str()) << parse_fen(example.fen) << example.expected_results;
   }
 }

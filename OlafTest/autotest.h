@@ -3,77 +3,42 @@
 
 #include <QTest>
 #include <QList>
-#include <QString>
-#include <QSharedPointer>
+#include <string>
+#include <memory>
 
-namespace AutoTest
+namespace auto_test
 {
-    typedef QList<QObject*> TestList;
+typedef std::vector<QObject*> TestList;
 
-    inline TestList& testList()
-    {
-        static TestList list;
-        return list;
-    }
+TestList& test_list();
 
-    inline bool findObject(QObject* object)
-    {
-        TestList& list = testList();
-        if (list.contains(object))
-        {
-            return true;
-        }
-        foreach (QObject* test, list)
-        {
-            if (test->objectName() == object->objectName())
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+bool find_test(QObject* test);
 
-    inline void addTest(QObject* object)
-    {
-        TestList& list = testList();
-        if (!findObject(object))
-        {
-            list.append(object);
-        }
-    }
+void add_test(QObject* test);
 
-    inline int run(int argc, char *argv[])
-    {
-        int ret = 0;
-
-        foreach (QObject* test, testList())
-        {
-            ret += QTest::qExec(test, argc, argv);
-        }
-
-        return ret;
-    }
-}
+int run(int argc, char* argv[]);
 
 template <class T>
-class Test
+struct TestHolder
 {
-public:
-    QSharedPointer<T> child;
+  std::unique_ptr<T> child;
 
-    Test(const QString& name) : child(new T)
-    {
-        child->setObjectName(name);
-        AutoTest::addTest(child.data());
-    }
+  TestHolder(const char* const name):
+    child(new T)
+  {
+    child->setObjectName(name);
+    auto_test::add_test(child.get());
+  }
 };
 
-#define DECLARE_TEST(className) static Test<className> t(#className);
+} // namespace auto_test
+
+#define DECLARE_TEST(className) static ::auto_test::TestHolder<className> t(#className);
 
 #define AUTOTEST_MAIN \
-    int main(int argc, char *argv[]) \
-    { \
-      return AutoTest::run(argc, argv); \
+  int main(int argc, char *argv[]) \
+  { \
+      return ::auto_test::run(argc, argv); \
   }
 
 #endif // AUTOTEST_H

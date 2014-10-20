@@ -6,7 +6,7 @@ class Stopper
 public:
   virtual bool should_stop() const = 0;
 
-  virtual ~Stopper() = 0;
+  virtual ~Stopper();
 
 };
 

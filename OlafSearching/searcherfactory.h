@@ -55,6 +55,8 @@ private:
 
   EvaluatorFactory m_evaluator_factory;
 
+  static const std::chrono::milliseconds c_search_time;
+
   static const int c_sequential_depth = 2;
 
   static const int c_min_depth = 1;

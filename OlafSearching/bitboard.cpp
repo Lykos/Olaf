@@ -25,6 +25,16 @@ bool operator==(const BitBoard& a, const BitBoard& b)
   return a.m_bits == b.m_bits;
 }
 
+bool operator==(const BitBoard& a, const bitboard_t b)
+{
+  return a.m_bits == b;
+}
+
+bool operator==(const bitboard_t a, const BitBoard& b)
+{
+  return a == b.m_bits;
+}
+
 uint_fast8_t index(const Position& position)
 {
   return position.row() * Position::c_column_size + position.column();

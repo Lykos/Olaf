@@ -39,7 +39,8 @@ BitBoard Piece::initial_board(const Color color) const
   return color == Color::White ? m_initial_board : m_initial_board.mirror_rows();
 }
 
-Piece::~Piece() {}
+Piece::~Piece()
+{}
 
 bool Piece::can_move(const Position& source,
                      const Position& destination,

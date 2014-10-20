@@ -10,7 +10,7 @@ public:
 
   virtual score_t evaluate(const ChessBoard& board) = 0;
 
-  virtual ~PositionEvaluator() {}
+  virtual ~PositionEvaluator();
 
 };
 

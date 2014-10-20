@@ -8,6 +8,8 @@ class Searcher
 {
 public:
   virtual SearchResult search(SearchContext* context) = 0;
+
+  virtual ~Searcher();
 };
 
 #endif // SEARCHER_H

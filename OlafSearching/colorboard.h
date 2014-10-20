@@ -75,6 +75,8 @@ public:
 
   BitBoard occupied() const;
 
+  bool finished() const;
+
 private:
   std::vector<PieceBoard> m_piece_boards;
 

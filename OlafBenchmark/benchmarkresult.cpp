@@ -31,6 +31,9 @@ BenchmarkResult::BenchmarkResult(const string& description):
   m_millis(0)
 {}
 
+BenchmarkResult::~BenchmarkResult()
+{}
+
 const string& BenchmarkResult::description() const
 {
   return m_description;

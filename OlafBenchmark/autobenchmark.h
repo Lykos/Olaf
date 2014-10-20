@@ -6,15 +6,16 @@
 #include <memory>
 #include "benchmark.h"
 
-namespace auto_benchmark {
+namespace auto_benchmark
+{
 
-typedef std::vector<Benchmark*> TestList;
+typedef std::vector<Benchmark*> BenchmarkList;
 
-TestList& test_list();
+BenchmarkList& benchmark_list();
 
 bool find_benchmark(Benchmark* benchmark);
 
-void add_test(Benchmark* benchmark);
+void add_benchmark(Benchmark* benchmark);
 
 typedef CompositeBenchmarkResult<BenchmarkResult> ClassResult;
 typedef CompositeBenchmarkResult<ClassResult> GlobalResult;
@@ -22,20 +23,20 @@ typedef CompositeBenchmarkResult<ClassResult> GlobalResult;
 GlobalResult run(int argc, char* argv[], const std::string& description);
 
 template <class T>
-class Test
+class BenchmarkHolder
 {
 public:
   std::unique_ptr<T> child;
 
-  Test(const char* const name) : child(new T)
+  BenchmarkHolder(const char* const name) : child(new T)
   {
     child->setObjectName(name);
-    auto_benchmark::add_test(child.get());
+    auto_benchmark::add_benchmark(child.get());
   }
 };
 
 } // namespace auto_benchmark
 
-#define DECLARE_BENCHMARK(className) static ::auto_benchmark::Test<className> t(#className);
+#define DECLARE_BENCHMARK(className) static ::auto_benchmark::BenchmarkHolder<className> t(#className);
 
 #endif // AUTOBENCHMARK_H

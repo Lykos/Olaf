@@ -40,11 +40,11 @@ public:
 
   Piece(Piece&& piece) = delete;
 
+  virtual ~Piece();
+
   Piece& operator =(const Piece& piece) = delete;
 
   Piece& operator =(Piece&& piece) = delete;
-
-  virtual ~Piece();
 
   virtual std::vector<Move> moves(const Position& source,
                                   const ChessBoard& board) const = 0;

@@ -5,6 +5,10 @@
 #include <climits>
 #include "position.h"
 
+typedef uint64_t bitboard_t;
+static_assert(sizeof(bitboard_t) * CHAR_BIT >= Position::c_column_size * Position::c_row_size,
+              "Not enough space for a bit board in the used type.");
+
 class BitBoard;
 
 BitBoard operator|(const BitBoard&, const BitBoard&);
@@ -15,9 +19,9 @@ BitBoard operator&(const BitBoard&, const BitBoard&);
 
 bool operator==(const BitBoard&, const BitBoard&);
 
-typedef uint64_t bitboard_t;
-static_assert(sizeof(bitboard_t) * CHAR_BIT >= Position::c_column_size * Position::c_row_size,
-              "Not enough space for a bit board in the used type.");
+bool operator==(const BitBoard&, bitboard_t);
+
+bool operator==(bitboard_t, const BitBoard&);
 
 /**
  * @brief The BitBoard class represents a board where a bit is stored in each square.
@@ -32,8 +36,12 @@ class BitBoard
 
   friend bool operator==(const BitBoard&, const BitBoard&);
 
+  friend bool operator==(const BitBoard&, uint64_t);
+
+  friend bool operator==(uint64_t, const BitBoard&);
+
 public:
-  constexpr BitBoard(bitboard_t bits = 0): m_bits (bits) {}
+  constexpr explicit BitBoard(bitboard_t bits = 0): m_bits (bits) {}
 
   bool get(const Position&) const;
 

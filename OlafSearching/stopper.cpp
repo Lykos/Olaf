@@ -1,3 +1,4 @@
 #include "stopper.h"
 
-Stopper::~Stopper() {}
+Stopper::~Stopper()
+{}

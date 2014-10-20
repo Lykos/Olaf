@@ -28,7 +28,8 @@ SOURCES += \
     testutil.cpp \
     sanparsertest.cpp \
     epdparsertest.cpp \
-    bitboardtest.cpp
+    bitboardtest.cpp \
+    autotest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 

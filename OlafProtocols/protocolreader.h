@@ -8,9 +8,9 @@
 class ProtocolReader
 {
 public:
-  virtual void run() = 0;
+  virtual ~ProtocolReader();
 
-  ~ProtocolReader() {}
+  virtual void run() = 0;
 
 };
 
