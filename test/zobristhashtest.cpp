@@ -36,11 +36,9 @@ void ZobristHashTest::test_calculate()
 {
   QFETCH(ChessBoard, board);
 
-  const ChessBoard copy(board);
   const ZobristHash::hash_t hash = board.zobrist_hash();
   ZobristHash::calculate(&board);
   QASSERT_THAT(board.zobrist_hash(), Eq(hash));
-  QASSERT_THAT(copy.zobrist_hash(), Eq(hash));
   set<ZobristHash::hash_t> hashes{hash};
   for (Move& move : m_generator->generate_valid_moves(board)) {
     move.execute(&board);
@@ -50,7 +48,6 @@ void ZobristHashTest::test_calculate()
     ZobristHash::calculate(&board);
     QASSERT_THAT(board.zobrist_hash(), Eq(move_hash));
     move.undo(&board);
-    QASSERT_THAT(board, Eq(copy));
     const ZobristHash::hash_t undo_hash = board.zobrist_hash();
     ZobristHash::calculate(&board);
     QASSERT_THAT(board.zobrist_hash(), Eq(undo_hash));

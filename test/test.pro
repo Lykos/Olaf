@@ -22,7 +22,6 @@ SOURCES += \
     oncepiecetest.cpp \
     fenparsertest.cpp \
     main.cpp \
-    materialevaluatortest.cpp \
     movegeneratortest.cpp \
     perfttest.cpp \
     testutil.cpp \
@@ -31,7 +30,8 @@ SOURCES += \
     autotest.cpp \
     zobristhashtest.cpp \
     lrucachetest.cpp \
-    bitboardtest.cpp
+    bitboardtest.cpp \
+    incrementalevaluatortest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -42,14 +42,14 @@ HEADERS += \
     autotest.h \
     testutil.h \
     fenparsertest.h \
-    materialevaluatortest.h \
     movegeneratortest.h \
     perfttest.h \
     sanparsertest.h \
     epdparsertest.h \
     zobristhashtest.h \
     lrucachetest.h \
-    bitboardtest.h
+    bitboardtest.h \
+    incrementalevaluatortest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf

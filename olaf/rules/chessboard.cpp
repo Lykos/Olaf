@@ -64,6 +64,7 @@ ChessBoard::ChessBoard(const array<ColorBoard, 2>& color_boards, Color turn,
   m_ep_victim_position (ep_victim_position)
 {
   ZobristHash::calculate(this);
+  IncrementalUpdater::calculate(this);
 }
 
 const ColorBoard& ChessBoard::color_board(Color color) const
@@ -223,6 +224,7 @@ void ChessBoard::add_piece(const Color color,
 {
   m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, true);
   ZobristHash::update(color, piece_index, position, this);
+  IncrementalUpdater::add_piece(color, piece_index, position, this);
 }
 
 void ChessBoard::remove_piece(const Color color,
@@ -231,6 +233,7 @@ void ChessBoard::remove_piece(const Color color,
 {
   m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, false);
   ZobristHash::update(color, piece_index, position, this);
+  IncrementalUpdater::remove_piece(color, piece_index, position, this);
 }
 
 void ChessBoard::can_castle_k(const Color color, const bool new_can_castle_k)
@@ -276,6 +279,11 @@ void ChessBoard::king_victim_position(
 ZobristHash::hash_t ChessBoard::zobrist_hash() const
 {
   return m_zobrist_hash;
+}
+
+int ChessBoard::incremental_score() const
+{
+  return m_turn_color == Color::White ? m_incremental_score_white : -m_incremental_score_white;
 }
 
 ChessBoard create_initial_board()
