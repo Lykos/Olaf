@@ -1,0 +1,255 @@
+Bitboard_position_lists 0.0.5 jaguar 2014-9-19 21:13:51:
+  PerftBenchmark:
+    test_perft(initial):
+      time: 31484 ms
+    test_perft(position3):
+      time: 6281 ms
+  total time: 37765 ms
+  EpdBenchmark:
+    test_epd(epd_files/bk.epd BK.01):
+      score: 0
+    test_epd(epd_files/bk.epd BK.02):
+      score: 0
+    test_epd(epd_files/bk.epd BK.03):
+      score: 0
+    test_epd(epd_files/bk.epd BK.04):
+      score: 0
+    test_epd(epd_files/bk.epd BK.05):
+      score: 0
+    test_epd(epd_files/bk.epd BK.06):
+      score: 0
+    test_epd(epd_files/bk.epd BK.07):
+      score: 0
+    test_epd(epd_files/bk.epd BK.08):
+      score: 0
+    test_epd(epd_files/bk.epd BK.09):
+      score: 0
+    test_epd(epd_files/bk.epd BK.10):
+      score: 0
+    test_epd(epd_files/bk.epd BK.11):
+      score: 0
+    test_epd(epd_files/bk.epd BK.12):
+      score: 1
+    test_epd(epd_files/bk.epd BK.12):
+      score: 0
+    test_epd(epd_files/bk.epd BK.13):
+      score: 0
+    test_epd(epd_files/bk.epd BK.14):
+      score: 0
+    test_epd(epd_files/bk.epd BK.15):
+      score: 1
+    test_epd(epd_files/bk.epd BK.15):
+      score: 0
+    test_epd(epd_files/bk.epd BK.16):
+      score: 0
+    test_epd(epd_files/bk.epd BK.17):
+      score: 0
+    test_epd(epd_files/bk.epd BK.18):
+      score: 0
+    test_epd(epd_files/bk.epd BK.19):
+      score: 0
+    test_epd(epd_files/bk.epd BK.20):
+      score: 0
+    test_epd(epd_files/bk.epd BK.21):
+      score: 0
+    test_epd(epd_files/bk.epd BK.22):
+      score: 0
+    test_epd(epd_files/bk.epd BK.23):
+      score: 0
+    test_epd(epd_files/bk.epd BK.24):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.01):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.02):
+      score: 1
+    test_epd(epd_files/lct2.epd LCTII.POS.02):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.03):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.04):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.05):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.06):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.07):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.08):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.09):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.10):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.11):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.12):
+      score: 1
+    test_epd(epd_files/lct2.epd LCTII.POS.12):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.13):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.POS.14):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.01):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.02):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.03):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.04):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.05):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.06):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.07):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.08):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.09):
+      score: 1
+    test_epd(epd_files/lct2.epd LCTII.CMB.09):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.10):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.11):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.CMB.12):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.01):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.02):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.03):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.04):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.05):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.06):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.07):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.08):
+      score: 0
+    test_epd(epd_files/lct2.epd LCTII.FIN.09):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR01):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR02):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR03):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR04):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR05):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR06):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR06):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR07):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR08):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR09):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR10):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR11):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR12):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR13):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR13):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR14):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR14):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR15):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR16):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR17):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR18):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR19):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR19):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR20):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR20):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR21):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR22):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR23):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR24):
+      score: 0
+    test_epd(epd_files/ccr.epd CCR25):
+      score: 1
+    test_epd(epd_files/ccr.epd CCR25):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 01):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 02):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 03):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 04):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 05):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 06):
+      score: 1
+    test_epd(epd_files/kaufman.epd position 06):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 07):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 08):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 09):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 10):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 11):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 12):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 13):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 14):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 15):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 16):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 17):
+      score: 1
+    test_epd(epd_files/kaufman.epd position 17):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 18):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 19):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 20):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 21):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 22):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 23):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 24):
+      score: 0
+    test_epd(epd_files/kaufman.epd position 25):
+      score: 0
+  total score: 13
+total time: 37765 ms
+total score: 13
