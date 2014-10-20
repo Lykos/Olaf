@@ -63,6 +63,7 @@ Move SimpleMoveCreator::create_move(const ChessBoard& board,
                                     const Position& source,
                                     const Position& destination)
 {
+  assert(board.friendd(source));
   return board.turn_board().piece(source).move(source, destination, board);
 }
 
@@ -71,7 +72,9 @@ Move SimpleMoveCreator::create_move(const ChessBoard& board,
                                     const Position& destination,
                                     const Piece::piece_index_t conversion)
 {
-  const Pawn& pawn = PieceSet::instance().pawn();
+  static const Pawn& pawn = PieceSet::instance().pawn();
+  assert(board.friendd(source));
+  assert(board.turn_board().piece(source) == pawn);
   return pawn.move(source, destination, board, conversion);
 }
 
