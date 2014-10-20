@@ -1,11 +1,11 @@
 #include "olaf/search/alphabetasearcher.h"
 
+#include <cassert>
+#include <limits>
+
 #include "olaf/search/searchcontext.h"
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/rules/movecreator.h"
-
-#include <cassert>
-#include <limits>
 
 using namespace std;
 
@@ -81,13 +81,13 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
             result.main_variation.emplace_back(MoveCreator::create_move(
                                                  context->board,
                                                  entry->best_move_source,
-                                                 entry->best_move_destination));
+                                                 entry->best_move_destination,
+						 entry->best_move_created_piece));
           } else {
             result.main_variation.emplace_back(MoveCreator::create_move(
                                                  context->board,
                                                  entry->best_move_source,
-                                                 entry->best_move_destination,
-                                                 entry->best_move_created_piece));
+                                                 entry->best_move_destination));
           }
         }
       }
@@ -137,7 +137,6 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     entry.has_best_move = false;
   } else {
     entry.has_best_move = true;
-    const Move& move = recursive_result->main_variation.back();
     entry.best_move_source = move.source();
     entry.best_move_destination = move.destination();
     entry.best_move_is_conversion = move.is_conversion();

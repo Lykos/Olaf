@@ -12,10 +12,12 @@
 #include "olaf/rules/piece.h"
 #include "olaf/search/perft.h"
 
+Q_DECLARE_METATYPE(olaf::BitBoard)
 Q_DECLARE_METATYPE(olaf::ChessBoard)
 Q_DECLARE_METATYPE(olaf::Position)
 Q_DECLARE_METATYPE(std::vector<olaf::Perft::PerftResult>)
 Q_DECLARE_METATYPE(std::vector<olaf::Move>)
+Q_DECLARE_METATYPE(std::vector<olaf::Position>)
 Q_DECLARE_METATYPE(const olaf::Piece*)
 Q_DECLARE_METATYPE(olaf::Move)
 

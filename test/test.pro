@@ -30,6 +30,7 @@ SOURCES += \
     autotest.cpp \
     zobristhashtest.cpp \
     lrucachetest.cpp \
+    bitboardtest.cpp \
     incrementalevaluatortest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
@@ -47,6 +48,7 @@ HEADERS += \
     epdparsertest.h \
     zobristhashtest.h \
     lrucachetest.h \
+    bitboardtest.h \
     incrementalevaluatortest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
