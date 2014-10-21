@@ -6,6 +6,7 @@
 
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceset.h"
+#include "olaf/rules/pawn.h"
 #include "olaf/rules/move.h"
 #include "olaf/rules/movechecker.h"
 
@@ -49,13 +50,13 @@ bool SanParser::parse(const string& san_move,
   const string::const_iterator end = san_move.end();
   CHECK_NOT_END(it, end);
   const char symbol = *it;
-  Piece::piece_index_t piece_index = PieceSet::instance().pawn().piece_index();
+  Piece::piece_index_t piece_index = PieceSet::c_pawn_index;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
     if (piece->symbol(Color::White) == symbol) {
       piece_index = piece->piece_index();
     }
   }
-  if (piece_index != PieceSet::instance().pawn().piece_index()) {
+  if (piece_index != PieceSet::c_pawn_index) {
     ++it;
   }
   CHECK_NOT_END(it, end);

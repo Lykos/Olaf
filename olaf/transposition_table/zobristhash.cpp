@@ -2,12 +2,13 @@
 
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/color.h"
+#include "olaf/rules/pieceset.h"
 #include "olaf/rules/bitboard.h"
 
 namespace olaf
 {
 
-static ZobristHash::hash_t c_piece_randomness[768] = {
+static ZobristHash::hash_t c_piece_randomness[c_no_colors * PieceSet::c_no_pieces * BitBoard::c_bitboard_size] = {
   0xfb6fbb496d646d3cULL,
   0x854af12391102a7aULL,
   0x659f277aaf0c5cacULL,
@@ -778,17 +779,17 @@ static ZobristHash::hash_t c_piece_randomness[768] = {
   0xb742eaab80a03d95ULL
 };
 
-static ZobristHash::hash_t c_castle_k_randomness[2] = {
+static ZobristHash::hash_t c_castle_k_randomness[c_no_colors] = {
   0xc73c6ac0aea30b6bULL,
   0x290dfff4b2e6d920ULL
 };
 
-static ZobristHash::hash_t c_castle_q_randomness[2] = {
+static ZobristHash::hash_t c_castle_q_randomness[c_no_colors] = {
   0xbf3b7b35c09f8629ULL,
   0x03159920464f4cdbULL
 };
 
-static ZobristHash::hash_t c_ep_randomness[64] = {
+static ZobristHash::hash_t c_ep_randomness[BitBoard::c_bitboard_size] = {
   0x16cf6ee7cf003194ULL,
   0x106d7c9ac96b69dbULL,
   0x6f69d291ce3e3868ULL,
@@ -863,6 +864,9 @@ void ZobristHash::calculate(ChessBoard* const board)
   board->m_zobrist_hash = 0;
   for (const Color color : {Color::Black, Color::White}) {
     for (const PieceBoard& piece_board : board->color_board(color).piece_boards()) {
+      if (piece_board.bit_board() == 0) {
+        continue;
+      }
       const Piece::piece_index_t piece_index =
           piece_board.piece().piece_index();
       for (const Position& position : piece_board.positions()) {
@@ -891,7 +895,7 @@ void ZobristHash::update(Color color,
                          ChessBoard* board)
 {
   const int color_index = static_cast<int>(color);
-  board->m_zobrist_hash ^= c_piece_randomness[color_index * 384 + piece_index * 64 + BitBoard::index(position)];
+  board->m_zobrist_hash ^= c_piece_randomness[color_index * PieceSet::c_no_pieces * BitBoard::c_bitboard_size + piece_index * BitBoard::c_bitboard_size + BitBoard::index(position)];
 }
 
 // static

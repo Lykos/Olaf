@@ -1,6 +1,9 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#include <array>
+#include <cstdint>
+
 #include "olaf/rules/position.h"
 #include "olaf/rules/positiondelta.h"
 
@@ -15,6 +18,10 @@ enum class Color {
   White = 0,
   Black = 1
 };
+
+const std::uint_fast8_t c_no_colors = 2;
+
+const std::array<Color, c_no_colors> c_colors = {Color::White, Color::Black};
 
 constexpr Color other_color(Color color)
 {

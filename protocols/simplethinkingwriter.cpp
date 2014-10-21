@@ -36,15 +36,7 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
     }
     oss << " " << move.source() << move.destination();
     if (move.is_promotion()) {
-      if (move.created_piece() == PieceSet::instance().bishop().piece_index()) {
-        oss << "b";
-      } else if (move.created_piece() == PieceSet::instance().knight().piece_index()) {
-        oss << "n";
-      } else if (move.created_piece() == PieceSet::instance().queen().piece_index()) {
-        oss << "q";
-      } else if (move.created_piece() == PieceSet::instance().rook().piece_index()) {
-        oss << "r";
-      }
+      oss << PieceSet::instance().piece(move.created_piece()).symbol(Color::Black);
     }
     ++ply;
   }

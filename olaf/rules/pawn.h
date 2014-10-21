@@ -3,6 +3,7 @@
 
 #include "color.h"
 #include "olaf/rules/piece.h"
+#include "olaf/rules/pieceset.h"
 #include <vector>
 #include <cstddef>
 
@@ -17,7 +18,7 @@ public:
   Pawn(piece_index_t piece_index,
        char symbol,
        const BitBoard& initial_board,
-       const std::vector<piece_index_t>& conversions);
+       const PieceSet::PromotionArray& conversions);
 
   std::vector<Move> moves(const Position& source,
                           const ChessBoard& board) const;
@@ -34,7 +35,7 @@ private:
                             const Position& source,
                             const Position& destination) const;
 
-  std::vector<piece_index_t> m_promotions;
+  const PieceSet::PromotionArray m_promotions;
 };
 
 } // namespace olaf

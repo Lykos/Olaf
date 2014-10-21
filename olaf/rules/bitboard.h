@@ -13,8 +13,6 @@ namespace olaf
 {
 
 typedef uint64_t bitboard_t;
-static_assert(sizeof(bitboard_t) * CHAR_BIT >= Position::c_column_size * Position::c_row_size,
-              "Not enough space for a bit board in the used type.");
 
 class BitBoard;
 
@@ -44,6 +42,11 @@ class BitBoard
   friend constexpr bool operator!=(BitBoard, BitBoard);
 
 public:
+  static const uint_fast8_t c_bitboard_size = Position::c_column_size * Position::c_row_size;
+
+  static_assert(sizeof(bitboard_t) * CHAR_BIT >= c_bitboard_size,
+                "Not enough space for a bit board in the used type.");
+
   constexpr BitBoard(bitboard_t bits = 0): m_bits (bits) {}
 
   constexpr BitBoard(const Position& position): m_bits (1ull << index(position)) {}

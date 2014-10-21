@@ -39,7 +39,7 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
       && left.m_king_captures == right.m_king_captures;
 }
 
-ChessBoard::ChessBoard(const array<ColorBoard, 2>& color_boards,
+ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
                        const Color turn_color,
                        const BitBoard ep_captures):
   m_color_boards(color_boards),

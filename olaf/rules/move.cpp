@@ -7,6 +7,7 @@
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/undoinfo.h"
 #include "olaf/rules/color.h"
+#include "olaf/rules/pawn.h"
 
 using namespace std;
 
@@ -39,7 +40,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
     board->disable_ep();
   }
   static const Piece::piece_index_t c_king_index =
-      PieceSet::instance().king().piece_index();
+      PieceSet::c_king_index;
   if (is_capture()) {
     Position victim_position;
     if (is_ep()) {
@@ -67,7 +68,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   undo_info->king_captures = board->king_captures();
   const Position::row_t gnd = ground_line(board->turn_color());
   static const Piece::piece_index_t c_rook_index =
-      PieceSet::instance().rook().piece_index();
+      PieceSet::c_rook_index;
   if (is_castle()) {
     board->can_castle_k(board->turn_color(), false);
     board->can_castle_q(board->turn_color(), false);
@@ -113,7 +114,7 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
   const Piece::piece_index_t piece_index = board->turn_board().piece_index(dst);
   if (is_castle()) {
     static const Piece::piece_index_t c_rook_index =
-        PieceSet::instance().rook().piece_index();
+        PieceSet::c_rook_index;
     board->remove_piece(turn_color, c_rook_index, undo_info.rook_destination);
     board->add_piece(turn_color, c_rook_index, undo_info.rook_source);
   }
@@ -122,7 +123,7 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
   board->can_castle_q(turn_color, undo_info.can_castle_q);
   board->remove_piece(turn_color, piece_index, dst);
   if (is_promotion()) {
-    Piece::piece_index_t c_pawn_index = PieceSet::instance().pawn().piece_index();
+    Piece::piece_index_t c_pawn_index = PieceSet::c_pawn_index;
     board->add_piece(turn_color, c_pawn_index, src);
   } else {
     board->add_piece(turn_color, piece_index, src);

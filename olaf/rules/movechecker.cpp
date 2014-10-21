@@ -47,12 +47,10 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
   const Position dst(incomplete_move.destination());
   const Color turn_color = board.turn_color();
   const Position::row_t gnd = ground_line(turn_color);
-  static const Piece::piece_index_t c_king_index =
-      PieceSet::instance().king().piece_index();
   if (src.row() == gnd
       && dst.row() == gnd
       && abs(src.column() - dst.column()) == 2
-      && piece_index == c_king_index) {
+      && piece_index == PieceSet::c_king_index) {
     if (dst.column() == Position::c_kings_knight_column) {
       return Move(src, dst, Move::c_castle_k_flag);
     } else {
@@ -60,12 +58,10 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
       return Move(src, dst, Move::c_castle_q_flag);
     }
   }
-  static const Piece::piece_index_t c_pawn_index =
-      PieceSet::instance().pawn().piece_index();
   BitBoard capturable = board.opponents() | board.king_captures();
   const BitBoard dst_board(dst);
   const bool is_capture = (capturable & dst_board) != 0;
-  if (piece_index == c_pawn_index) {
+  if (piece_index == PieceSet::c_pawn_index) {
     if ((board.ep_captures() & dst_board) != 0) {
       return Move(src, dst, Move::c_ep_flag);
     } else if (incomplete_move.is_promotion()) {
@@ -82,10 +78,8 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
 bool MoveChecker::is_in_check(const ChessBoard& board,
                               const Color color)
 {
-  static const Piece::piece_index_t king_index =
-      PieceSet::instance().king().piece_index();
   const BitBoard king_captures =
-      board.color_board(color).piece_board(king_index).bit_board() | board.king_captures();
+      board.color_board(color).piece_board(PieceSet::c_king_index).bit_board() | board.king_captures();
   if (king_captures == 0) {
     return false;
   }
@@ -99,7 +93,7 @@ bool MoveChecker::is_in_check(const ChessBoard& board,
       for (const Position& king_position : king_positions) {
         static const Pawn& pawn = PieceSet::instance().pawn();
         static const Piece::piece_index_t queen_index =
-            PieceSet::instance().queen().piece_index();
+            PieceSet::c_queen_index;
         if (piece.can_move(IncompleteMove(source, king_position), board)) {
           return true;
         } else if (&piece == &pawn

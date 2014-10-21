@@ -1,13 +1,14 @@
 #ifndef COLORBOARD_H
 #define COLORBOARD_H
 
-#include <vector>
+#include <array>
 #include <memory>
 
 #include "color.h"
 #include "olaf/rules/position.h"
 #include "olaf/rules/pieceboard.h"
 #include "olaf/rules/piece.h"
+#include "olaf/rules/pieceset.h"
 #include "olaf/rules/bitboard.h"
 
 namespace olaf
@@ -25,13 +26,11 @@ class ColorBoard
 {
   friend bool operator ==(const ColorBoard& left, const ColorBoard& right);
 public:
-  // Because of cyclic dependencies, we have to redefine it here. :(
-  // The original is in Piece.
-  typedef int piece_index_t;
-
   static ColorBoard create_initial_color_board(Color);
 
   static ColorBoard create_empty_color_board();
+
+  typedef std::array<PieceBoard, PieceSet::c_no_pieces> PieceBoards;
 
   /**
    * @brief ColorBoard
@@ -40,27 +39,27 @@ public:
    * @param can_castle_q True if queenside castling is possible.
    * @param can_castle_k True if queenside castling is possible.
    */
-  explicit ColorBoard(const std::vector<PieceBoard>& piece_boards = std::vector<PieceBoard>(),
+  explicit ColorBoard(const PieceBoards& piece_boards = PieceBoards(),
                       bool can_castle_q = true,
                       bool can_castle_k = true);
 
-  const std::vector<PieceBoard>& piece_boards() const;
+  const PieceBoards& piece_boards() const;
 
   /**
    * @brief piece_board returns the bitboard that belongs to a given piece.
    * @param piece_index the index of the piece.
    * @return the PieceBoard of that piece.
    */
-  PieceBoard& piece_board(piece_index_t piece_index);
+  PieceBoard& piece_board(Piece::piece_index_t piece_index);
 
   /**
    * @brief piece_board returns the bitboard that belongs to a given piece.
    * @param piece_index the index of the piece.
    * @return the PieceBoard of that piece.
    */
-  const PieceBoard& piece_board(piece_index_t piece_index) const;
+  const PieceBoard& piece_board(Piece::piece_index_t piece_index) const;
 
-  piece_index_t piece_index(const Position&) const;
+  Piece::piece_index_t piece_index(const Position&) const;
 
   const Piece& piece(const Position&) const;
 
@@ -79,7 +78,7 @@ public:
   bool finished() const;
 
 private:
-  std::vector<PieceBoard> m_piece_boards;
+  PieceBoards m_piece_boards;
 
   bool m_can_castle_q;
 

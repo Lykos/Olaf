@@ -167,22 +167,14 @@ void XBoardReader::handle_move(const std::string& move)
       m_writer->illegal_move(move);
     }
   } else if (move.size() == 5) {
-    Piece::piece_index_t created_piece = -1;
-    const PieceSet &set = PieceSet::instance();
-    switch (move[4]) {
-    case 'r':
-      created_piece = set.rook().piece_index();
-      break;
-    case 'b':
-      created_piece = set.bishop().piece_index();
-      break;
-    case 'q':
-      created_piece = set.queen().piece_index();
-      break;
-    case 'n':
-      created_piece = set.knight().piece_index();
-      break;
-    default:
+    Piece::piece_index_t created_piece = Piece::c_no_piece;
+    for (const Piece* const piece : PieceSet::instance().pieces()) {
+      if (piece->symbol(Color::Black) == move[4]) {
+        created_piece = piece->piece_index();
+        break;
+      }
+    }
+    if (created_piece == Piece::c_no_piece) {
       m_writer->illegal_move(move);
       return;
     }

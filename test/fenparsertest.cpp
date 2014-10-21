@@ -8,6 +8,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/piece.h"
+#include "olaf/rules/pawn.h"
 #include "testutil.h"
 
 using namespace std;
@@ -20,8 +21,8 @@ namespace test
 static ChessBoard create_ep_board()
 {
   ChessBoard board = create_empty_board();
-  Piece::piece_index_t pawn_index = PieceSet::instance().pawn().piece_index();
-  Piece::piece_index_t knight_index = PieceSet::instance().knight().piece_index();
+  Piece::piece_index_t pawn_index = PieceSet::c_pawn_index;
+  Piece::piece_index_t knight_index = PieceSet::c_knight_index;
 
   board.add_piece(Color::White, pawn_index, Position("a2"));
   board.add_piece(Color::White, pawn_index, Position("a5"));

@@ -16,7 +16,7 @@ namespace olaf
 static bool can_castle_q(const ChessBoard& board)
 {
   static const Piece::piece_index_t c_rook_index =
-      PieceSet::instance().rook().piece_index();
+      PieceSet::c_rook_index;
   const Position::row_t ground = ground_line(board.turn_color());
   const Position rook_position(ground, Position::c_queens_rook_column);
   return board.turn_board().can_castle_q()
@@ -29,7 +29,7 @@ static bool can_castle_q(const ChessBoard& board)
 static bool can_castle_k(const ChessBoard& board)
 {
   static const Piece::piece_index_t c_rook_index =
-      PieceSet::instance().rook().piece_index();
+      PieceSet::c_rook_index;
   const Position::row_t ground = ground_line(board.turn_color());
   const Position rook_position(ground, Position::c_kings_rook_column);
   return board.turn_board().can_castle_k()

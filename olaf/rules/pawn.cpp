@@ -15,9 +15,9 @@ namespace olaf
 Pawn::Pawn(const piece_index_t piece_index,
            const char symbol,
            const BitBoard& initial_board,
-           const std::vector<piece_index_t>& conversions):
+           const PieceSet::PromotionArray& promitions):
   Piece(piece_index, symbol, initial_board),
-  m_promotions (conversions)
+  m_promotions(promitions)
 {}
 
 static const array<PositionDelta, 2> sidewards_directions = {{

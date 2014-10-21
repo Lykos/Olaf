@@ -9,7 +9,7 @@ namespace test
 {
 
 BoardTest::BoardTest():
-  m_bishop(PieceSet::instance().bishop().piece_index())
+  m_bishop(PieceSet::c_bishop_index)
 {}
 
 void BoardTest::test_friends()

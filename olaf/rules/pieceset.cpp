@@ -3,7 +3,7 @@
 #include "olaf/rules/linepiece.h"
 #include "olaf/rules/oncepiece.h"
 #include "olaf/rules/bitboard.h"
-#include <iostream>
+#include <array>
 
 using namespace std;
 
@@ -58,25 +58,11 @@ static const BitBoard c_king_initial_board (0x10ull);
 
 static const BitBoard c_pawn_initial_board (0xff00ull);
 
-static const PieceSet::piece_index_t c_rook_index = 0;
-
-static const PieceSet::piece_index_t c_knight_index = 1;
-
-static const PieceSet::piece_index_t c_bishop_index = 2;
-
-static const PieceSet::piece_index_t c_queen_index = 3;
-
-static const PieceSet::piece_index_t c_king_index = 4;
-
-static const PieceSet::piece_index_t c_pawn_index = 5;
-
-static const PieceSet::piece_index_t c_no_pieces = 6;
-
-static const vector<PieceSet::piece_index_t> c_pawn_conversions = {
-  c_rook_index,
-  c_bishop_index,
-  c_knight_index,
-  c_queen_index
+static const PieceSet::PromotionArray c_pawn_conversions = {
+  PieceSet::c_rook_index,
+  PieceSet::c_bishop_index,
+  PieceSet::c_knight_index,
+  PieceSet::c_queen_index
 };
 
 const Piece& PieceSet::rook() const
@@ -109,9 +95,14 @@ const Pawn& PieceSet::pawn() const
   return *m_pawn;
 }
 
-const vector<const Piece*>& PieceSet::pieces() const
+const PieceSet::PieceArray& PieceSet::pieces() const
 {
   return m_pieces;
+}
+
+const Piece& PieceSet::piece(const piece_index_t piece_index) const
+{
+  return *(m_pieces[piece_index]);
 }
 
 PieceSet::PieceSet():
@@ -120,8 +111,7 @@ PieceSet::PieceSet():
   m_bishop(new LinePiece(c_bishop_index, 'b', c_bishop_initial_board, c_bishop_directions)),
   m_queen(new LinePiece(c_queen_index, 'q', c_queen_initial_board, c_queen_directions)),
   m_king(new OncePiece(c_king_index, 'k', c_king_initial_board, c_queen_directions, true)),
-  m_pawn(new Pawn(c_pawn_index, 'p', c_pawn_initial_board, c_pawn_conversions)),
-  m_pieces(c_no_pieces)
+  m_pawn(new Pawn(c_pawn_index, 'p', c_pawn_initial_board, c_pawn_conversions))
 {
   m_pieces[m_rook->piece_index()] = m_rook.get();
   m_pieces[m_knight->piece_index()] = m_knight.get();

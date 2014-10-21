@@ -35,7 +35,7 @@ class ChessBoard
 
 public:
   ChessBoard(
-      const std::array<ColorBoard, 2>& color_boards = {{ColorBoard(), ColorBoard()}},
+      const std::array<ColorBoard, c_no_colors>& color_boards = {{ColorBoard(), ColorBoard()}},
       Color turn_color = Color::White,
       const BitBoard ep_captures = BitBoard());
 
@@ -191,7 +191,7 @@ public:
   }
 
 private:
-  std::array<ColorBoard, 2> m_color_boards;
+  std::array<ColorBoard, c_no_colors> m_color_boards;
 
   Color m_turn_color;
 

@@ -54,15 +54,7 @@ void XBoardWriter::move(const Move& mov)
          << mov.source()
          << mov.destination();
   if (mov.is_promotion()) {
-    if (mov.created_piece() == PieceSet::instance().bishop().piece_index()) {
-      *m_out << "b";
-    } else if (mov.created_piece() == PieceSet::instance().knight().piece_index()) {
-      *m_out << "n";
-    } else if (mov.created_piece() == PieceSet::instance().queen().piece_index()) {
-      *m_out << "q";
-    } else if (mov.created_piece() == PieceSet::instance().rook().piece_index()) {
-      *m_out << "r";
-    }
+    *m_out << PieceSet::instance().piece(mov.created_piece()).symbol(Color::Black);
   }
   *m_out << endl;
 }

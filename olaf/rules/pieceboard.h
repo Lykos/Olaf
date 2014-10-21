@@ -27,7 +27,7 @@ public:
   /**
    * @brief PieceBoard does not take ownership of piece.
    */
-  constexpr PieceBoard(const Piece* piece, const BitBoard bit_board):
+  constexpr PieceBoard(const Piece* piece = nullptr, const BitBoard bit_board = BitBoard(0)):
     m_piece(piece),
     m_bit_board(bit_board)
   {}

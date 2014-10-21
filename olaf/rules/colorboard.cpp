@@ -18,7 +18,7 @@ bool operator ==(const ColorBoard& left, const ColorBoard& right)
       && left.m_piece_boards == right.m_piece_boards;
 }
 
-ColorBoard::ColorBoard(const std::vector<PieceBoard>& piece_boards,
+ColorBoard::ColorBoard(const PieceBoards& piece_boards,
                        const bool can_castle_q,
                        const bool can_castle_k):
   m_piece_boards(piece_boards),
@@ -27,26 +27,26 @@ ColorBoard::ColorBoard(const std::vector<PieceBoard>& piece_boards,
 {}
 
 
-const std::vector<PieceBoard>& ColorBoard::piece_boards() const
+const ColorBoard::PieceBoards& ColorBoard::piece_boards() const
 {
   return m_piece_boards;
 }
 
-const PieceBoard& ColorBoard::piece_board(const piece_index_t piece_index) const
+const PieceBoard& ColorBoard::piece_board(const Piece::piece_index_t piece_index) const
 {
   return m_piece_boards[piece_index];
 }
 
 
-PieceBoard& ColorBoard::piece_board(const piece_index_t piece_index)
+PieceBoard& ColorBoard::piece_board(const Piece::piece_index_t piece_index)
 {
   return m_piece_boards[piece_index];
 }
 
-ColorBoard::piece_index_t ColorBoard::piece_index(const Position &position) const
+Piece::piece_index_t ColorBoard::piece_index(const Position &position) const
 {
-  const piece_index_t size = m_piece_boards.size();
-  for (piece_index_t index = 0; index < size; ++index) {
+  const Piece::piece_index_t size = m_piece_boards.size();
+  for (Piece::piece_index_t index = 0; index < size; ++index) {
     if (m_piece_boards[index].get(position)) {
       return index;
     }
@@ -95,18 +95,20 @@ BitBoard ColorBoard::occupied() const
 
 bool ColorBoard::finished() const
 {
-  static const Piece::piece_index_t king_index = PieceSet::instance().king().piece_index();
+  static const Piece::piece_index_t king_index = PieceSet::c_king_index;
   return m_piece_boards[king_index].bit_board() == 0;
 }
 
 // static
 ColorBoard ColorBoard::create_initial_color_board(Color color)
 {
-  vector<PieceBoard> piece_boards;
+  ColorBoard::PieceBoards piece_boards;
+  int i = 0;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
     BitBoard initial_board = piece->initial_board(color);
     const PieceBoard piece_board(piece, initial_board);
-    piece_boards.push_back(piece_board);
+    piece_boards[i] = piece_board;
+    ++i;
   }
   return ColorBoard(piece_boards, true, true);
 }
@@ -114,11 +116,13 @@ ColorBoard ColorBoard::create_initial_color_board(Color color)
 // static
 ColorBoard ColorBoard::create_empty_color_board()
 {
-  vector<PieceBoard> piece_boards;
+  ColorBoard::PieceBoards piece_boards;
+  int i = 0;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
     const BitBoard empty_board(0);
     const PieceBoard piece_board(piece, empty_board);
-    piece_boards.push_back(piece_board);
+    piece_boards[i] = piece_board;
+    ++i;
   }
   return ColorBoard(piece_boards, false, false);
 
