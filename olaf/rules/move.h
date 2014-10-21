@@ -85,7 +85,7 @@ public:
 
   bool is_ep() const
   {
-    return (m_state & c_ep_mask) == c_ep_mask;
+    return (m_state & c_ep_mask) == c_ep_flag;
   }
 
   bool is_king_castle() const

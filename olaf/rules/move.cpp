@@ -55,7 +55,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
         board->color_board(noturn_color).piece_index(victim_position);
     undo_info->captured_piece = captured_piece;
     undo_info->victim_position = victim_position;
-    board->remove_piece(noturn_color, captured_piece, dst);
+    board->remove_piece(noturn_color, captured_piece, victim_position);
   }
   board->remove_piece(turn_color, piece_index, src);
   if (is_promotion()) {
