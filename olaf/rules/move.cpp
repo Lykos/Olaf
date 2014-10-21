@@ -135,7 +135,7 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
   assert(is_pseudo_valid(*board));
 }
 
-std::ostream& operator <<(std::ostream& out, Move move)
+std::ostream& operator <<(std::ostream& out, IncompleteMove move)
 {
   out << "Move(" << move.source() << " " << move.destination();
   if (move.is_king_castle()) {
@@ -151,6 +151,11 @@ std::ostream& operator <<(std::ostream& out, Move move)
     out << " promotes to " << move.created_piece();
   }
   return out << ")";
+}
+
+std::ostream& operator <<(std::ostream& out, const Move move)
+{
+  return out << IncompleteMove(move);
+}
 
 } // namespace olaf
-}

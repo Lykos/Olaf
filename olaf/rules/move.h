@@ -152,6 +152,8 @@ constexpr bool operator ==(const IncompleteMove a,
 
 std::ostream& operator <<(std::ostream& out, IncompleteMove move);
 
+std::ostream& operator <<(std::ostream& out, Move move);
+
 } // namespace olaf
 
 #endif // MOVE_H

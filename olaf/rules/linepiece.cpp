@@ -46,6 +46,9 @@ bool LinePiece::can_move(const IncompleteMove incomplete_move,
   }
   const PositionDelta difference = dst - src;
   const uint_fast8_t length = max(abs(difference.d_row()), abs(difference.d_column()));
+  if (difference.d_row() % length != 0 || difference.d_column() % length != 0) {
+    return false;
+  }
   const PositionDelta direction(difference.d_row() / length, difference.d_column() / length);
   bool valid_direction = false;
   for (const PositionDelta& dir : m_directions) {

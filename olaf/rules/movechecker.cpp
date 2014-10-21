@@ -87,17 +87,15 @@ bool MoveChecker::is_in_check(const ChessBoard& board,
   if (king_positions.empty()) {
     return false;
   }
-  for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
+  for (const PieceBoard& piece_board : board.color_board(other_color(color)).piece_boards()) {
     const Piece& piece = piece_board.piece();
     for (Position source : piece_board.positions()) {
       for (const Position& king_position : king_positions) {
         static const Pawn& pawn = PieceSet::instance().pawn();
-        static const Piece::piece_index_t queen_index =
-            PieceSet::c_queen_index;
         if (piece.can_move(IncompleteMove(source, king_position), board)) {
           return true;
         } else if (&piece == &pawn
-                   && pawn.can_move(IncompleteMove::promotion(source, king_position, queen_index), board)) {
+                   && pawn.can_move(IncompleteMove::promotion(source, king_position, PieceSet::c_queen_index), board)) {
           return true;
         }
       }

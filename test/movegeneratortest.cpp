@@ -66,9 +66,31 @@ void MoveGeneratorTest::test_generate_data()
       MoveChecker::complete(Position("g2"), Position("h3"), board),
       MoveChecker::complete(Position("d5"), Position("d6"), board),
       MoveChecker::complete(Position("d5"), Position("e6"), board)};
-    QTest::newRow("middle game")
-         << board
-         << moves;
+    QTest::newRow("middle game") << board << moves;
+  }
+  {
+    ChessBoard board = parse_fen("8/2p5/3p4/KP5r/7k/R4p2/4P1P1/8 b - - 0 2");
+    const vector<Move> moves{
+      MoveChecker::complete(Position("c7"), Position("c6"), board),
+      MoveChecker::complete(Position("c7"), Position("c5"), board),
+      MoveChecker::complete(Position("d6"), Position("d5"), board),
+      MoveChecker::complete(Position("h5"), Position("g5"), board),
+      MoveChecker::complete(Position("h5"), Position("f5"), board),
+      MoveChecker::complete(Position("h5"), Position("e5"), board),
+      MoveChecker::complete(Position("h5"), Position("d5"), board),
+      MoveChecker::complete(Position("h5"), Position("c5"), board),
+      MoveChecker::complete(Position("h5"), Position("b5"), board),
+      MoveChecker::complete(Position("h5"), Position("h6"), board),
+      MoveChecker::complete(Position("h5"), Position("h8"), board),
+      MoveChecker::complete(Position("h5"), Position("h7"), board),
+      MoveChecker::complete(Position("h4"), Position("g5"), board),
+      MoveChecker::complete(Position("h4"), Position("g4"), board),
+      MoveChecker::complete(Position("h4"), Position("g3"), board),
+      MoveChecker::complete(Position("f3"), Position("e2"), board),
+      MoveChecker::complete(Position("f3"), Position("f2"), board),
+      MoveChecker::complete(Position("f3"), Position("g2"), board),
+    };
+    QTest::newRow("regression 1") << board << moves;
   }
 }
 
@@ -81,6 +103,7 @@ void MoveGeneratorTest::test_generate()
   SearcherFactory factory(&no_thinking_writer);
   unique_ptr<MoveGenerator> generator(factory.move_generator());
   const vector<Move>& actual_moves = generator->generate_moves(board);
+
   vector<Move> valid_moves;
   for (const Move move : actual_moves) {
     if (MoveChecker::valid_move(board, move)) {
