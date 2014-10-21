@@ -93,7 +93,7 @@ BitBoard ColorBoard::occupied() const
   return bla;
 }
 
-bool ColorBoard::finished() const
+bool ColorBoard::dead() const
 {
   static const Piece::piece_index_t king_index = PieceSet::c_king_index;
   return m_piece_boards[king_index].bit_board() == 0;

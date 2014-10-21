@@ -50,7 +50,8 @@ bool Piece::can_move(const IncompleteMove incomplete_move,
                      const ChessBoard& board) const {
   return board.friendd(incomplete_move.source())
       && !board.friendd(incomplete_move.destination())
-      && board.turn_board().piece_index(incomplete_move.source()) == m_piece_index;
+      && board.turn_board().piece_index(incomplete_move.source()) == m_piece_index
+      && !board.finished();
 }
 
 } // namespace olaf

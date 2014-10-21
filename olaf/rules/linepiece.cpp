@@ -23,6 +23,9 @@ vector<Move> LinePiece::moves(const Position& source,
                               const ChessBoard& board) const
 {
   vector<Move> result;
+  if (board.finished()) {
+    return result;
+  }
   for (const PositionDelta& direction : m_directions) {
     Position current(source);
     while (current.in_bounds(direction) && !board.opponent(current)) {

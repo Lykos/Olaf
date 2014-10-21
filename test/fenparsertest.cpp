@@ -71,21 +71,17 @@ void FenParserTest::test_parse_data()
       << true
       << false
       << create_empty_board();
-  QTest::newRow("empty board ignores ply")
-      << "8/8/8/8/8/8/8/8 w - - 10 1"
-      << true
-      << false
-      << create_empty_board();
   QTest::newRow("empty board ignores suffix")
       << "8/8/8/8/8/8/8/8 w - - 0 1asdflkjadsflkjadsf"
       << true
       << false
       << create_empty_board();
   ChessBoard board = create_empty_board();
+  board.reversible_plies(30);
   board.turn_number(100);
   board.turn_color(Color::Black);
   QTest::newRow("empty board blacks turn")
-      << "8/8/8/8/8/8/8/8 b - - 0 100"
+      << "8/8/8/8/8/8/8/8 b - - 30 100"
       << true
       << true
       << board;

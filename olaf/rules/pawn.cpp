@@ -34,6 +34,9 @@ std::vector<Move> Pawn::moves(const Position& source,
                               const ChessBoard& board) const
 {
   vector<Move> result;
+  if (board.finished()) {
+    return result;
+  }
   const Color color = board.turn_color();
   const Position& simple_move_destination =
       source + forward_direction(color);

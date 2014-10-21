@@ -52,6 +52,9 @@ vector<Move> OncePiece::moves(const Position& source,
                               const ChessBoard& board) const
 {
   vector<Move> result;
+  if (board.finished()) {
+    return result;
+  }
   for (const PositionDelta& direction : m_directions) {
     if (source.in_bounds(direction)) {
       Position destination = source + direction;

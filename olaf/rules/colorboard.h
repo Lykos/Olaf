@@ -75,7 +75,7 @@ public:
 
   BitBoard occupied() const;
 
-  bool finished() const;
+  bool dead() const;
 
 private:
   PieceBoards m_piece_boards;

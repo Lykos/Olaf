@@ -84,18 +84,9 @@ void ChessBoard::turn_color(const Color new_color)
   }
 }
 
-int ChessBoard::turn_number() const
-{
-  return m_turn_number;
-}
-
-void ChessBoard::turn_number(const int new_turn_number)
-{
-  m_turn_number = new_turn_number;
-}
-
 void ChessBoard::next_turn()
 {
+  m_hashes_history.insert(m_zobrist_hash);
   m_opponents_valid = false;
   m_friends_valid = false;
   m_occupied_valid = false;
@@ -108,14 +99,15 @@ void ChessBoard::next_turn()
 
 void ChessBoard::previous_turn()
 {
-  m_opponents_valid = false;
-  m_friends_valid = false;
-  m_occupied_valid = false;
-  m_turn_color = other_color(m_turn_color);
-  ZobristHash::update_turn_color(this);
   if (m_turn_color == Color::Black) {
     --m_turn_number;
   }
+  ZobristHash::update_turn_color(this);
+  m_turn_color = other_color(m_turn_color);
+  m_occupied_valid = false;
+  m_friends_valid = false;
+  m_opponents_valid = false;
+  m_hashes_history.erase(m_zobrist_hash);
 }
 
 BitBoard ChessBoard::opponents() const
@@ -158,12 +150,6 @@ BitBoard ChessBoard::occupied() const
 bool ChessBoard::occupied(const Position &position) const
 {
   return occupied().get(position);
-}
-
-bool ChessBoard::finished() const
-{
-  // TODO 50 moves rule, repetition
-  return m_color_boards[0].finished() || m_color_boards[1].finished();
 }
 
 void ChessBoard::add_piece(const Color color,

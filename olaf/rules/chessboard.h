@@ -1,6 +1,8 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+#include <cstdint>
+#include <unordered_set>
 #include <array>
 #include <ostream>
 
@@ -77,25 +79,57 @@ public:
 
   void turn_color(Color new_turn_color);
 
-  int turn_number() const;
+  inline int turn_number() const
+  {
+    return m_turn_number;
+  }
 
-  void turn_number(int new_turn_number);
+  inline void turn_number(const int new_turn_number)
+  {
+    m_turn_number = new_turn_number;
+  }
 
+  /**
+   * @brief next_turn advances to the next turn. In order to make all things this updates work
+   *        properly, this should be the last thing that is done when a move is executed.
+   */
   void next_turn();
 
+  /**
+   * @brief next_turn advances to the next turn. In order to make all things this updates work
+   *        properly, this should be the first thing that is done when a move is undone.
+   */
   void previous_turn();
+
+  inline int reversible_plies() const
+  {
+    return m_reversible_plies;
+  }
+
+  inline void reversible_plies(int new_reversible_plies)
+  {
+    m_reversible_plies = new_reversible_plies;
+  }
+
+  inline void reset_reversible_plies()
+  {
+    m_reversible_plies = 0;
+  }
+
+  inline void increment_reversible_plies()
+  {
+    ++m_reversible_plies;
+  }
 
   /**
    * @attention Result caching might be invalid if the user is not careful.
    * @brief opponents returns a bitboard indicating positions at which an opposing piece
    * is present and caches the result until the next turn flip.
-   * @return
    */
   BitBoard opponents() const;
 
   /**
    * @brief opponent is a shortcut for opponents().get(position)
-   * @return
    */
   bool opponent(const Position&) const;
 
@@ -103,7 +137,6 @@ public:
    * @attention Result caching might be invalid if the user is not careful.
    * @brief opponents returns a bitboard indicating positions at which a friendly piece
    * is present and caches the result until the next turn flip.
-   * @return
    */
   BitBoard friends() const;
 
@@ -117,21 +150,41 @@ public:
    * @attention Result caching might be invalid if the user is not careful.
    * @brief opponents returns a bitboard indicating positions at which any piece
    * is present and caches the result until the next turn flip.
-   * @return
    */
   BitBoard occupied() const;
 
   /**
    * @brief occupied is a shortcut for occupied().get(position)
-   * @return
    */
   bool occupied(const Position& position) const;
 
   /**
-   * @brief finished returns true if the game is finished
-   * @return
+   * @brief won returns true if the given color has won, i.e.
+   *        if black has no king. Note that this is not strictly
+   *        according to the chess rules, but it fits the engine.
    */
-  bool finished() const;
+  bool won(const Color color) const
+  {
+    return m_color_boards[1 - static_cast<int>(color)].dead();
+  }
+
+  /**
+   * @brief draw returns true if the game is a draw.
+   */
+  bool draw() const
+  {
+    static const int_fast8_t c_draw_reversible_plies = 50;
+    return m_reversible_plies >= c_draw_reversible_plies
+        || m_hashes_history.count(m_zobrist_hash);
+  }
+
+  /**
+   * @brief finished returns true if the game is finished.
+   */
+  bool finished() const
+  {
+    return won(Color::White) || won(Color::Black) || draw();
+  }
 
   /**
    * @brief add_piece adds a piece at the specific location.
@@ -197,6 +250,8 @@ private:
 
   int m_turn_number = 1;
 
+  std::int_fast8_t m_reversible_plies = 0;
+
   BitBoard m_ep_captures;
 
   BitBoard m_king_captures;
@@ -204,6 +259,8 @@ private:
   ZobristHash::hash_t m_zobrist_hash;
 
   int m_incremental_score_white;
+
+  std::unordered_set<ZobristHash::hash_t> m_hashes_history;
 
   mutable bool m_opponents_valid = false;
 

@@ -101,12 +101,19 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
       }
     }
   }
+  undo_info->reversible_plies = board->reversible_plies();
+  if (piece_index == PieceSet::c_pawn_index || is_capture()) {
+    board->reset_reversible_plies();
+  } else {
+    board->increment_reversible_plies();
+  }
   board->next_turn();
 }
 
 void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
 {
   board->previous_turn();
+  board->reversible_plies(undo_info.reversible_plies);
   const Position src(source());
   const Position dst(destination());
   const Color turn_color = board->turn_color();

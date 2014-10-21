@@ -1,6 +1,7 @@
 #ifndef UNDOINFO_H
 #define UNDOINFO_H
 
+#include <cstdint>
 #include "olaf/rules/bitboard.h"
 #include "olaf/rules/piece.h"
 #include "olaf/rules/position.h"
@@ -19,6 +20,7 @@ struct UndoInfo
   Position rook_source;
   Position rook_destination;
   Piece::piece_index_t captured_piece;
+  std::int_fast8_t reversible_plies;
   bool can_castle_k;
   bool can_castle_q;
 };
