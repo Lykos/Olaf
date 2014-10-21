@@ -23,7 +23,7 @@ namespace test
 
 typedef Perft::PerftResult PerftResult;
 
-static const int c_depth = 2;
+static const int c_depth = 1;
 
 void PerftTest::test_perft_data()
 {
