@@ -82,24 +82,12 @@ void EngineEventHelper::post(const bool value)
   m_thinking_writer->post(value);
 }
 
-bool EngineEventHelper::request_move(const Position& source, const Position& destination)
+bool EngineEventHelper::request_move(const IncompleteMove incomplete_move)
 {
-  if (!m_board_state->valid_move(source, destination)) {
+  if (!m_board_state->valid_move(incomplete_move)) {
     return false;
   }
-  Move move = m_board_state->create_move(source, destination);
-  enqueue_move(move);
-  return true;
-}
-
-bool EngineEventHelper::request_move(const Position& source,
-                                     const Position& destination,
-                                     const Piece::piece_index_t conversion)
-{
-  if (!m_board_state->valid_move(source, destination, conversion)) {
-    return false;
-  }
-  Move move = m_board_state->create_move(source, destination, conversion);
+  const Move move = m_board_state->create_move(incomplete_move);
   enqueue_move(move);
   return true;
 }

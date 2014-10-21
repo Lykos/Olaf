@@ -111,10 +111,10 @@ static int piece_value(const Color color,
   int result = piece_values[piece_index];
   int position_index;
   if (color == Color::White) {
-    position_index = index(position);
+    position_index = BitBoard::index(position);
   } else {
     Position pos(Position::c_row_size - 1 - position.row(), position.column());
-    position_index = index(pos);
+    position_index = BitBoard::index(pos);
   }
   result += piece_square_values[piece_index][position_index];
   return result;

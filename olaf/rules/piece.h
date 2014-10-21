@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "olaf/rules/position.h"
-#include "color.h"
 #include "olaf/rules/bitboard.h"
+#include "olaf/rules/color.h"
 
 namespace olaf
 {
@@ -58,13 +58,8 @@ public:
 
   BitBoard initial_board(Color color) const;
 
-  virtual bool can_move(const Position& source,
-                        const Position& destination,
+  virtual bool can_move(Move incomplete_move,
                         const ChessBoard& board) const;
-
-  virtual Move move(const Position& source,
-                    const Position& destination,
-                    const ChessBoard& board) const = 0;
 
   static const piece_index_t c_no_piece = -1;
 

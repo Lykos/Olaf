@@ -15,11 +15,7 @@ void MoveOrderer::order_moves(const SearchContext& context,
   const TranspositionTableEntry* const entry = context.get();
   if (entry != nullptr && entry->has_best_move) {
     for (Move& move : *moves) {
-      if (move.source() == entry->best_move_source
-          && move.destination() == entry->best_move_destination
-          && move.is_conversion() == entry->best_move_is_conversion
-          && (!move.is_conversion()
-              || move.created_piece() == entry->best_move_created_piece)) {
+      if (move == entry->best_move) {
         swap(move, moves->front());
         break;
       }

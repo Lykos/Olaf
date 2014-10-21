@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "olaf/rules/pieceset.h"
+#include "olaf/rules/move.h"
 
 using namespace std;
 
@@ -52,7 +53,7 @@ void XBoardWriter::move(const Move& mov)
   *m_out << "move "
          << mov.source()
          << mov.destination();
-  if (mov.is_conversion()) {
+  if (mov.is_promotion()) {
     if (mov.created_piece() == PieceSet::instance().bishop().piece_index()) {
       *m_out << "b";
     } else if (mov.created_piece() == PieceSet::instance().knight().piece_index()) {

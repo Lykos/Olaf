@@ -44,7 +44,7 @@ static ChessBoard create_ep_board()
   board.add_piece(Color::Black, knight_index, Position("c4"));
   board.add_piece(Color::Black, knight_index, Position("f5"));
   board.add_piece(Color::Black, knight_index, Position("b8"));
-  board.enable_ep(Position("g5"), Position("g6"));
+  board.ep_captures(BitBoard(Position("g6")));
   return board;
 }
 

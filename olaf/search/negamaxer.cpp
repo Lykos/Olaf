@@ -20,7 +20,7 @@ SearchResult NegaMaxer::alpha_beta(SearchState* const state,
   SearchResult result;
   result.score = state->alpha;
   for (Move& move : moves) {
-    SearchResult current_result = recurse_move(*state, context, &move);
+    SearchResult current_result = recurse_move(move, *state, context);
     switch (update_result(move, &current_result, context, state, &result)) {
       case ResultReaction::INVALID:
         return SearchResult::invalid();

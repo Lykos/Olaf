@@ -35,7 +35,7 @@ void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &r
       oss << " " << turn_number << ".";
     }
     oss << " " << move.source() << move.destination();
-    if (move.is_conversion()) {
+    if (move.is_promotion()) {
       if (move.created_piece() == PieceSet::instance().bishop().piece_index()) {
         oss << "b";
       } else if (move.created_piece() == PieceSet::instance().knight().piece_index()) {

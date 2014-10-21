@@ -27,19 +27,40 @@ public:
   /**
    * @brief PieceBoard does not take ownership of piece.
    */
-  PieceBoard(const Piece* piece, const BitBoard& bit_board);
+  constexpr PieceBoard(const Piece* piece, const BitBoard bit_board):
+    m_piece(piece),
+    m_bit_board(bit_board)
+  {}
 
-  operator BitBoard() const;
+  constexpr operator BitBoard() const
+  {
+    return m_bit_board;
+  }
 
-  const Piece& piece() const;
+  constexpr const Piece& piece() const
+  {
+    return *m_piece;
+  }
 
-  bool get(const Position& position) const;
+  constexpr bool get(const Position& position) const
+  {
+    return m_bit_board.get(position);
+  }
 
-  void set(const Position& position, bool value);
+  inline void set(const Position& position, const bool value)
+  {
+    m_bit_board.set(position, value);
+  }
 
-  const BitBoard& bit_board() const;
+  constexpr const BitBoard& bit_board() const
+  {
+    return m_bit_board;
+  }
 
-  std::vector<Position> positions() const;
+  inline std::vector<Position> positions() const
+  {
+    return m_bit_board.positions();
+  }
 
 private:
   const Piece* m_piece;

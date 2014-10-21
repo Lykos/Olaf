@@ -160,20 +160,16 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
     const int column = *it - c_a;
     ++it;
     CHECK_NOT_END(it, end);
-    int ep_row;
-    int victim_row;
+    int row;
     if (*it == c_three) {
-      ep_row = 2;
-      victim_row = 3;
+      row = 2;
     } else if (*it == c_six) {
-      ep_row = 5;
-      victim_row = 4;
+      row = 5;
     } else {
       return false;
     }
-    Position ep_position(ep_row, column);
-    Position victim_position(victim_row, column);
-    new_board.enable_ep(victim_position, ep_position);
+    const Position ep_position(row, column);
+    new_board.ep_captures(BitBoard(ep_position));
   } else if (*it != c_dash) {
     return false;
   }
@@ -203,7 +199,7 @@ string FenParser::serialize(const ChessBoard& board)
         if (board.friendd(pos)) {
          result << board.turn_board().piece(pos).symbol(board.turn_color());
        } else if (board.opponent(pos)) {
-         result << board.noturn_board().piece(pos).symbol(previous(board.turn_color()));
+         result << board.noturn_board().piece(pos).symbol(other_color(board.turn_color()));
        }
       } else {
         ++free_columns;
@@ -241,7 +237,7 @@ string FenParser::serialize(const ChessBoard& board)
   }
   result << c_space;
   if (board.ep_possible()) {
-    result << board.ep_capture_position();
+    result << board.ep_captures().first_position();
   } else {
     result << c_dash;
   }

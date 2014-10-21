@@ -34,20 +34,10 @@ class ChessBoard
   friend class IncrementalUpdater;
 
 public:
-  /**
-   * @brief ChessBoard
-   * @param color_boards
-   * @param turn
-   * @param ep_possible
-   * @param ep_capture_position
-   * @param ep_vicitim_position
-   */
   ChessBoard(
-      const std::array<ColorBoard, 2> &color_boards = {{ColorBoard(), ColorBoard()}},
-      Color turn = Color::White,
-      bool ep_possible = false,
-      const Position &ep_capture_position = Position(),
-      const Position &ep_victim_position = Position());
+      const std::array<ColorBoard, 2>& color_boards = {{ColorBoard(), ColorBoard()}},
+      Color turn_color = Color::White,
+      const BitBoard ep_captures = BitBoard());
 
   const ColorBoard& color_board(Color color) const;
 
@@ -55,29 +45,35 @@ public:
 
   const ColorBoard& noturn_board() const;
 
-  /**
-   * @brief ep_possible returns true  if en passent is possible.
-   */
-  bool ep_possible() const;
+  inline bool ep_possible() const
+  {
+    return m_ep_captures != 0;
+  }
 
   /**
-   * @brief ep_position returns the position at which en passent capture is possible.
+   * @brief ep_captures returns a bitboard indicating at which en passent capture is possible.
    */
-  const Position& ep_capture_position() const;
+  inline BitBoard ep_captures() const
+  {
+    return m_ep_captures;
+  }
 
-  /**
-   * @brief ep_position returns the position at which en passent will capture a pawn.
-   */
-  const Position& ep_victim_position() const;
+  inline void disable_ep()
+  {
+    ep_captures(BitBoard(0));
+  }
 
-  void disable_ep();
+  void ep_captures(const BitBoard new_ep_captures);
 
-  void enable_ep(const Position& victim_position,
-                 const Position& capture_position);
+  Color noturn_color() const
+  {
+    return other_color(m_turn_color);
+  }
 
-  Color noturn_color() const;
-
-  Color turn_color() const;
+  inline Color turn_color() const
+  {
+    return m_turn_color;
+  }
 
   void turn_color(Color new_turn_color);
 
@@ -95,7 +91,7 @@ public:
    * is present and caches the result until the next turn flip.
    * @return
    */
-  const BitBoard& opponents() const;
+  BitBoard opponents() const;
 
   /**
    * @brief opponent is a shortcut for opponents().get(position)
@@ -109,7 +105,7 @@ public:
    * is present and caches the result until the next turn flip.
    * @return
    */
-  const BitBoard& friends() const;
+  BitBoard friends() const;
 
   /**
    * @brief friendd is a shortcut for friends().get(position)
@@ -123,7 +119,7 @@ public:
    * is present and caches the result until the next turn flip.
    * @return
    */
-  const BitBoard& occupied() const;
+  BitBoard occupied() const;
 
   /**
    * @brief occupied is a shortcut for occupied().get(position)
@@ -165,26 +161,34 @@ public:
    * @brief king_capture_positions returns the squares at which the king can be captured
    *        except for his own square. This is only non-empty after castling.
    */
-  const std::vector<Position>& king_capture_positions() const;
+  inline BitBoard king_captures() const
+  {
+    return m_king_captures;
+  }
 
-  void king_capture_positions(
-      const std::vector<Position>& new_king_capture_positions);
+  inline void king_captures(BitBoard new_king_captures)
+  {
+    m_king_captures = new_king_captures;
+  }
 
-  /**
-   * @brief king_victim_position returns the square of the killed king if he is captured
-   *        via king_capture_positions.
-   */
-  const Position& king_victim_position() const;
+  inline void disable_king_captures()
+  {
+    king_captures(BitBoard(0));
+  }
 
-  void king_victim_position(const Position& new_king_victim_position);
-
-  ZobristHash::hash_t zobrist_hash() const;
+  inline ZobristHash::hash_t zobrist_hash() const
+  {
+    return m_zobrist_hash;
+  }
 
   /**
    * @brief incremental_score returns the score regarding all the things that are updated incrementally.
    *        It always returns the score for the side whose turn it is;
    */
-  int incremental_score() const;
+  inline int incremental_score() const
+  {
+    return m_turn_color == Color::White ? m_incremental_score_white : -m_incremental_score_white;
+  }
 
 private:
   std::array<ColorBoard, 2> m_color_boards;
@@ -193,15 +197,9 @@ private:
 
   int m_turn_number = 1;
 
-  bool m_ep_possible;
+  BitBoard m_ep_captures;
 
-  Position m_ep_capture_position;
-
-  Position m_ep_victim_position;
-
-  std::vector<Position> m_king_capture_positions;
-
-  Position m_king_victim_position;
+  BitBoard m_king_captures;
 
   ZobristHash::hash_t m_zobrist_hash;
 

@@ -6,6 +6,7 @@
 #include "olaf/transposition_table/lrucache.h"
 #include "olaf/rules/position.h"
 #include "olaf/rules/piece.h"
+#include "olaf/rules/move.h"
 
 namespace olaf
 {
@@ -25,10 +26,7 @@ struct TranspositionTableEntry
   int score;
   NodeType node_type;
   bool has_best_move;
-  Position best_move_source;
-  Position best_move_destination;
-  bool best_move_is_conversion;
-  Piece::piece_index_t best_move_created_piece;
+  Move best_move;
 };
 
 extern template class LruCache<TranspositionTableEntry>;

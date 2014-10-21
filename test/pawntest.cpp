@@ -70,20 +70,22 @@ void PawnTest::test_can_move()
   QFETCH(bool, is_capture);
   QFETCH(bool, is_conversion);
 
-  QCOMPARE(m_pawn->can_move(source, destination, m_board), result);
+  const Move incomplete_move = Move::incomplete(source, destination);
+  QCOMPARE(m_pawn->can_move(incomplete_move, m_board), result);
   if (result) {
-    const Move& move = m_pawn->move(source, destination, m_board);
+    const Move move = Move::complete(incomplete_move, m_board);
     QCOMPARE(move.is_capture(), is_capture);
   }
+  const Move incomplete_promotion = Move::incomplete_promotion(source, destination, m_knight_index);
   if (is_conversion) {
-    QVERIFY2(m_pawn->can_move(source, destination, m_board, m_knight_index),
+    QVERIFY2(m_pawn->can_move(incomplete_promotion, m_board),
              "Move does not work as a conversion.");
-    const Move& move = m_pawn->move(source, destination, m_board, m_knight_index);
+    const Move move = Move::complete(incomplete_promotion, m_board);
     QCOMPARE(move.is_capture(), is_capture);
-    QVERIFY2(move.is_conversion(), "Conversion is not a conversion.");
+    QVERIFY2(move.is_promotion(), "Conversion is not a conversion.");
     QCOMPARE(move.created_piece(), m_knight_index);
   } else {
-    QVERIFY2(!m_pawn->can_move(source, destination, m_board, m_knight_index), "Move works as a conversion.");
+    QVERIFY2(!m_pawn->can_move(incomplete_promotion, m_board), "Move works as a conversion.");
   }
 }
 

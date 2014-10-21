@@ -46,12 +46,11 @@ BitBoard Piece::initial_board(const Color color) const
 Piece::~Piece()
 {}
 
-bool Piece::can_move(const Position& source,
-                     const Position& destination,
+bool Piece::can_move(const IncompleteMove incomplete_move,
                      const ChessBoard& board) const {
-  return board.friendd(source)
-      && !board.friendd(destination)
-      && board.turn_board().piece_index(source) == m_piece_index;
+  return board.friendd(incomplete_move.source())
+      && !board.friendd(incomplete_move.destination())
+      && board.turn_board().piece_index(incomplete_move.source()) == m_piece_index;
+}
 
 } // namespace olaf
-}

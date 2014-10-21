@@ -67,16 +67,16 @@ public:
   /**
    * @brief search_move shortcut for executing a move, recursing and not undoing.
    */
-  SearchResult recurse_move_noundo(const SearchState& current_state,
-                                   SearchContext* context,
-                                   Move* move);
+  SearchResult recurse_move_noundo(Move move,
+                                   const SearchState& current_state,
+                                   SearchContext* context);
 
   /**
    * @brief search_move shortcut for executing a move, recursing and undoing.
    */
-  SearchResult recurse_move(const SearchState& current_state,
-                            SearchContext* context,
-                            Move* move);
+  SearchResult recurse_move(Move move,
+                            const SearchState& current_state,
+                            SearchContext* context);
 
 protected:
   std::vector<Move> generate_ordered_moves(const SearchContext& context);
@@ -95,13 +95,14 @@ protected:
    *        result from a recursive call. The return value decides how to proceed.
    * @param move the move that was executed. The object is consumed.
    * @param recursive_result is the result gotten from a recursive call.
-   * @param SearchState the state of the search.
+   * @param context the global context of the search.
+   * @param state the current state of the search.
    * @param result the result of the current method.
    * @return INVALID if the search should be stopped and an invalid result should be returned.
    *         CONTINUE if the search should continue as normal.
    *         RETURN if the result should be returned now.
    */
-  ResultReaction update_result(const Move& move,
+  ResultReaction update_result(Move move,
                                SearchResult* recursive_result,
                                SearchContext* const context,
                                SearchState* state,

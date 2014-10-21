@@ -38,15 +38,8 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
   if (moves.empty()) {
     return recurse_sub_searcher(*state, context);
   }
-  for (Move& move : moves) {
-    assert(context->board.opponent(move.destination())
-           || find(context->board.king_capture_positions().begin(),
-                   context->board.king_capture_positions().end(),
-                   move.destination())
-              != context->board.king_capture_positions().end()
-           || (context->board.ep_possible()
-               && context->board.ep_capture_position() == move.destination()));
-    SearchResult current_result = recurse_move(*state, context, &move);
+  for (const Move move : moves) {
+    SearchResult current_result = recurse_move(move, *state, context);
     switch (update_result(move, &current_result, context, state, &result)) {
       case ResultReaction::INVALID:
         return SearchResult::invalid();

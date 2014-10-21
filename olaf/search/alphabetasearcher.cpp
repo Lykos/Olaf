@@ -5,7 +5,7 @@
 
 #include "olaf/search/searchcontext.h"
 #include "olaf/transposition_table/transpositiontable.h"
-#include "olaf/rules/movecreator.h"
+#include "olaf/rules/undoinfo.h"
 
 using namespace std;
 
@@ -77,18 +77,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
         result.nodes = 1;
         result.score = entry->score;
         if (entry->has_best_move) {
-          if (entry->best_move_is_conversion) {
-            result.main_variation.emplace_back(MoveCreator::create_move(
-                                                 context->board,
-                                                 entry->best_move_source,
-                                                 entry->best_move_destination,
-						 entry->best_move_created_piece));
-          } else {
-            result.main_variation.emplace_back(MoveCreator::create_move(
-                                                 context->board,
-                                                 entry->best_move_source,
-                                                 entry->best_move_destination));
-          }
+          result.main_variation.emplace_back(entry->best_move);
         }
       }
     }
@@ -99,26 +88,28 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
   }
 }
 
-SearchResult AlphaBetaSearcher::recurse_move_noundo(const SearchState& current_state,
-                                                    SearchContext* const context,
-                                                    Move* const move)
+SearchResult AlphaBetaSearcher::recurse_move_noundo(const Move move,
+                                                    const SearchState& current_state,
+                                                    SearchContext* const context)
 {
-  move->execute(&(context->board));
+  UndoInfo undo_info;
+  move.execute(&(context->board), &undo_info);
   return recurse_alpha_beta(current_state, context);
 }
 
-SearchResult AlphaBetaSearcher::recurse_move(const SearchState& current_state,
-                                             SearchContext* const context,
-                                             Move* const move)
+SearchResult AlphaBetaSearcher::recurse_move(const Move move,
+                                             const SearchState& current_state,
+                                             SearchContext* const context)
 {
-  move->execute(&(context->board));
+  UndoInfo undo_info;
+  move.execute(&(context->board), &undo_info);
   const SearchResult& result = recurse_alpha_beta(current_state, context);
-  move->undo(&(context->board));
+  move.undo(undo_info, &(context->board));
   return result;
 }
 
 AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
-    const Move& move,
+    const Move move,
     SearchResult* const recursive_result,
     SearchContext* const context,
     SearchState* const state,
@@ -137,12 +128,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     entry.has_best_move = false;
   } else {
     entry.has_best_move = true;
-    entry.best_move_source = move.source();
-    entry.best_move_destination = move.destination();
-    entry.best_move_is_conversion = move.is_conversion();
-    if (entry.best_move_is_conversion) {
-      entry.best_move_created_piece = move.created_piece();
-    }
+    entry.best_move = recursive_result->main_variation.back();
   }
   if (recursive_score > state->alpha) {
     result->score = recursive_score;

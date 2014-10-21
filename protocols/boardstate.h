@@ -1,16 +1,22 @@
 #ifndef BOARDSTATE_H
 #define BOARDSTATE_H
 
-#include "olaf/rules/movecreator.h"
+#include "olaf/rules/movechecker.h"
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/piece.h"
 #include "olaf/rules/position.h"
+#include "olaf/rules/undoinfo.h"
+#include "olaf/rules/move.h"
 #include <memory>
 #include <mutex>
 #include <stack>
+#include <utility>
 
 namespace olaf
 {
+
+class Move;
+class UndoInfo;
 
 /**
  * @brief The BoardState class is the engines interface to the chess board.
@@ -28,26 +34,16 @@ public:
 
   void move(const Move& move);
 
-  bool valid_move(const Position& source,
-                  const Position& destination);
+  bool valid_move(IncompleteMove incomplete_move) const;
 
-  bool valid_move(const Position& source,
-                  const Position& destination,
-                  Piece::piece_index_t conversion);
-
-  Move create_move(const Position& source,
-                   const Position& destination);
-
-  Move create_move(const Position& source,
-                   const Position& destination,
-                   Piece::piece_index_t conversion);
+  Move create_move(IncompleteMove incomplete_move) const;
 
 private:
   mutable std::mutex m_mutex;
 
   ChessBoard m_board;
 
-  std::stack<Move> m_moves;
+  std::stack<std::pair<Move, UndoInfo>> m_undoable_moves;
 };
 
 } // namespace olaf

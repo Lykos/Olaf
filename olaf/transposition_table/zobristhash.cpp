@@ -877,7 +877,7 @@ void ZobristHash::calculate(ChessBoard* const board)
     }
   }
   if (board->ep_possible()) {
-    update_ep(board->ep_capture_position(), board);
+    update_ep(board->ep_captures().first_position(), board);
   }
   if (board->turn_color() == Color::Black) {
     update_turn_color(board);
@@ -891,7 +891,7 @@ void ZobristHash::update(Color color,
                          ChessBoard* board)
 {
   const int color_index = static_cast<int>(color);
-  board->m_zobrist_hash ^= c_piece_randomness[color_index * 384 + piece_index * 64 + index(position)];
+  board->m_zobrist_hash ^= c_piece_randomness[color_index * 384 + piece_index * 64 + BitBoard::index(position)];
 }
 
 // static
@@ -914,7 +914,7 @@ void ZobristHash::update_castle_q(const Color color,
 void ZobristHash::update_ep(const Position& position,
                             ChessBoard* const board)
 {
-  board->m_zobrist_hash ^= c_ep_randomness[index(position)];
+  board->m_zobrist_hash ^= c_ep_randomness[BitBoard::index(position)];
 }
 
 // static

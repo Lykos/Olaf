@@ -47,32 +47,22 @@ SOURCES += \
     parse/epdposition.cpp \
     parse/fenparser.cpp \
     rules/oncepiece.cpp \
-    rules/epenableaction.cpp \
-    rules/epdisableaction.cpp \
-    rules/conversionaction.cpp \
-    rules/turnflipaction.cpp \
     rules/positiondelta.cpp \
     rules/position.cpp \
     rules/pieceset.cpp \
-    rules/piecemoveaction.cpp \
     rules/pieceboard.cpp \
     rules/piece.cpp \
     rules/pawn.cpp \
     rules/linepiece.cpp \
     rules/colorboard.cpp \
     rules/chessboard.cpp \
-    rules/captureaction.cpp \
     rules/bitboard.cpp \
-    rules/anticastleaction.cpp \
-    rules/movebuilder.cpp \
     rules/move.cpp \
-    rules/setkingcapturepositionsaction.cpp \
-    rules/movecreator.cpp \
-    rules/moveaction.cpp \
     transposition_table/zobristhash.cpp \
     transposition_table/transpositiontable.cpp \
     evaluation/incrementalevaluator.cpp \
-    evaluation/incrementalupdater.cpp
+    evaluation/incrementalupdater.cpp \
+    rules/movechecker.cpp
 
 HEADERS += \
     config.h \
@@ -107,35 +97,26 @@ HEADERS += \
     parse/epdparser.h \
     parse/epdposition.h \
     parse/fenparser.h \
-    rules/movecreator.h \
-    rules/moveaction.h \
     rules/oncepiece.h \
-    rules/epdisableaction.h \
-    rules/conversionaction.h \
     rules/positiondelta.h \
     rules/position.h \
     rules/pieceset.h \
-    rules/piecemoveaction.h \
     rules/pieceboard.h \
     rules/piece.h \
     rules/pawn.h \
     rules/linepiece.h \
-    rules/turnflipaction.h \
     rules/colorboard.h \
     rules/color.h \
     rules/chessboard.h \
-    rules/captureaction.h \
     rules/bitboard.h \
-    rules/anticastleaction.h \
-    rules/epenableaction.h \
-    rules/movebuilder.h \
     rules/move.h \
-    rules/setkingcapturepositionsaction.h \
     transposition_table/zobristhash.h \
     transposition_table/lrucache.h \
     transposition_table/transpositiontable.h \
     evaluation/incrementalevaluator.h \
-    evaluation/incrementalupdater.h
+    evaluation/incrementalupdater.h \
+    rules/undoinfo.h \
+    rules/movechecker.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

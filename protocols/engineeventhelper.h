@@ -45,9 +45,7 @@ public:
 
   void ping(int number);
 
-  bool request_move(const Position& source, const Position& destination);
-
-  bool request_move(const Position& source, const Position& destination, Piece::piece_index_t conversion);
+  bool request_move(IncompleteMove incomplete_move);
 
   void post(bool value);
 

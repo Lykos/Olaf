@@ -16,12 +16,7 @@ enum class Color {
   Black = 1
 };
 
-constexpr Color next(Color color)
-{
-  return static_cast<Color>(1 - static_cast<uint_fast8_t>(color));
-}
-
-constexpr Color previous(Color color)
+constexpr Color other_color(Color color)
 {
   return static_cast<Color>(1 - static_cast<uint_fast8_t>(color));
 }
@@ -41,7 +36,7 @@ constexpr Position::row_t pawn_row(Color color)
   return color == Color::White ? 1 : 6;
 }
 
-constexpr Position::row_t conversion_row(Color color)
+constexpr Position::row_t promotion_row(Color color)
 {
   return color == Color::White ? 7 : 0;
 }

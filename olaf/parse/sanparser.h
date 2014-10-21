@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 #include "olaf/search/movegenerator.h"
-#include "olaf/rules/movecreator.h"
+#include "olaf/rules/movechecker.h"
 
 namespace olaf
 {

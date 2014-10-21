@@ -1,6 +1,8 @@
 #include "boardstate.h"
 
 #include "olaf/search/searcherfactory.h"
+#include <utility>
+#include "olaf/rules/undoinfo.h"
 
 using namespace std;
 
@@ -28,47 +30,31 @@ void BoardState::reset()
 void BoardState::undo()
 {
   unique_lock<mutex> lock(m_mutex);
-  if (!m_moves.empty()) {
-    m_moves.top().undo(&m_board);
-    m_moves.pop();
+  if (!m_undoable_moves.empty()) {
+    auto& undoable_move = m_undoable_moves.top();
+    undoable_move.first.undo(undoable_move.second, &m_board);
+    m_undoable_moves.pop();
   }
 }
 
 void BoardState::move(const Move& move)
 {
   unique_lock<mutex> lock(m_mutex);
-  m_moves.push(move);
-  m_moves.top().execute(&m_board);
+  m_undoable_moves.push(make_pair(move, UndoInfo()));
+  auto& undoable_move = m_undoable_moves.top();
+  undoable_move.first.execute(&m_board, &(undoable_move.second));
 }
 
-bool BoardState::valid_move(const Position& source,
-                            const Position& destination)
+bool BoardState::valid_move(const IncompleteMove incomplete_move) const
 {
   unique_lock<mutex> lock(m_mutex);
-  return MoveCreator::valid_move(m_board, source, destination);
+  return MoveChecker::valid_move(m_board, incomplete_move);
 }
 
-bool BoardState::valid_move(const Position& source,
-                            const Position& destination,
-                            const Piece::piece_index_t conversion)
+Move BoardState::create_move(const IncompleteMove incomplete_move) const
 {
   unique_lock<mutex> lock(m_mutex);
-  return MoveCreator::valid_move(m_board, source, destination, conversion);
+  return Move::complete(incomplete_move, m_board);
 }
-
-Move BoardState::create_move(const Position& source,
-                             const Position& destination)
-{
-  unique_lock<mutex> lock(m_mutex);
-  return MoveCreator::create_move(m_board, source, destination);
-}
-
-Move BoardState::create_move(const Position& source,
-                             const Position& destination,
-                             const Piece::piece_index_t conversion)
-{
-  unique_lock<mutex> lock(m_mutex);
-  return MoveCreator::create_move(m_board, source, destination, conversion);
 
 } // namespace olaf
-}

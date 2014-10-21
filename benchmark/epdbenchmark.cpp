@@ -70,7 +70,7 @@ void EpdBenchmark::test_epd()
   context.transposition_table = &transposition_table;
   Move move = m_searcher->search(&context).main_variation.back();
   long score = 0;
-  auto ContainsMove = Matches(Contains(IsSameMove(move)));
+  auto ContainsMove = Matches(Contains(move));
   if (!position.best_moves.empty()) {
     if (ContainsMove(position.best_moves)) {
       push_score(1);

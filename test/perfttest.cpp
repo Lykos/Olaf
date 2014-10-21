@@ -6,7 +6,7 @@
 #include <gmock/gmock-matchers.h>
 
 #include "olaf/search/movegenerator.h"
-#include "olaf/rules/movecreator.h"
+#include "olaf/rules/movechecker.h"
 #include "olaf/search/searcherfactory.h"
 #include "olaf/search/nothinkingwriter.h"
 #include "olaf/rules/chessboard.h"

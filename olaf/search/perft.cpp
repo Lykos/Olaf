@@ -3,11 +3,13 @@
 #include <memory>
 #include <iostream>
 
-#include "olaf/rules/movecreator.h"
+#include "olaf/rules/movechecker.h"
 #include "olaf/search/movegenerator.h"
 #include "olaf/rules/move.h"
+#include "olaf/rules/undoinfo.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/parse/fenparser.h"
+#include "olaf/rules/move.h"
 
 using namespace std;
 
@@ -103,10 +105,11 @@ void Perft::debug_perft(const int depth,
   vector<Move> moves = m_generator->generate_valid_moves(try_board);
   int sum = 0;
   for (Move& move : moves) {
-    move.execute(&try_board);
+    UndoInfo undo_info;
+    move.execute(&try_board, &undo_info);
     cout << "setboard " << FenParser::serialize(try_board) << endl;
     const PerftResult& result = internal_perft(depth - 1, &try_board);
-    move.undo(&try_board);
+    move.undo(undo_info, &try_board);
     sum += result.nodes;
     cout << "perft " << depth - 1 << endl;
     cout << "name " << result.nodes << endl;
@@ -123,29 +126,27 @@ Perft::PerftResult Perft::internal_perft(const int depth,
   PerftResult result{0, 0, 0, 0, 0, 0};
   vector<Move> moves = m_generator->generate_valid_moves(*board);
   for (Move& move : moves) {
-    move.execute(board);
+    UndoInfo undo_info;
+    move.execute(board, &undo_info);
     if (depth > 1) {
       result += internal_perft(depth - 1, board);
     } else if (m_generator->generate_valid_moves(*board).empty()) {
       ++result.mates;
     }
-    move.undo(board);
+    move.undo(undo_info, board);
     if (depth == 1) {
       ++result.nodes;
       if (move.is_capture()) {
         ++result.captures;
 
-        if (board->ep_possible()
-            && move.destination() == board->ep_capture_position()) {
+        if (move.is_ep()) {
           ++result.ep;
         }
       }
-      if (abs(move.source().column() - move.destination().column()) == 2
-          && board->turn_board().piece_index(move.source())
-          == PieceSet::instance().king().piece_index()) {
+      if (move.is_castle()) {
         ++result.castles;
       }
-      if (move.is_conversion()) {
+      if (move.is_promotion()) {
         ++result.promotions;
       }
     }

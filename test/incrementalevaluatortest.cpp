@@ -6,6 +6,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/search/nothinkingwriter.h"
 #include "olaf/search/searcherfactory.h"
+#include "olaf/rules/undoinfo.h"
 #include "testutil.h"
 
 using namespace testing;
@@ -44,11 +45,12 @@ void IncrementalEvaluatorTest::test_evaluate()
   QASSERT_THAT(actual_score, Eq(score));
   QASSERT_THAT(m_evaluator.evaluate(board), Eq(score));
   for (Move& move : m_generator->generate_valid_moves(board)) {
-    move.execute(&board);
+    UndoInfo undo_info;
+    move.execute(&board, &undo_info);
     const int move_score = board.incremental_score();
     IncrementalUpdater::calculate(&board);
     QASSERT_THAT(board.incremental_score(), Eq(move_score));
-    move.undo(&board);
+    move.undo(undo_info, &board);
     const int undo_score = board.incremental_score();
     IncrementalUpdater::calculate(&board);
     QASSERT_THAT(board.incremental_score(), Eq(undo_score));

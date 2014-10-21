@@ -25,13 +25,8 @@ public:
   std::vector<Move> moves(const Position& source,
                           const ChessBoard& board) const;
 
-  bool can_move(const Position& source,
-                const Position& destination,
+  bool can_move(IncompleteMove incomplete_move,
                 const ChessBoard& board) const override;
-
-  Move move(const Position& source,
-            const Position& destination,
-            const ChessBoard& board) const override;
 
   Move castle_q(Color) const;
 
@@ -45,11 +40,8 @@ private:
   bool is_king_at_initial_position(const Position& position,
                                    const ChessBoard& board) const;
 
-  bool is_castling_move(const Position& source,
-                        const Position& destination,
+  bool is_castling_move(IncompleteMove incomplete_move,
                         const ChessBoard& board) const;
-
-  bool forbids_castle(const Position& source, const ChessBoard& board) const;
 
   std::vector<PositionDelta> m_directions;
 

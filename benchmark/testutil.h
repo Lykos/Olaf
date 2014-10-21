@@ -15,19 +15,11 @@ namespace olaf
 namespace benchmark
 {
 
-MATCHER_P(IsSameMove, move, "") {
-  return ExplainMatchResult(testing::Eq(move.source()), arg.source(), result_listener)
-      && ExplainMatchResult(testing::Eq(move.destination()), arg.destination(), result_listener)
-      && ExplainMatchResult(testing::Eq(move.is_capture()), arg.is_capture(), result_listener)
-      && ExplainMatchResult(testing::Eq(move.is_conversion()), arg.is_conversion(), result_listener)
-      && ExplainMatchResult(testing::Eq(move.created_piece()), arg.created_piece(), result_listener);
-}
-
 #define QASSERT_THAT(value, matcher) { \
-  const AssertionResult& result = \
+  const AssertionResult& __gmock_assertion_result = \
     ::testing::internal::MakePredicateFormatterFromMatcher(matcher)(#value, value); \
-  if (!result) { \
-    QFAIL(result.message()); \
+  if (!__gmock_assertion_result) { \
+    QFAIL(__gmock_assertion_result.message()); \
   } \
 }
 

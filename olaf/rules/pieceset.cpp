@@ -115,10 +115,10 @@ const vector<const Piece*>& PieceSet::pieces() const
 }
 
 PieceSet::PieceSet():
-  m_rook(new LinePiece(c_rook_index, 'r', c_rook_initial_board, c_rook_directions, true)),
+  m_rook(new LinePiece(c_rook_index, 'r', c_rook_initial_board, c_rook_directions)),
   m_knight(new OncePiece(c_knight_index, 'n', c_knight_initial_board, c_knight_directions, false)),
-  m_bishop(new LinePiece(c_bishop_index, 'b', c_bishop_initial_board, c_bishop_directions, false)),
-  m_queen(new LinePiece(c_queen_index, 'q', c_queen_initial_board, c_queen_directions, false)),
+  m_bishop(new LinePiece(c_bishop_index, 'b', c_bishop_initial_board, c_bishop_directions)),
+  m_queen(new LinePiece(c_queen_index, 'q', c_queen_initial_board, c_queen_directions)),
   m_king(new OncePiece(c_king_index, 'k', c_king_initial_board, c_queen_directions, true)),
   m_pawn(new Pawn(c_pawn_index, 'p', c_pawn_initial_board, c_pawn_conversions)),
   m_pieces(c_no_pieces)

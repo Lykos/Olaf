@@ -22,23 +22,8 @@ public:
   std::vector<Move> moves(const Position& source,
                           const ChessBoard& board) const;
 
-  bool can_move(const Position& source,
-                const Position& destination,
+  bool can_move(Move move,
                 const ChessBoard& board) const override;
-
-  bool can_move(const Position& source,
-                const Position& destination,
-                const ChessBoard& board,
-                piece_index_t conversion) const;
-
-  Move move(const Position& source,
-            const Position& destination,
-            const ChessBoard& board) const override;
-
-  Move move(const Position& source,
-            const Position& destination,
-            const ChessBoard& board,
-            piece_index_t conversion) const;
 
 private:
   /**
@@ -49,11 +34,7 @@ private:
                             const Position& source,
                             const Position& destination) const;
 
-  bool internal_can_move(const Position& source,
-                         const Position& destination,
-                         const ChessBoard& board) const;
-
-  std::vector<piece_index_t> m_conversions;
+  std::vector<piece_index_t> m_promotions;
 };
 
 } // namespace olaf

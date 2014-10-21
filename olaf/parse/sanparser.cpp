@@ -7,7 +7,7 @@
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/move.h"
-#include "olaf/rules/movecreator.h"
+#include "olaf/rules/movechecker.h"
 
 using namespace std;
 
@@ -31,15 +31,16 @@ bool SanParser::parse(const string& san_move,
   const bool is_castle_k = san_move.find(c_castle_k) == 0;
   const bool is_castle_q = san_move.find(c_castle_q) == 0;
   if (is_castle_k || is_castle_q) {
-    Position::column_t destination_column = is_castle_q
-        ? Position::c_queens_bishop_column
-        : Position::c_kings_knight_column;
+    Position::column_t destination_column = is_castle_k
+        ? Position::c_kings_knight_column
+        : Position::c_queens_bishop_column;
     Position source(ground_line(board.turn_color()), Position::c_king_column);
     Position destination(ground_line(board.turn_color()), destination_column);
-    if (!MoveCreator::valid_move(board, source, destination)) {
+    Move castle = Move::complete(source, destination, board);
+    if (!MoveChecker::valid_move(board, castle)) {
       return false;
     }
-    *move = MoveCreator::create_move(board, source, destination);
+    *move = castle;
     return true;
   }
   const string::const_iterator begin = san_move.begin();
@@ -127,7 +128,7 @@ bool SanParser::parse(const string& san_move,
   for (const Move& mov : moves) {
     if (!(mov.destination() == destination)
         || mov.is_capture() != capture
-        || mov.is_conversion() != conversion) {
+        || mov.is_promotion() != conversion) {
       continue;
     }
     if (board.turn_board().piece_index(mov.source()) != piece_index) {

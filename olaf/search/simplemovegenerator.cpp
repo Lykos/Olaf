@@ -4,7 +4,7 @@
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceboard.h"
 #include "olaf/rules/chessboard.h"
-#include "olaf/rules/movecreator.h"
+#include "olaf/rules/movechecker.h"
 
 #include <memory>
 #include <iostream>
@@ -20,10 +20,8 @@ vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
   for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
     const Piece& piece = piece_board.piece();
     for (Position source : piece_board.positions()) {
-      vector<Move> piece_moves = piece.moves(source, board);
-      for (Move& move : piece_moves) {
-        moves.emplace_back(std::move(move));
-      }
+      const vector<Move>& piece_moves = piece.moves(source, board);
+      moves.insert(moves.end(), piece_moves.begin(), piece_moves.end());
     }
   }
   return moves;
@@ -32,23 +30,14 @@ vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
 bool SimpleMoveGenerator::valid_move(const ChessBoard& board,
                                      const Move& move)
 {
-  if (move.is_conversion()) {
-    return MoveCreator::valid_move(board,
-                                   move.source(),
-                                   move.destination(),
-                                   move.created_piece());
-  } else {
-    return MoveCreator::valid_move(board,
-                                   move.source(),
-                                   move.destination());
-  }
+  return MoveChecker::valid_move(board, move);
 }
 
 vector<Move> SimpleMoveGenerator::generate_valid_moves(const ChessBoard& board)
 {
   vector<Move> moves = generate_moves(board);
   vector<Move> result;
-  for (const Move& move : moves) {
+  for (const Move move : moves) {
     if (valid_move(board, move)) {
       result.push_back(move);
     }

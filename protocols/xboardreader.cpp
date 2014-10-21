@@ -163,7 +163,7 @@ void XBoardReader::handle_move(const std::string& move)
   istringstream iss(move);
   iss >> source >> destination;
   if (move.size() == 4) {
-    if (!m_engine_helper->request_move(source, destination)) {
+    if (!m_engine_helper->request_move(Move::incomplete(source, destination))) {
       m_writer->illegal_move(move);
     }
   } else if (move.size() == 5) {
@@ -186,7 +186,7 @@ void XBoardReader::handle_move(const std::string& move)
       m_writer->illegal_move(move);
       return;
     }
-    if (!m_engine_helper->request_move(source, destination, conversion)) {
+    if (!m_engine_helper->request_move(Move::incomplete_promotion(source, destination, conversion))) {
       m_writer->illegal_move(move);
     }
   } else {
