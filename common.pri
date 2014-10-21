@@ -1,11 +1,11 @@
 INCLUDEPATH += . ..
 DEPENDPATH += . ..
 
-VERSION=0.0.9
+VERSION=0.0.10
 
 DEFINES += \
     VERSION=\\\"$$VERSION\\\" \
-    VERSION_NAME=\\\"Better_moves\\\"
+    VERSION_NAME=\\\"Move_ordering\\\"
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -Werror -pedantic
 CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
