@@ -3,7 +3,7 @@
 #include <utility>
 
 #include "olaf/rules/chessboard.h"
-#include "olaf/rules/move.h"
+#include "olaf/rules/movechecker.h"
 
 using namespace std;
 using namespace rel_ops;
@@ -30,7 +30,7 @@ vector<Move> LinePiece::moves(const Position& source,
       if (board.friendd(current)) {
         break;
       }
-      result.push_back(Move::complete(source, current, board));
+      result.push_back(MoveChecker::complete(source, current, board));
     }
   }
   return result;

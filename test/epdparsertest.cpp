@@ -29,7 +29,7 @@ void EpdParserTest::test_parse()
   const string epd = "1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - bm Qd1+; id \"BK.01\"";
   EpdPosition position;
   QVERIFY(m_parser->parse(epd, &position));
-  const Move move = Move::complete(Position("d6"), Position("d1"), position.board);
+  const Move move = MoveChecker::complete(Position("d6"), Position("d1"), position.board);
   QASSERT_THAT(position.id, Eq(string("BK.01")));
   QASSERT_THAT(position.best_moves, ElementsAre(move));
 }

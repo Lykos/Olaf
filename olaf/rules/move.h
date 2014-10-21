@@ -11,75 +11,37 @@
 namespace olaf
 {
 
-class UndoInfo;
-class Move;
+class IncompleteMove;
+class MoveChecker;
+
+constexpr bool operator ==(const IncompleteMove a, const IncompleteMove b);
 
 /**
  * @brief IncompleteMove is used for a move for which the flags have not been set.
  */
-typedef Move IncompleteMove;
-
-constexpr bool operator ==(const Move a, const Move b);
-
-class Move
+class IncompleteMove
 {
-  friend constexpr bool operator ==(const Move a, const Move b);
+  friend class MoveChecker;
+  friend constexpr bool operator ==(const IncompleteMove a, const IncompleteMove b);
 public:
-  constexpr Move():
+  constexpr IncompleteMove():
     m_state(0)
   {}
 
-  constexpr Move(const Position& source,
-                 const Position& destination,
-                 const std::uint16_t flags):
-    m_state(flags | BitBoard::index(source) << 6 | BitBoard::index(destination))
+  constexpr IncompleteMove(const Position& source,
+                           const Position& destination):
+    IncompleteMove(source, destination, 0)
   {}
 
-  /**
-   * @brief complete creates a new move for which the flags are set correctly.
-   */
-  static Move complete(IncompleteMove incomplete_move,
-                       const ChessBoard& board);
-  inline static Move complete(const Position& source,
-                              const Position& destination,
-                              const ChessBoard& board)
-  {
-    return complete(incomplete(source, destination), board);
-  }
-  inline static Move complete_promotion(const Position& source,
-                                        const Position& destination,
-                                        const Piece::piece_index_t created_piece,
-                                        const ChessBoard& board)
-  {
-    return complete(incomplete_promotion(source, destination, created_piece), board);
-  }
-
-  static constexpr IncompleteMove incomplete(
-      const Position& source,
-      const Position& destination)
-  {
-    return Move(source, destination, 0);
-  }
-
-  static constexpr IncompleteMove incomplete_promotion(
+  static constexpr IncompleteMove promotion(
       const Position& source,
       const Position& destination,
       const Piece::piece_index_t created_piece)
   {
-    return Move(source, destination, created_piece << 12 | c_promotion_flag);
+    return IncompleteMove(source, destination, created_piece << 12 | c_promotion_flag);
   }
 
   bool is_pseudo_valid(const ChessBoard& board) const;
-
-  /**
-   * @brief execute executes the moves.
-   */
-  void execute(ChessBoard* board, UndoInfo* undo_info) const;
-
-  /**
-   * @brief undo takes back the move actions.
-   */
-  void undo(const UndoInfo& undo_info, ChessBoard* board) const;
 
   constexpr Position source() const
   {
@@ -104,7 +66,7 @@ public:
   static const std::uint16_t c_castle_mask = c_capture_flag | c_promotion_flag | c_special1_flag;
   static const std::uint16_t c_castle_flag = c_special1_flag;
   static const std::uint16_t c_double_pawn_push_mask = c_capture_flag | c_promotion_flag | c_special1_flag | c_special0_flag;
-  static const std::uint16_t c_double_pawn_push_flag = c_special1_flag | c_special0_flag;
+  static const std::uint16_t c_double_pawn_push_flag = c_special0_flag;
 
   constexpr bool is_capture() const
   {
@@ -113,7 +75,7 @@ public:
 
   bool is_double_pawn_push() const
   {
-    return (m_state & c_double_pawn_push_mask) == c_double_pawn_push_mask;
+    return (m_state & c_double_pawn_push_mask) == c_double_pawn_push_flag;
   }
 
   bool is_promotion() const
@@ -128,12 +90,12 @@ public:
 
   bool is_king_castle() const
   {
-    return (m_state & c_castle_k_flag) == c_castle_k_mask;
+    return (m_state & c_castle_k_mask) == c_castle_k_flag;
   }
 
   bool is_queen_castle() const
   {
-    return (m_state & c_castle_q_flag) == c_castle_q_mask;
+    return (m_state & c_castle_q_mask) == c_castle_q_flag;
   }
 
   bool is_castle() const
@@ -146,16 +108,49 @@ public:
     return (m_state >> 12) & 3;
   }
 
+protected:
+  constexpr IncompleteMove(const Position& source,
+                           const Position& destination,
+                           const std::uint16_t flags):
+    m_state(flags | BitBoard::index(source) << 6 | BitBoard::index(destination))
+  {}
+
 private:
   std::uint16_t m_state;
 };
 
-constexpr bool operator ==(const Move a, const Move b)
+class UndoInfo;
+
+class Move : public IncompleteMove {
+  friend class MoveChecker;
+public:
+  constexpr Move()
+  {}
+
+  /**
+   * @brief execute executes the moves.
+   */
+  void execute(ChessBoard* board, UndoInfo* undo_info) const;
+
+  /**
+   * @brief undo takes back the move actions.
+   */
+  void undo(const UndoInfo& undo_info, ChessBoard* board) const;
+private:
+  constexpr Move(const Position& source,
+                 const Position& destination,
+                 const std::uint16_t flags):
+    IncompleteMove(source, destination, flags)
+  {}
+};
+
+constexpr bool operator ==(const IncompleteMove a,
+                           const IncompleteMove b)
 {
   return a.m_state == b.m_state;
 }
 
-std::ostream& operator <<(std::ostream& out, Move move);
+std::ostream& operator <<(std::ostream& out, IncompleteMove move);
 
 } // namespace olaf
 

@@ -5,6 +5,7 @@
 #include "olaf/rules/move.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/chessboard.h"
+#include "olaf/rules/movechecker.h"
 
 using namespace std;
 
@@ -42,12 +43,12 @@ std::vector<Move> Pawn::moves(const Position& source,
     if (simple_move_destination.row() == promotion_row(color)) {
       add_conversion_moves(&result, board, source, simple_move_destination);
     } else {
-      result.emplace_back(Move::complete(source, simple_move_destination, board));
+      result.emplace_back(MoveChecker::complete(source, simple_move_destination, board));
       if (source.row() == pawn_row(color)) {
         const Position& double_move_destination =
             simple_move_destination + forward_direction(color);
         if (!board.occupied(double_move_destination)) {
-          result.emplace_back(Move::complete(source, double_move_destination, board));
+          result.emplace_back(MoveChecker::complete(source, double_move_destination, board));
         }
       }
     }
@@ -63,7 +64,7 @@ std::vector<Move> Pawn::moves(const Position& source,
       if (capture_destination.row() == promotion_row(color)) {
         add_conversion_moves(&result, board, source, capture_destination);
       } else {
-        result.emplace_back(Move::complete(source, capture_destination, board));
+        result.emplace_back(MoveChecker::complete(source, capture_destination, board));
       }
     }
   }
@@ -76,27 +77,27 @@ void Pawn::add_conversion_moves(vector<Move>* const moves,
                                 const Position& destination) const
 {
   for (piece_index_t piece_index : m_promotions) {
-    moves->emplace_back(Move::complete_promotion(source, destination, piece_index, board));
+    moves->emplace_back(MoveChecker::complete_promotion(source, destination, piece_index, board));
   }
 }
 
-bool Pawn::can_move(const Move move,
+bool Pawn::can_move(const IncompleteMove incomplete_move,
                     const ChessBoard& board) const
 {
-  if (!Piece::can_move(move, board)) {
+  if (!Piece::can_move(incomplete_move, board)) {
     return false;
   }
   const Color color = board.turn_color();
-  const Position dst(move.destination());
-  if (move.is_promotion() != (dst.row() == promotion_row(color))) {
+  const Position dst(incomplete_move.destination());
+  if (incomplete_move.is_promotion() != (dst.row() == promotion_row(color))) {
     return false;
   }
-  if (move.is_promotion()
-      && find(m_promotions.begin(), m_promotions.end(), move.created_piece()) == m_promotions.end()) {
+  if (incomplete_move.is_promotion()
+      && find(m_promotions.begin(), m_promotions.end(), incomplete_move.created_piece()) == m_promotions.end()) {
     return false;
   }
   const PositionDelta& delta = forward_direction(board.turn_color());
-  const Position src(move.source());
+  const Position src(incomplete_move.source());
   const Position& step = src + delta;
   // Handle capture.
   if (dst.row() == step.row()

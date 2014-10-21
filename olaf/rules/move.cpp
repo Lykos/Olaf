@@ -1,6 +1,7 @@
 #include "olaf/rules/move.h"
 
 #include <cassert>
+#include <iostream>
 
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/pieceset.h"
@@ -12,7 +13,7 @@ using namespace std;
 namespace olaf
 {
 
-bool Move::is_pseudo_valid(const ChessBoard& board) const
+bool IncompleteMove::is_pseudo_valid(const ChessBoard& board) const
 {
   const Position src(source());
   const Piece::piece_index_t piece_index =
@@ -21,48 +22,6 @@ bool Move::is_pseudo_valid(const ChessBoard& board) const
     return false;
   }
   return board.turn_board().piece(src).can_move(*this, board);
-}
-
-// static
-Move Move::complete(IncompleteMove incomplete_move,
-                    const ChessBoard& board)
-{
-  const Position src(incomplete_move.source());
-  const Piece::piece_index_t piece_index = board.turn_board().piece_index(src);
-  assert(piece_index != Piece::c_no_piece);
-  assert(board.turn_board().piece(src).can_move(incomplete_move, board));
-  const Position dst(incomplete_move.destination());
-  const Color turn_color = board.turn_color();
-  const Position::row_t gnd = ground_line(turn_color);
-  static const Piece::piece_index_t c_king_index =
-      PieceSet::instance().king().piece_index();
-  if (src.row() == gnd
-      && dst.row() == gnd
-      && abs(src.column() - dst.column()) == 2
-      && piece_index == c_king_index) {
-    if (dst.column() == Position::c_kings_knight_column) {
-      return Move(src, dst, c_castle_k_flag);
-    } else {
-      assert(dst.column() == Position::c_queens_bishop_column);
-      return Move(src, dst, c_castle_q_flag);
-    }
-  }
-  static const Piece::piece_index_t c_pawn_index =
-      PieceSet::instance().pawn().piece_index();
-  BitBoard capturable = board.opponents() | board.king_captures();
-  const BitBoard dst_board(dst);
-  const bool is_capture = (capturable & dst_board) != 0;
-  if (piece_index == c_pawn_index) {
-    if ((board.ep_captures() & dst_board) != 0) {
-      Move(src, dst, c_ep_flag);
-    } else if (incomplete_move.is_promotion()) {
-      incomplete_move.m_state |= is_capture << 14;
-      return incomplete_move;
-    } else if (abs(src.row() - dst.row()) == 2) {
-      return Move(src, dst, c_double_pawn_push_flag);
-    }
-  }
-  return Move(src, dst, is_capture << 14);
 }
 
 void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
@@ -79,8 +38,9 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   } else {
     board->disable_ep();
   }
-    static const Piece::piece_index_t c_king_index =
-        PieceSet::instance().king().piece_index();  if (is_capture()) {
+  static const Piece::piece_index_t c_king_index =
+      PieceSet::instance().king().piece_index();
+  if (is_capture()) {
     Position victim_position;
     if (is_ep()) {
       victim_position = dst + forward_direction(noturn_color);
@@ -150,7 +110,7 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
   const Position dst(destination());
   const Color turn_color = board->turn_color();
   const Color noturn_color = other_color(turn_color);
-  const Piece::piece_index_t piece_index = board->turn_board().piece_index(src);
+  const Piece::piece_index_t piece_index = board->turn_board().piece_index(dst);
   if (is_castle()) {
     static const Piece::piece_index_t c_rook_index =
         PieceSet::instance().rook().piece_index();
@@ -160,12 +120,13 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
   board->king_captures(undo_info.king_captures);
   board->can_castle_k(turn_color, undo_info.can_castle_k);
   board->can_castle_q(turn_color, undo_info.can_castle_q);
+  board->remove_piece(turn_color, piece_index, dst);
   if (is_promotion()) {
-    board->remove_piece(turn_color, created_piece(), dst);
+    Piece::piece_index_t c_pawn_index = PieceSet::instance().pawn().piece_index();
+    board->add_piece(turn_color, c_pawn_index, src);
   } else {
-    board->remove_piece(turn_color, piece_index, dst);
+    board->add_piece(turn_color, piece_index, src);
   }
-  board->add_piece(turn_color, piece_index, src);
   if (is_capture()) {
     board->add_piece(noturn_color, undo_info.captured_piece, undo_info.victim_position);
   }
@@ -176,6 +137,12 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
 std::ostream& operator <<(std::ostream& out, Move move)
 {
   out << "Move(" << move.source() << " " << move.destination();
+  if (move.is_king_castle()) {
+    out << " castle k";
+  }
+  if (move.is_queen_castle()) {
+    out << " castle q";
+  }
   if (move.is_capture()) {
     out << " capture";
   }

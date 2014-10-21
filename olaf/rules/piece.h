@@ -10,6 +10,8 @@
 namespace olaf
 {
 
+class IncompleteMove;
+
 class Move;
 
 class ChessBoard;
@@ -58,7 +60,7 @@ public:
 
   BitBoard initial_board(Color color) const;
 
-  virtual bool can_move(Move incomplete_move,
+  virtual bool can_move(IncompleteMove incomplete_move,
                         const ChessBoard& board) const;
 
   static const piece_index_t c_no_piece = -1;

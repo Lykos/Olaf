@@ -5,6 +5,7 @@
 #include "olaf/rules/colorboard.h"
 #include "olaf/rules/pieceboard.h"
 #include "olaf/rules/pieceset.h"
+#include "olaf/rules/movechecker.h"
 #include "olaf/rules/move.h"
 #include "testutil.h"
 
@@ -40,7 +41,7 @@ void PawnTest::test_can_move_data()
   QTest::newRow("start single move opponent blocked b2b3") << Position("b2") << Position("b3") << false << false << false;
   QTest::newRow("nostart single move not blocked f3f4") << Position("f3") << Position("f4") << true << false << false;
   QTest::newRow("nostart single move own blocked h5h6") << Position("h5") << Position("h6") << false << false << false;
-  QTest::newRow("nostart single move opponent noblocked g4g5") << Position("g4") << Position("g5") << false << false << false;
+  QTest::newRow("nostart single move opponent opponent blocked g4g5") << Position("g4") << Position("g5") << false << false << false;
   QTest::newRow("start double move not blocked a2a4") << Position("a2") << Position("a4") << true << false << false;
   QTest::newRow("start double move own direct blocked e2e4") << Position("e2") << Position("e4") << false << false << false;
   QTest::newRow("start double move own blocked d2d4") << Position("d2") << Position("d4") << false << false << false;
@@ -70,17 +71,19 @@ void PawnTest::test_can_move()
   QFETCH(bool, is_capture);
   QFETCH(bool, is_conversion);
 
-  const Move incomplete_move = Move::incomplete(source, destination);
+  if (string(QTest::currentDataTag()) != "nostart single move opponent noblocked g4g5")
+    return;
+  const IncompleteMove incomplete_move = IncompleteMove(source, destination);
   QCOMPARE(m_pawn->can_move(incomplete_move, m_board), result);
   if (result) {
-    const Move move = Move::complete(incomplete_move, m_board);
+    const Move move = MoveChecker::complete(incomplete_move, m_board);
     QCOMPARE(move.is_capture(), is_capture);
   }
-  const Move incomplete_promotion = Move::incomplete_promotion(source, destination, m_knight_index);
+  const IncompleteMove incomplete_promotion = IncompleteMove::promotion(source, destination, m_knight_index);
   if (is_conversion) {
     QVERIFY2(m_pawn->can_move(incomplete_promotion, m_board),
              "Move does not work as a conversion.");
-    const Move move = Move::complete(incomplete_promotion, m_board);
+    const Move move = MoveChecker::complete(incomplete_promotion, m_board);
     QCOMPARE(move.is_capture(), is_capture);
     QVERIFY2(move.is_promotion(), "Conversion is not a conversion.");
     QCOMPARE(move.created_piece(), m_knight_index);

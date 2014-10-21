@@ -31,12 +31,13 @@ bool SanParser::parse(const string& san_move,
   const bool is_castle_k = san_move.find(c_castle_k) == 0;
   const bool is_castle_q = san_move.find(c_castle_q) == 0;
   if (is_castle_k || is_castle_q) {
-    Position::column_t destination_column = is_castle_k
-        ? Position::c_kings_knight_column
-        : Position::c_queens_bishop_column;
+    // Note that we cannot change the order here since c_castle_k is a prefix of c_castle_q.
+    const Position::column_t destination_column = is_castle_q
+        ? Position::c_queens_bishop_column
+        : Position::c_kings_knight_column;
     Position source(ground_line(board.turn_color()), Position::c_king_column);
     Position destination(ground_line(board.turn_color()), destination_column);
-    Move castle = Move::complete(source, destination, board);
+    Move castle = MoveChecker::complete(source, destination, board);
     if (!MoveChecker::valid_move(board, castle)) {
       return false;
     }

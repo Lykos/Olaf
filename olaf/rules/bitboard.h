@@ -71,7 +71,7 @@ public:
   inline void set(const Position& position, bool value)
   {
     const uint_fast8_t i = index(position);
-    m_bits = (m_bits & ~(1ull << i)) | value << i;
+    m_bits = (m_bits & ~(1ull << i)) | static_cast<bitboard_t>(value) << i;
   }
 
   BitBoard mirror_rows() const;

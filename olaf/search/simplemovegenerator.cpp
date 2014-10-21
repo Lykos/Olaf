@@ -27,18 +27,12 @@ vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
   return moves;
 }
 
-bool SimpleMoveGenerator::valid_move(const ChessBoard& board,
-                                     const Move& move)
-{
-  return MoveChecker::valid_move(board, move);
-}
-
 vector<Move> SimpleMoveGenerator::generate_valid_moves(const ChessBoard& board)
 {
   vector<Move> moves = generate_moves(board);
   vector<Move> result;
   for (const Move move : moves) {
-    if (valid_move(board, move)) {
+    if (MoveChecker::valid_move(board, move)) {
       result.push_back(move);
     }
   }

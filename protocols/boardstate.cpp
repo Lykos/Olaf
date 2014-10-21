@@ -54,7 +54,7 @@ bool BoardState::valid_move(const IncompleteMove incomplete_move) const
 Move BoardState::create_move(const IncompleteMove incomplete_move) const
 {
   unique_lock<mutex> lock(m_mutex);
-  return Move::complete(incomplete_move, m_board);
+  return MoveChecker::complete(incomplete_move, m_board);
 }
 
 } // namespace olaf

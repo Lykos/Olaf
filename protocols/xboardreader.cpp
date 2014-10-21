@@ -163,30 +163,30 @@ void XBoardReader::handle_move(const std::string& move)
   istringstream iss(move);
   iss >> source >> destination;
   if (move.size() == 4) {
-    if (!m_engine_helper->request_move(Move::incomplete(source, destination))) {
+    if (!m_engine_helper->request_move(IncompleteMove(source, destination))) {
       m_writer->illegal_move(move);
     }
   } else if (move.size() == 5) {
-    Piece::piece_index_t conversion = -1;
+    Piece::piece_index_t created_piece = -1;
     const PieceSet &set = PieceSet::instance();
     switch (move[4]) {
     case 'r':
-      conversion = set.rook().piece_index();
+      created_piece = set.rook().piece_index();
       break;
     case 'b':
-      conversion = set.bishop().piece_index();
+      created_piece = set.bishop().piece_index();
       break;
     case 'q':
-      conversion = set.queen().piece_index();
+      created_piece = set.queen().piece_index();
       break;
     case 'n':
-      conversion = set.knight().piece_index();
+      created_piece = set.knight().piece_index();
       break;
     default:
       m_writer->illegal_move(move);
       return;
     }
-    if (!m_engine_helper->request_move(Move::incomplete_promotion(source, destination, conversion))) {
+    if (!m_engine_helper->request_move(IncompleteMove::promotion(source, destination, created_piece))) {
       m_writer->illegal_move(move);
     }
   } else {

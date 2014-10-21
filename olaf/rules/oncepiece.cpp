@@ -6,6 +6,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/position.h"
 #include "olaf/rules/pieceset.h"
+#include "olaf/rules/movechecker.h"
 
 using namespace std;
 
@@ -55,16 +56,16 @@ vector<Move> OncePiece::moves(const Position& source,
     if (source.in_bounds(direction)) {
       Position destination = source + direction;
       if (!board.friendd(destination)) {
-        result.push_back(Move::complete(source, destination, board));
+        result.push_back(MoveChecker::complete(source, destination, board));
       }
     }
   }
   if (is_king_at_initial_position(source, board)) {
     if (can_castle_q(board)) {
-      result.push_back(Move::complete(source, Position(source.row(), Position::c_queens_bishop_column), board));
+      result.push_back(MoveChecker::complete(source, Position(source.row(), Position::c_queens_bishop_column), board));
     }
     if (can_castle_k(board)) {
-      result.push_back(Move::complete(source, Position(source.row(), Position::c_kings_knight_column), board));
+      result.push_back(MoveChecker::complete(source, Position(source.row(), Position::c_kings_knight_column), board));
     }
   }
   return result;
@@ -73,10 +74,10 @@ vector<Move> OncePiece::moves(const Position& source,
 bool OncePiece::can_move(const IncompleteMove incomplete_move,
                          const ChessBoard& board) const
 {
-  const Position dst(incomplete_move.destination());
   if (!Piece::can_move(incomplete_move, board)) {
     return false;
   }
+  const Position dst(incomplete_move.destination());
   if (is_castling_move(incomplete_move, board)) {
     if (dst.column() == Position::c_queens_bishop_column) {
       return can_castle_q(board);

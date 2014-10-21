@@ -8,6 +8,7 @@
 #include "olaf/rules/move.h"
 #include "olaf/rules/oncepiece.h"
 #include "olaf/rules/position.h"
+#include "olaf/rules/movechecker.h"
 #include "gmock/gmock-generated-matchers.h"
 
 using namespace std;
@@ -78,10 +79,10 @@ void OncePieceTest::test_can_move()
   QFETCH(bool, result);
   QFETCH(bool, is_capture);
 
-  const Move incomplete_move = Move::incomplete(source, destination);
+  const IncompleteMove incomplete_move = IncompleteMove(source, destination);
   QCOMPARE(piece->can_move(incomplete_move, m_board), result);
   if (result) {
-    const Move move = Move::complete(incomplete_move, m_board);
+    const Move move = MoveChecker::complete(incomplete_move, m_board);
     QCOMPARE(move.is_capture(), is_capture);
   }
 }
@@ -94,50 +95,50 @@ void OncePieceTest::test_moves_data()
 
   {
     vector<Move> moves{
-      Move::complete(Position("a8"), Position("b8"), m_board),
-      Move::complete(Position("a8"), Position("a7"), m_board)};
+      MoveChecker::complete(Position("a8"), Position("b8"), m_board),
+      MoveChecker::complete(Position("a8"), Position("a7"), m_board)};
     QTest::newRow("king a8") << m_king << Position("a8") << moves;
   }
   {
     vector<Move> moves{
-      Move::complete(Position("b7"), Position("b8"), m_board),
-      Move::complete(Position("b7"), Position("c8"), m_board),
-      Move::complete(Position("b7"), Position("a7"), m_board),
-      Move::complete(Position("b7"), Position("c7"), m_board),
-      Move::complete(Position("b7"), Position("a6"), m_board),
-      Move::complete(Position("b7"), Position("b6"), m_board),
-      Move::complete(Position("b7"), Position("c6"), m_board)};
+      MoveChecker::complete(Position("b7"), Position("b8"), m_board),
+      MoveChecker::complete(Position("b7"), Position("c8"), m_board),
+      MoveChecker::complete(Position("b7"), Position("a7"), m_board),
+      MoveChecker::complete(Position("b7"), Position("c7"), m_board),
+      MoveChecker::complete(Position("b7"), Position("a6"), m_board),
+      MoveChecker::complete(Position("b7"), Position("b6"), m_board),
+      MoveChecker::complete(Position("b7"), Position("c6"), m_board)};
     QTest::newRow("king b7") << m_king << Position("b7") << moves;
   }
   {
     vector<Move> moves{
-      Move::complete(Position("e1"), Position("d1"), m_board),
-      Move::complete(Position("e1"), Position("f1"), m_board),
-      Move::complete(Position("e1"), Position("d2"), m_board),
-      Move::complete(Position("e1"), Position("e2"), m_board),
-      Move::complete(Position("e1"), Position("f2"), m_board),
-      Move::complete(Position("e1"), Position("c1"), m_board),
-      Move::complete(Position("e1"), Position("g1"), m_board)};
+      MoveChecker::complete(Position("e1"), Position("d1"), m_board),
+      MoveChecker::complete(Position("e1"), Position("f1"), m_board),
+      MoveChecker::complete(Position("e1"), Position("d2"), m_board),
+      MoveChecker::complete(Position("e1"), Position("e2"), m_board),
+      MoveChecker::complete(Position("e1"), Position("f2"), m_board),
+      MoveChecker::complete(Position("e1"), Position("c1"), m_board),
+      MoveChecker::complete(Position("e1"), Position("g1"), m_board)};
     QTest::newRow("king e1") << m_king << Position("e1") << moves;
   }
   {
     vector<Move> moves{
-      Move::complete(Position("h8"), Position("f7"), m_board)};
+      MoveChecker::complete(Position("h8"), Position("f7"), m_board)};
     QTest::newRow("knight h8") << m_knight << Position("h8") << moves;
   }
   {
     vector<Move> moves{
-      Move::complete(Position("g6"), Position("f8"), m_board),
-      Move::complete(Position("g6"), Position("e7"), m_board),
-      Move::complete(Position("g6"), Position("e5"), m_board),
-      Move::complete(Position("g6"), Position("f4"), m_board)};
+      MoveChecker::complete(Position("g6"), Position("f8"), m_board),
+      MoveChecker::complete(Position("g6"), Position("e7"), m_board),
+      MoveChecker::complete(Position("g6"), Position("e5"), m_board),
+      MoveChecker::complete(Position("g6"), Position("f4"), m_board)};
     QTest::newRow("knight g6") << m_knight << Position("g6") << moves;
   }
   {
     vector<Move> moves{
-      Move::complete(Position("h4"), Position("f5"), m_board),
-      Move::complete(Position("h4"), Position("f3"), m_board),
-      Move::complete(Position("h4"), Position("g2"), m_board)};
+      MoveChecker::complete(Position("h4"), Position("f5"), m_board),
+      MoveChecker::complete(Position("h4"), Position("f3"), m_board),
+      MoveChecker::complete(Position("h4"), Position("g2"), m_board)};
     QTest::newRow("knight h4") << m_knight << Position("h4") << moves;
   }
 }
