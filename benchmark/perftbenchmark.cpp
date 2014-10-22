@@ -29,6 +29,10 @@ typedef Perft::PerftResult PerftResult;
 
 const int c_depth = 4;
 
+PerftBenchmark::PerftBenchmark():
+  Benchmark("Perft")
+{}
+
 void PerftBenchmark::test_perft_data()
 {
   QTest::addColumn<ChessBoard>("board");
@@ -58,7 +62,9 @@ void PerftBenchmark::test_perft()
     actual_result = perft->perft(c_depth, board);
   }
   QASSERT_THAT(actual_result, Eq(expected_result));
+}
+
+DECLARE_BENCHMARK(PerftBenchmark)
 
 } // namespace benchmark
 } // namespace olaf
-}

@@ -14,14 +14,14 @@ namespace benchmark
 class PerftBenchmark : public Benchmark
 {
   Q_OBJECT
+public:
+  PerftBenchmark();
 
 private Q_SLOTS:
   void test_perft_data();
 
   void test_perft();
 };
-
-DECLARE_BENCHMARK(PerftBenchmark)
 
 } // namespace benchmark
 } // namespace olaf

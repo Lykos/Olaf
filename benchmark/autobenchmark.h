@@ -31,13 +31,15 @@ template <class T>
 class BenchmarkHolder
 {
 public:
-  std::unique_ptr<T> child;
-
-  BenchmarkHolder(const char* const name) : child(new T)
+  explicit BenchmarkHolder(const char* const name):
+    m_child(new T)
   {
-    child->setObjectName(name);
-    ::olaf::benchmark::auto_benchmark::add_benchmark(child.get());
+    m_child->setObjectName(name);
+    ::olaf::benchmark::auto_benchmark::add_benchmark(m_child.get());
   }
+
+private:
+  std::unique_ptr<T> m_child;
 };
 
 } // namespace auto_benchmark
