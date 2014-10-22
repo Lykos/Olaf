@@ -1,15 +1,18 @@
 #ifndef SIMPLETHINKINGWRITER_H
 #define SIMPLETHINKINGWRITER_H
 
-#include "protocolwriter.h"
-#include "olaf/search/thinkingwriter.h"
-#include "olaf/search/searchresult.h"
-#include "olaf/rules/chessboard.h"
 #include <chrono>
 #include <memory>
 
+#include "olaf/search/thinkingwriter.h"
+#include "olaf/search/searcher.h"
+
 namespace olaf
 {
+
+class ChessBoard;
+class ProtocolWriter;
+class SearchResult;
 
 /**
  * @brief The SimpleThinkingWriter class is a very simple class
@@ -26,7 +29,7 @@ class SimpleThinkingWriter : public ThinkingWriter
   void output(const ChessBoard& board,
               const SearchResult& result,
               const std::chrono::milliseconds &time,
-              int depth);
+              Searcher::depth_t depth);
 
 private:
   ProtocolWriter* const m_writer;

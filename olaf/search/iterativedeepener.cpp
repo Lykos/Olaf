@@ -1,8 +1,12 @@
 #include "olaf/search/iterativedeepener.h"
-#include "olaf/search/compositestopper.h"
-#include "olaf/search/searchcontext.h"
+
 #include <chrono>
 #include <cassert>
+
+#include "olaf/search/compositestopper.h"
+#include "olaf/search/searchcontext.h"
+#include "olaf/search/thinkingwriter.h"
+#include "olaf/search/alphabetasearcher.h"
 
 using namespace std;
 using namespace chrono;
@@ -12,7 +16,7 @@ namespace olaf
 
 IterativeDeepener::IterativeDeepener(unique_ptr<AlphaBetaSearcher> searcher,
                                      ThinkingWriter* const writer,
-                                     const int min_depth):
+                                     const depth_t min_depth):
   m_searcher(move(searcher)),
   m_writer(writer),
   m_min_depth(min_depth)

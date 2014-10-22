@@ -1,16 +1,18 @@
 #ifndef ALPHABETASEARCHER_H
 #define ALPHABETASEARCHER_H
 
-#include "olaf/search/stopper.h"
-#include "olaf/search/searcher.h"
-#include "olaf/search/movegenerator.h"
-#include "olaf/search/moveorderer.h"
-#include "olaf/rules/move.h"
 #include <memory>
 #include <vector>
 
+#include "olaf/search/searcher.h"
+#include "olaf/rules/move.h"
+#include "olaf/search/searchresult.h"
+
 namespace olaf
 {
+
+class SearchContext;
+class MoveGenerator;
 
 /**
  * @brief The RecursiveSearcher class is an abstract searcher which provides

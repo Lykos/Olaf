@@ -6,6 +6,7 @@
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/pawn.h"
 #include "olaf/rules/bitboard.h"
+#include "olaf/rules/chessboard.h"
 
 using namespace std;
 

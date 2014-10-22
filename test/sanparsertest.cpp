@@ -6,6 +6,7 @@
 
 #include "testutil.h"
 #include "olaf/rules/chessboard.h"
+#include "olaf/rules/movechecker.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/parse/sanparser.h"
 #include "olaf/search/searcherfactory.h"

@@ -9,6 +9,8 @@
 #include <sstream>
 
 #include "olaf/parse/epdposition.h"
+#include "olaf/parse/epdparser.h"
+#include "olaf/parse/sanparser.h"
 #include "olaf/search/nostopper.h"
 #include "olaf/search/searchcontext.h"
 #include "testutil.h"

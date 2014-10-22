@@ -4,11 +4,11 @@
 #include <cstdint>
 
 #include "olaf/rules/piece.h"
-#include "olaf/rules/color.h"
 
 namespace olaf
 {
 
+enum class Color;
 class ChessBoard;
 class Position;
 

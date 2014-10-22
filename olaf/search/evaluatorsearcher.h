@@ -1,9 +1,10 @@
 #ifndef EVALUATORSEARCHER_H
 #define EVALUATORSEARCHER_H
 
-#include "olaf/search/alphabetasearcher.h"
-#include "olaf/evaluation/positionevaluator.h"
 #include <memory>
+
+#include "olaf/search/alphabetasearcher.h"
+#include "olaf/search/searchresult.h"
 
 namespace olaf
 {

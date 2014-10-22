@@ -1,4 +1,5 @@
 #include "olaf/search/searcherfactory.h"
+
 #include "olaf/search/simpletimedsearcher.h"
 #include "olaf/search/iterativedeepener.h"
 #include "olaf/search/parallelnegamaxer.h"
@@ -8,6 +9,9 @@
 #include "olaf/search/simplemovegenerator.h"
 #include "olaf/search/moveorderer.h"
 #include "olaf/search/quiescer.h"
+#include "olaf/search/perft.h"
+#include "olaf/parse/sanparser.h"
+#include "olaf/parse/epdparser.h"
 #include "olaf/transposition_table/transpositiontable.h"
 
 using namespace std;

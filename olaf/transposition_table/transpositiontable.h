@@ -6,14 +6,10 @@
 #include "olaf/transposition_table/lrucache.h"
 #include "olaf/evaluation/positionevaluator.h"
 #include "olaf/search/searcher.h"
-#include "olaf/rules/position.h"
-#include "olaf/rules/piece.h"
 #include "olaf/rules/move.h"
 
 namespace olaf
 {
-
-class Move;
 
 enum class NodeType
 {

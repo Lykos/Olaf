@@ -3,12 +3,13 @@
 
 #include <memory>
 #include <string>
+
 #include "olaf/search/movegenerator.h"
-#include "olaf/rules/movechecker.h"
 
 namespace olaf
 {
 
+class ChessBoard;
 class Move;
 
 class SanParser

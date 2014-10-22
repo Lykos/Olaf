@@ -3,7 +3,6 @@
 
 #include "olaf/search/movegenerator.h"
 #include "olaf/rules/move.h"
-#include "olaf/rules/piece.h"
 #include <vector>
 
 namespace olaf
@@ -17,9 +16,6 @@ public:
   std::vector<Move> generate_moves(const ChessBoard& board) override;
 
   std::vector<Move> generate_valid_moves(const ChessBoard& board) override;
-
-private:
-  bool valid_move(const ChessBoard& board, const Move& move);
 };
 
 } // namespace olaf

@@ -1,8 +1,9 @@
 #ifndef RESULTEVALUATOR_H
 #define RESULTEVALUATOR_H
 
-#include "olaf/evaluation/positionevaluator.h"
 #include <memory>
+
+#include "olaf/evaluation/positionevaluator.h"
 
 namespace olaf
 {

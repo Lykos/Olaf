@@ -1,10 +1,11 @@
 #ifndef CAPTUREGENERATOR_H
 #define CAPTUREGENERATOR_H
 
-#include "olaf/search/movegenerator.h"
-#include "olaf/rules/move.h"
 #include <memory>
 #include <vector>
+
+#include "olaf/rules/move.h"
+#include "olaf/search/movegenerator.h"
 
 namespace olaf
 {

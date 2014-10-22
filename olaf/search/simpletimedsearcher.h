@@ -5,13 +5,12 @@
 #include <chrono>
 
 #include "olaf/search/searcher.h"
-#include "olaf/rules/chessboard.h"
-#include "olaf/search/stopper.h"
 #include "olaf/search/searchresult.h"
-#include "olaf/search/timestopper.h"
 
 namespace olaf
 {
+
+class SearchContext;
 
 /**
  * @brief The SimpleTimedSearcher class adds time bounds to the SearchContext unless

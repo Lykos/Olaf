@@ -1,7 +1,6 @@
 #ifndef MOVEORDERER_H
 #define MOVEORDERER_H
 
-#include "olaf/rules/chessboard.h"
 #include "olaf/rules/move.h"
 #include <vector>
 

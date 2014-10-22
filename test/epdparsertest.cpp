@@ -7,6 +7,7 @@
 #include "olaf/parse/epdparser.h"
 #include "olaf/parse/epdposition.h"
 #include "olaf/search/nothinkingwriter.h"
+#include "olaf/rules/movechecker.h"
 #include "testutil.h"
 
 using namespace std;

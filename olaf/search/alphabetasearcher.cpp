@@ -4,6 +4,9 @@
 #include <limits>
 
 #include "olaf/search/searchcontext.h"
+#include "olaf/search/movegenerator.h"
+#include "olaf/search/moveorderer.h"
+#include "olaf/search/stopper.h"
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/rules/undoinfo.h"
 #include "olaf/evaluation/positionevaluator.h"

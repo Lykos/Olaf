@@ -8,6 +8,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/parse/epdposition.h"
 #include "olaf/parse/epdparser.h"
+#include "olaf/parse/sanparser.h"
 #include "olaf/search/searcherfactory.h"
 #include "olaf/search/nothinkingwriter.h"
 
@@ -32,7 +33,7 @@ EpdPosition parse_epd(const string& epd)
   SearcherFactory factory(&no_thinking_writer);
   assert(factory.epd_parser()->parse(epd, &position));
   return position;
+}
 
 } // namespace benchmark
 } // namespace olaf
-}

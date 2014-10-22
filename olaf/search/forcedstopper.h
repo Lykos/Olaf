@@ -1,8 +1,9 @@
 #ifndef FORCEDSTOPPER_H
 #define FORCEDSTOPPER_H
 
-#include "olaf/search/stopper.h"
 #include <atomic>
+
+#include "olaf/search/stopper.h"
 
 namespace olaf
 {

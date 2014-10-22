@@ -1,20 +1,23 @@
 #ifndef ENGINEFACTORY_H
 #define ENGINEFACTORY_H
 
-#include "olaf/search/searcher.h"
-#include "olaf/search/alphabetasearcher.h"
-#include "olaf/evaluation/positionevaluator.h"
-#include "olaf/search/movegenerator.h"
-#include "olaf/evaluation/evaluatorfactory.h"
-#include "olaf/search/thinkingwriter.h"
-#include "olaf/search/perft.h"
-#include "olaf/parse/sanparser.h"
-#include "olaf/parse/epdparser.h"
-#include "olaf/transposition_table/transpositiontable.h"
+#include <chrono>
 #include <memory>
+
+#include "olaf/search/searcher.h"
+#include "olaf/evaluation/evaluatorfactory.h"
+#include "olaf/transposition_table/transpositiontable.h"
 
 namespace olaf
 {
+
+class AlphaBetaSearcher;
+class ThinkingWriter;
+class MoveGenerator;
+class MoveOrderer;
+class Perft;
+class SanParser;
+class EpdParser;
 
 class SearcherFactory
 {
@@ -57,9 +60,9 @@ private:
 
   static const std::chrono::milliseconds c_search_time;
 
-  static const int c_sequential_depth = 2;
+  static const Searcher::depth_t c_sequential_depth = 2;
 
-  static const int c_min_depth = 1;
+  static const Searcher::depth_t c_min_depth = 1;
 
   static const long c_transposition_table_size = 0x10000;
 

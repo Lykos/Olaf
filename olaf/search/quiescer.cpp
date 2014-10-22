@@ -5,6 +5,7 @@
 
 #include "olaf/evaluation/positionevaluator.h"
 #include "olaf/search/searchcontext.h"
+#include "olaf/search/movegenerator.h"
 
 using namespace std;
 

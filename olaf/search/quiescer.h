@@ -4,10 +4,12 @@
 #include <memory>
 
 #include "olaf/search/alphabetasearcher.h"
-#include "olaf/evaluation/positionevaluator.h"
+#include "olaf/search/searchresult.h"
 
 namespace olaf
 {
+
+class MoveGenerator;
 
 class Quiescer : public AlphaBetaSearcher
 {
