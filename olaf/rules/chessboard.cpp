@@ -99,7 +99,7 @@ void ChessBoard::next_turn()
 
 void ChessBoard::previous_turn()
 {
-  if (m_turn_color == Color::Black) {
+  if (m_turn_color == Color::White) {
     --m_turn_number;
   }
   ZobristHash::update_turn_color(this);

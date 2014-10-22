@@ -10,6 +10,7 @@
 
 #include "olaf/parse/epdposition.h"
 #include "olaf/search/nostopper.h"
+#include "olaf/search/searchcontext.h"
 #include "testutil.h"
 
 using namespace std;

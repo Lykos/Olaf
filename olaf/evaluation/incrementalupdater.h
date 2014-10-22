@@ -1,12 +1,14 @@
 #ifndef MATERIALEVALUATOR_H
 #define MATERIALEVALUATOR_H
 
-#include "olaf/evaluation/positionevaluator.h"
 #include <vector>
+
+#include "olaf/rules/piece.h"
 
 namespace olaf
 {
 
+class Position;
 class ChessBoard;
 
 class IncrementalUpdater

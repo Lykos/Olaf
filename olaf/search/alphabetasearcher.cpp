@@ -6,6 +6,7 @@
 #include "olaf/search/searchcontext.h"
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/rules/undoinfo.h"
+#include "olaf/evaluation/positionevaluator.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ AlphaBetaSearcher::AlphaBetaSearcher():
 
 AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
                                      std::unique_ptr<AlphaBetaSearcher> sub_searcher,
-                                     const int sub_searcher_depth,
+                                     const depth_t sub_searcher_depth,
                                      const bool ignore_depth):
   m_generator(move(generator)),
   m_sub_searcher(move(sub_searcher)),
@@ -45,8 +46,8 @@ SearchResult AlphaBetaSearcher::search(SearchContext* const context)
 {
   assert(context->depth_mode == SearchContext::DepthMode::FIXED_DEPTH);
   // We increment the depth by 1 because it gets immediately decremented again.
-  SearchState initial_state{-numeric_limits<int>::max(),
-                            numeric_limits<int>::max(),
+  SearchState initial_state{-numeric_limits<PositionEvaluator::score_t>::max(),
+                            numeric_limits<PositionEvaluator::score_t>::max(),
                             context->search_depth + 1};
   return recurse_alpha_beta(initial_state, context);
 }
@@ -60,7 +61,7 @@ SearchResult AlphaBetaSearcher::recurse_sub_searcher(const SearchState& current_
 SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_state,
                                                    SearchContext* const context)
 {
-  const int recurse_depth = current_state.depth - 1;
+  const depth_t recurse_depth = current_state.depth - 1;
   if (context->forced_stopper->should_stop()) {
     return SearchResult::invalid();
   } else if ((!m_ignore_depth && recurse_depth <= m_sub_searcher_depth)
@@ -83,7 +84,15 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     SearchState state{-current_state.beta,
                       -current_state.alpha,
                       recurse_depth};
-    return alpha_beta(&state, context);
+    SearchResult result = alpha_beta(&state, context);
+    // Make mates in higher depth favorable.
+    static const PositionEvaluator::score_t c_safety_margin = 1000;
+    if (result.score >= PositionEvaluator::c_win_score - c_safety_margin) {
+      --result.score;
+    } else if (-result.score >= PositionEvaluator::c_win_score - c_safety_margin) {
+      ++result.score;
+    }
+    return result;
   }
 }
 

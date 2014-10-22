@@ -3,6 +3,7 @@
 
 #include "olaf/rules/chessboard.h"
 #include "olaf/transposition_table/transpositiontable.h"
+#include "olaf/search/searcher.h"
 
 namespace olaf
 {
@@ -66,7 +67,7 @@ struct SearchContext
   /**
    * @brief search/search_depth the depth for FIXED_DEPTH mode.
    */
-  int search_depth;
+  Searcher::depth_t search_depth;
 
   TranspositionTable* transposition_table;
 

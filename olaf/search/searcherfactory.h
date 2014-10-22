@@ -10,6 +10,7 @@
 #include "olaf/search/perft.h"
 #include "olaf/parse/sanparser.h"
 #include "olaf/parse/epdparser.h"
+#include "olaf/transposition_table/transpositiontable.h"
 #include <memory>
 
 namespace olaf

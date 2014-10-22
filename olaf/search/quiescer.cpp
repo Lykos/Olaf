@@ -3,6 +3,9 @@
 #include <cassert>
 #include <algorithm>
 
+#include "olaf/evaluation/positionevaluator.h"
+#include "olaf/search/searchcontext.h"
+
 using namespace std;
 
 namespace olaf
@@ -11,7 +14,7 @@ namespace olaf
 Quiescer::Quiescer(unique_ptr<PositionEvaluator> evaluator,
                    unique_ptr<MoveGenerator> generator,
                    unique_ptr<AlphaBetaSearcher> sub_searcher,
-                   const int sub_searcher_depth,
+                   const depth_t sub_searcher_depth,
                    const bool ignore_depth):
   AlphaBetaSearcher(move(generator),
                     move(sub_searcher),
@@ -24,7 +27,7 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
                                   SearchContext* const context)
 {
   SearchResult result;
-  const int stand_pat = m_evaluator->evaluate(context->board);
+  const PositionEvaluator::score_t stand_pat = m_evaluator->evaluate(context->board);
   result.nodes = 1;
   if (stand_pat >= state->beta) {
     result.score = stand_pat;

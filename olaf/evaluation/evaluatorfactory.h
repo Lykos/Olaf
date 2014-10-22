@@ -2,10 +2,11 @@
 #define EVALUATORFACTORY_H
 
 #include <memory>
-#include "olaf/evaluation/positionevaluator.h"
 
 namespace olaf
 {
+
+class PositionEvaluator;
 
 class EvaluatorFactory
 {

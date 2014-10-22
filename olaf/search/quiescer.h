@@ -15,7 +15,7 @@ public:
   Quiescer(std::unique_ptr<PositionEvaluator> evaluator,
            std::unique_ptr<MoveGenerator> generator,
            std::unique_ptr<AlphaBetaSearcher> sub_searcher,
-           int sub_searcher_depth,
+           depth_t sub_searcher_depth,
            bool ignore_depth);
 
   SearchResult alpha_beta(SearchState* state,

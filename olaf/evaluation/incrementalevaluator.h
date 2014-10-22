@@ -1,8 +1,9 @@
 #ifndef INCREMENTALEVALUATOR_H
 #define INCREMENTALEVALUATOR_H
 
-#include "olaf/evaluation/positionevaluator.h"
 #include <vector>
+
+#include "olaf/evaluation/positionevaluator.h"
 
 namespace olaf
 {

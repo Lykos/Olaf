@@ -4,6 +4,8 @@
 #include <memory>
 
 #include "olaf/transposition_table/lrucache.h"
+#include "olaf/evaluation/positionevaluator.h"
+#include "olaf/search/searcher.h"
 #include "olaf/rules/position.h"
 #include "olaf/rules/piece.h"
 #include "olaf/rules/move.h"
@@ -22,8 +24,8 @@ enum class NodeType
 
 struct TranspositionTableEntry
 {
-  int depth;
-  int score;
+  Searcher::depth_t depth;
+  PositionEvaluator::score_t score;
   NodeType node_type;
   Move best_move;
   bool has_best_move;

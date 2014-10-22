@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "olaf/search/searchcontext.h"
+
 using namespace std;
 
 namespace olaf

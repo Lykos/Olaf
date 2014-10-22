@@ -25,7 +25,7 @@ public:
 
   AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
                     std::unique_ptr<AlphaBetaSearcher> sub_searcher,
-                    int sub_searcher_depth,
+                    depth_t sub_searcher_depth,
                     bool ignore_depth);
 
   virtual ~AlphaBetaSearcher();
@@ -42,8 +42,8 @@ public:
    *        for each recursive call.
    */
   struct SearchState {
-    int alpha;
-    int beta;
+    PositionEvaluator::score_t alpha;
+    PositionEvaluator::score_t beta;
     int depth;
   };
 

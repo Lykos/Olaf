@@ -1,9 +1,11 @@
 #ifndef SEARCHRESULT_H
 #define SEARCHRESULT_H
 
-#include "olaf/rules/move.h"
 #include <limits>
 #include <vector>
+
+#include "olaf/rules/move.h"
+#include "olaf/evaluation/positionevaluator.h"
 
 namespace olaf
 {
@@ -18,7 +20,7 @@ struct SearchResult
 
   // We use -max because numeric_limits is asymmetric and min
   // would not work.
-  int score = -std::numeric_limits<int>::max();
+  PositionEvaluator::score_t score = -std::numeric_limits<int>::max();
 
   std::vector<Move> main_variation;
 };

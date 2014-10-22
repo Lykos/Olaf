@@ -1,7 +1,10 @@
 #include "olaf/search/parallelnegamaxer.h"
-#include "olaf/rules/move.h"
+
 #include <limits>
 #include <future>
+
+#include "olaf/rules/move.h"
+#include "olaf/search/searchcontext.h"
 
 using namespace std;
 
