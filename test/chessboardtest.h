@@ -1,5 +1,5 @@
-#ifndef BOARDTEST_H
-#define BOARDTEST_H
+#ifndef CHESSBOARDTEST_H
+#define CHESSBOARDTEST_H
 
 #include "olaf/rules/piece.h"
 #include "autotest.h"
@@ -11,15 +11,9 @@ namespace olaf
 namespace test
 {
 
-class BoardTest : public QObject
+class ChessBoardTest : public QObject
 {
   Q_OBJECT
-
-public:
-  BoardTest();
-
-private:
-  Piece::piece_index_t m_bishop;
 
 private Q_SLOTS:
   void test_occupied();
@@ -27,12 +21,16 @@ private Q_SLOTS:
   void test_opponents();
 
   void test_friends();
+
+  void test_finished_data();
+
+  void test_finished();
   
 };
 
-DECLARE_TEST(BoardTest)
+DECLARE_TEST(ChessBoardTest)
 
 } // namespace test
 } // namespace olaf
 
-#endif // BOARDTEST_H
+#endif // CHESSBOARDTEST_H

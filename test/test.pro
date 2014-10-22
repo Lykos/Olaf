@@ -17,7 +17,6 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 SOURCES += \
-    boardtest.cpp \
     pawntest.cpp \
     oncepiecetest.cpp \
     fenparsertest.cpp \
@@ -31,12 +30,12 @@ SOURCES += \
     zobristhashtest.cpp \
     lrucachetest.cpp \
     bitboardtest.cpp \
-    incrementalevaluatortest.cpp
+    incrementalevaluatortest.cpp \
+    chessboardtest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
-    boardtest.h \
     pawntest.h \
     oncepiecetest.h \
     autotest.h \
@@ -49,7 +48,8 @@ HEADERS += \
     zobristhashtest.h \
     lrucachetest.h \
     bitboardtest.h \
-    incrementalevaluatortest.h
+    incrementalevaluatortest.h \
+    chessboardtest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf

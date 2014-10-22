@@ -10,6 +10,7 @@
 #include "testutil.h"
 
 using namespace std;
+using namespace testing;
 
 namespace olaf
 {
@@ -19,7 +20,7 @@ namespace test
 void PawnTest::initTestCase()
 {
   m_pawn = &(PieceSet::instance().pawn());
-  m_board = parse_fen("1n1N4/1PPP4/6pN/P4npP/2nN2P1/1p2NP2/PPPPP3/8 w - g6 0 1");
+  m_board = parse_fen("1n1N3k/1PPP4/7N/P4npP/2nN2P1/1p2NP2/PPPPP3/K7 w - g6 0 1");
   m_pawn_index = m_pawn->piece_index();
   m_knight_index = PieceSet::c_king_index;
 }
@@ -92,11 +93,61 @@ void PawnTest::test_can_move()
   }
 }
 
+Move PawnTest::make_move(const string& source, const string& destination)
+{
+  return MoveChecker::complete(Position(source), Position(destination), m_board);
+}
+
 void PawnTest::test_moves_data()
-{}
+{
+  QTest::addColumn<Position>("source");
+  QTest::addColumn<vector<Move>>("moves");
+
+  QTest::newRow("free move")
+      << Position("a2")
+      << vector<Move>{{make_move("a2", "a4"), make_move("a2", "a3"), make_move("a2", "b3")}};
+  QTest::newRow("opponent blocked move")
+      << Position("b2")
+      << vector<Move>();
+  QTest::newRow("opponent blocked double move")
+      << Position("c2")
+      << vector<Move>{{make_move("c2", "b3"), make_move("c2", "c3")}};
+  QTest::newRow("friend blocked double move")
+      << Position("d2")
+      << vector<Move>{{make_move("d2", "d3")}};
+  QTest::newRow("friend blocked")
+      << Position("e2")
+      << vector<Move>();
+  QTest::newRow("ep")
+      << Position("h5")
+      << vector<Move>{{make_move("h5", "g6")}};
+  QTest::newRow("promotion blocked")
+      << Position("b7")
+      << vector<Move>();
+  {
+    vector<Move> moves{
+      MoveChecker::complete_promotion(Position("c7"), Position("b8"), PieceSet::c_bishop_index, m_board),
+      MoveChecker::complete_promotion(Position("c7"), Position("b8"), PieceSet::c_knight_index, m_board),
+      MoveChecker::complete_promotion(Position("c7"), Position("b8"), PieceSet::c_rook_index, m_board),
+      MoveChecker::complete_promotion(Position("c7"), Position("b8"), PieceSet::c_queen_index, m_board),
+      MoveChecker::complete_promotion(Position("c7"), Position("c8"), PieceSet::c_bishop_index, m_board),
+      MoveChecker::complete_promotion(Position("c7"), Position("c8"), PieceSet::c_knight_index, m_board),
+      MoveChecker::complete_promotion(Position("c7"), Position("c8"), PieceSet::c_rook_index, m_board),
+      MoveChecker::complete_promotion(Position("c7"), Position("c8"), PieceSet::c_queen_index, m_board),
+    };
+    QTest::newRow("promotion")
+        << Position("c7")
+        << moves;
+  }
+}
 
 void PawnTest::test_moves()
-{}
+{
+  QFETCH(Position, source);
+  QFETCH(vector<Move>, moves);
+
+  QASSERT_THAT(m_pawn->moves(source, m_board), UnorderedElementsAreArray(moves));
+}
 
 } // namespace test
 } // namespace olaf

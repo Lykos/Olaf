@@ -1,5 +1,5 @@
 
-#include "bitboardtest.h"
+#include "test/bitboardtest.h"
 #include <QtTest/QTest>
 #include <vector>
 #include "testutil.h"
