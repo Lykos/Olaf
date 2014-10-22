@@ -23,7 +23,7 @@ void OncePieceTest::initTestCase()
 {
   m_king = &(PieceSet::instance().king());
   m_knight = &(PieceSet::instance().knight());
-  m_board = parse_fen("K6N/nK6/6N1/8/7N/8/6n1/R3K2R w KQ - 0 1");
+  m_board = parse_fen("K6N/nK6/6N1/8/7N/4k3/6n1/R3K2R w KQ - 0 1");
   m_king_index = m_king->piece_index();
   m_knight_index = m_knight->piece_index();
 }

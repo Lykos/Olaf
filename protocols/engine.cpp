@@ -33,7 +33,7 @@ void Engine::run()
       SearchContext context = m_state.create_search_context(m_forced_stopper.get(),
                                                             m_weak_stopper.get());
       SearchResult result = m_searcher->search(&context);
-      if (!result.valid()) {
+      if (!result.valid) {
         continue;
       }
       move(result.main_variation.back());

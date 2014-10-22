@@ -115,7 +115,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     SearchState* const state,
     SearchResult* const result) const
 {
-  if (!recursive_result->valid()) {
+  if (!recursive_result->valid) {
     return ResultReaction::INVALID;
   }
   ResultReaction reaction;

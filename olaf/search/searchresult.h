@@ -2,6 +2,7 @@
 #define SEARCHRESULT_H
 
 #include "olaf/rules/move.h"
+#include <limits>
 #include <vector>
 
 namespace olaf
@@ -11,15 +12,15 @@ struct SearchResult
 {
   static const SearchResult& invalid();
 
-  SearchResult();
+  bool valid = true;
 
-  int nodes;
+  int nodes = 0;
 
-  int score;
+  // We use -max because numeric_limits is asymmetric and min
+  // would not work.
+  int score = -std::numeric_limits<int>::max();
 
   std::vector<Move> main_variation;
-
-  bool valid() const;
 };
 
 } // namespace olaf

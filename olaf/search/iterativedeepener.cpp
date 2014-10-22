@@ -32,7 +32,7 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   }
 
   SearchResult result = m_searcher->search(context);
-  if (!result.valid()) {
+  if (!result.valid) {
     return SearchResult::invalid();
   }
   assert(!result.main_variation.empty());
@@ -48,7 +48,7 @@ SearchResult IterativeDeepener::search(SearchContext* context)
     ++context->search_depth;
     const SearchResult& next_result =
         m_searcher->search(context);
-    if (!next_result.valid()) {
+    if (!next_result.valid) {
       break;
     }
     assert(!result.main_variation.empty());
