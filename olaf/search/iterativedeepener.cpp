@@ -38,8 +38,10 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   SearchResult result = m_searcher->search(context);
   if (!result.valid) {
     return SearchResult::invalid();
+  } else if (result.main_variation.empty()) {
+    // That should only happen for terminal positions.
+    return result;
   }
-  assert(!result.main_variation.empty());
   milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
   m_writer->output(context->board, result, time, m_min_depth);
   if (mode == SearchContext::DepthMode::FIXED_DEPTH) {

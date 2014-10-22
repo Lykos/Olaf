@@ -5,6 +5,7 @@
 
 #include "olaf/search/searchcontext.h"
 #include "olaf/search/movegenerator.h"
+#include "olaf/rules/movechecker.h"
 #include "olaf/search/moveorderer.h"
 #include "olaf/search/stopper.h"
 #include "olaf/transposition_table/transpositiontable.h"
@@ -61,6 +62,14 @@ SearchResult AlphaBetaSearcher::recurse_sub_searcher(const SearchState& current_
  return m_sub_searcher->recurse_alpha_beta(current_state, context);
 }
 
+static bool is_checked(ChessBoard* const board)
+{
+  board->next_turn();
+  const bool result = MoveChecker::can_kill_king(*board);
+  board->previous_turn();
+  return result;
+}
+
 SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_state,
                                                    SearchContext* const context)
 {
@@ -71,8 +80,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
              || (m_sub_searcher != nullptr && context->board.finished())) {
     return recurse_sub_searcher(current_state, context);
   } else {
-    const TranspositionTableEntry* const entry =
-        context->get();
+    const TranspositionTableEntry* const entry = context->get();
     if (entry != nullptr && entry->depth >= current_state.depth) {
       if (entry->node_type == NodeType::PvNode
           || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
@@ -90,10 +98,18 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     SearchResult result = alpha_beta(&state, context);
     // Make mates in higher depth favorable.
     static const PositionEvaluator::score_t c_safety_margin = 1000;
+    bool decided = false;
     if (result.score >= PositionEvaluator::c_win_score - c_safety_margin) {
       --result.score;
+      decided = true;
     } else if (-result.score >= PositionEvaluator::c_win_score - c_safety_margin) {
       ++result.score;
+      decided = true;
+    }
+    // Stalemate. Not in check, but all moves lead to an immediate loss of the king.
+    if (decided && result.depth == 2 && !is_checked(&(context->board))) {
+      result.score = PositionEvaluator::c_draw_score;
+      result.main_variation.clear();
     }
     return result;
   }
@@ -143,6 +159,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   if (recursive_score > state->alpha) {
     result->score = recursive_score;
+    result->depth = recursive_result->depth + 1;
     if (recursive_score >= state->beta) {
       result->main_variation.clear();
       entry.node_type = NodeType::CutNode;

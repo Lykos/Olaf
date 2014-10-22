@@ -31,7 +31,8 @@ SOURCES += \
     lrucachetest.cpp \
     bitboardtest.cpp \
     incrementalevaluatortest.cpp \
-    chessboardtest.cpp
+    chessboardtest.cpp \
+    searchertest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -49,7 +50,8 @@ HEADERS += \
     lrucachetest.h \
     bitboardtest.h \
     incrementalevaluatortest.h \
-    chessboardtest.h
+    chessboardtest.h \
+    searchertest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf

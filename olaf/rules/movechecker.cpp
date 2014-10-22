@@ -23,7 +23,7 @@ bool MoveChecker::valid_move(const ChessBoard& board,
     UndoInfo undo_info;
     ChessBoard try_board(board);
     complete(incomplete_move, try_board).execute(&try_board, &undo_info);
-    return !is_in_check(try_board, try_board.noturn_color());
+    return !can_kill_king(try_board);
   }
 }
 
@@ -75,11 +75,10 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
 }
 
 // static
-bool MoveChecker::is_in_check(const ChessBoard& board,
-                              const Color color)
+bool MoveChecker::can_kill_king(const ChessBoard& board)
 {
   const BitBoard king_captures =
-      board.color_board(color).piece_board(PieceSet::c_king_index).bit_board() | board.king_captures();
+      board.noturn_board().piece_board(PieceSet::c_king_index).bit_board() | board.king_captures();
   if (king_captures == 0) {
     return false;
   }
@@ -87,7 +86,7 @@ bool MoveChecker::is_in_check(const ChessBoard& board,
   if (king_positions.empty()) {
     return false;
   }
-  for (const PieceBoard& piece_board : board.color_board(other_color(color)).piece_boards()) {
+  for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
     const Piece& piece = piece_board.piece();
     for (Position source : piece_board.positions()) {
       for (const Position& king_position : king_positions) {

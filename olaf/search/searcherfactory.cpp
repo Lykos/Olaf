@@ -36,9 +36,9 @@ unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 
 unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
 {
-  unique_ptr<Searcher> searcher (new IterativeDeepener(sequential_alpha_beta_searcher(),
-                                                       m_writer,
-                                                       c_min_depth));
+  unique_ptr<Searcher> searcher(new IterativeDeepener(sequential_alpha_beta_searcher(),
+                                                      m_writer,
+                                                      c_min_depth));
   return searcher;
 }
 

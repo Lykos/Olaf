@@ -13,7 +13,7 @@ class SearchContext;
 class Searcher
 {
 public:
-  typedef std::int16_t depth_t;
+  typedef SearchResult::depth_t depth_t;
 
   virtual SearchResult search(SearchContext* context) = 0;
 
