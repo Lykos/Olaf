@@ -74,7 +74,6 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
           || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
           || (entry->node_type == NodeType::CutNode && entry->score >= current_state.beta)) {
         SearchResult result;
-        result.nodes = 1;
         result.score = entry->score;
         if (entry->has_best_move) {
           result.main_variation.emplace_back(entry->best_move);

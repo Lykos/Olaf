@@ -25,8 +25,9 @@ struct TranspositionTableEntry
   int depth;
   int score;
   NodeType node_type;
-  bool has_best_move;
   Move best_move;
+  bool has_best_move;
+  bool terminal;
 };
 
 extern template class LruCache<TranspositionTableEntry>;

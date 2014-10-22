@@ -16,7 +16,6 @@ DEFINES += OLAFSEARCHING_LIBRARY
 
 SOURCES += \
     config.cpp \
-    evaluation/materialevaluator.cpp \
     evaluation/evaluatorfactory.cpp \
     evaluation/positionevaluator.cpp \
     search/simplemovegenerator.cpp \
@@ -62,12 +61,12 @@ SOURCES += \
     transposition_table/transpositiontable.cpp \
     evaluation/incrementalevaluator.cpp \
     evaluation/incrementalupdater.cpp \
-    rules/movechecker.cpp
+    rules/movechecker.cpp \
+    evaluation/resultevaluator.cpp
 
 HEADERS += \
     config.h \
     evaluation/positionevaluator.h \
-    evaluation/materialevaluator.h \
     evaluation/evaluatorfactory.h \
     evaluation/positionevaluator.h \
     search/simplemovegenerator.h \
@@ -116,7 +115,8 @@ HEADERS += \
     evaluation/incrementalevaluator.h \
     evaluation/incrementalupdater.h \
     rules/undoinfo.h \
-    rules/movechecker.h
+    rules/movechecker.h \
+    evaluation/resultevaluator.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

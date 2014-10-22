@@ -13,10 +13,6 @@ class IncrementalEvaluator : public PositionEvaluator
 {
 public:
   score_t evaluate(const ChessBoard& board) override;
-
-private:
-  std::vector<int> m_piece_values;
-
 };
 
 } // namespace olaf
