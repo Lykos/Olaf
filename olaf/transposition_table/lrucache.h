@@ -23,6 +23,10 @@ public:
 
   void put(key_t key, V&& value);
 
+  long hits() const { return m_hits; }
+
+  long misses() const { return m_misses; }
+
 private:
   long index(key_t key) const;
 
@@ -45,6 +49,10 @@ private:
 
   std::vector<Entry> m_elements;
 
+  mutable long m_hits = 0;
+
+  mutable long m_misses = 0;
+
   mutable std::mutex m_mutex;
 };
 
@@ -63,8 +71,10 @@ const V* LruCache<V>::get(const key_t key) const
   std::unique_lock<std::mutex> lock(m_mutex);
   const Entry& entry = m_elements[i];
   if (entry.key == key) {
+    ++m_hits;
     return &(entry.value);
   } else {
+    ++m_misses;
     return nullptr;
   }
 }
