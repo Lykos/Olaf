@@ -7,6 +7,7 @@
 #include "autotest.h"
 #include "olaf/search/nothinkingwriter.h"
 #include "olaf/search/searcher.h"
+#include "olaf/search/searchcontext.h"
 #include "olaf/search/nostopper.h"
 
 namespace olaf
@@ -18,9 +19,6 @@ class SearcherTest : public QObject
 {
   Q_OBJECT
 
-public:
-  SearcherTest();
-
 private:
   NoThinkingWriter m_no_thinking_writer;
 
@@ -28,10 +26,16 @@ private:
 
   NoStopper m_stopper;
 
+  SearchContext m_context;
+
 private Q_SLOTS:
+  void init_test_case();
+
   void test_mate();
 
   void test_mate_in_one();
+
+  void test_stalemate_data();
 
   void test_stalemate();
 };

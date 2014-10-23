@@ -16,6 +16,8 @@ class Stopper;
  */
 struct SearchContext
 {
+  typedef Searcher::depth_t depth_t;
+
   SearchContext();
 
   /**
@@ -67,7 +69,7 @@ struct SearchContext
   /**
    * @brief search/search_depth the depth for FIXED_DEPTH mode.
    */
-  Searcher::depth_t search_depth;
+  depth_t search_depth;
 
   TranspositionTable* transposition_table;
 
