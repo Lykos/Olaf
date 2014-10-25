@@ -44,6 +44,7 @@ void PerftTest::test_perft()
   }
 
   NoThinkingWriter no_thinking_writer;
+  unique_ptr<Config> config = test_config();
   SearcherFactory factory(&no_thinking_writer);
   unique_ptr<Perft> perft = factory.perft();
 

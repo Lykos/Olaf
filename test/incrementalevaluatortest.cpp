@@ -20,7 +20,8 @@ namespace test
 void IncrementalEvaluatorTest::init_test_case()
 {
   NoThinkingWriter no_thinking_writer;
-  SearcherFactory factory(&no_thinking_writer);
+  Config config = test_config();
+  SearcherFactory factory(&no_thinking_writer, &config);
   m_generator = factory.move_generator();
 }
 

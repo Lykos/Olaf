@@ -13,6 +13,7 @@
 #include "olaf/parse/sanparser.h"
 #include "olaf/parse/epdparser.h"
 #include "olaf/transposition_table/transpositiontable.h"
+#include "olaf/config.h"
 
 using namespace std;
 using namespace chrono;
@@ -20,34 +21,37 @@ using namespace chrono;
 namespace olaf
 {
 
-// static
-const milliseconds SearcherFactory::c_search_time(2000);
-
-SearcherFactory::SearcherFactory(ThinkingWriter* const writer):
-  m_writer(writer)
+SearcherFactory::SearcherFactory(ThinkingWriter* const writer,
+                                 const Config* const config):
+  m_writer(writer),
+  m_evaluator_factory(&(config->evaluation())),
+  m_config(config)
 {}
 
 unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
-  unique_ptr<Searcher> searcher(new SimpleTimedSearcher(iterative_searcher(),
-                                                        c_search_time));
+  unique_ptr<Searcher> searcher(new SimpleTimedSearcher(
+                                  iterative_searcher(),
+                                  milliseconds(m_config->search().search_time_millis())));
   return searcher;
 }
 
 unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
 {
-  unique_ptr<Searcher> searcher(new IterativeDeepener(sequential_alpha_beta_searcher(),
-                                                      m_writer,
-                                                      c_min_depth));
+  unique_ptr<Searcher> searcher(new IterativeDeepener(
+                                  sequential_alpha_beta_searcher(),
+                                  m_writer,
+                                  m_config->search().min_search_depth()));
   return searcher;
 }
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(move_generator(),
-                                                               sequential_alpha_beta_searcher(),
-                                                               c_sequential_depth,
-                                                               false));
+  unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(
+                                           move_generator(),
+                                           sequential_alpha_beta_searcher(),
+                                           m_config->search().sequential_search_depth(),
+                                           false));
   return searcher;
 }
 
@@ -113,7 +117,11 @@ unique_ptr<EpdParser> SearcherFactory::epd_parser() const
 
 std::unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
 {
-  unique_ptr<TranspositionTable> table(new TranspositionTable(c_transposition_table_size));
+  unique_ptr<TranspositionTable> table;
+  const long size = m_config->transposition_table().size();
+  if (size) {
+    table.reset(new TranspositionTable(size));
+  }
   return table;
 }
 

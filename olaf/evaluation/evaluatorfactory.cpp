@@ -8,6 +8,10 @@ using namespace std;
 namespace olaf
 {
 
+EvaluatorFactory::EvaluatorFactory(const Config::Evaluation* const config):
+  m_config(config)
+{}
+
 unique_ptr<PositionEvaluator> EvaluatorFactory::evaluator() const
 {
   unique_ptr<PositionEvaluator> evaluator(new ResultEvaluator(incremental_evaluator()));

@@ -18,14 +18,17 @@ class MoveOrderer;
 class Perft;
 class SanParser;
 class EpdParser;
+class Config;
 
 class SearcherFactory
 {
 public:
   /**
-   * @brief SearcherFactory does not take ownership of writer.
+   * @brief SearcherFactory does not take ownership of writer or config.
+   *        The lifetime of those objects has to be at least the lifetime of
+   *        the created objects.
    */
-  SearcherFactory(ThinkingWriter* writer);
+  SearcherFactory(ThinkingWriter* writer, const Config* config);
 
   std::unique_ptr<Searcher> timed_searcher() const;
 
@@ -58,14 +61,7 @@ private:
 
   EvaluatorFactory m_evaluator_factory;
 
-  static const std::chrono::milliseconds c_search_time;
-
-  static const Searcher::depth_t c_sequential_depth = 2;
-
-  static const Searcher::depth_t c_min_depth = 1;
-
-  static const long c_transposition_table_size = 0x10000;
-
+  const Config* const m_config;
 };
 
 } // namespace olaf

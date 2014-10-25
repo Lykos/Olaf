@@ -3,6 +3,7 @@
 
 #include <QtTest/qtest.h>
 #include <string>
+#include <memory>
 #include <vector>
 
 #include "gmock/gmock-generated-matchers.h"
@@ -11,6 +12,7 @@
 #include "olaf/rules/move.h"
 #include "olaf/rules/piece.h"
 #include "olaf/search/perft.h"
+#include "olaf/config.h"
 
 Q_DECLARE_METATYPE(olaf::BitBoard)
 Q_DECLARE_METATYPE(olaf::ChessBoard)
@@ -37,6 +39,12 @@ namespace test
 Move make_move(const Position& source, const Position& destination, const bool is_capture);
 
 ChessBoard parse_fen(const std::string& fen);
+
+struct SearchFactoryOwner {
+  std::unique_ptr<Config> config;
+};
+
+std::unique_ptr<Config> test_config();
 
 } // namespace test
 } // namespace olaf
