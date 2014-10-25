@@ -16,7 +16,7 @@ const SearchContext::depth_t c_depth = 3;
 
 void SearcherTest::init_test_case()
 {
-  m_searcher = move(SearcherFactory(&m_no_thinking_writer).iterative_searcher());
+  m_searcher = m_factory_owner.factory.iterative_searcher();
   m_context.depth_mode = SearchContext::DepthMode::FIXED_DEPTH;
   m_context.search_depth = c_depth;
   m_context.forced_stopper = &m_stopper;

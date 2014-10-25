@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QtTest/QTest>
 
-#include "autotest.h"
+#include "test/autotest.h"
+#include "test/testutil.h"
 
 namespace olaf
 {
@@ -14,6 +15,10 @@ namespace test
 class MoveGeneratorTest : public QObject
 {
   Q_OBJECT
+
+private:
+  TestFactoryOwner m_factory_owner;
+
 private Q_SLOTS:
   void test_generate();
 

@@ -99,9 +99,7 @@ void MoveGeneratorTest::test_generate()
   QFETCH(ChessBoard, board);
   QFETCH(vector<Move>, moves);
 
-  NoThinkingWriter no_thinking_writer;
-  SearcherFactory factory(&no_thinking_writer);
-  unique_ptr<MoveGenerator> generator(factory.move_generator());
+  unique_ptr<MoveGenerator> generator(m_factory_owner.factory.move_generator());
   const vector<Move>& actual_moves = generator->generate_moves(board);
 
   vector<Move> valid_moves;

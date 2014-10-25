@@ -20,9 +20,7 @@ namespace test
 
 void ZobristHashTest::init_test_case()
 {
-  NoThinkingWriter no_thinking_writer;
-  SearcherFactory factory(&no_thinking_writer);
-  m_generator = factory.move_generator();
+  m_generator = m_factory_owner.factory.move_generator();
 }
 
 void ZobristHashTest::test_calculate_data()

@@ -119,7 +119,7 @@ HEADERS += \
     evaluation/resultevaluator.h
 
 headers.files = $$HEADERS
-headers.path = /usr/local/include/OlafSearching
+headers.path = /usr/local/include/olaf
 
 target.path = /usr/local/lib
 

@@ -9,6 +9,7 @@
 #include "olaf/search/searcher.h"
 #include "olaf/search/searchcontext.h"
 #include "olaf/search/nostopper.h"
+#include "test/testutil.h"
 
 namespace olaf
 {
@@ -20,6 +21,8 @@ class SearcherTest : public QObject
   Q_OBJECT
 
 private:
+  TestFactoryOwner m_factory_owner;
+
   NoThinkingWriter m_no_thinking_writer;
 
   std::unique_ptr<Searcher> m_searcher;

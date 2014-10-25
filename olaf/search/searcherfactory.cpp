@@ -32,7 +32,7 @@ unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
   unique_ptr<Searcher> searcher(new SimpleTimedSearcher(
                                   iterative_searcher(),
-                                  milliseconds(m_config->search().search_time_millis())));
+                                  milliseconds(m_config->search().time_millis())));
   return searcher;
 }
 
@@ -41,7 +41,7 @@ unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
   unique_ptr<Searcher> searcher(new IterativeDeepener(
                                   sequential_alpha_beta_searcher(),
                                   m_writer,
-                                  m_config->search().min_search_depth()));
+                                  m_config->search().min_depth()));
   return searcher;
 }
 
@@ -50,7 +50,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() co
   unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(
                                            move_generator(),
                                            sequential_alpha_beta_searcher(),
-                                           m_config->search().sequential_search_depth(),
+                                           m_config->search().sequential_depth(),
                                            false));
   return searcher;
 }

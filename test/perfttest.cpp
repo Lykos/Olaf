@@ -43,10 +43,7 @@ void PerftTest::test_perft()
     return;
   }
 
-  NoThinkingWriter no_thinking_writer;
-  unique_ptr<Config> config = test_config();
-  SearcherFactory factory(&no_thinking_writer);
-  unique_ptr<Perft> perft = factory.perft();
+  unique_ptr<Perft> perft = m_factory_owner.factory.perft();
 
   // perft->debug_perft(c_depth, board);
   const PerftResult& expected_result = expected_results.at(c_depth);

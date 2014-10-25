@@ -22,10 +22,15 @@ CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/protocols -lolafprotocols
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/protocols -lolafprotocols
 
-start_game.path = $$OUT_PWD
-start_game.files = $$PWD/../start_game.txt
+OTHER_FILES += \
+    config.yml
+
+config.path = /usr/local/share/olaf
+config.files = $$OTHER_FILES
 
 LIBS += -lgflags
 
 target.path = /usr/local/bin
-INSTALLS += target
+
+INSTALLS += target config
+

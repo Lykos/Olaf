@@ -22,9 +22,7 @@ namespace test
 
 void SanParserTest::initTestCase()
 {
-  NoThinkingWriter no_thinking_writer;
-  SearcherFactory factory(&no_thinking_writer);
-  m_parser = factory.san_parser();
+  m_parser = m_factory_owner.factory.san_parser();
 }
 
 void SanParserTest::test_parse_data()

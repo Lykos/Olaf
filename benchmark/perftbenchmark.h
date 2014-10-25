@@ -5,6 +5,7 @@
 #include <QtTest/QTest>
 #include "autobenchmark.h"
 #include "benchmark.h"
+#include "testutil.h"
 
 namespace olaf
 {
@@ -16,6 +17,9 @@ class PerftBenchmark : public Benchmark
   Q_OBJECT
 public:
   PerftBenchmark();
+
+private:
+  TestFactoryOwner m_factory_owner;
 
 private Q_SLOTS:
   void test_perft_data();

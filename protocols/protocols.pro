@@ -55,7 +55,7 @@ HEADERS +=\
     setboardevent.h
 
 headers.files = $$HEADERS
-headers.path = /usr/local/include/OlafProtocols
+headers.path = /usr/local/include/protocols
 
 target.path = /usr/local/lib
 
