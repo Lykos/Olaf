@@ -38,11 +38,11 @@ public:
 
   void unknown_command(const std::string&);
 
-  void feature(const std::string& name, bool value);
+  void feature_bool(const std::string& name, bool value);
 
-  void feature(const std::string& name, int value);
+  void feature_int(const std::string& name, int value);
 
-  void feature(const std::string& name, const std::string& value);
+  void feature_string(const std::string& name, const std::string& value);
 
   void move(const Move& mov) override;
 

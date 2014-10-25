@@ -23,27 +23,26 @@ void XBoardWriter::newline()
   *m_out << endl;
 }
 
-void XBoardWriter::feature(const string& name, bool value)
+void XBoardWriter::feature_bool(const string& name, bool value)
 {
   unique_lock<mutex> lock(m_mutex);
   *m_out << "feature " << name << "=" << (value ? 1 : 0) << endl;
 }
 
-void XBoardWriter::feature(const string& name, int value)
+void XBoardWriter::feature_int(const string& name, int value)
 {
   unique_lock<mutex> lock(m_mutex);
   *m_out << "feature " << name << "=" << value << endl;
 }
 
-void XBoardWriter::feature(const string& name, const string& value)
+void XBoardWriter::feature_string(const string& name, const string& value)
 {
   unique_lock<mutex> lock(m_mutex);
-  *m_out << "feature " << name << " \"" << value << "\"" << endl;
+  *m_out << "feature " << name << "=\"" << value << "\"" << endl;
 }
 
 void XBoardWriter::unknown_command(const string &command)
 {
-  unique_lock<mutex> lock(m_mutex);
   error(ErrorType::UNKNOWN_COMMAND, command);
 }
 

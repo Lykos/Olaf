@@ -27,6 +27,8 @@ XBoardReader::XBoardReader(XBoardWriter* const writer,
 
 void XBoardReader::run()
 {
+  m_engine_helper->request_reset();
+  m_engine_helper->request_myturn(false);
   while (!m_in->eof()) {
     string message;
     getline(*m_in, message);
@@ -55,7 +57,6 @@ void XBoardReader::run()
       m_engine_helper->request_force(true);
       m_engine_helper->request_reset();
       m_engine_helper->request_deferred_pondering();
-      m_engine_helper->request_myturn(false);
       m_engine_helper->request_force(false);
     } else if (command == "random") {
     } else if (command == "force") {
@@ -188,19 +189,19 @@ void XBoardReader::handle_move(const std::string& move)
 
 void XBoardReader::write_features() const
 {
-  m_writer->feature("ping", true);
-  m_writer->feature("setboard", true);
-  m_writer->feature("usermove", true);
-  m_writer->feature("myname", "Olaf");
-  m_writer->feature("variants", "normal");
-  m_writer->feature("colors", false);
-  m_writer->feature("ics", true);
-  m_writer->feature("name", true);
-  m_writer->feature("nps", false);
-  m_writer->feature("pause", true);
-  m_writer->feature("debug", true);
-  m_writer->feature("sigint", false);
-  m_writer->feature("done", true);
+  m_writer->feature_bool("ping", true);
+  m_writer->feature_bool("setboard", true);
+  m_writer->feature_bool("usermove", true);
+  m_writer->feature_string("myname", "olaf");
+  m_writer->feature_string("variants", "normal");
+  m_writer->feature_bool("colors", false);
+  m_writer->feature_bool("ics", true);
+  m_writer->feature_bool("name", true);
+  m_writer->feature_bool("nps", false);
+  m_writer->feature_bool("pause", true);
+  m_writer->feature_bool("debug", true);
+  m_writer->feature_bool("sigint", false);
+  m_writer->feature_bool("done", true);
 }
 
 bool XBoardReader::check_args(const vector<string>& tokens,
