@@ -17,7 +17,6 @@ DEFINES += OLAFSEARCHING_LIBRARY
 SOURCES += \
     config.cpp \
     evaluation/evaluatorfactory.cpp \
-    evaluation/positionevaluator.cpp \
     search/simplemovegenerator.cpp \
     search/moveorderer.cpp \
     search/negamaxer.cpp \
@@ -27,7 +26,6 @@ SOURCES += \
     search/compositestopper.cpp \
     search/timestopper.cpp \
     search/forcedstopper.cpp \
-    search/evaluatorsearcher.cpp \
     search/parallelnegamaxer.cpp \
     search/capturegenerator.cpp \
     search/thinkingwriter.cpp \
@@ -62,7 +60,8 @@ SOURCES += \
     evaluation/incrementalevaluator.cpp \
     evaluation/incrementalupdater.cpp \
     rules/movechecker.cpp \
-    evaluation/resultevaluator.cpp
+    evaluation/resultevaluator.cpp \
+    evaluation/positionevaluator.cpp
 
 HEADERS += \
     config.h \
@@ -82,7 +81,6 @@ HEADERS += \
     search/compositestopper.h \
     search/timestopper.h \
     search/forcedstopper.h \
-    search/evaluatorsearcher.h \
     search/parallelnegamaxer.h \
     search/capturegenerator.h \
     search/thinkingwriter.h \

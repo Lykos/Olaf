@@ -19,7 +19,7 @@ class ResultEvaluator : public PositionEvaluator
 public:
   ResultEvaluator(std::unique_ptr<PositionEvaluator> evaluator);
 
-  score_t evaluate(const ChessBoard& board) override;
+  score_t evaluate(SearchState* state, SearchContext* context) override;
 
 private:
   std::unique_ptr<PositionEvaluator> m_evaluator;

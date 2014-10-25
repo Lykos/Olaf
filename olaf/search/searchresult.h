@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "olaf/rules/move.h"
-#include "olaf/evaluation/positionevaluator.h"
 
 namespace olaf
 {
@@ -13,6 +12,8 @@ namespace olaf
 struct SearchResult
 {
   typedef std::int16_t depth_t;
+
+  typedef std::int32_t score_t;
 
   static const SearchResult& invalid();
 
@@ -22,7 +23,7 @@ struct SearchResult
 
   // We use -max because numeric_limits is asymmetric and min
   // would not work.
-  PositionEvaluator::score_t score = -std::numeric_limits<int>::max();
+  score_t score = -std::numeric_limits<score_t>::max();
 
   depth_t depth = 0;
 

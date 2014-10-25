@@ -10,6 +10,7 @@ namespace olaf
 {
 
 class MoveGenerator;
+class PositionEvaluator;
 
 class Quiescer : public AlphaBetaSearcher
 {

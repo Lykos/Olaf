@@ -15,6 +15,8 @@ class Searcher
 public:
   typedef SearchResult::depth_t depth_t;
 
+  typedef SearchResult::score_t score_t;
+
   virtual SearchResult search(SearchContext* context) = 0;
 
   virtual ~Searcher();

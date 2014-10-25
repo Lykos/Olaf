@@ -13,7 +13,7 @@ class ChessBoard;
 class IncrementalEvaluator : public PositionEvaluator
 {
 public:
-  score_t evaluate(const ChessBoard& board) override;
+  score_t evaluate(SearchState* state, SearchContext* context) override;
 };
 
 } // namespace olaf

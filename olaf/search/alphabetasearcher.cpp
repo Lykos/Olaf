@@ -50,9 +50,9 @@ SearchResult AlphaBetaSearcher::search(SearchContext* const context)
 {
   assert(context->depth_mode == SearchContext::DepthMode::FIXED_DEPTH);
   // We increment the depth by 1 because it gets immediately decremented again.
-  SearchState initial_state{-numeric_limits<PositionEvaluator::score_t>::max(),
-                            numeric_limits<PositionEvaluator::score_t>::max(),
-                            context->search_depth + 1};
+  SearchState initial_state{-numeric_limits<score_t>::max(),
+                            numeric_limits<score_t>::max(),
+                            static_cast<depth_t>(context->search_depth + 1)};
   return recurse_alpha_beta(initial_state, context);
 }
 
@@ -92,22 +92,21 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
         }
       }
     }
-    SearchState state{-current_state.beta,
-                      -current_state.alpha,
+    SearchState state{static_cast<score_t>(-current_state.beta),
+                      static_cast<score_t>(-current_state.alpha),
                       recurse_depth};
     SearchResult result = alpha_beta(&state, context);
     // Make mates in higher depth favorable.
-    static const PositionEvaluator::score_t c_safety_margin = 1000;
     bool decided = false;
-    if (result.score >= PositionEvaluator::c_win_score - c_safety_margin) {
+    if (result.score >= PositionEvaluator::c_win_score) {
       --result.score;
       decided = true;
-    } else if (-result.score >= PositionEvaluator::c_win_score - c_safety_margin) {
+    } else if (-result.score >= PositionEvaluator::c_win_score) {
       ++result.score;
       decided = true;
     }
     // Stalemate. Not in check, but all moves lead to an immediate loss of the king.
-    if (decided && result.depth == 2 && !is_checked(&(context->board))) {
+    if (decided && result.depth + 2 == state.depth && !is_checked(&(context->board))) {
       result.score = PositionEvaluator::c_draw_score;
       result.main_variation.clear();
     }
@@ -159,7 +158,6 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   if (recursive_score > state->alpha) {
     result->score = recursive_score;
-    result->depth = recursive_result->depth + 1;
     if (recursive_score >= state->beta) {
       result->main_variation.clear();
       entry.node_type = NodeType::CutNode;

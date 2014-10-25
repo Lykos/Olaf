@@ -44,9 +44,9 @@ public:
    *        for each recursive call.
    */
   struct SearchState {
-    PositionEvaluator::score_t alpha;
-    PositionEvaluator::score_t beta;
-    int depth;
+    score_t alpha;
+    score_t beta;
+    depth_t depth;
   };
 
   /**

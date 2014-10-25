@@ -4,7 +4,6 @@
 #include "olaf/search/iterativedeepener.h"
 #include "olaf/search/parallelnegamaxer.h"
 #include "olaf/search/negamaxer.h"
-#include "olaf/search/evaluatorsearcher.h"
 #include "olaf/search/capturegenerator.h"
 #include "olaf/search/simplemovegenerator.h"
 #include "olaf/search/moveorderer.h"
@@ -66,21 +65,15 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() 
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(position_evaluator(),
+  unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(evaluator(),
                                                       capture_generator(),
-                                                      evaluation_searcher(),
+                                                      evaluator(),
                                                       0,
                                                       true));
   return searcher;
 }
 
-unique_ptr<AlphaBetaSearcher> SearcherFactory::evaluation_searcher() const
-{
-  unique_ptr<AlphaBetaSearcher> searcher(new EvaluatorSearcher(position_evaluator()));
-  return searcher;
-}
-
-unique_ptr<PositionEvaluator> SearcherFactory::position_evaluator() const
+unique_ptr<PositionEvaluator> SearcherFactory::evaluator() const
 {
   return m_evaluator_factory.evaluator();
 }
