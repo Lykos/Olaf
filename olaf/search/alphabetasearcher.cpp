@@ -87,6 +87,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
           || (entry->node_type == NodeType::CutNode && entry->score >= current_state.beta)) {
         SearchResult result;
         result.score = entry->score;
+        result.depth = entry->result_depth;
         if (entry->has_best_move) {
           result.main_variation.emplace_back(entry->best_move);
         }
@@ -96,17 +97,10 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
                       static_cast<score_t>(-current_state.alpha),
                       recurse_depth};
     SearchResult result = alpha_beta(&state, context);
-    // Make mates in higher depth favorable.
-    bool decided = false;
-    if (result.score >= PositionEvaluator::c_win_score) {
-      --result.score;
-      decided = true;
-    } else if (-result.score >= PositionEvaluator::c_win_score) {
-      ++result.score;
-      decided = true;
-    }
+    const score_t c_safety_margin = 10000;
     // Stalemate. Not in check, but all moves lead to an immediate loss of the king.
-    if (decided && result.depth + 2 == state.depth && !is_checked(&(context->board))) {
+    if (abs(result.score) >= (PositionEvaluator::c_win_score - c_safety_margin)
+        && result.depth == context->search_depth - state.depth + 2 && !is_checked(&(context->board))) {
       result.score = PositionEvaluator::c_draw_score;
       result.main_variation.clear();
     }
@@ -146,10 +140,11 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   ResultReaction reaction;
   result->nodes += recursive_result->nodes;
-  const int recursive_score = -recursive_result->score;
+  const score_t recursive_score = -recursive_result->score;
   TranspositionTableEntry entry;
   entry.score = recursive_score;
   entry.depth = state->depth - 1;
+  entry.result_depth = recursive_result->depth;
   if (recursive_result->main_variation.empty()) {
     entry.has_best_move = false;
   } else {
@@ -158,6 +153,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   if (recursive_score > state->alpha) {
     result->score = recursive_score;
+    result->depth = recursive_result->depth;
     if (recursive_score >= state->beta) {
       result->main_variation.clear();
       entry.node_type = NodeType::CutNode;

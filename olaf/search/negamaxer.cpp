@@ -1,9 +1,11 @@
 #include "olaf/search/negamaxer.h"
 
 #include <limits>
+#include <cassert>
 #include <vector>
 
 #include "olaf/rules/move.h"
+#include "olaf/search/searchcontext.h"
 
 using namespace std;
 
@@ -19,6 +21,7 @@ SearchResult NegaMaxer::alpha_beta(SearchState* const state,
   }
   SearchResult result;
   result.score = state->alpha;
+  result.depth = context->search_depth - state->depth;
   for (Move& move : moves) {
     SearchResult current_result = recurse_move(move, *state, context);
     switch (update_result(move, &current_result, context, state, &result)) {
