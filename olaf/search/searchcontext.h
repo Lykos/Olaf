@@ -58,18 +58,26 @@ struct SearchContext
    *        In case of ITERATIVE, iterative deepening is used, i.e. first a small depth is chosen
    *        and then it is increased itreatively until the stoppers stop the search/search.
    *        In case of FIXED_DEPTH, exactly that depth is search/searched and the result is returned.
+   *        MAX_DEPTH is similar to ITERATIVE, but there is a maximum depth.
    */
   enum class DepthMode {
     ITERATIVE,
-    FIXED_DEPTH
+    FIXED_DEPTH,
+    MAX_DEPTH
   };
 
   DepthMode depth_mode;
 
   /**
-   * @brief search/search_depth the depth for FIXED_DEPTH mode.
+   * @brief search_depth the depth for FIXED_DEPTH mode.
+   *        In ITERATIVE mode, this is set and iteratively increased by the searcher.
    */
   depth_t search_depth;
+
+  /**
+   * @brief max_depth the depth for MAX_DEPTH mode.
+   */
+  depth_t max_depth;
 
   TranspositionTable* transposition_table;
 

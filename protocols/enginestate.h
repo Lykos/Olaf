@@ -22,29 +22,49 @@ public:
   explicit EngineState(std::unique_ptr<TranspositionTable> transposition_table,
                        BoardState* board_state);
 
-  bool pondering() const;
+  bool pondering() const { return m_pondering && !m_deferred_pondering; }
 
-  void pondering(bool value);
+  void pondering(const bool value) { m_pondering = value; }
 
-  bool my_turn() const;
+  bool my_turn() const { return m_my_turn; }
 
-  void my_turn(bool value);
+  void my_turn(const bool value) { m_my_turn = value; }
 
-  void flip_turn();
+  void flip_turn() { m_deferred_pondering = false; m_my_turn = !m_my_turn; }
 
-  bool force() const;
+  bool force() const { return m_force; }
 
-  void force(bool value);
+  void force(const bool value) { m_force = value; }
 
-  void deferred_pondering();
+  void deferred_pondering() { m_deferred_pondering = true; m_pondering = true; }
 
-  std::chrono::milliseconds time() const;
+  std::chrono::milliseconds my_time() const { return m_my_time; }
 
-  void time(const std::chrono::milliseconds& time);
+  void my_time(const std::chrono::milliseconds& time) { m_my_time = time; }
 
-  const BoardState& board_state() const;
+  std::chrono::milliseconds opponent_time() const { return m_opponent_time; }
 
-  BoardState& board_state();
+  void opponent_time(const std::chrono::milliseconds& time) { m_opponent_time = time; }
+
+  bool use_nps() const { return m_use_nps; }
+
+  void use_nps(const bool value) { m_use_nps = value; }
+
+  bool nps() const { return m_nps; }
+
+  void nps(const bool value) { m_nps = value; }
+
+  bool use_depth() const { return m_use_depth; }
+
+  void use_depth(const int value) { m_use_depth = value; }
+
+  bool depth() const { return m_depth; }
+
+  void depth(const int value) { m_depth = value; }
+
+  const BoardState& board_state() const { return *m_board_state; }
+
+  BoardState& board_state() { return *m_board_state; }
 
   SearchContext create_search_context(const Stopper* forced_stopper,
                                       const Stopper* weak_stopper) const;
@@ -62,8 +82,17 @@ private:
 
   bool m_deferred_pondering = true;
 
-  std::chrono::milliseconds m_time;
+  bool m_use_nps = false;
 
+  bool m_use_depth = false;
+
+  int m_depth;
+
+  int m_nps;
+
+  std::chrono::milliseconds m_my_time;
+
+  std::chrono::milliseconds m_opponent_time;
 };
 
 } // namespace olaf

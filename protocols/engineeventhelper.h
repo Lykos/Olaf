@@ -41,6 +41,12 @@ public:
 
   void request_set_time(const std::chrono::milliseconds& time);
 
+  void request_set_opponent_time(const std::chrono::milliseconds& time);
+
+  void request_set_depth(int depth);
+
+  void request_set_nps(int nps);
+
   void move_now();
 
   void ping(int number);

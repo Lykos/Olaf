@@ -26,6 +26,7 @@ SearchResult IterativeDeepener::search(SearchContext* context)
 {
   steady_clock::time_point start = steady_clock::now();
   const SearchContext::DepthMode mode = context->depth_mode;
+  depth_t max_depth = numeric_limits<depth_t>::max();
   switch (mode) {
     case SearchContext::DepthMode::ITERATIVE:
       context->search_depth = m_min_depth;
@@ -33,6 +34,8 @@ SearchResult IterativeDeepener::search(SearchContext* context)
       break;
     case SearchContext::DepthMode::FIXED_DEPTH:
       break;
+    case SearchContext::DepthMode::MAX_DEPTH:
+      max_depth = context->max_depth;
   }
 
   SearchResult result = m_searcher->search(context);
@@ -50,7 +53,7 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   // Now we have one move and can be more brutal for the weak stopper.
   CompositeStopper composite_stopper{context->forced_stopper, context->weak_stopper};
   context->forced_stopper = &composite_stopper;
-  while (true) {
+  while (context->search_depth < max_depth) {
     ++context->search_depth;
     const SearchResult& next_result =
         m_searcher->search(context);

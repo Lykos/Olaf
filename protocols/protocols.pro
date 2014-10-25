@@ -31,7 +31,9 @@ SOURCES += \
     engineeventhelper.cpp \
     simplethinkingwriter.cpp \
     setboardevent.cpp \
-    protocolreader.cpp
+    protocolreader.cpp \
+    setnpsevent.cpp \
+    setdepthevent.cpp
 
 HEADERS +=\
     xboardwriter.h \
@@ -52,7 +54,9 @@ HEADERS +=\
     engineeventhelper.h \
     engine.h \
     simplethinkingwriter.h \
-    setboardevent.h
+    setboardevent.h \
+    setnpsevent.h \
+    setdepthevent.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/protocols

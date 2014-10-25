@@ -23,6 +23,7 @@ public:
   enum class ErrorType {
     UNKNOWN_COMMAND,
     NOT_ENOUGH_ARGUMENTS,
+    UNKNOWN_VARIANT,
     INVALID_FEN
   };
 

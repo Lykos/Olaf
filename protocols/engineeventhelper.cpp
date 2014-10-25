@@ -10,6 +10,8 @@
 #include "olaf/rules/move.h"
 #include "olaf/parse/fenparser.h"
 #include "setboardevent.h"
+#include "setdepthevent.h"
+#include "setnpsevent.h"
 
 using namespace std;
 
@@ -62,8 +64,27 @@ void EngineEventHelper::request_quit()
 
 void EngineEventHelper::request_set_time(const std::chrono::milliseconds& time)
 {
-  unique_ptr<SetTimeEvent> set_time(new SetTimeEvent(time));
+  unique_ptr<SetTimeEvent> set_time(new SetTimeEvent(time, true));
   m_engine->enqueue(move(set_time));
+}
+
+void EngineEventHelper::request_set_opponent_time(const std::chrono::milliseconds& time)
+{
+  unique_ptr<SetTimeEvent> set_time(new SetTimeEvent(time, false));
+  m_engine->enqueue(move(set_time));
+}
+
+void EngineEventHelper::request_set_depth(const int depth)
+{
+  unique_ptr<SetDepthEvent> set_depth(new SetDepthEvent(depth));
+  m_engine->enqueue(move(set_depth));
+}
+
+
+void EngineEventHelper::request_set_nps(const int nps)
+{
+  unique_ptr<SetNpsEvent> set_nps(new SetNpsEvent(nps));
+  m_engine->enqueue(move(set_nps));
 }
 
 void EngineEventHelper::move_now()

@@ -179,6 +179,8 @@ std::string XBoardWriter::error_name(const ErrorType type) const
       return "not enough arguments";
     case ErrorType::INVALID_FEN:
       return "invalid fen";
+    case ErrorType::UNKNOWN_VARIANT:
+      return "unknown variant";
   }
   return "";
 

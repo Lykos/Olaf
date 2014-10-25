@@ -85,6 +85,8 @@ void XBoardReader::run()
       m_engine_helper->request_pondering(true);
     } else if (command == "name") {
     } else if (command == "ics") {
+    } else if (command == "hint") {
+    } else if (command == "bk") {
     } else if (command == "time") {
       if (!check_args(tokens, 1)) {
         continue;
@@ -93,14 +95,49 @@ void XBoardReader::run()
       int centiseconds;
       iss >> centiseconds;
       m_engine_helper->request_set_time(milliseconds(centiseconds * 10));
+    } else if (command == "sd") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      istringstream iss(tokens.at(1));
+      int depth;
+      iss >> depth;
+      m_engine_helper->request_set_depth(depth);
+    } else if (command == "nps") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      istringstream iss(tokens.at(1));
+      int nps;
+      iss >> nps;
+      m_engine_helper->request_set_depth(nps);
     } else if (command == "otim") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      istringstream iss(tokens.at(1));
+      int centiseconds;
+      iss >> centiseconds;
+      m_engine_helper->request_set_opponent_time(milliseconds(centiseconds * 10));
     } else if (command == "computer") {
+    } else if (command == "draw") {
+    } else if (command == "result") {
     } else if (command == "level") {
       // TODO
     } else if (command == "post") {
       m_engine_helper->post(true);
     } else if (command == "nopost") {
       m_engine_helper->post(false);
+    } else if (command == "variant") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      const string& variant = tokens.at(1);
+      if (variant != "normal") {
+        ostringstream oss;
+        oss << "Unknown variant \"" << variant << "\"";
+        m_writer->error(XBoardWriter::ErrorType::UNKNOWN_VARIANT, oss.str());
+      }
     } else if (command == "setboard") {
       ostringstream oss;
       int size = tokens.size();
