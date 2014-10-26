@@ -2,7 +2,7 @@
 #define CHESSBOARD_H
 
 #include <cstdint>
-#include <unordered_map>
+#include <unordered_set>
 #include <array>
 #include <ostream>
 
@@ -174,10 +174,8 @@ public:
   bool draw() const
   {
     static const int_fast8_t c_draw_reversible_plies = 50;
-    static const int_fast8_t c_draw_repetitions = 3;
-    const auto it = m_hashes_counts.find(m_zobrist_hash);
     return m_reversible_plies >= c_draw_reversible_plies
-        || (it != m_hashes_counts.end() && it->second >= c_draw_repetitions);
+        || m_hashes.count(m_zobrist_hash);
   }
 
   /**
@@ -262,7 +260,7 @@ private:
 
   int m_incremental_score_white;
 
-  std::unordered_map<ZobristHash::hash_t, std::int_fast8_t> m_hashes_counts;
+  std::unordered_set<ZobristHash::hash_t> m_hashes;
 
   mutable bool m_opponents_valid = false;
 

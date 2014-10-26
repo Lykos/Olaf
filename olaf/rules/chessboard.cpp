@@ -86,6 +86,7 @@ void ChessBoard::turn_color(const Color new_color)
 
 void ChessBoard::next_turn()
 {
+  m_hashes.insert(m_zobrist_hash);
   m_opponents_valid = false;
   m_friends_valid = false;
   m_occupied_valid = false;
@@ -94,12 +95,10 @@ void ChessBoard::next_turn()
   if (m_turn_color == Color::White) {
     ++m_turn_number;
   }
-  ++m_hashes_counts[m_zobrist_hash];
 }
 
 void ChessBoard::previous_turn()
 {
-  --m_hashes_counts[m_zobrist_hash];
   if (m_turn_color == Color::White) {
     --m_turn_number;
   }
@@ -108,6 +107,7 @@ void ChessBoard::previous_turn()
   m_occupied_valid = false;
   m_friends_valid = false;
   m_opponents_valid = false;
+  m_hashes.erase(m_zobrist_hash);
 }
 
 BitBoard ChessBoard::opponents() const
