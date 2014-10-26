@@ -51,9 +51,19 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   BitBoard attackers = 0;
   for (const Color color : c_colors) {
     const ColorBoard& color_board = board.color_board(color);
-    const Position pawn_source_middle = forward_direction(color) + src;
-    const BitBoard pawn_sources = BitBoard(pawn_source_middle + PositionDelta(0, 1))
-        | BitBoard(pawn_source_middle + PositionDelta(0, -1));
+    BitBoard pawn_sources;
+    const PositionDelta backward = forward_direction(other_color(color));
+    if (src.in_bounds(backward)) {
+      const Position pawn_source_middle = backward + dst;
+      static const PositionDelta c_left(0, -1);
+      static const PositionDelta c_right(0, 1);
+      if (pawn_source_middle.in_bounds(c_left)) {
+        pawn_sources = pawn_sources | BitBoard(pawn_source_middle + c_left);
+      }
+      if (pawn_source_middle.in_bounds(c_right)) {
+        pawn_sources = pawn_sources | BitBoard(pawn_source_middle + c_right);
+      }
+    }
     for (Piece::piece_index_t piece_index : xray_pieces) {
       may_xray = may_xray | color_board.piece_board(piece_index).bit_board();
     }
@@ -79,10 +89,7 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   BitBoard opponents = board.opponents();
   BitBoard occupied = board.occupied();
   Color color = board.turn_color();
-  do {
-    for (const Position& pos : attackers.positions()) {
-      cout << pos << endl;
-    }
+  while (true) {
     ++depth;
     gain[depth] = values[attacker] - gain[depth - 1];
     if (max(-gain[depth - 1], gain[depth]) < 0) {
@@ -94,8 +101,6 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
     if ((from & may_xray) != 0) {
       Position src2 = from.first_position();
       const PositionDelta direction = (src2 - dst).unit();
-      // We want to overjump the original piece.
-      src2 = src2 + direction;
       while (src2.in_bounds(direction)) {
         src2 = src2 + direction;
         BitBoard src3(src2);
@@ -116,7 +121,13 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
       }
     }
     from = least_valuable_piece(board, color, attackers);
-  } while (from != 0);
+    if (from != 0) {
+      attacker = board.color_board(color).piece_index(from.first_position());
+      assert(attacker != Piece::c_no_piece);
+    } else {
+      break;
+    }
+  }
   while (--depth) {
     gain[depth - 1] = -max(-gain[depth - 1], gain[depth]);
   }
@@ -129,16 +140,31 @@ void MoveOrderer::order_moves(const SearchContext& context,
 {
   const TranspositionTableEntry* const entry = context.get();
   if (entry != nullptr && entry->has_best_move) {
-    for (Move move : *moves) {
+    for (Move& move : *moves) {
       if (move == entry->best_move) {
         swap(move, moves->front());
         break;
       }
     }
   }
-  vector<Searcher::score_t> see_values(moves->size() - 1);
-  for (unsigned int i = 0; i < moves->size() - 1; ++i) {
-    see_values[i] = see(context.board, (*moves)[i + 1]);
+  unsigned int start = entry == nullptr ? 0 : 1;
+  vector<Searcher::score_t> move_values(moves->size());
+  for (unsigned int i = start; i < moves->size(); ++i) {
+    move_values[i] = see(context.board, (*moves)[i]);
+  }
+  for (unsigned int i = start; i < moves->size() - 1; ++i) {
+    int max = numeric_limits<Searcher::score_t>::min();
+    unsigned int max_index = i;
+    for (unsigned int j = i; j < moves->size(); ++j) {
+      if (move_values[j] > max) {
+        max = move_values[j];
+        max_index = j;
+      }
+    }
+    if (i != max_index) {
+      swap(move_values[i], move_values[max_index]);
+      swap((*moves)[i], (*moves)[max_index]);
+    }
   }
 }
 

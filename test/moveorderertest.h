@@ -17,6 +17,10 @@ class MoveOrdererTest : public QObject
   Q_OBJECT
 
 private Q_SLOTS:
+  void test_order_data();
+
+  void test_order();
+
   void test_see_data();
 
   void test_see();

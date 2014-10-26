@@ -25,6 +25,7 @@ Q_DECLARE_METATYPE(std::vector<olaf::Position>)
 Q_DECLARE_METATYPE(const olaf::Piece*)
 Q_DECLARE_METATYPE(olaf::Move)
 Q_DECLARE_METATYPE(olaf::IncompleteMove)
+Q_DECLARE_METATYPE(olaf::TranspositionTableEntry)
 
 namespace olaf
 {
@@ -38,8 +39,6 @@ namespace test
     QFAIL(__gmock_assertion_result.message()); \
   } \
 }
-
-Move make_move(const Position& source, const Position& destination, const bool is_capture);
 
 ChessBoard parse_fen(const std::string& fen);
 
