@@ -84,12 +84,9 @@ void Pawn::add_conversion_moves(vector<Move>* const moves,
   }
 }
 
-bool Pawn::can_move(const IncompleteMove incomplete_move,
-                    const ChessBoard& board) const
+bool Pawn::could_move(const IncompleteMove incomplete_move,
+                      const ChessBoard& board) const
 {
-  if (!Piece::can_move(incomplete_move, board)) {
-    return false;
-  }
   const Color color = board.turn_color();
   const Position dst(incomplete_move.destination());
   if (incomplete_move.is_promotion() != (dst.row() == promotion_row(color))) {

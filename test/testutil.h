@@ -24,6 +24,7 @@ Q_DECLARE_METATYPE(std::vector<olaf::Move>)
 Q_DECLARE_METATYPE(std::vector<olaf::Position>)
 Q_DECLARE_METATYPE(const olaf::Piece*)
 Q_DECLARE_METATYPE(olaf::Move)
+Q_DECLARE_METATYPE(olaf::IncompleteMove)
 
 namespace olaf
 {
