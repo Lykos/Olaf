@@ -1,7 +1,7 @@
 #ifndef SETDEPTHEVENT_H
 #define SETDEPTHEVENT_H
 
-#include "engineevent.h"
+#include "protocols/event/engineevent.h"
 #include <chrono>
 
 namespace olaf

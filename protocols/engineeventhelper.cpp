@@ -1,17 +1,20 @@
-#include "engineeventhelper.h"
-#include "engineevent.h"
-#include "moveevent.h"
-#include "ponderingflipevent.h"
-#include "forceflipevent.h"
-#include "deferredponderingevent.h"
-#include "myturnflipevent.h"
-#include "pingevent.h"
-#include "settimeevent.h"
+#include "protocols/engineeventhelper.h"
+
+#include "protocols/event/engineevent.h"
+#include "protocols/event/moveevent.h"
+#include "protocols/event/ponderingflipevent.h"
+#include "protocols/event/forceflipevent.h"
+#include "protocols/event/deferredponderingevent.h"
+#include "protocols/event/myturnflipevent.h"
+#include "protocols/event/pingevent.h"
+#include "protocols/event/undoevent.h"
+#include "protocols/event/settimeevent.h"
+#include "protocols/event/setanalyzeevent.h"
 #include "olaf/rules/move.h"
 #include "olaf/parse/fenparser.h"
-#include "setboardevent.h"
-#include "setdepthevent.h"
-#include "setnpsevent.h"
+#include "protocols/event/setboardevent.h"
+#include "protocols/event/setdepthevent.h"
+#include "protocols/event/setnpsevent.h"
 
 using namespace std;
 
@@ -113,7 +116,7 @@ bool EngineEventHelper::request_move(const IncompleteMove incomplete_move)
   return true;
 }
 
-bool EngineEventHelper::set_fen(const string& fen)
+bool EngineEventHelper::request_set_fen(const string& fen)
 {
   ChessBoard board;
   if (!FenParser::parse(fen, &board)) {
@@ -124,10 +127,26 @@ bool EngineEventHelper::set_fen(const string& fen)
   return true;
 }
 
+bool EngineEventHelper::request_undo(int moves)
+{
+  if (m_board_state->undoable_moves_size() < moves) {
+    return false;
+  }
+  unique_ptr<UndoEvent> undo_event(new UndoEvent(moves));
+  m_engine->enqueue(move(undo_event));
+  return true;
+}
+
+void EngineEventHelper::request_analyze(const bool value)
+{
+  unique_ptr<SetAnalyzeEvent> analyze_event(new SetAnalyzeEvent(value));
+  m_engine->enqueue(move(analyze_event));
+}
+
 void EngineEventHelper::enqueue_move(const Move& move)
 {
   unique_ptr<EngineEvent> move_event(new MoveEvent(move));
   m_engine->enqueue(std::move(move_event));
+}
 
 } // namespace olaf
-}

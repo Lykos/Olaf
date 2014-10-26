@@ -38,6 +38,8 @@ public:
 
   Move create_move(IncompleteMove incomplete_move) const;
 
+  inline int undoable_moves_size() { return m_undoable_moves.size(); }
+
 private:
   mutable std::mutex m_mutex;
 

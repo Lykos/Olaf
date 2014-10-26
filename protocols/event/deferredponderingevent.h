@@ -1,8 +1,8 @@
 #ifndef DEFERREDPONDERINGEVENT_H
 #define DEFERREDPONDERINGEVENT_H
 
-#include "engineevent.h"
-#include "enginestate.h"
+#include "protocols/event/engineevent.h"
+#include "protocols/enginestate.h"
 
 namespace olaf
 {

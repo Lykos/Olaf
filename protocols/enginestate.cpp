@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "boardstate.h"
+#include "olaf/search/forcedstopper.h"
 
 using namespace std;
 using namespace chrono;
@@ -18,17 +19,24 @@ EngineState::EngineState(unique_ptr<TranspositionTable> transposition_table,
   assert(board_state);
 }
 
-SearchContext EngineState::create_search_context(const Stopper* const forced_stopper,
-                                                 const Stopper* const weak_stopper) const
+SearchContext EngineState::create_search_context()
 {
+  m_weak_stopper.reset(new ForcedStopper);
+  m_forced_stopper.reset(new ForcedStopper);
   SearchContext context;
   context.board = m_board_state->copy_board();
-  context.forced_stopper = forced_stopper;
-  context.weak_stopper = weak_stopper;
+  context.forced_stopper = m_forced_stopper.get();
+  context.weak_stopper = m_weak_stopper.get();
   if (m_my_turn && !m_force) {
     context.time_mode = SearchContext::TimeMode::BOUNDED;
   } else {
     context.time_mode = SearchContext::TimeMode::INFINITE;
+  }
+  if (m_use_depth) {
+    context.depth_mode = SearchContext::DepthMode::MAX_DEPTH;
+    context.max_depth = m_depth;
+  } else {
+    context.depth_mode = SearchContext::DepthMode::ITERATIVE;
   }
   context.transposition_table = m_transposition_table.get();
   return context;

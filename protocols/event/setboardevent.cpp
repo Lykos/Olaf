@@ -1,8 +1,8 @@
-#include "setboardevent.h"
+#include "protocols/event/setboardevent.h"
 
 #include "olaf/rules/chessboard.h"
-#include "enginestate.h"
-#include "boardstate.h"
+#include "protocols/enginestate.h"
+#include "protocols/boardstate.h"
 
 namespace olaf
 {

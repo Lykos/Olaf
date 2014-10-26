@@ -2,9 +2,9 @@
 #include "test/bitboardtest.h"
 #include <QtTest/QTest>
 #include <vector>
-#include "testutil.h"
-#include "OlafSearching/position.h"
-#include "OlafSearching/bitboard.h"
+#include "test/testutil.h"
+#include "olaf/rules/position.h"
+#include "olaf/rules/bitboard.h"
 
 using namespace std;
 using namespace testing;

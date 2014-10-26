@@ -121,7 +121,20 @@ void XBoardReader::run()
       m_engine_helper->request_set_opponent_time(milliseconds(centiseconds * 10));
     } else if (command == "computer") {
     } else if (command == "draw") {
+    } else if (command == "analyze") {
+      m_engine_helper->request_analyze(true);
+    } else if (command == "exit") {
+      m_engine_helper->request_analyze(false);
+    } else if (command == "undo") {
+      if (!m_engine_helper->request_undo()) {
+        m_writer->error(XBoardWriter::ErrorType::NO_UNDOABLE_MOVES, "It is not possible to undo a move.");
+      }
+    } else if (command == "remove") {
+      if (!m_engine_helper->request_undo(2)) {
+        m_writer->error(XBoardWriter::ErrorType::NO_UNDOABLE_MOVES, "It is not possible to undo two moves.");
+      }
     } else if (command == "result") {
+      m_engine_helper->request_force(true);
     } else if (command == "level") {
       // TODO
     } else if (command == "post") {
@@ -149,7 +162,7 @@ void XBoardReader::run()
         }
       }
       const string fen = oss.str();
-      if (!m_engine_helper->set_fen(fen)) {
+      if (!m_engine_helper->request_set_fen(fen)) {
         m_writer->error(XBoardWriter::ErrorType::INVALID_FEN, fen);
       }
     } else if (command == "usermove") {
@@ -235,10 +248,12 @@ void XBoardReader::write_features() const
   m_writer->feature_bool("ics", true);
   m_writer->feature_bool("name", true);
   m_writer->feature_bool("nps", false);
+  m_writer->feature_bool("analyze", true);
   m_writer->feature_bool("pause", true);
   m_writer->feature_bool("debug", true);
   m_writer->feature_bool("sigint", false);
   m_writer->feature_bool("done", true);
+  m_writer->feature_bool("playother", true);
 }
 
 bool XBoardReader::check_args(const vector<string>& tokens,

@@ -1,7 +1,7 @@
 #ifndef PONDERINGFLIP_H
 #define PONDERINGFLIP_H
 
-#include "engineevent.h"
+#include "protocols/event/engineevent.h"
 
 namespace olaf
 {

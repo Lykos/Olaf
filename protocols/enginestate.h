@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "olaf/search/searchcontext.h"
+#include "olaf/search/forcedstopper.h"
 #include "olaf/transposition_table/transpositiontable.h"
 
 namespace olaf
@@ -22,55 +23,66 @@ public:
   explicit EngineState(std::unique_ptr<TranspositionTable> transposition_table,
                        BoardState* board_state);
 
-  bool pondering() const { return m_pondering && !m_deferred_pondering; }
+  inline bool pondering() const { return m_pondering && !m_deferred_pondering; }
 
-  void pondering(const bool value) { m_pondering = value; }
+  inline void pondering(const bool value) { m_pondering = value; }
 
-  bool my_turn() const { return m_my_turn; }
+  inline bool my_turn() const { return m_my_turn; }
 
-  void my_turn(const bool value) { m_my_turn = value; }
+  inline void my_turn(const bool value) { m_my_turn = value; }
 
-  void flip_turn() { m_deferred_pondering = false; m_my_turn = !m_my_turn; }
+  inline void flip_turn() { m_deferred_pondering = false; m_my_turn = !m_my_turn; }
 
-  bool force() const { return m_force; }
+  inline bool force() const { return m_force; }
 
-  void force(const bool value) { m_force = value; }
+  inline void force(const bool value) { m_force = value; }
 
-  void deferred_pondering() { m_deferred_pondering = true; m_pondering = true; }
+  inline void deferred_pondering() { m_deferred_pondering = true; m_pondering = true; }
 
-  std::chrono::milliseconds my_time() const { return m_my_time; }
+  inline std::chrono::milliseconds my_time() const { return m_my_time; }
 
-  void my_time(const std::chrono::milliseconds& time) { m_my_time = time; }
+  inline void my_time(const std::chrono::milliseconds& time) { m_my_time = time; }
 
-  std::chrono::milliseconds opponent_time() const { return m_opponent_time; }
+  inline std::chrono::milliseconds opponent_time() const { return m_opponent_time; }
 
-  void opponent_time(const std::chrono::milliseconds& time) { m_opponent_time = time; }
+  inline void opponent_time(const std::chrono::milliseconds& time) { m_opponent_time = time; }
 
-  bool use_nps() const { return m_use_nps; }
+  inline bool analyze() const { return m_analyze; }
 
-  void use_nps(const bool value) { m_use_nps = value; }
+  inline void analyze(const bool value) { m_analyze = value; }
 
-  bool nps() const { return m_nps; }
+  inline bool use_nps() const { return m_use_nps; }
 
-  void nps(const bool value) { m_nps = value; }
+  inline void use_nps(const bool value) { m_use_nps = value; }
 
-  bool use_depth() const { return m_use_depth; }
+  inline bool nps() const { return m_nps; }
 
-  void use_depth(const int value) { m_use_depth = value; }
+  inline void nps(const bool value) { m_nps = value; }
 
-  bool depth() const { return m_depth; }
+  inline bool use_depth() const { return m_use_depth; }
 
-  void depth(const int value) { m_depth = value; }
+  inline void use_depth(const int value) { m_use_depth = value; }
 
-  const BoardState& board_state() const { return *m_board_state; }
+  inline bool depth() const { return m_depth; }
 
-  BoardState& board_state() { return *m_board_state; }
+  inline void depth(const int value) { m_depth = value; }
 
-  SearchContext create_search_context(const Stopper* forced_stopper,
-                                      const Stopper* weak_stopper) const;
+  inline const BoardState& board_state() const { return *m_board_state; }
+
+  inline BoardState& board_state() { return *m_board_state; }
+
+  SearchContext create_search_context();
+
+  inline void stop() { if (m_forced_stopper) { m_forced_stopper->request_stop(); } }
+
+  inline void weak_stop() { if (m_weak_stopper) { m_weak_stopper->request_stop(); } }
 
 private:
   std::unique_ptr<TranspositionTable> m_transposition_table;
+
+  std::unique_ptr<ForcedStopper> m_forced_stopper;
+
+  std::unique_ptr<ForcedStopper> m_weak_stopper;
 
   BoardState* const m_board_state;
 
@@ -85,6 +97,8 @@ private:
   bool m_use_nps = false;
 
   bool m_use_depth = false;
+
+  bool m_analyze;
 
   int m_depth;
 

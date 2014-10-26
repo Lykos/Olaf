@@ -1,4 +1,4 @@
-#include "setnpsevent.h"
+#include "protocols/event/setnpsevent.h"
 
 using namespace std;
 using namespace chrono;
