@@ -61,7 +61,8 @@ SOURCES += \
     evaluation/incrementalupdater.cpp \
     rules/movechecker.cpp \
     evaluation/resultevaluator.cpp \
-    evaluation/positionevaluator.cpp
+    evaluation/positionevaluator.cpp \
+    transposition_table/randomnumbers.cpp
 
 HEADERS += \
     config.h \
@@ -114,7 +115,8 @@ HEADERS += \
     evaluation/incrementalupdater.h \
     rules/undoinfo.h \
     rules/movechecker.h \
-    evaluation/resultevaluator.h
+    evaluation/resultevaluator.h \
+    transposition_table/randomnumbers.h
 
 target.path = /usr/local/lib
 
