@@ -65,15 +65,19 @@ static string file_name_to_class_name(const string& name)
   static const char c_underscore = '_';
   static const char c_slash = '/';
   const auto slash_index = name.rfind(c_slash);
-  auto it = name.begin() + (slash_index == string::npos ? 0 : slash_index);
+  auto it = name.begin() + (slash_index == string::npos ? 0 : slash_index + 1);
   auto end = name.end();
   string result;
+  for (; it != end && !isalpha(*it); ++it);
+  if (it != end) {
+    result.push_back(toupper(*it));
+  }
   for (; it != end; ++it) {
     auto next = it + 1;
     if (next != end && *next == c_underscore) {
       result.push_back(toupper(*it));
       ++it; // Overjump next.
-    } else {
+    } else if (isalpha(*it)) {
       result.push_back(*it);
     }
   }
