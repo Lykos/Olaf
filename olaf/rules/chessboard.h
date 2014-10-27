@@ -2,7 +2,7 @@
 #define CHESSBOARD_H
 
 #include <cstdint>
-#include <unordered_set>
+#include <vector>
 #include <array>
 #include <ostream>
 
@@ -163,7 +163,7 @@ public:
    *        if black has no king. Note that this is not strictly
    *        according to the chess rules, but it fits the engine.
    */
-  bool won(const Color color) const
+  inline bool won(const Color color) const
   {
     return m_color_boards[1 - static_cast<int>(color)].dead();
   }
@@ -171,17 +171,18 @@ public:
   /**
    * @brief draw returns true if the game is a draw.
    */
-  bool draw() const
+  inline bool draw() const
   {
-    static const int_fast8_t c_draw_reversible_plies = 50;
-    return m_reversible_plies >= c_draw_reversible_plies
-        || m_hashes.count(m_zobrist_hash);
+    if (!m_draw_valid) {
+      calculate_draw();
+    }
+    return m_draw;
   }
 
   /**
    * @brief finished returns true if the game is finished.
    */
-  bool finished() const
+  inline bool finished() const
   {
     return won(Color::White) || won(Color::Black) || draw();
   }
@@ -244,6 +245,8 @@ public:
   }
 
 private:
+  void calculate_draw() const;
+
   std::array<ColorBoard, c_no_colors> m_color_boards;
 
   Color m_turn_color;
@@ -260,13 +263,17 @@ private:
 
   int m_incremental_score_white;
 
-  std::unordered_set<ZobristHash::hash_t> m_hashes;
+  std::vector<ZobristHash::hash_t> m_hashes;
+
+  mutable bool m_draw;
 
   mutable bool m_opponents_valid = false;
 
   mutable bool m_friends_valid = false;
 
   mutable bool m_occupied_valid = false;
+
+  mutable bool m_draw_valid = false;
 
   mutable BitBoard m_opponents;
 

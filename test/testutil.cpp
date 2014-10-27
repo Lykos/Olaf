@@ -25,7 +25,11 @@ static const char c_config[] =
 ChessBoard parse_fen(const string& fen)
 {
   ChessBoard board;
+#ifdef NDEBUG
+  FenParser::parse(fen, &board);
+#else
   assert(FenParser::parse(fen, &board));
+#endif
   return board;
 }
 

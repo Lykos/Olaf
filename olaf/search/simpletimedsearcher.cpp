@@ -34,6 +34,6 @@ SearchResult SimpleTimedSearcher::search(SearchContext* const context)
       break;
   }
   return m_sub_searcher->search(context);
+}
 
 } // namespace olaf
-}

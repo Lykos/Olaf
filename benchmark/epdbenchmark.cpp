@@ -90,6 +90,7 @@ EpdBenchmark::~EpdBenchmark()
 
 void EpdBenchmark::initTestCase()
 {
+  cout << "initialized" << endl;
   m_searcher.reset(new SimpleTimedSearcher(m_factory_owner.factory.iterative_searcher(), c_max_time));
 }
 
@@ -105,7 +106,9 @@ void EpdBenchmark::test_epd()
   context.weak_stopper = &stopper;
   TranspositionTable transposition_table(0x1000);
   context.transposition_table = &transposition_table;
-  Move move = m_searcher->search(&context).main_variation.back();
+  const vector<Move> main_variation = m_searcher->search(&context).main_variation;
+  QVERIFY(!main_variation.empty());
+  Move move = main_variation.back();
   long score = 0;
   auto ContainsMove = Matches(Contains(move));
   if (!position.best_moves.empty()) {

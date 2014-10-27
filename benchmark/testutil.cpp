@@ -29,7 +29,11 @@ static const char c_config[] =
 ChessBoard parse_fen(const string& fen)
 {
   ChessBoard board;
+#ifdef NDEBUG
+  FenParser::parse(fen, &board);
+#else
   assert(FenParser::parse(fen, &board));
+#endif
   return board;
 }
 
@@ -51,7 +55,12 @@ EpdPosition parse_epd(const string& epd)
 {
   EpdPosition position;
   static const TestFactoryOwner factory_owner;
-  assert(factory_owner.factory.epd_parser()->parse(epd, &position));
+  auto parser = factory_owner.factory.epd_parser();
+#ifdef NDEBUG
+  parser->parse(epd, &position);
+#else
+  assert(parser->parse(epd, &position));
+#endif
   return position;
 }
 

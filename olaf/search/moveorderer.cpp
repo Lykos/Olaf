@@ -86,7 +86,9 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   Piece::piece_index_t attacker = board.turn_board().piece_index(move.source());
   BitBoard from = BitBoard(src);
   BitBoard friends = board.friends();
+#ifndef NDEBUG
   BitBoard opponents = board.opponents();
+#endif
   BitBoard occupied = board.occupied();
   Color color = board.turn_color();
   while (true) {
