@@ -23,7 +23,8 @@ CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/protoco
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/protocols -lolafprotocols
 
 OTHER_FILES += \
-    config.yml
+    config.yml \
+    ../resources/move_table.bin
 
 config.path = /usr/local/share/olaf
 config.files = $$OTHER_FILES

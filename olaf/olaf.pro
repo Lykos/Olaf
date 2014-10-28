@@ -62,7 +62,9 @@ SOURCES += \
     rules/movechecker.cpp \
     evaluation/resultevaluator.cpp \
     evaluation/positionevaluator.cpp \
-    transposition_table/randomnumbers.cpp
+    transposition_table/randomnumbers.cpp \
+    rules/magicnumbers.cpp \
+    rules/magicmoves.cpp
 
 HEADERS += \
     config.h \
@@ -116,7 +118,9 @@ HEADERS += \
     rules/undoinfo.h \
     rules/movechecker.h \
     evaluation/resultevaluator.h \
-    transposition_table/randomnumbers.h
+    transposition_table/randomnumbers.h \
+    rules/magicnumbers.h \
+    rules/magicmoves.h
 
 target.path = /usr/local/lib
 

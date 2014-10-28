@@ -63,7 +63,7 @@ std::vector<Move> Pawn::moves(const Position& source,
     }
     Position capture_destination = source + forward_direction(color) + sidewards;
     // Check if capture is possible
-    if ((BitBoard(capture_destination) & capturable2) != 0) {
+    if (BitBoard(capture_destination) & capturable2) {
       if (capture_destination.row() == promotion_row(color)) {
         add_conversion_moves(&result, board, source, capture_destination);
       } else {
@@ -102,7 +102,7 @@ bool Pawn::could_move(const IncompleteMove incomplete_move,
   // Handle capture.
   if (dst.row() == step.row()
       && abs(dst.column() - step.column()) == 1) {
-    return (capturable(board) & BitBoard(dst)) != 0;
+    return capturable(board) & BitBoard(dst);
   }
   if (dst.column() != step.column()) {
     return false;

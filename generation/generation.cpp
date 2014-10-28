@@ -1,6 +1,7 @@
 #include "generation.h"
 
 #include <array>
+#include <cassert>
 #include <algorithm>
 #include <deque>
 #include <vector>
@@ -8,8 +9,12 @@
 #include <cstdlib>
 #include <ostream>
 #include <iostream>
+#include <fstream>
+#include <gflags/gflags.h>
 
 #include "olaf/rules/bitboard.h"
+
+DEFINE_string(output_file, "", "If this is non-empty, the output will be written here.");
 
 using namespace std;
 
@@ -207,10 +212,10 @@ static const array<uint64_t, 64> c_occupancy_mask_rook = {
   0x76080808080800ULL,
   0x6e101010101000ULL,
   0x5e202020202000ULL,
-  0x7c02020202020200ULL,
   0x3e404040404000ULL,
   0x7e808080808000ULL,
   0x7e01010101010100ULL,
+  0x7c02020202020200ULL,
   0x7a04040404040400ULL,
   0x7608080808080800ULL,
   0x6e10101010101000ULL,
@@ -287,17 +292,25 @@ static const array<uint64_t, 64> c_occupancy_mask_bishop = {
 };
 
 static const array<int_fast8_t, 64> c_magic_number_shifts_rook = {
-    52,53,53,53,53,53,53,52,53,54,54,54,54,54,54,53,
-    53,54,54,54,54,54,54,53,53,54,54,54,54,54,54,53,
-    53,54,54,54,54,54,54,53,53,54,54,54,54,54,54,53,
-    53,54,54,54,54,54,54,53,52,53,53,53,53,53,53,52
+  52,53,53,53,53,53,53,52,
+  53,54,54,54,54,54,54,53,
+  53,54,54,54,54,54,54,53,
+  53,54,54,54,54,54,54,53,
+  53,54,54,54,54,54,54,53,
+  53,54,54,54,54,54,54,53,
+  53,54,54,54,54,54,54,53,
+  52,53,53,53,53,53,53,52
 };
 
 static const array<int_fast8_t, 64> c_magic_number_shifts_bishop = {
-  58,59,59,59,59,59,59,58,59,59,59,59,59,59,59,59,
-  59,59,57,57,57,57,59,59,59,59,57,55,55,57,59,59,
-  59,59,57,55,55,57,59,59,59,59,57,57,57,57,59,59,
-  59,59,59,59,59,59,59,59,58,59,59,59,59,59,59,58
+  58,59,59,59,59,59,59,58,
+  59,59,59,59,59,59,59,59,
+  59,59,57,57,57,57,59,59,
+  59,59,57,55,55,57,59,59,
+  59,59,57,55,55,57,59,59,
+  59,59,57,57,57,57,59,59,
+  59,59,59,59,59,59,59,59,
+  58,59,59,59,59,59,59,58
 };
 
 vector<int> indices(const uint64_t bits)
@@ -309,8 +322,10 @@ vector<int> indices(const uint64_t bits)
   return result;
 }
 
-static array<array<uint64_t, 64>, 64> occupancy_variation;
-static array<array<uint64_t, 64>, 64> occupancy_attack_set;
+static array<vector<uint64_t>, 64> occupancy_variation_rook;
+static array<vector<uint64_t>, 64> occupancy_attack_set_rook;
+static array<vector<uint64_t>, 64> occupancy_variation_bishop;
+static array<vector<uint64_t>, 64> occupancy_attack_set_bishop;
 
 void generate_occupancy_variations(const bool is_rook)
 {
@@ -321,6 +336,8 @@ void generate_occupancy_variations(const bool is_rook)
   vector<int> set_bits_in_mask;
   vector<int> set_bits_in_index;
   array<int, 64> bit_count;
+  array<vector<uint64_t>, 64>& occupancy_variation = is_rook ? occupancy_variation_rook : occupancy_variation_bishop;
+  array<vector<uint64_t>, 64>& occupancy_attack_set = is_rook ? occupancy_attack_set_rook : occupancy_attack_set_bishop;
 
   for (bit_ref=0; bit_ref<=63; bit_ref++)
   {
@@ -328,8 +345,14 @@ void generate_occupancy_variations(const bool is_rook)
     set_bits_in_mask = indices(mask);
     bit_count[bit_ref] = BitBoard(mask).number();
     int variation_count = (int)(1L << bit_count[bit_ref]);
+    occupancy_variation[bit_ref].resize(variation_count);
+    occupancy_attack_set[bit_ref].resize(variation_count);
     for (i = 0; i < variation_count; i++)
     {
+      assert(bit_ref < int(occupancy_variation.size()));
+      assert(i < int(occupancy_variation[bit_ref].size()));
+      assert(bit_ref < int(occupancy_attack_set.size()));
+      assert(i < int(occupancy_attack_set[bit_ref].size()));
       occupancy_variation[bit_ref][i] = 0;
 
       // find bits set in index "i" and map them to bits in the 64 bit "occupancy_variation"
@@ -372,13 +395,14 @@ static array<vector<uint64_t>, 64> magic_moves_bishop;
 void force_insert(vector<uint64_t>& vec, unsigned int i, uint64_t val)
 {
   if (i >= vec.size()) {
-    vec.resize(i);
+    vec.resize(i + 1);
   }
   vec[i] = val;
 }
 
 void generate_move_database(const bool is_rook)
 {
+  array<vector<uint64_t>, 64>& occupancy_variation = is_rook ? occupancy_variation_rook : occupancy_variation_bishop;
   uint64_t valid_moves;
   int variations, bit_count;
   int bit_ref, i, j, magic_index;
@@ -434,10 +458,10 @@ struct Magic {
 
 ostream& operator <<(ostream& out, const Magic& magic)
 {
-  return out << "  {&(lookup_table[" << dec << magic.index << "]), "
+  return out << "{&(c_move_table[" << dec << magic.index << "]), "
              << "0x" << hex << magic.mask << "ULL, "
              << "0x" << hex << magic.magic << "ULL, "
-             << dec << magic.shift << "}," << endl;
+             << dec << magic.shift << "}";
 }
 
 static vector<uint64_t> optimized_magic_moves;
@@ -447,6 +471,7 @@ bool try_integrate(const vector<uint64_t>& moves, int index, array<Magic, 64>* c
   auto it = search(optimized_magic_moves.begin(), optimized_magic_moves.end(),
                    moves.begin(), moves.end());
   if (it != optimized_magic_moves.end()) {
+    cout << "Hit!";
     (*magic)[index].index = it - optimized_magic_moves.begin();
     return true;
   } else {
@@ -457,7 +482,7 @@ bool try_integrate(const vector<uint64_t>& moves, int index, array<Magic, 64>* c
 int back_overlap(const vector<uint64_t>& moves)
 {
   auto end = optimized_magic_moves.end();
-  auto it = end - moves.size();
+  auto it = moves.size() < optimized_magic_moves.size() ? end - moves.size() : optimized_magic_moves.begin();
   while (it != end) {
     ++it;
     it = find(it, end, moves.front());
@@ -475,6 +500,7 @@ void optimize_move_database(const array<vector<uint64_t>, 64>& magic_moves, arra
     if (!try_integrate(moves, i, magic)) {
       int overlap = back_overlap(moves);
       optimized_magic_moves.insert(optimized_magic_moves.end(), moves.begin() + overlap, moves.end());
+      (*magic)[i].index = optimized_magic_moves.size() - moves.size();
     }
   }
 }
@@ -506,25 +532,73 @@ void finish_magic(const bool is_rook)
   }
 }
 
-void printmagic()
+void print(uint64_t bla)
+{
+  cout << bla << endl;
+  for (int i = 7; i >= 0; --i) {
+    for (int j = 0; j < 8; ++j) {
+      cout << ((bla >> (i * 8 + j)) & 1);
+    }
+    cout << endl;
+  }
+}
+
+uint64_t do_magic(const Position& position, const uint64_t board, const bool is_rook)
+{
+  const Magic& magic = (is_rook ? rook_magic : bishop_magic)[BitBoard::index(position)];
+  return optimized_magic_moves[magic.index + (((board & magic.mask) * magic.magic) >> magic.shift)];
+}
+
+void print_magic(const bool is_rook)
+{
+  cout << endl;
+  cout << "// static" << endl;
+  cout << "const array<Magic, 64> MagicNumbers::c_" << (is_rook ? "rook" : "bishop") << "_magic = {{" << endl;
+  auto magics = (is_rook ? rook_magic : bishop_magic);
+  for (int i = 0; i < 63; ++i) {
+    cout << "  " << magics[i] << "," << endl;
+  }
+  cout << "  " << magics[63] << endl;
+  cout << "}};" << endl;
+}
+
+void generate_magic()
 {
   cout << "Generating occupancy for rook" << endl;
   generate_occupancy_variations(true);
-  cout << "Generating occupancy for bishop" << endl;
-  generate_occupancy_variations(false);
   cout << "Generating move database for rook" << endl;
   generate_move_database(true);
-  cout << "Generating move database for bishop" << endl;
-  generate_move_database(false);
   cout << "Optimizing move database for rook" << endl;
   optimize_move_database(true);
-  cout << "Optimizing move database for bishop" << endl;
-  optimize_move_database(false);
   cout << "Finishing magic for rook" << endl;
   finish_magic(true);
+  cout << "Generating occupancy for bishop" << endl;
+  generate_occupancy_variations(false);
+  cout << "Generating move database for bishop" << endl;
+  generate_move_database(false);
+  cout << "Optimizing move database for bishop" << endl;
+  optimize_move_database(false);
   cout << "Finishing magic for bishop" << endl;
   finish_magic(false);
   cout << "Entries: " << optimized_magic_moves.size() << endl;
+  int unoptimized_size = 0;
+  for (int i = 0; i < 64; ++i) {
+    unoptimized_size += magic_moves_bishop[i].size() + magic_moves_rook[i].size();
+  }
+  cout << "Unoptimized entries: " << unoptimized_size << endl << endl;
+  print(do_magic(Position("a8"), 18446462598732972029ull, true));
+  cout << endl;
+  print(do_magic(Position("b2"), 1 << 18, false));
+  cout << endl;
+  if (!FLAGS_output_file.empty()) {
+    ofstream file(FLAGS_output_file, ios::binary | ios::trunc | ios::out);
+    const char* const block = reinterpret_cast<char*>(&(optimized_magic_moves[0]));
+    file.write(block, optimized_magic_moves.size() * sizeof(uint64_t));
+    file.close();
+    cout << "File written." << endl;
+  }
+  print_magic(true);
+  print_magic(false);
 }
 
 } // namespace generation

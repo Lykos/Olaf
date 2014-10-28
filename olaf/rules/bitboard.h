@@ -53,6 +53,8 @@ public:
 
   constexpr BitBoard operator -() const { return BitBoard(-m_bits); }
 
+  constexpr operator bitboard_t() const { return m_bits; }
+
   /**
    * @brief index returns the index that has to be used to access the bit of this position
    * @param position

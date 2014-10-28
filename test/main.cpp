@@ -1,3 +1,8 @@
 #include "autotest.h"
+#include <gflags/gflags.h>
 
-AUTOTEST_MAIN
+int main(int argc, char* argv[])
+{
+  google::ParseCommandLineFlags(&argc, &argv, true);
+  return ::olaf::test::auto_test::run(argc, argv);
+}

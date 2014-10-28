@@ -1,11 +1,11 @@
-#include <cstdint>
-#include <cstdio>
+#include <gflags/gflags.h>
 
 #include "generation.h"
 
 using namespace std;
 
-int main() {
-  olaf::generation::printmagic();
+int main(int argc, char* argv[]) {
+  google::ParseCommandLineFlags(&argc, &argv, true);
+  olaf::generation::generate_magic();
   return 0;
 }

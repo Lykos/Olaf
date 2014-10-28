@@ -1,10 +1,12 @@
 #include "olaf/rules/linepiece.h"
 
+#include <cassert>
 #include <algorithm>
 #include <utility>
 
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/movechecker.h"
+#include "olaf/rules/magicmoves.h"
 
 using namespace std;
 using namespace rel_ops;
@@ -27,15 +29,17 @@ vector<Move> LinePiece::moves(const Position& source,
   if (board.finished()) {
     return result;
   }
-  for (const PositionDelta& direction : m_directions) {
-    Position current(source);
-    while (current.in_bounds(direction) && !board.opponent(current)) {
-      current = current + direction;
-      if (board.friendd(current)) {
-        break;
-      }
-      result.push_back(MoveChecker::complete(source, current, board));
-    }
+  BitBoard bitboard;
+  if (piece_index() == PieceSet::c_rook_index) {
+    bitboard = MagicMoves::magic_moves_rook(source, board.occupied(), board.friends());
+  } else if (piece_index() == PieceSet::c_bishop_index) {
+    bitboard = MagicMoves::magic_moves_bishop(source, board.occupied(), board.friends());
+  } else {
+    assert(piece_index() == PieceSet::c_queen_index);
+    bitboard = MagicMoves::magic_moves_queen(source, board.occupied(), board.friends());
+  }
+  for (const Position& destination : bitboard.positions()) {
+    result.push_back(MoveChecker::complete(source, destination, board));
   }
   return result;
 }

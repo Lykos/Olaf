@@ -132,7 +132,7 @@ void IncrementalUpdater::calculate(ChessBoard* board)
   for (const Color color : c_colors) {
     const ColorBoard& color_board = board->color_board(color);
     for (const PieceBoard& piece_board : color_board.piece_boards()) {
-      if (piece_board.bit_board() == 0) {
+      if (!piece_board.bit_board()) {
         continue;
       }
       const Piece::piece_index_t index = piece_board.piece().piece_index();

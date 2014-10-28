@@ -1,5 +1,5 @@
-#ifndef MOVECREATOR_H
-#define MOVECREATOR_H
+#ifndef MOVECHECKER_H
+#define MOVECHECKER_H
 
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/position.h"
@@ -11,7 +11,7 @@ namespace olaf
 {
 
 /**
- * @brief The MoveCreator class is responsible for checking moves from the user and
+ * @brief The MoveChecker class is responsible for checking moves from the user and
  * creating the move objects.
  */
 class MoveChecker
@@ -59,4 +59,4 @@ public:
 
 } // namespace olaf
 
-#endif // MOVECREATOR_H
+#endif // MOVECHECKER_H

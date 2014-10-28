@@ -49,7 +49,7 @@ public:
 
   inline bool ep_possible() const
   {
-    return m_ep_captures != 0;
+    return m_ep_captures;
   }
 
   /**

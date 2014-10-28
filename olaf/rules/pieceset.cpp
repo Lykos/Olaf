@@ -46,17 +46,17 @@ static const vector<PositionDelta> c_knight_directions = {
   PositionDelta(2, 1)
 };
 
-static const BitBoard c_rook_initial_board (0x81ull);
+static const BitBoard c_rook_initial_board(0x81ull);
 
-static const BitBoard c_knight_initial_board (0x42ull);
+static const BitBoard c_knight_initial_board(0x42ull);
 
-static const BitBoard c_bishop_initial_board (0x24ull);
+static const BitBoard c_bishop_initial_board(0x24ull);
 
-static const BitBoard c_queen_initial_board (0x8ull);
+static const BitBoard c_queen_initial_board(0x8ull);
 
-static const BitBoard c_king_initial_board (0x10ull);
+static const BitBoard c_king_initial_board(0x10ull);
 
-static const BitBoard c_pawn_initial_board (0xff00ull);
+static const BitBoard c_pawn_initial_board(0xff00ull);
 
 static const PieceSet::PromotionArray c_pawn_conversions = {
   PieceSet::c_rook_index,
@@ -125,6 +125,6 @@ const PieceSet& PieceSet::instance()
 {
   static PieceSet instance;
   return instance;
+}
 
 } // namespace olaf
-}

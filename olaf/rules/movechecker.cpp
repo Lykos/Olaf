@@ -60,9 +60,9 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
   }
   BitBoard capturable = board.opponents() | board.king_captures();
   const BitBoard dst_board(dst);
-  const bool is_capture = (capturable & dst_board) != 0;
+  const bool is_capture = capturable & dst_board;
   if (piece_index == PieceSet::c_pawn_index) {
-    if ((board.ep_captures() & dst_board) != 0) {
+    if (board.ep_captures() & dst_board) {
       return Move(src, dst, Move::c_ep_flag);
     } else if (incomplete_move.is_promotion()) {
       const uint16_t flags = (static_cast<uint16_t>(is_capture) << 14) | incomplete_move.m_state;
@@ -79,7 +79,7 @@ bool MoveChecker::can_kill_king(const ChessBoard& board)
 {
   const BitBoard king_captures =
       board.noturn_board().piece_board(PieceSet::c_king_index).bit_board() | board.king_captures();
-  if (king_captures == 0) {
+  if (!king_captures) {
     return false;
   }
   const vector<Position>& king_positions = king_captures.positions();

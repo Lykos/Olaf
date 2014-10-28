@@ -45,7 +45,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
     Position victim_position;
     if (is_ep()) {
       victim_position = dst + forward_direction(noturn_color);
-    } else if ((BitBoard(dst) & board->king_captures()) != 0) {
+    } else if (BitBoard(dst) & board->king_captures()) {
       victim_position =
           board->color_board(noturn_color).piece_board(c_king_index).bit_board().first_position();
     } else {

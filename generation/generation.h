@@ -7,7 +7,7 @@ namespace olaf
 {
 namespace generation
 {
-void printmagic();
+void generate_magic();
 } // namespace generation
 } // namespace olaf
 

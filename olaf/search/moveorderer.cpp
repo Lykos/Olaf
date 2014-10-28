@@ -24,7 +24,7 @@ BitBoard least_valuable_piece(const ChessBoard& board, const Color color, const 
   const ColorBoard& color_board = board.color_board(color);
   for (const Piece::piece_index_t piece_index : piece_values) {
     const BitBoard subset = color_board.piece_board(piece_index).bit_board() & attackers;
-    if (subset != 0) {
+    if (subset) {
       return subset & -subset;
     }
   }
@@ -100,21 +100,21 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
     attackers = attackers ^ from;
     occupied = occupied ^ from;
     color = other_color(color);
-    if ((from & may_xray) != 0) {
+    if (from & may_xray) {
       Position src2 = from.first_position();
       const PositionDelta direction = (src2 - dst).unit();
       while (src2.in_bounds(direction)) {
         src2 = src2 + direction;
         BitBoard src3(src2);
-        if ((occupied & src3) == 0) {
+        if (!(occupied & src3)) {
           continue;
         }
-        if ((friends & src3) != 0){
+        if (friends & src3){
           if (board.turn_board().piece(src2).can_xray(direction)) {
             attackers = attackers | src3;
           }
         } else {
-          assert((opponents & src3) != 0);
+          assert(opponents & src3);
           if (board.noturn_board().piece(src2).can_xray(direction)) {
             attackers = attackers | src3;
           }
@@ -123,7 +123,7 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
       }
     }
     from = least_valuable_piece(board, color, attackers);
-    if (from != 0) {
+    if (from) {
       attacker = board.color_board(color).piece_index(from.first_position());
       assert(attacker != Piece::c_no_piece);
     } else {

@@ -23,5 +23,7 @@ SOURCES += \
 HEADERS += \
     generation.h
 
+LIBS += -lgflags
+
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf
