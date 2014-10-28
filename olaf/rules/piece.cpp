@@ -51,7 +51,6 @@ bool Piece::can_move(const IncompleteMove incomplete_move,
   return board.friendd(incomplete_move.source())
       && !board.friendd(incomplete_move.destination())
       && board.turn_board().piece_index(incomplete_move.source()) == m_piece_index
-      && !board.finished()
       && could_move(incomplete_move, board);
 }
 

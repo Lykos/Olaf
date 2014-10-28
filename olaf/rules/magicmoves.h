@@ -2,19 +2,27 @@
 #define MAGICMOVES_H
 
 #include "olaf/rules/bitboard.h"
-#include "olaf/rules/position.h"
 
 namespace olaf
 {
 
+class ChessBoard;
+class Position;
+
 class MagicMoves
 {
 public:
-  static BitBoard magic_moves_rook(const Position& source, const BitBoard occupied, const BitBoard friends);
+  static BitBoard moves_rook(const Position& source, const ChessBoard& board);
 
-  static BitBoard magic_moves_bishop(const Position& source, const BitBoard occupied, const BitBoard friends);
+  static BitBoard moves_bishop(const Position& source, const ChessBoard& board);
 
-  static BitBoard magic_moves_queen(const Position& source, const BitBoard occupied, const BitBoard friends);
+  static BitBoard moves_queen(const Position& source, const ChessBoard& board);
+
+  static BitBoard moves_knight(const Position& source, const ChessBoard& board);
+
+  static BitBoard moves_king(const Position& source, const ChessBoard& board);
+
+  static BitBoard moves_pawn(const Position& source, const ChessBoard& board);
 };
 
 } // namespace

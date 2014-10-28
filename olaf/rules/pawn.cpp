@@ -6,6 +6,8 @@
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/movechecker.h"
+#include "olaf/rules/magicmoves.h"
+#include "olaf/rules/magicnumbers.h"
 
 using namespace std;
 
@@ -37,38 +39,14 @@ std::vector<Move> Pawn::moves(const Position& source,
   if (board.finished()) {
     return result;
   }
-  const Color color = board.turn_color();
-  const Position& simple_move_destination =
-      source + forward_direction(color);
-  // Check if square is free
-  if (!board.occupied(simple_move_destination)) {
-    // Handle conversion, if necessary.
-    if (simple_move_destination.row() == promotion_row(color)) {
-      add_conversion_moves(&result, board, source, simple_move_destination);
-    } else {
-      result.emplace_back(MoveChecker::complete(source, simple_move_destination, board));
-      if (source.row() == pawn_row(color)) {
-        const Position& double_move_destination =
-            simple_move_destination + forward_direction(color);
-        if (!board.occupied(double_move_destination)) {
-          result.emplace_back(MoveChecker::complete(source, double_move_destination, board));
-        }
-      }
+  const BitBoard bitboard = MagicMoves::moves_pawn(source, board);
+  if (bitboard & BitBoard(MagicNumbers::c_promotion_rows[static_cast<int>(board.turn_color())])) {
+    for (const Position& destination : bitboard.positions()) {
+      add_conversion_moves(&result, board, source, destination);
     }
-  }
-  const BitBoard capturable2 = capturable(board);
-  for (const PositionDelta& sidewards : sidewards_directions) {
-    if (!source.in_bounds(sidewards)) {
-      continue;
-    }
-    Position capture_destination = source + forward_direction(color) + sidewards;
-    // Check if capture is possible
-    if (BitBoard(capture_destination) & capturable2) {
-      if (capture_destination.row() == promotion_row(color)) {
-        add_conversion_moves(&result, board, source, capture_destination);
-      } else {
-        result.emplace_back(MoveChecker::complete(source, capture_destination, board));
-      }
+  } else {
+    for (const Position& destination : bitboard.positions()) {
+      result.push_back(MoveChecker::complete(source, destination, board));
     }
   }
   return result;

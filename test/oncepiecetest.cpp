@@ -89,6 +89,7 @@ void OncePieceTest::test_can_move()
 
 void OncePieceTest::test_moves_data()
 {
+  QTest::addColumn<ChessBoard>("board");
   QTest::addColumn<const Piece*>("piece");
   QTest::addColumn<Position>("source");
   QTest::addColumn<vector<Move>>("moves");
@@ -96,8 +97,9 @@ void OncePieceTest::test_moves_data()
   {
     vector<Move> moves{
       MoveChecker::complete(Position("a8"), Position("b8"), m_board),
-      MoveChecker::complete(Position("a8"), Position("a7"), m_board)};
-    QTest::newRow("king a8") << m_king << Position("a8") << moves;
+      MoveChecker::complete(Position("a8"), Position("a7"), m_board)
+    };
+    QTest::newRow("king a8") << m_board << m_king << Position("a8") << moves;
   }
   {
     vector<Move> moves{
@@ -107,8 +109,9 @@ void OncePieceTest::test_moves_data()
       MoveChecker::complete(Position("b7"), Position("c7"), m_board),
       MoveChecker::complete(Position("b7"), Position("a6"), m_board),
       MoveChecker::complete(Position("b7"), Position("b6"), m_board),
-      MoveChecker::complete(Position("b7"), Position("c6"), m_board)};
-    QTest::newRow("king b7") << m_king << Position("b7") << moves;
+      MoveChecker::complete(Position("b7"), Position("c6"), m_board)
+    };
+    QTest::newRow("king b7") << m_board << m_king << Position("b7") << moves;
   }
   {
     vector<Move> moves{
@@ -118,38 +121,47 @@ void OncePieceTest::test_moves_data()
       MoveChecker::complete(Position("e1"), Position("e2"), m_board),
       MoveChecker::complete(Position("e1"), Position("f2"), m_board),
       MoveChecker::complete(Position("e1"), Position("c1"), m_board),
-      MoveChecker::complete(Position("e1"), Position("g1"), m_board)};
-    QTest::newRow("king e1") << m_king << Position("e1") << moves;
+      MoveChecker::complete(Position("e1"), Position("g1"), m_board)
+    };
+    ChessBoard board = m_board;
+    // Remove extra kings to make castling work.
+    board.remove_piece(Color::White, PieceSet::c_king_index, Position("a8"));
+    board.remove_piece(Color::White, PieceSet::c_king_index, Position("b7"));
+    QTest::newRow("king e1") << board << m_king << Position("e1") << moves;
   }
   {
     vector<Move> moves{
-      MoveChecker::complete(Position("h8"), Position("f7"), m_board)};
-    QTest::newRow("knight h8") << m_knight << Position("h8") << moves;
+      MoveChecker::complete(Position("h8"), Position("f7"), m_board)
+    };
+    QTest::newRow("knight h8") << m_board << m_knight << Position("h8") << moves;
   }
   {
     vector<Move> moves{
       MoveChecker::complete(Position("g6"), Position("f8"), m_board),
       MoveChecker::complete(Position("g6"), Position("e7"), m_board),
       MoveChecker::complete(Position("g6"), Position("e5"), m_board),
-      MoveChecker::complete(Position("g6"), Position("f4"), m_board)};
-    QTest::newRow("knight g6") << m_knight << Position("g6") << moves;
+      MoveChecker::complete(Position("g6"), Position("f4"), m_board)
+    };
+    QTest::newRow("knight g6") << m_board << m_knight << Position("g6") << moves;
   }
   {
     vector<Move> moves{
       MoveChecker::complete(Position("h4"), Position("f5"), m_board),
       MoveChecker::complete(Position("h4"), Position("f3"), m_board),
-      MoveChecker::complete(Position("h4"), Position("g2"), m_board)};
-    QTest::newRow("knight h4") << m_knight << Position("h4") << moves;
+      MoveChecker::complete(Position("h4"), Position("g2"), m_board)
+    };
+    QTest::newRow("knight h4") << m_board << m_knight << Position("h4") << moves;
   }
 }
 
 void OncePieceTest::test_moves()
 {
+  QFETCH(ChessBoard, board);
   QFETCH(const Piece*, piece);
   QFETCH(Position, source);
   QFETCH(vector<Move>, moves);
 
-  const vector<Move>& actual_moves = piece->moves(source, m_board);
+  const vector<Move>& actual_moves = piece->moves(source, board);
   QASSERT_THAT(actual_moves, UnorderedElementsAreArray(moves));
 
 } // namespace test

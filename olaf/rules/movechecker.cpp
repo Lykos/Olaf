@@ -42,8 +42,6 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
 {
   const Position src(incomplete_move.source());
   const Piece::piece_index_t piece_index = board.turn_board().piece_index(src);
-  assert(piece_index != Piece::c_no_piece);
-  assert(board.turn_board().piece(src).can_move(incomplete_move, board));
   const Position dst(incomplete_move.destination());
   const Color turn_color = board.turn_color();
   const Position::row_t gnd = ground_line(turn_color);

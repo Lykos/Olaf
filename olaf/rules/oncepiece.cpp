@@ -7,6 +7,7 @@
 #include "olaf/rules/position.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/movechecker.h"
+#include "olaf/rules/magicmoves.h"
 
 using namespace std;
 
@@ -55,21 +56,15 @@ vector<Move> OncePiece::moves(const Position& source,
   if (board.finished()) {
     return result;
   }
-  for (const PositionDelta& direction : m_directions) {
-    if (source.in_bounds(direction)) {
-      Position destination = source + direction;
-      if (!board.friendd(destination)) {
-        result.push_back(MoveChecker::complete(source, destination, board));
-      }
-    }
+  BitBoard bitboard;
+  if (piece_index() == PieceSet::c_knight_index) {
+    bitboard = MagicMoves::moves_knight(source, board);
+  } else {
+    assert(piece_index() == PieceSet::c_king_index);
+    bitboard = MagicMoves::moves_king(source, board);
   }
-  if (is_king_at_initial_position(source, board)) {
-    if (can_castle_q(board)) {
-      result.push_back(MoveChecker::complete(source, Position(source.row(), Position::c_queens_bishop_column), board));
-    }
-    if (can_castle_k(board)) {
-      result.push_back(MoveChecker::complete(source, Position(source.row(), Position::c_kings_knight_column), board));
-    }
+  for (const Position& destination : bitboard.positions()) {
+    result.push_back(MoveChecker::complete(source, destination, board));
   }
   return result;
 }

@@ -31,12 +31,12 @@ vector<Move> LinePiece::moves(const Position& source,
   }
   BitBoard bitboard;
   if (piece_index() == PieceSet::c_rook_index) {
-    bitboard = MagicMoves::magic_moves_rook(source, board.occupied(), board.friends());
+    bitboard = MagicMoves::moves_rook(source, board);
   } else if (piece_index() == PieceSet::c_bishop_index) {
-    bitboard = MagicMoves::magic_moves_bishop(source, board.occupied(), board.friends());
+    bitboard = MagicMoves::moves_bishop(source, board);
   } else {
     assert(piece_index() == PieceSet::c_queen_index);
-    bitboard = MagicMoves::magic_moves_queen(source, board.occupied(), board.friends());
+    bitboard = MagicMoves::moves_queen(source, board);
   }
   for (const Position& destination : bitboard.positions()) {
     result.push_back(MoveChecker::complete(source, destination, board));

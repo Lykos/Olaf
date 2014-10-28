@@ -172,4 +172,240 @@ const MagicNumbers::MagicTable MagicNumbers::c_bishop_magic = {{
   {&(c_move_table[107584]), 0x40201008040200ULL, 0x138200122002900ULL, 58}
 }};
 
+const MagicNumbers::SquareTable MagicNumbers::c_knight_table = {
+  0x20400ULL,
+  0x50800ULL,
+  0xa1100ULL,
+  0x142200ULL,
+  0x284400ULL,
+  0x508800ULL,
+  0xa01000ULL,
+  0x402000ULL,
+  0x2040004ULL,
+  0x5080008ULL,
+  0xa110011ULL,
+  0x14220022ULL,
+  0x28440044ULL,
+  0x50880088ULL,
+  0xa0100010ULL,
+  0x40200020ULL,
+  0x204000402ULL,
+  0x508000805ULL,
+  0xa1100110aULL,
+  0x1422002214ULL,
+  0x2844004428ULL,
+  0x5088008850ULL,
+  0xa0100010a0ULL,
+  0x4020002040ULL,
+  0x20400040200ULL,
+  0x50800080500ULL,
+  0xa1100110a00ULL,
+  0x142200221400ULL,
+  0x284400442800ULL,
+  0x508800885000ULL,
+  0xa0100010a000ULL,
+  0x402000204000ULL,
+  0x2040004020000ULL,
+  0x5080008050000ULL,
+  0xa1100110a0000ULL,
+  0x14220022140000ULL,
+  0x28440044280000ULL,
+  0x50880088500000ULL,
+  0xa0100010a00000ULL,
+  0x40200020400000ULL,
+  0x204000402000000ULL,
+  0x508000805000000ULL,
+  0xa1100110a000000ULL,
+  0x1422002214000000ULL,
+  0x2844004428000000ULL,
+  0x5088008850000000ULL,
+  0xa0100010a0000000ULL,
+  0x4020002040000000ULL,
+  0x400040200000000ULL,
+  0x800080500000000ULL,
+  0x1100110a00000000ULL,
+  0x2200221400000000ULL,
+  0x4400442800000000ULL,
+  0x8800885000000000ULL,
+  0x100010a000000000ULL,
+  0x2000204000000000ULL,
+  0x4020000000000ULL,
+  0x8050000000000ULL,
+  0x110a0000000000ULL,
+  0x22140000000000ULL,
+  0x44280000000000ULL,
+  0x88500000000000ULL,
+  0x10a00000000000ULL,
+  0x20400000000000ULL
+};
+
+const MagicNumbers::SquareTable MagicNumbers::c_king_table = {
+  0x302ULL,
+  0x705ULL,
+  0xe0aULL,
+  0x1c14ULL,
+  0x3828ULL,
+  0x7050ULL,
+  0xe0a0ULL,
+  0xc040ULL,
+  0x30203ULL,
+  0x70507ULL,
+  0xe0a0eULL,
+  0x1c141cULL,
+  0x382838ULL,
+  0x705070ULL,
+  0xe0a0e0ULL,
+  0xc040c0ULL,
+  0x3020300ULL,
+  0x7050700ULL,
+  0xe0a0e00ULL,
+  0x1c141c00ULL,
+  0x38283800ULL,
+  0x70507000ULL,
+  0xe0a0e000ULL,
+  0xc040c000ULL,
+  0x302030000ULL,
+  0x705070000ULL,
+  0xe0a0e0000ULL,
+  0x1c141c0000ULL,
+  0x3828380000ULL,
+  0x7050700000ULL,
+  0xe0a0e00000ULL,
+  0xc040c00000ULL,
+  0x30203000000ULL,
+  0x70507000000ULL,
+  0xe0a0e000000ULL,
+  0x1c141c000000ULL,
+  0x382838000000ULL,
+  0x705070000000ULL,
+  0xe0a0e0000000ULL,
+  0xc040c0000000ULL,
+  0x3020300000000ULL,
+  0x7050700000000ULL,
+  0xe0a0e00000000ULL,
+  0x1c141c00000000ULL,
+  0x38283800000000ULL,
+  0x70507000000000ULL,
+  0xe0a0e000000000ULL,
+  0xc040c000000000ULL,
+  0x302030000000000ULL,
+  0x705070000000000ULL,
+  0xe0a0e0000000000ULL,
+  0x1c141c0000000000ULL,
+  0x3828380000000000ULL,
+  0x7050700000000000ULL,
+  0xe0a0e00000000000ULL,
+  0xc040c00000000000ULL,
+  0x203000000000000ULL,
+  0x507000000000000ULL,
+  0xa0e000000000000ULL,
+  0x141c000000000000ULL,
+  0x2838000000000000ULL,
+  0x5070000000000000ULL,
+  0xa0e0000000000000ULL,
+  0x40c0000000000000ULL
+};
+
+const MagicNumbers::ColorSquareTable MagicNumbers::c_pawn_one_step_table = {
+           0,          0,          0,          0,          0,          0,          0,          0,
+  1ULL << 16, 1ULL << 17, 1ULL << 18, 1ULL << 19, 1ULL << 20, 1ULL << 21, 1ULL << 22, 1ULL << 23,
+  1ULL << 24, 1ULL << 25, 1ULL << 26, 1ULL << 27, 1ULL << 28, 1ULL << 29, 1ULL << 30, 1ULL << 31,
+  1ULL << 32, 1ULL << 33, 1ULL << 34, 1ULL << 35, 1ULL << 36, 1ULL << 37, 1ULL << 38, 1ULL << 39,
+  1ULL << 40, 1ULL << 41, 1ULL << 42, 1ULL << 43, 1ULL << 44, 1ULL << 45, 1ULL << 46, 1ULL << 47,
+  1ULL << 48, 1ULL << 49, 1ULL << 50, 1ULL << 51, 1ULL << 52, 1ULL << 53, 1ULL << 54, 1ULL << 55,
+  1ULL << 56, 1ULL << 57, 1ULL << 58, 1ULL << 59, 1ULL << 60, 1ULL << 61, 1ULL << 62, 1ULL << 63,
+           0,          0,          0,          0,          0,          0,          0,          0,
+
+           0,          0,          0,          0,          0,          0,          0,          0,
+   1ULL << 0,  1ULL << 1,  1ULL << 2,  1ULL << 3,  1ULL << 4,  1ULL << 5,  1ULL << 6,  1ULL << 7,
+   1ULL << 8,  1ULL << 9, 1ULL << 10, 1ULL << 11, 1ULL << 12, 1ULL << 13, 1ULL << 14, 1ULL << 15,
+  1ULL << 16, 1ULL << 17, 1ULL << 18, 1ULL << 19, 1ULL << 20, 1ULL << 21, 1ULL << 22, 1ULL << 23,
+  1ULL << 24, 1ULL << 25, 1ULL << 26, 1ULL << 27, 1ULL << 28, 1ULL << 29, 1ULL << 30, 1ULL << 31,
+  1ULL << 32, 1ULL << 33, 1ULL << 34, 1ULL << 35, 1ULL << 36, 1ULL << 37, 1ULL << 38, 1ULL << 39,
+  1ULL << 40, 1ULL << 41, 1ULL << 42, 1ULL << 43, 1ULL << 44, 1ULL << 45, 1ULL << 46, 1ULL << 47,
+           0,          0,          0,          0,          0,          0,          0,          0
+};
+
+const MagicNumbers::ColorSquareTable MagicNumbers::c_pawn_two_step_table = {
+           0,          0,          0,          0,          0,          0,          0,          0,
+  1ULL << 24, 1ULL << 25, 1ULL << 26, 1ULL << 27, 1ULL << 28, 1ULL << 29, 1ULL << 30, 1ULL << 31,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+           0,          0,          0,          0,          0,          0,          0,          0,
+  1ULL << 32, 1ULL << 33, 1ULL << 34, 1ULL << 35, 1ULL << 36, 1ULL << 37, 1ULL << 38, 1ULL << 39,
+           0,          0,          0,          0,          0,          0,          0,          0
+};
+
+// Shift the bit pattern 101 to the place in front of the pawn - 1, s.t. the 0 is directly in front.
+// For the borders, use 100 and 001 instead.
+const MagicNumbers::ColorSquareTable MagicNumbers::c_pawn_capture_table = {
+           0,          0,          0,          0,          0,          0,          0,          0,
+  4ULL << 15, 5ULL << 16, 5ULL << 17, 5ULL << 18, 5ULL << 19, 5ULL << 20, 5ULL << 21, 1ULL << 22,
+  4ULL << 23, 5ULL << 24, 5ULL << 25, 5ULL << 26, 5ULL << 27, 5ULL << 28, 5ULL << 29, 1ULL << 30,
+  4ULL << 31, 5ULL << 32, 5ULL << 33, 5ULL << 34, 5ULL << 35, 5ULL << 36, 5ULL << 37, 1ULL << 38,
+  4ULL << 39, 5ULL << 40, 5ULL << 41, 5ULL << 42, 5ULL << 43, 5ULL << 44, 5ULL << 45, 1ULL << 46,
+  4ULL << 47, 5ULL << 48, 5ULL << 49, 5ULL << 50, 5ULL << 51, 5ULL << 52, 5ULL << 53, 1ULL << 54,
+  4ULL << 55, 5ULL << 56, 5ULL << 57, 5ULL << 58, 5ULL << 59, 5ULL << 60, 5ULL << 61, 1ULL << 62,
+           0,          0,          0,          0,          0,          0,          0,          0,
+
+           0,          0,          0,          0,          0,          0,          0,          0,
+   4ULL >> 1,  5ULL << 0,  5ULL << 1,  5ULL << 2,  5ULL << 3,  5ULL << 4,  5ULL << 5,  1ULL << 6,
+   4ULL << 7,  5ULL << 8,  5ULL << 9, 5ULL << 10, 5ULL << 11, 5ULL << 12, 5ULL << 13, 1ULL << 14,
+  4ULL << 15, 5ULL << 16, 5ULL << 17, 5ULL << 18, 5ULL << 19, 5ULL << 20, 5ULL << 21, 1ULL << 22,
+  4ULL << 23, 5ULL << 24, 5ULL << 25, 5ULL << 26, 5ULL << 27, 5ULL << 28, 5ULL << 29, 1ULL << 30,
+  4ULL << 31, 5ULL << 32, 5ULL << 33, 5ULL << 34, 5ULL << 35, 5ULL << 36, 5ULL << 37, 1ULL << 38,
+  4ULL << 39, 5ULL << 40, 5ULL << 41, 5ULL << 42, 5ULL << 43, 5ULL << 44, 5ULL << 45, 1ULL << 46,
+           0,          0,          0,          0,          0,          0,          0,          0
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_promotion_rows = {
+  0xFFULL << (7 * 8),
+  0xFFULL
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_king_positions = {
+  1ULL << 4,
+  1ULL << (7 * 8 + 4)
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_k_square = {
+  1ULL << 6,
+  1ULL << (7 * 8 + 6)
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_q_square = {
+  1ULL << 2,
+  1ULL << (7 * 8 + 2)
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_k_room = {
+  3ULL << 5,
+  3ULL << (7 * 8 + 5)
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_q_room = {
+  5ULL << 1,
+  5ULL << (7 * 8 + 1)
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_k_rook = {
+  1ULL << 7,
+  1ULL << (7 * 8 + 7),
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_q_rook = {
+  1ULL,
+  1ULL << 7 * 8
+};
+
 } // namespace olaf

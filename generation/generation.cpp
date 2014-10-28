@@ -1,5 +1,7 @@
 #include "generation.h"
 
+#include "olaf/rules/pieceset.h"
+
 #include <array>
 #include <cassert>
 #include <algorithm>
@@ -13,6 +15,7 @@
 #include <gflags/gflags.h>
 
 #include "olaf/rules/bitboard.h"
+#include "olaf/rules/chessboard.h"
 
 DEFINE_string(output_file, "", "If this is non-empty, the output will be written here.");
 
@@ -599,6 +602,21 @@ void generate_magic()
   }
   print_magic(true);
   print_magic(false);
+  cout << endl << "const MagicNumbers::SquareTable MagicNumbers::c_king_table = {" << endl;
+  const ChessBoard board = create_empty_board();
+  for (int i = 0; i < 64; ++i) {
+    BitBoard targets(0);
+    for (const Move move : PieceSet::instance().king().moves(BitBoard::reverse_index(i), board)) {
+      targets = targets | BitBoard(move.destination());
+    }
+    uint64_t lol = targets;
+    cout << "  0x" << hex << lol << "ULL";
+    if (i < 63) {
+      cout << ",";
+    }
+    cout << endl;
+  }
+  cout << "};" << endl;
 }
 
 } // namespace generation
