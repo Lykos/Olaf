@@ -1,7 +1,6 @@
 #include "pawntest.h"
 
 #include "olaf/rules/position.h"
-#include "olaf/rules/pawn.h"
 #include "olaf/rules/colorboard.h"
 #include "olaf/rules/pieceboard.h"
 #include "olaf/rules/pieceset.h"
@@ -19,10 +18,7 @@ namespace test
 
 void PawnTest::initTestCase()
 {
-  m_pawn = &(PieceSet::instance().pawn());
   m_board = parse_fen("1n1N3k/1PPP4/7N/P4npP/2nN2P1/1p2NP2/PPPPP3/K7 w - g6 0 1");
-  m_pawn_index = m_pawn->piece_index();
-  m_knight_index = PieceSet::c_king_index;
 }
 
 void PawnTest::test_can_move_data()
@@ -75,21 +71,21 @@ void PawnTest::test_can_move()
   if (string(QTest::currentDataTag()) != "nostart single move opponent noblocked g4g5")
     return;
   const IncompleteMove incomplete_move = IncompleteMove(source, destination);
-  QCOMPARE(m_pawn->can_move(incomplete_move, m_board), result);
+  QCOMPARE(MoveChecker::pseudo_valid_move(m_board, incomplete_move), result);
   if (result) {
     const Move move = MoveChecker::complete(incomplete_move, m_board);
     QCOMPARE(move.is_capture(), is_capture);
   }
-  const IncompleteMove incomplete_promotion = IncompleteMove::promotion(source, destination, m_knight_index);
+  const IncompleteMove incomplete_promotion = IncompleteMove::promotion(source, destination, PieceSet::c_knight_index);
   if (is_conversion) {
-    QVERIFY2(m_pawn->can_move(incomplete_promotion, m_board),
+    QVERIFY2(MoveChecker::pseudo_valid_move(m_board, incomplete_promotion),
              "Move does not work as a conversion.");
     const Move move = MoveChecker::complete(incomplete_promotion, m_board);
     QCOMPARE(move.is_capture(), is_capture);
     QVERIFY2(move.is_promotion(), "Conversion is not a conversion.");
-    QCOMPARE(move.created_piece(), m_knight_index);
+    QASSERT_THAT(move.created_piece(), Eq(PieceSet::c_knight_index));
   } else {
-    QVERIFY2(!m_pawn->can_move(incomplete_promotion, m_board), "Move works as a conversion.");
+    QVERIFY2(!MoveChecker::pseudo_valid_move(m_board, incomplete_promotion), "Move works as a conversion.");
   }
 }
 
@@ -97,7 +93,7 @@ Move PawnTest::make_move(const string& source, const string& destination)
 {
   return MoveChecker::complete(Position(source), Position(destination), m_board);
 }
-
+/*
 void PawnTest::test_moves_data()
 {
   QTest::addColumn<Position>("source");
@@ -148,6 +144,6 @@ void PawnTest::test_moves()
 
   QASSERT_THAT(m_pawn->moves(source, m_board), UnorderedElementsAreArray(moves));
 }
-
+*/
 } // namespace test
 } // namespace olaf

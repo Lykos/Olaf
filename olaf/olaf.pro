@@ -43,14 +43,11 @@ SOURCES += \
     parse/epdparser.cpp \
     parse/epdposition.cpp \
     parse/fenparser.cpp \
-    rules/oncepiece.cpp \
     rules/positiondelta.cpp \
     rules/position.cpp \
     rules/pieceset.cpp \
     rules/pieceboard.cpp \
     rules/piece.cpp \
-    rules/pawn.cpp \
-    rules/linepiece.cpp \
     rules/colorboard.cpp \
     rules/chessboard.cpp \
     rules/bitboard.cpp \
@@ -61,7 +58,10 @@ SOURCES += \
     evaluation/incrementalupdater.cpp \
     rules/movechecker.cpp \
     evaluation/resultevaluator.cpp \
-    evaluation/positionevaluator.cpp
+    evaluation/positionevaluator.cpp \
+    transposition_table/randomnumbers.cpp \
+    rules/magicnumbers.cpp \
+    rules/magicmoves.cpp
 
 HEADERS += \
     config.h \
@@ -94,14 +94,11 @@ HEADERS += \
     parse/epdparser.h \
     parse/epdposition.h \
     parse/fenparser.h \
-    rules/oncepiece.h \
     rules/positiondelta.h \
     rules/position.h \
     rules/pieceset.h \
     rules/pieceboard.h \
     rules/piece.h \
-    rules/pawn.h \
-    rules/linepiece.h \
     rules/colorboard.h \
     rules/color.h \
     rules/chessboard.h \
@@ -114,7 +111,10 @@ HEADERS += \
     evaluation/incrementalupdater.h \
     rules/undoinfo.h \
     rules/movechecker.h \
-    evaluation/resultevaluator.h
+    evaluation/resultevaluator.h \
+    transposition_table/randomnumbers.h \
+    rules/magicnumbers.h \
+    rules/magicmoves.h
 
 target.path = /usr/local/lib
 

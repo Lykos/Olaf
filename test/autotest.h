@@ -42,10 +42,4 @@ struct TestHolder
 
 #define DECLARE_TEST(className) static ::olaf::test::auto_test::TestHolder<className> t(#className);
 
-#define AUTOTEST_MAIN \
-  int main(int argc, char *argv[]) \
-  { \
-      return ::olaf::test::auto_test::run(argc, argv); \
-  }
-
 #endif // AUTOTEST_H

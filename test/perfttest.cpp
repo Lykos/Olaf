@@ -23,7 +23,7 @@ namespace test
 
 typedef Perft::PerftResult PerftResult;
 
-static const int c_depth = 1;
+static const int c_depth = 2;
 
 void PerftTest::test_perft_data()
 {
@@ -49,7 +49,7 @@ void PerftTest::test_perft()
   const PerftResult& expected_result = expected_results.at(c_depth);
   const PerftResult& actual_result = perft->perft(c_depth, board);
   QASSERT_THAT(actual_result, Eq(expected_result));
+}
 
 } // namespace test
 } // namespace olaf
-}

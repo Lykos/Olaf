@@ -69,11 +69,11 @@ const ColorBoard& ChessBoard::noturn_board() const
 
 void ChessBoard::ep_captures(const BitBoard new_ep_captures)
 {
-  if (m_ep_captures != 0) {
+  if (m_ep_captures) {
     ZobristHash::update_ep(m_ep_captures.first_position(), this);
   }
   m_ep_captures = new_ep_captures;
-  if (new_ep_captures != 0) {
+  if (new_ep_captures) {
     ZobristHash::update_ep(new_ep_captures.first_position(), this);
   }
 }

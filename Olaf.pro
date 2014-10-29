@@ -6,7 +6,8 @@ SUBDIRS += \
     protocols \
     test \
     main \
-    benchmark
+    benchmark \
+    generation
 
 protocols.depends = \
     olaf
@@ -21,4 +22,7 @@ main.depends = \
 
 benchmark.depends = \
     protocols \
+    olaf
+
+generation.depends = \
     olaf

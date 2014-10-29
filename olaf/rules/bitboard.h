@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <climits>
+#include <ostream>
 
 #include "olaf/rules/position.h"
 #ifdef __POPCNT__
@@ -25,6 +26,8 @@ constexpr BitBoard operator &(BitBoard, BitBoard);
 constexpr bool operator ==(BitBoard, BitBoard);
 
 constexpr bool operator !=(BitBoard, BitBoard);
+
+std::ostream& operator <<(std::ostream& out, const BitBoard bit_board);
 
 /**
  * @brief The BitBoard class represents a board where a bit is stored in each square.
@@ -52,6 +55,8 @@ public:
   constexpr BitBoard(const Position& position): m_bits (1ull << index(position)) {}
 
   constexpr BitBoard operator -() const { return BitBoard(-m_bits); }
+
+  constexpr operator bitboard_t() const { return m_bits; }
 
   /**
    * @brief index returns the index that has to be used to access the bit of this position
@@ -99,9 +104,16 @@ public:
 #endif
   }
 
+  /**
+   * @brief first_position returns the position of the first set bit.
+   */
   Position first_position() const;
 
-  std::vector<Position> positions() const;
+  /**
+   * @brief next_position returns the position of the first set bit like first_position.
+   *        But it also unsets that bit and is hence useful for scanning.
+   */
+  Position next_position();
 
 private:
   bitboard_t m_bits;

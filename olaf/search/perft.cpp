@@ -1,5 +1,6 @@
 #include "olaf/search/perft.h"
 
+#include <cassert>
 #include <memory>
 #include <iostream>
 
@@ -108,6 +109,7 @@ void Perft::debug_perft(const int depth,
     cout << "setboard " << FenParser::serialize(try_board) << endl;
     const PerftResult& result = internal_perft(depth - 1, &try_board);
     move.undo(undo_info, &try_board);
+    assert(try_board == board);
     sum += result.nodes;
     cout << "perft " << depth - 1 << endl;
     cout << "name " << result.nodes << endl;
@@ -125,7 +127,9 @@ Perft::PerftResult Perft::internal_perft(const int depth,
   vector<Move> moves = m_generator->generate_valid_moves(*board);
   for (Move& move : moves) {
     UndoInfo undo_info;
+    const ChessBoard copy = *board;
     move.execute(board, &undo_info);
+    const ChessBoard copy2 = *board;
     if (depth > 1) {
       result += internal_perft(depth - 1, board);
     } else if (m_generator->generate_valid_moves(*board).empty()) {

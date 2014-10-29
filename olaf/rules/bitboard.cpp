@@ -17,8 +17,7 @@ BitBoard BitBoard::mirror_rows() const
   return BitBoard(bits);
 }
 
-
-static uint_fast8_t bit_scan(const bitboard_t bits)
+static inline uint_fast8_t bit_scan(const bitboard_t bits)
 {
   static const uint_fast8_t index64[64] = {
       0,  1, 48,  2, 57, 49, 28,  3,
@@ -39,15 +38,22 @@ Position BitBoard::first_position() const
   return reverse_index(m_bits ? bit_scan(m_bits) : 0);
 }
 
-vector<Position> BitBoard::positions() const
+Position BitBoard::next_position()
 {
-  vector<Position> result;
-  bitboard_t bits = m_bits;
-  while (bits) {
-    result.emplace_back(reverse_index(bit_scan(bits)));
-    bits &= bits - 1;
-  }
+  Position result(reverse_index(bit_scan(m_bits)));
+  m_bits &= m_bits - 1;
   return result;
+}
+
+ostream& operator <<(ostream& out, const BitBoard bit_board)
+{
+  for (Position::row_t row = 7; row >= 0; --row) {
+    for (Position::column_t column = 0; column < 8; ++column) {
+      out << (bit_board.get(Position(row, column)) ? 1 : 0);
+    }
+    out << endl;
+  }
+  return out;
 }
 
 } // namespace olaf

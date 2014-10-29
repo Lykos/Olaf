@@ -3,7 +3,6 @@
 
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/piece.h"
-#include "olaf/rules/pawn.h"
 #include "autotest.h"
 #include <string>
 #include <QtTest/QTest>
@@ -21,12 +20,6 @@ class PawnTest : public QObject
 private:
   ChessBoard m_board;
 
-  Piece::piece_index_t m_pawn_index;
-
-  Piece::piece_index_t m_knight_index;
-
-  const Pawn* m_pawn;
-
   Move make_move(const std::string& source, const std::string& destination);
 
 private Q_SLOTS:
@@ -36,9 +29,9 @@ private Q_SLOTS:
 
   void test_can_move();
 
-  void test_moves_data();
+  //void test_moves_data();
 
-  void test_moves();
+  //void test_moves();
 
 };
 

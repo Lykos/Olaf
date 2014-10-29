@@ -63,6 +63,8 @@ CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/protocols -
 
 LIBS += -L$$PWD/../../../../Downloads/gmock-1.7.0/build/ -lgmock
 
+LIBS += -lgflags
+
 INCLUDEPATH += $$PWD/../../../../Downloads/gmock-1.7.0/include
 DEPENDPATH += $$PWD/../../../../Downloads/gmock-1.7.0/include
 

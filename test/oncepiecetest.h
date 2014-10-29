@@ -35,9 +35,9 @@ private Q_SLOTS:
 
   void test_can_move();
 
-  void test_moves_data();
+  //void test_moves_data();
 
-  void test_moves();
+  //void test_moves();
 
 };
 

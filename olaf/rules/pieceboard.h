@@ -57,11 +57,6 @@ public:
     return m_bit_board;
   }
 
-  inline std::vector<Position> positions() const
-  {
-    return m_bit_board.positions();
-  }
-
 private:
   const Piece* m_piece;
 

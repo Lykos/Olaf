@@ -3,10 +3,10 @@
 #include <cassert>
 #include <vector>
 
-#include "olaf/rules/pawn.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/move.h"
 #include "olaf/rules/undoinfo.h"
+#include "olaf/rules/magicmoves.h"
 
 using namespace std;
 
@@ -31,9 +31,25 @@ bool MoveChecker::valid_move(const ChessBoard& board,
 bool MoveChecker::pseudo_valid_move(const ChessBoard& board,
                                     const IncompleteMove incomplete_move)
 {
-  const Position src(incomplete_move.source());
-  return board.friendd(src)
-      && board.turn_board().piece(src).can_move(incomplete_move, board);
+  // TODO Improve this.
+  const Position source(incomplete_move.source());
+  const BitBoard destinations(incomplete_move.destination());
+  const ColorBoard& turn_board = board.turn_board();
+  if (turn_board.piece_board(PieceSet::c_rook_index).get(source)) {
+    return destinations & MagicMoves::moves_rook(source, board);
+  } else if (turn_board.piece_board(PieceSet::c_knight_index).get(source)) {
+    return destinations & MagicMoves::moves_knight(source, board);
+  } else if (turn_board.piece_board(PieceSet::c_bishop_index).get(source)) {
+    return destinations & MagicMoves::moves_bishop(source, board);
+  } else if (turn_board.piece_board(PieceSet::c_queen_index).get(source)) {
+    return destinations & MagicMoves::moves_queen(source, board);
+  } else if (turn_board.piece_board(PieceSet::c_king_index).get(source)) {
+    return destinations & MagicMoves::moves_king(source, board);
+  } else if (turn_board.piece_board(PieceSet::c_pawn_index).get(source)) {
+    return destinations & MagicMoves::moves_pawn(source, board);
+  } else {
+    return false;
+  }
 }
 
 // static
@@ -42,8 +58,6 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
 {
   const Position src(incomplete_move.source());
   const Piece::piece_index_t piece_index = board.turn_board().piece_index(src);
-  assert(piece_index != Piece::c_no_piece);
-  assert(board.turn_board().piece(src).can_move(incomplete_move, board));
   const Position dst(incomplete_move.destination());
   const Color turn_color = board.turn_color();
   const Position::row_t gnd = ground_line(turn_color);
@@ -60,9 +74,9 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
   }
   BitBoard capturable = board.opponents() | board.king_captures();
   const BitBoard dst_board(dst);
-  const bool is_capture = (capturable & dst_board) != 0;
+  const bool is_capture = capturable & dst_board;
   if (piece_index == PieceSet::c_pawn_index) {
-    if ((board.ep_captures() & dst_board) != 0) {
+    if (board.ep_captures() & dst_board) {
       return Move(src, dst, Move::c_ep_flag);
     } else if (incomplete_move.is_promotion()) {
       const uint16_t flags = (static_cast<uint16_t>(is_capture) << 14) | incomplete_move.m_state;
@@ -79,25 +93,44 @@ bool MoveChecker::can_kill_king(const ChessBoard& board)
 {
   const BitBoard king_captures =
       board.noturn_board().piece_board(PieceSet::c_king_index).bit_board() | board.king_captures();
-  if (king_captures == 0) {
+  if (!king_captures) {
     return false;
   }
-  const vector<Position>& king_positions = king_captures.positions();
-  if (king_positions.empty()) {
-    return false;
+  const ColorBoard& turn_board = board.turn_board();
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_rook_index); sources;) {
+    const Position source = sources.next_position();
+    if (king_captures & MagicMoves::moves_rook(source, board)) {
+      return true;
+    }
   }
-  for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
-    const Piece& piece = piece_board.piece();
-    for (Position source : piece_board.positions()) {
-      for (const Position& king_position : king_positions) {
-        static const Pawn& pawn = PieceSet::instance().pawn();
-        if (piece.can_move(IncompleteMove(source, king_position), board)) {
-          return true;
-        } else if (&piece == &pawn
-                   && pawn.can_move(IncompleteMove::promotion(source, king_position, PieceSet::c_queen_index), board)) {
-          return true;
-        }
-      }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_knight_index); sources;) {
+    const Position source = sources.next_position();
+    if (king_captures & MagicMoves::moves_knight(source, board)) {
+      return true;
+    }
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_bishop_index); sources;) {
+    const Position source = sources.next_position();
+    if (king_captures & MagicMoves::moves_bishop(source, board)) {
+      return true;
+    }
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_queen_index); sources;) {
+    const Position source = sources.next_position();
+    if (king_captures & MagicMoves::moves_queen(source, board)) {
+      return true;
+    }
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_king_index); sources;) {
+    const Position source = sources.next_position();
+    if (king_captures & MagicMoves::moves_king(source, board)) {
+      return true;
+    }
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_pawn_index); sources;) {
+    const Position source = sources.next_position();
+    if (king_captures & MagicMoves::moves_pawn(source, board)) {
+      return true;
     }
   }
   return false;

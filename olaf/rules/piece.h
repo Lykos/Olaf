@@ -41,36 +41,11 @@ public:
         char symbol,
         const BitBoard& initial_board);
 
-  Piece(const Piece& piece) = delete;
-
-  Piece(Piece&& piece) = delete;
-
-  virtual ~Piece();
-
-  Piece& operator =(const Piece& piece) = delete;
-
-  Piece& operator =(Piece&& piece) = delete;
-
-  virtual std::vector<Move> moves(const Position& source,
-                                  const ChessBoard& board) const = 0;
-
   piece_index_t piece_index() const;
 
   char symbol(Color color) const;
 
   BitBoard initial_board(Color color) const;
-
-  bool can_move(IncompleteMove incomplete_move,
-                const ChessBoard& board) const;
-
-  /**
-   * @brief could_move indicates whether the piece could perform the move independent
-   *        of whether it is its turn.
-   */
-  virtual bool could_move(IncompleteMove incomplete_move,
-                          const ChessBoard& board) const = 0;
-
-  virtual bool can_xray(const PositionDelta& direction) const;
 
   static const piece_index_t c_no_piece = -1;
 

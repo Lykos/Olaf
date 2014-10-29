@@ -39,6 +39,7 @@ void SimpleThinkingWriter::output(const ChessBoard& board,
     const Move& move = *it;
     if (ply % 2 == 0) {
       oss << " " << turn_number << ".";
+      ++turn_number;
     }
     oss << " " << move.source() << move.destination();
     if (move.is_promotion()) {

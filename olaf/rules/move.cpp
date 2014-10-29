@@ -7,27 +7,15 @@
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/undoinfo.h"
 #include "olaf/rules/color.h"
-#include "olaf/rules/pawn.h"
+
 
 using namespace std;
 
 namespace olaf
 {
 
-bool IncompleteMove::is_pseudo_valid(const ChessBoard& board) const
-{
-  const Position src(source());
-  const Piece::piece_index_t piece_index =
-      board.turn_board().piece_index(src);
-  if (piece_index == Piece::c_no_piece) {
-    return false;
-  }
-  return board.turn_board().piece(src).can_move(*this, board);
-}
-
 void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
 {
-  assert(is_pseudo_valid(*board));
   const Position src(source());
   const Position dst(destination());
   const Color turn_color = board->turn_color();
@@ -45,7 +33,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
     Position victim_position;
     if (is_ep()) {
       victim_position = dst + forward_direction(noturn_color);
-    } else if ((BitBoard(dst) & board->king_captures()) != 0) {
+    } else if (BitBoard(dst) & board->king_captures()) {
       victim_position =
           board->color_board(noturn_color).piece_board(c_king_index).bit_board().first_position();
     } else {
@@ -139,7 +127,6 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
     board->add_piece(noturn_color, undo_info.captured_piece, undo_info.victim_position);
   }
   board->ep_captures(undo_info.ep_captures);
-  assert(is_pseudo_valid(*board));
 }
 
 std::ostream& operator <<(std::ostream& out, IncompleteMove move)

@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <fstream>
 #include <iostream>
+#include <gflags/gflags.h>
+
 #include "autobenchmark.h"
 #include "compositebenchmarkresult.h"
 #include "benchmarkresult.h"
@@ -12,8 +14,11 @@ using namespace std;
 using namespace olaf;
 using namespace benchmark;
 
-int main(int argc, char *argv[])
+
+int main(int argc, char* argv[])
 {
+  google::ParseCommandLineFlags(&argc, &argv, true);
+
   // get hostname
   char hostname[1024];
   hostname[1023] = '\0';
