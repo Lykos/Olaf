@@ -26,8 +26,8 @@ void ZobristHash::calculate(ChessBoard* const board)
       }
       const Piece::piece_index_t piece_index =
           piece_board.piece().piece_index();
-      for (const Position& position : piece_board.positions()) {
-        update(color, piece_index, position, board);
+      for (BitBoard bit_board = piece_board.bit_board(); bit_board; ) {
+        update(color, piece_index, bit_board.next_position(), board);
       }
     }
     if (board->color_board(color).can_castle_k()) {

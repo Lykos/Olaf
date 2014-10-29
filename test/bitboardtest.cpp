@@ -30,7 +30,7 @@ void BitboardTest::test_number()
   QASSERT_THAT(board.number(), Eq(number));
 }
 
-void BitboardTest::test_positions_data()
+void BitboardTest::test_next_position_data()
 {
   QTest::addColumn<BitBoard>("board");
   QTest::addColumn<vector<Position>>("positions");
@@ -45,11 +45,16 @@ void BitboardTest::test_positions_data()
   }
 }
 
-void BitboardTest::test_positions()
+void BitboardTest::test_next_position()
 {
   QFETCH(BitBoard, board);
   QFETCH(vector<Position>, positions);
-  QASSERT_THAT(board.positions(), UnorderedElementsAreArray(positions));
+  vector<Position> extracted_positions;
+  for (BitBoard bit_board = board; board; ) {
+    extracted_positions.push_back(bit_board.first_position());
+    QASSERT_THAT(bit_board.next_position(), Eq(extracted_positions.back()));
+  }
+  QASSERT_THAT(extracted_positions, UnorderedElementsAreArray(positions));
 }
 
 void BitboardTest::test_get_data()

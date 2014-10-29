@@ -9,8 +9,6 @@
 namespace olaf
 {
 
-class Pawn;
-
 class PieceSet
 {
 public:
@@ -54,7 +52,7 @@ public:
 
   const Piece& king() const;
 
-  const Pawn& pawn() const;
+  const Piece& pawn() const;
 
   const PieceArray& pieces() const;
 
@@ -75,7 +73,7 @@ private:
 
   std::unique_ptr<const Piece> m_king;
 
-  std::unique_ptr<const Pawn> m_pawn;
+  std::unique_ptr<const Piece> m_pawn;
 
   PieceArray m_pieces;
 

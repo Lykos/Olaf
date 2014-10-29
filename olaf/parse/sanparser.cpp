@@ -6,7 +6,6 @@
 
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceset.h"
-#include "olaf/rules/pawn.h"
 #include "olaf/rules/move.h"
 #include "olaf/rules/movechecker.h"
 

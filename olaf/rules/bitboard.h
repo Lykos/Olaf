@@ -101,9 +101,16 @@ public:
 #endif
   }
 
+  /**
+   * @brief first_position returns the position of the first set bit.
+   */
   Position first_position() const;
 
-  std::vector<Position> positions() const;
+  /**
+   * @brief next_position returns the position of the first set bit like first_position.
+   *        But it also unsets that bit and is hence useful for scanning.
+   */
+  Position next_position();
 
 private:
   bitboard_t m_bits;

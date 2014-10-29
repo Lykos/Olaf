@@ -43,14 +43,11 @@ SOURCES += \
     parse/epdparser.cpp \
     parse/epdposition.cpp \
     parse/fenparser.cpp \
-    rules/oncepiece.cpp \
     rules/positiondelta.cpp \
     rules/position.cpp \
     rules/pieceset.cpp \
     rules/pieceboard.cpp \
     rules/piece.cpp \
-    rules/pawn.cpp \
-    rules/linepiece.cpp \
     rules/colorboard.cpp \
     rules/chessboard.cpp \
     rules/bitboard.cpp \
@@ -97,14 +94,11 @@ HEADERS += \
     parse/epdparser.h \
     parse/epdposition.h \
     parse/fenparser.h \
-    rules/oncepiece.h \
     rules/positiondelta.h \
     rules/position.h \
     rules/pieceset.h \
     rules/pieceboard.h \
     rules/piece.h \
-    rules/pawn.h \
-    rules/linepiece.h \
     rules/colorboard.h \
     rules/color.h \
     rules/chessboard.h \

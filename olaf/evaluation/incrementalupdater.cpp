@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "olaf/rules/pieceset.h"
-#include "olaf/rules/pawn.h"
 #include "olaf/rules/bitboard.h"
 #include "olaf/rules/chessboard.h"
 
@@ -136,8 +135,8 @@ void IncrementalUpdater::calculate(ChessBoard* board)
         continue;
       }
       const Piece::piece_index_t index = piece_board.piece().piece_index();
-      for (const Position& position : piece_board.positions()) {
-        add_piece(color, index, position, board);
+      for (BitBoard bit_board = piece_board.bit_board(); bit_board; ) {
+        add_piece(color, index, bit_board.next_position(), board);
       }
     }
   }

@@ -319,8 +319,8 @@ static const array<int_fast8_t, 64> c_magic_number_shifts_bishop = {
 vector<int> indices(const uint64_t bits)
 {
   vector<int> result;
-  for (const Position& pos : BitBoard(bits).positions()) {
-    result.push_back(BitBoard::index(pos));
+  for (BitBoard bit_board(bits); bit_board; ) {
+    result.push_back(BitBoard::index(bit_board.next_position()));
   }
   return result;
 }
@@ -602,21 +602,6 @@ void generate_magic()
   }
   print_magic(true);
   print_magic(false);
-  cout << endl << "const MagicNumbers::SquareTable MagicNumbers::c_king_table = {" << endl;
-  const ChessBoard board = create_empty_board();
-  for (int i = 0; i < 64; ++i) {
-    BitBoard targets(0);
-    for (const Move move : PieceSet::instance().king().moves(BitBoard::reverse_index(i), board)) {
-      targets = targets | BitBoard(move.destination());
-    }
-    uint64_t lol = targets;
-    cout << "  0x" << hex << lol << "ULL";
-    if (i < 63) {
-      cout << ",";
-    }
-    cout << endl;
-  }
-  cout << "};" << endl;
 }
 
 } // namespace generation

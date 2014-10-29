@@ -5,6 +5,8 @@
 #include "olaf/rules/pieceboard.h"
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/movechecker.h"
+#include "olaf/rules/magicmoves.h"
+#include "olaf/rules/magicnumbers.h"
 
 #include <memory>
 #include <iostream>
@@ -14,15 +16,60 @@ using namespace std;
 namespace olaf
 {
 
+static inline void add_moves(const Position& source,
+                             BitBoard destinations,
+                             const ChessBoard& board,
+                             vector<Move>* const moves)
+{
+  while (destinations) {
+    moves->push_back(MoveChecker::complete(source, destinations.next_position(), board));
+  }
+}
+
+static inline void add_pawn_moves(const Position& source,
+                                  BitBoard destinations,
+                                  const ChessBoard& board,
+                                  vector<Move>* const moves)
+{
+  if (destinations & BitBoard(MagicNumbers::c_promotion_rows[static_cast<int>(board.turn_color())])) {
+    while (destinations) {
+      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_rook_index, board));
+      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_knight_index, board));
+      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_bishop_index, board));
+      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_queen_index, board));
+    }
+  } else {
+    add_moves(source, destinations, board, moves);
+  }
+}
+
 vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
 {
   vector<Move> moves;
-  for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
-    const Piece& piece = piece_board.piece();
-    for (Position source : piece_board.positions()) {
-      const vector<Move>& piece_moves = piece.moves(source, board);
-      moves.insert(moves.end(), piece_moves.begin(), piece_moves.end());
-    }
+  const ColorBoard& turn_board = board.turn_board();
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_rook_index); sources;) {
+    const Position source = sources.next_position();
+    add_moves(source, MagicMoves::moves_rook(source, board), board, &moves);
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_knight_index); sources;) {
+    const Position source = sources.next_position();
+    add_moves(source, MagicMoves::moves_knight(source, board), board, &moves);
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_bishop_index); sources;) {
+    const Position source = sources.next_position();
+    add_moves(source, MagicMoves::moves_bishop(source, board), board, &moves);
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_queen_index); sources;) {
+    const Position source = sources.next_position();
+    add_moves(source, MagicMoves::moves_queen(source, board), board, &moves);
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_king_index); sources;) {
+    const Position source = sources.next_position();
+    add_moves(source, MagicMoves::moves_king(source, board), board, &moves);
+  }
+  for (BitBoard sources = turn_board.piece_board(PieceSet::c_pawn_index); sources;) {
+    const Position source = sources.next_position();
+    add_pawn_moves(source, MagicMoves::moves_pawn(source, board), board, &moves);
   }
   return moves;
 }

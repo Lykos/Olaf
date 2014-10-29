@@ -8,7 +8,6 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/piece.h"
-#include "olaf/rules/pawn.h"
 #include "testutil.h"
 
 using namespace std;

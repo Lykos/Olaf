@@ -43,20 +43,4 @@ BitBoard Piece::initial_board(const Color color) const
   return color == Color::White ? m_initial_board : m_initial_board.mirror_rows();
 }
 
-Piece::~Piece()
-{}
-
-bool Piece::can_move(const IncompleteMove incomplete_move,
-                     const ChessBoard& board) const {
-  return board.friendd(incomplete_move.source())
-      && !board.friendd(incomplete_move.destination())
-      && board.turn_board().piece_index(incomplete_move.source()) == m_piece_index
-      && could_move(incomplete_move, board);
-}
-
-bool Piece::can_xray(const PositionDelta& /* direction */) const
-{
-  return false;
-}
-
 } // namespace olaf

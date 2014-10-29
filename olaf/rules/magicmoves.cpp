@@ -15,39 +15,6 @@ namespace olaf
 static_assert(MagicNumbers::c_no_colors == c_no_colors, "Different number of colors");
 static_assert(MagicNumbers::c_no_squares == BitBoard::c_bitboard_size, "Different number of squares");
 
-static inline BitBoard internal_magic_moves(const array<Magic, BitBoard::c_bitboard_size>& magics,
-                                            const Position& source,
-                                            const BitBoard occupied)
-{
-  const Magic& magic = magics[BitBoard::index(source)];
-  const uint64_t board = occupied;
-  return magic.ptr[((board & magic.mask) * magic.magic) >> magic.shift];
-}
-
-// static
-BitBoard MagicMoves::moves_rook(const Position& source, const ChessBoard& board)
-{
-  return internal_magic_moves(MagicNumbers::c_rook_magic, source, board.occupied()) & BitBoard(~board.friends());
-}
-
-// static
-BitBoard MagicMoves::moves_bishop(const Position& source, const ChessBoard& board)
-{
-  return internal_magic_moves(MagicNumbers::c_bishop_magic, source, board.occupied()) & BitBoard(~board.friends());
-}
-
-// static
-BitBoard MagicMoves::moves_queen(const Position& source, const ChessBoard& board)
-{
-  return (internal_magic_moves(MagicNumbers::c_rook_magic, source, board.occupied())
-      | internal_magic_moves(MagicNumbers::c_bishop_magic, source, board.occupied())) & BitBoard(~board.friends());
-}
-
-// static
-BitBoard MagicMoves::moves_knight(const Position& source, const ChessBoard& board)
-{
-  return BitBoard(MagicNumbers::c_knight_table[BitBoard::index(source)]) & BitBoard(~board.friends());
-}
 
 // static
 BitBoard MagicMoves::moves_king(const Position& source, const ChessBoard& board)

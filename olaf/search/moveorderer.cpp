@@ -6,6 +6,8 @@
 
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/search/searchcontext.h"
+#include "olaf/rules/magicmoves.h"
+#include "olaf/rules/magicnumbers.h"
 
 using namespace std;
 
@@ -49,47 +51,36 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   const Position src = move.source();
   const Position dst = move.destination();
   BitBoard attackers = 0;
+  BitBoard occupied = board.occupied();
+  BitBoard straight_pieces;
+  BitBoard diagonal_pieces;
   for (const Color color : c_colors) {
     const ColorBoard& color_board = board.color_board(color);
-    BitBoard pawn_sources;
-    const PositionDelta backward = forward_direction(other_color(color));
-    if (src.in_bounds(backward)) {
-      const Position pawn_source_middle = backward + dst;
-      static const PositionDelta c_left(0, -1);
-      static const PositionDelta c_right(0, 1);
-      if (pawn_source_middle.in_bounds(c_left)) {
-        pawn_sources = pawn_sources | BitBoard(pawn_source_middle + c_left);
-      }
-      if (pawn_source_middle.in_bounds(c_right)) {
-        pawn_sources = pawn_sources | BitBoard(pawn_source_middle + c_right);
-      }
-    }
     for (Piece::piece_index_t piece_index : xray_pieces) {
       may_xray = may_xray | color_board.piece_board(piece_index).bit_board();
     }
-    for (const PieceBoard& piece_board : color_board.piece_boards()) {
-      const Piece& piece = piece_board.piece();
-      if (piece.piece_index() == PieceSet::c_pawn_index) {
-        attackers = attackers | (pawn_sources & piece_board.bit_board());
-      } else {
-        for (Position source : piece_board.positions()) {
-          if (piece.could_move(IncompleteMove(source, dst), board)) {
-            attackers = attackers | BitBoard(source);
-          }
-        }
-      }
-    }
+    const int src_index = BitBoard::index(src);
+    // Pawns can attack this square from the squares an opposing pawn would attack from here.
+    const int color_index = static_cast<int>(other_color(color));
+    BitBoard pawn_attackers(MagicNumbers::c_pawn_capture_table[color_index + src_index]);
+    attackers = attackers | (pawn_attackers & color_board.piece_board(PieceSet::c_pawn_index));
+    // We use the fact that the pieces except for the pawn behave symmetrically.
+    straight_pieces = straight_pieces
+        | color_board.piece_board(PieceSet::c_rook_index).bit_board()
+        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
+    diagonal_pieces = diagonal_pieces
+        | color_board.piece_board(PieceSet::c_bishop_index).bit_board()
+        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
+    attackers = attackers | (MagicNumbers::c_knight_table[src_index] & color_board.piece_board(PieceSet::c_knight_index));
+    attackers = attackers | (MagicNumbers::c_king_table[src_index] & color_board.piece_board(PieceSet::c_king_index));
   }
+  attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_rook_magic, src, occupied) & straight_pieces);
+  attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_bishop_magic, src, occupied) & diagonal_pieces);
   array<Searcher::score_t, 32> gain;
   Searcher::depth_t depth = 0;
   gain[depth] = values[board.noturn_board().piece_index(dst)];
   Piece::piece_index_t attacker = board.turn_board().piece_index(move.source());
   BitBoard from = BitBoard(src);
-  BitBoard friends = board.friends();
-#ifndef NDEBUG
-  BitBoard opponents = board.opponents();
-#endif
-  BitBoard occupied = board.occupied();
   Color color = board.turn_color();
   while (true) {
     ++depth;
@@ -101,26 +92,8 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
     occupied = occupied ^ from;
     color = other_color(color);
     if (from & may_xray) {
-      Position src2 = from.first_position();
-      const PositionDelta direction = (src2 - dst).unit();
-      while (src2.in_bounds(direction)) {
-        src2 = src2 + direction;
-        BitBoard src3(src2);
-        if (!(occupied & src3)) {
-          continue;
-        }
-        if (friends & src3){
-          if (board.turn_board().piece(src2).can_xray(direction)) {
-            attackers = attackers | src3;
-          }
-        } else {
-          assert(opponents & src3);
-          if (board.noturn_board().piece(src2).can_xray(direction)) {
-            attackers = attackers | src3;
-          }
-        }
-        break;
-      }
+      attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_rook_magic, src, occupied) & straight_pieces);
+      attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_bishop_magic, src, occupied) & diagonal_pieces);
     }
     from = least_valuable_piece(board, color, attackers);
     if (from) {

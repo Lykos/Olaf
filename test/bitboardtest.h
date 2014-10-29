@@ -18,9 +18,9 @@ private Q_SLOTS:
 
   void test_number_data();
 
-  void test_positions();
+  void test_next_position();
 
-  void test_positions_data();
+  void test_next_position_data();
 
   void test_get();
 
