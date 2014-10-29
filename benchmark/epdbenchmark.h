@@ -25,7 +25,9 @@ public:
   virtual ~EpdBenchmark();
 
 private:
-  TestFactoryOwner m_factory_owner;
+  NoThinkingWriter m_writer;
+
+  std::unique_ptr<SearcherFactory> m_factory;
 
   std::unique_ptr<SimpleTimedSearcher> m_searcher;
 

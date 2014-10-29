@@ -51,7 +51,7 @@ void PerftBenchmark::test_perft()
     return;
   }
 
-  unique_ptr<Perft> perft = m_factory_owner.factory.perft();
+  unique_ptr<Perft> perft = SearcherFactory::perft();
 
   // perft->debug_perft(c_depth, board);
   const PerftResult& expected_result = expected_results.at(c_depth);

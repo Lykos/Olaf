@@ -8,9 +8,11 @@
 
 namespace olaf
 {
+
+class Config;
+
 namespace benchmark
 {
-
 namespace auto_benchmark
 {
 
@@ -25,7 +27,7 @@ void add_benchmark(Benchmark* benchmark);
 typedef CompositeBenchmarkResult<BenchmarkResult> ClassResult;
 typedef CompositeBenchmarkResult<ClassResult> GlobalResult;
 
-GlobalResult run(int argc, char* argv[], const std::string& description);
+GlobalResult run(int argc, char* argv[], const std::string& description, const Config* const config);
 
 template <class T>
 class BenchmarkHolder

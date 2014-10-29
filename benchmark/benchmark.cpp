@@ -44,6 +44,16 @@ void Benchmark::push_score(const long score)
   push_result(BenchmarkResult(current_test_id(), score));
 }
 
+void Benchmark::config(const Config* const config)
+{
+  m_config = config;
+}
+
+const Config* Benchmark::config() const
+{
+  return m_config;
+}
+
 Benchmark::PerformanceMeasurer::PerformanceMeasurer(Benchmark* const benchmark):
   m_benchmark(benchmark),
   m_done(false)
@@ -61,7 +71,7 @@ void Benchmark::PerformanceMeasurer::next()
   m_benchmark->push_result(BenchmarkResult(m_benchmark->current_test_id(),
                                            milliseconds(m_timer.elapsed())));
   m_done = true;
+}
 
 } // namespace benchmark
 } // namespace olaf
-}

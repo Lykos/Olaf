@@ -18,9 +18,6 @@ class PerftBenchmark : public Benchmark
 public:
   PerftBenchmark();
 
-private:
-  TestFactoryOwner m_factory_owner;
-
 private Q_SLOTS:
   void test_perft_data();
 

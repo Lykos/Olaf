@@ -28,20 +28,6 @@ namespace benchmark
 
 Move make_move(const Position& source, const Position& destination, const bool is_capture);
 
-struct TestFactoryOwner {
-  TestFactoryOwner();
-
-  TestFactoryOwner(const Config& config);
-
-  Config config;
-
-  NoThinkingWriter no_thinking_writer;
-
-  SearcherFactory factory;
-};
-
-Config test_config();
-
 ChessBoard parse_fen(const std::string& fen);
 
 EpdPosition parse_epd(const std::string& epd);

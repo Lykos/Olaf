@@ -18,13 +18,6 @@ namespace olaf
 {
 namespace benchmark
 {
-static const char c_config[] =
-    "search:\n"
-    "  time_millis: 2000\n"
-    "  min_depth: 1\n"
-    "  sequential_depth: 2\n"
-    "transposition_table:\n"
-    "  size: 65536\n";
 
 ChessBoard parse_fen(const string& fen)
 {
@@ -37,25 +30,10 @@ ChessBoard parse_fen(const string& fen)
   return board;
 }
 
-TestFactoryOwner::TestFactoryOwner(const Config& config2):
-  config(config2),
-  factory(&no_thinking_writer, &config)
-{}
-
-TestFactoryOwner::TestFactoryOwner():
-  TestFactoryOwner(test_config())
-{}
-
-Config test_config()
-{
-  return Config(c_config);
-}
-
 EpdPosition parse_epd(const string& epd)
 {
   EpdPosition position;
-  static const TestFactoryOwner factory_owner;
-  auto parser = factory_owner.factory.epd_parser();
+  auto parser = SearcherFactory::epd_parser();
 #ifdef NDEBUG
   parser->parse(epd, &position);
 #else

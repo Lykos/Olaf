@@ -94,8 +94,8 @@ EpdBenchmark::~EpdBenchmark()
 
 void EpdBenchmark::initTestCase()
 {
-  cout << "initialized" << endl;
-  m_searcher.reset(new SimpleTimedSearcher(m_factory_owner.factory.iterative_searcher(), c_max_time));
+  m_factory.reset(new SearcherFactory(&m_writer, config()));
+  m_searcher.reset(new SimpleTimedSearcher(m_factory->iterative_searcher(), c_max_time));
 }
 
 void EpdBenchmark::test_epd()
@@ -131,7 +131,7 @@ void EpdBenchmark::test_epd()
 void EpdBenchmark::test_epd_data()
 {
   QTest::addColumn<EpdPosition>("position");
-  std::unique_ptr<EpdParser> parser = m_factory_owner.factory.epd_parser();
+  std::unique_ptr<EpdParser> parser = SearcherFactory::epd_parser();
   ifstream file(m_epd_file);
   string line;
   int i = 1;

@@ -11,6 +11,9 @@
 
 namespace olaf
 {
+
+class Config;
+
 namespace benchmark
 {
 
@@ -30,6 +33,10 @@ public:
   void push_result(const BenchmarkResult& result);
 
   void push_score(long score);
+
+  void config(const Config* config);
+
+  const Config* config() const;
 
 protected:
   class PerformanceMeasurer {
@@ -52,6 +59,8 @@ protected:
 
 private:
   CompositeBenchmarkResult<BenchmarkResult> m_results;
+
+  const Config* m_config;
 };
 
 #define OLAF_BENCHMARK for (PerformanceMeasurer m(this); !m.done(); m.next())

@@ -25,10 +25,11 @@ void add_benchmark(Benchmark* const benchmark)
   list.push_back(benchmark);
 }
 
-GlobalResult run(const int argc, char* argv[], const string& description)
+GlobalResult run(const int argc, char* argv[], const string& description, const Config* const config)
 {
   GlobalResult global_result(description);
   for (Benchmark* const test : benchmark_list()) {
+    test->config(config);
     QTest::qExec(test, argc, argv);
     global_result.add_sub_result(test->results());
   }

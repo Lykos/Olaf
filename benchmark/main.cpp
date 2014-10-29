@@ -9,11 +9,21 @@
 #include "autobenchmark.h"
 #include "compositebenchmarkresult.h"
 #include "benchmarkresult.h"
+#include "olaf/config.h"
 
 using namespace std;
 using namespace olaf;
 using namespace benchmark;
 
+DEFINE_string(config_file, "/usr/local/share/olaf/config.yml", "Config file for the engine.");
+
+Config read_config(const string& config_file)
+{
+  std::ifstream file(config_file.c_str());
+  std::string config_string((std::istreambuf_iterator<char>(file)),
+                             std::istreambuf_iterator<char>());
+  return Config(config_string);
+}
 
 int main(int argc, char* argv[])
 {
@@ -44,8 +54,9 @@ int main(int argc, char* argv[])
       << timeinfo->tm_mday << " " << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec;
   string description = oss.str();
 
+  Config config = read_config(FLAGS_config_file);
   const auto_benchmark::GlobalResult& global_result =
-      auto_benchmark::run(argc, argv, description);
+      auto_benchmark::run(argc, argv, description, &config);
 
   // Write result to file
   ofstream result_file(file_name.c_str());
