@@ -21,17 +21,12 @@ BitBoard MagicMoves::moves_king(const Position& source, const ChessBoard& board)
 {
   BitBoard result = BitBoard(MagicNumbers::c_king_table[BitBoard::index(source)]) & BitBoard(~board.friends());
   const Color color = board.turn_color();
-  const ColorBoard& turn_board = board.color_board(color);
   const int index = static_cast<int>(color);
-  if (turn_board.piece_board(PieceSet::c_king_index).bit_board() == BitBoard(MagicNumbers::c_king_positions[index])) {
-    if (turn_board.can_castle_k()
-        && !(board.occupied() & BitBoard(MagicNumbers::c_castle_k_room[index]))
-        && (turn_board.piece_board(PieceSet::c_rook_index) & BitBoard(MagicNumbers::c_castle_k_rook[index]))) {
+  if (king_unmoved(board, color)) {
+    if (can_castle_k(board, color)) {
       result = result | BitBoard(MagicNumbers::c_castle_k_square[index]);
     }
-    if (turn_board.can_castle_q()
-        && !(board.occupied() & BitBoard(MagicNumbers::c_castle_q_room[index]))
-        && (turn_board.piece_board(PieceSet::c_rook_index) & BitBoard(MagicNumbers::c_castle_q_rook[index]))) {
+    if (can_castle_q(board, color)) {
       result = result | BitBoard(MagicNumbers::c_castle_q_square[index]);
     }
   }

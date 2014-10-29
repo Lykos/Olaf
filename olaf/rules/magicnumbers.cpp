@@ -394,8 +394,8 @@ const MagicNumbers::ColorTable MagicNumbers::c_castle_k_room = {
 };
 
 const MagicNumbers::ColorTable MagicNumbers::c_castle_q_room = {
-  5ULL << 1,
-  5ULL << (7 * 8 + 1)
+  7ULL << 1,
+  7ULL << (7 * 8 + 1)
 };
 
 const MagicNumbers::ColorTable MagicNumbers::c_castle_k_rook = {

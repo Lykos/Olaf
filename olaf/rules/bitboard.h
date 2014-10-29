@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <climits>
+#include <ostream>
 
 #include "olaf/rules/position.h"
 #ifdef __POPCNT__
@@ -25,6 +26,8 @@ constexpr BitBoard operator &(BitBoard, BitBoard);
 constexpr bool operator ==(BitBoard, BitBoard);
 
 constexpr bool operator !=(BitBoard, BitBoard);
+
+std::ostream& operator <<(std::ostream& out, const BitBoard bit_board);
 
 /**
  * @brief The BitBoard class represents a board where a bit is stored in each square.

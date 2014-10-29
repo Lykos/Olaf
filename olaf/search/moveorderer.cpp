@@ -34,48 +34,61 @@ BitBoard least_valuable_piece(const ChessBoard& board, const Color color, const 
 }
 
 // static
+void MoveOrderer::init_see_state(const ChessBoard& board, SeeState* const see_state)
+{
+  see_state->may_xray = 0;
+  static const array<Piece::piece_index_t, 4> xray_pieces = {
+    PieceSet::c_pawn_index,
+    PieceSet::c_bishop_index,
+    PieceSet::c_rook_index,
+    PieceSet::c_queen_index};
+  for (const Color color : c_colors) {
+    const ColorBoard& color_board = board.color_board(color);
+    for (Piece::piece_index_t piece_index : xray_pieces) {
+      see_state->may_xray = see_state->may_xray | color_board.piece_board(piece_index).bit_board();
+    }
+    see_state->straight_pieces = see_state->straight_pieces
+        | color_board.piece_board(PieceSet::c_rook_index).bit_board()
+        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
+    see_state->diagonal_pieces = see_state->diagonal_pieces
+        | color_board.piece_board(PieceSet::c_bishop_index).bit_board()
+        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
+  }
+}
+
+static inline BitBoard consider_xrays(const BitBoard occupied, const Position& src, const MoveOrderer::SeeState& see_state)
+{
+  return ((MagicMoves::sliding_magic_moves(MagicNumbers::c_rook_magic, src, occupied) & see_state.straight_pieces)
+          | (MagicMoves::sliding_magic_moves(MagicNumbers::c_bishop_magic, src, occupied) & see_state.diagonal_pieces))
+          & occupied;
+}
+
+// static
 Searcher::score_t MoveOrderer::see(const ChessBoard& board,
-                                   const Move move)
+                                   const Move move,
+                                   const SeeState& see_state)
 {
   if (!move.is_capture()) {
     return 0;
   }
   static const array<int, PieceSet::c_no_pieces> values =
       IncrementalUpdater::piece_values();
-  BitBoard may_xray = 0;
-  static const array<Piece::piece_index_t, 4> xray_pieces = {
-    PieceSet::c_pawn_index,
-    PieceSet::c_bishop_index,
-    PieceSet::c_rook_index,
-    PieceSet::c_queen_index};
   const Position src = move.source();
   const Position dst = move.destination();
   BitBoard attackers = 0;
   BitBoard occupied = board.occupied();
-  BitBoard straight_pieces;
-  BitBoard diagonal_pieces;
   for (const Color color : c_colors) {
     const ColorBoard& color_board = board.color_board(color);
-    for (Piece::piece_index_t piece_index : xray_pieces) {
-      may_xray = may_xray | color_board.piece_board(piece_index).bit_board();
-    }
-    const int src_index = BitBoard::index(src);
+    const int dst_index = BitBoard::index(dst);
     // Pawns can attack this square from the squares an opposing pawn would attack from here.
-    const int color_index = static_cast<int>(other_color(color));
-    BitBoard pawn_attackers(MagicNumbers::c_pawn_capture_table[color_index + src_index]);
+    const int color_index = static_cast<int>(other_color(color)) * BitBoard::c_bitboard_size;
+    BitBoard pawn_attackers(MagicNumbers::c_pawn_capture_table[color_index + dst_index]);
     attackers = attackers | (pawn_attackers & color_board.piece_board(PieceSet::c_pawn_index));
-    // We use the fact that the pieces except for the pawn behave symmetrically.
-    straight_pieces = straight_pieces
-        | color_board.piece_board(PieceSet::c_rook_index).bit_board()
-        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
-    diagonal_pieces = diagonal_pieces
-        | color_board.piece_board(PieceSet::c_bishop_index).bit_board()
-        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
-    attackers = attackers | (MagicNumbers::c_knight_table[src_index] & color_board.piece_board(PieceSet::c_knight_index));
-    attackers = attackers | (MagicNumbers::c_king_table[src_index] & color_board.piece_board(PieceSet::c_king_index));
+    // We use the fact that the knights and kings move symmetrically.
+    attackers = attackers | (MagicNumbers::c_knight_table[dst_index] & color_board.piece_board(PieceSet::c_knight_index));
+    attackers = attackers | (MagicNumbers::c_king_table[dst_index] & color_board.piece_board(PieceSet::c_king_index));
   }
-  attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_rook_magic, src, occupied) & straight_pieces);
-  attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_bishop_magic, src, occupied) & diagonal_pieces);
+  attackers = attackers | consider_xrays(occupied, dst, see_state);
   array<Searcher::score_t, 32> gain;
   Searcher::depth_t depth = 0;
   gain[depth] = values[board.noturn_board().piece_index(dst)];
@@ -84,6 +97,7 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   Color color = board.turn_color();
   while (true) {
     ++depth;
+    assert(depth < 32);
     gain[depth] = values[attacker] - gain[depth - 1];
     if (max(-gain[depth - 1], gain[depth]) < 0) {
       break;
@@ -91,9 +105,8 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
     attackers = attackers ^ from;
     occupied = occupied ^ from;
     color = other_color(color);
-    if (from & may_xray) {
-      attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_rook_magic, src, occupied) & straight_pieces);
-      attackers = attackers | (MagicMoves::sliding_magic_moves(MagicNumbers::c_bishop_magic, src, occupied) & diagonal_pieces);
+    if (from & see_state.may_xray) {
+      attackers = attackers | consider_xrays(occupied, dst, see_state);
     }
     from = least_valuable_piece(board, color, attackers);
     if (from) {
@@ -124,8 +137,10 @@ void MoveOrderer::order_moves(const SearchContext& context,
   }
   unsigned int start = entry == nullptr ? 0 : 1;
   vector<Searcher::score_t> move_values(moves->size());
+  SeeState see_state;
+  init_see_state(context.board, &see_state);
   for (unsigned int i = start; i < moves->size(); ++i) {
-    move_values[i] = see(context.board, (*moves)[i]);
+    move_values[i] = see(context.board, (*moves)[i], see_state);
   }
   for (unsigned int i = start; i < moves->size() - 1; ++i) {
     int max = numeric_limits<Searcher::score_t>::min();

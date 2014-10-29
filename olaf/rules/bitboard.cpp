@@ -45,4 +45,15 @@ Position BitBoard::next_position()
   return result;
 }
 
+ostream& operator <<(ostream& out, const BitBoard bit_board)
+{
+  for (Position::row_t row = 7; row >= 0; --row) {
+    for (Position::column_t column = 0; column < 8; ++column) {
+      out << (bit_board.get(Position(row, column)) ? 1 : 0);
+    }
+    out << endl;
+  }
+  return out;
+}
+
 } // namespace olaf

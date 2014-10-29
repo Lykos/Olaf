@@ -16,8 +16,17 @@ class SearchContext;
 class MoveOrderer
 {
 public:
+  struct SeeState {
+    BitBoard may_xray;
+    BitBoard straight_pieces;
+    BitBoard diagonal_pieces;
+  };
+
+  static void init_see_state(const ChessBoard& board, SeeState* see_state);
+
   static Searcher::score_t see(const ChessBoard& board,
-                               const Move move);
+                               const Move move,
+                               const SeeState& see_state);
 
   static void order_moves(const SearchContext& context,
                           std::vector<Move>* moves);

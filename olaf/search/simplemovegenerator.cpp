@@ -33,10 +33,11 @@ static inline void add_pawn_moves(const Position& source,
 {
   if (destinations & BitBoard(MagicNumbers::c_promotion_rows[static_cast<int>(board.turn_color())])) {
     while (destinations) {
-      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_rook_index, board));
-      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_knight_index, board));
-      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_bishop_index, board));
-      moves->push_back(MoveChecker::complete_promotion(source, destinations.next_position(), PieceSet::c_queen_index, board));
+      Position destination = destinations.next_position();
+      moves->push_back(MoveChecker::complete_promotion(source, destination, PieceSet::c_rook_index, board));
+      moves->push_back(MoveChecker::complete_promotion(source, destination, PieceSet::c_knight_index, board));
+      moves->push_back(MoveChecker::complete_promotion(source, destination, PieceSet::c_bishop_index, board));
+      moves->push_back(MoveChecker::complete_promotion(source, destination, PieceSet::c_queen_index, board));
     }
   } else {
     add_moves(source, destinations, board, moves);

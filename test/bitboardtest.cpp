@@ -50,7 +50,7 @@ void BitboardTest::test_next_position()
   QFETCH(BitBoard, board);
   QFETCH(vector<Position>, positions);
   vector<Position> extracted_positions;
-  for (BitBoard bit_board = board; board; ) {
+  for (BitBoard bit_board = board; bit_board; ) {
     extracted_positions.push_back(bit_board.first_position());
     QASSERT_THAT(bit_board.next_position(), Eq(extracted_positions.back()));
   }

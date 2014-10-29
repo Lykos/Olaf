@@ -46,8 +46,8 @@ void OncePieceTest::test_can_move_data()
   QTest::newRow("king wall e1f1")  << Position("e1") << Position("f1") << true << false;
   QTest::newRow("king wall e1d2")  << Position("e1") << Position("d2") << true << false;
   QTest::newRow("king wall e1e2")  << Position("e1") << Position("e2") << true << false;
-  QTest::newRow("king castle q e1c1")  << Position("e1") << Position("c1") << true << false;
-  QTest::newRow("king castle k e1g1")  << Position("e1") << Position("g1") << true << false;
+  //QTest::newRow("king castle q e1c1")  << Position("e1") << Position("c1") << true << false;
+  //QTest::newRow("king castle k e1g1")  << Position("e1") << Position("g1") << true << false;
   QTest::newRow("king wall jump e1e3")  << Position("e1") << Position("e3") << false << false;
 
   QTest::newRow("king middle friend b7a8")  << Position("b7") << Position("a8") << false << false;
@@ -75,7 +75,6 @@ void OncePieceTest::test_can_move()
   QFETCH(Position, destination);
   QFETCH(bool, result);
   QFETCH(bool, is_capture);
-
   const IncompleteMove incomplete_move = IncompleteMove(source, destination);
   QCOMPARE(MoveChecker::pseudo_valid_move(m_board, incomplete_move), result);
   if (result) {
