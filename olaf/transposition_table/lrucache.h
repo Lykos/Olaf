@@ -52,8 +52,6 @@ private:
   mutable long m_hits = 0;
 
   mutable long m_misses = 0;
-
-  mutable std::mutex m_mutex;
 };
 
 template <typename V>
@@ -68,7 +66,6 @@ template <typename V>
 const V* LruCache<V>::get(const key_t key) const
 {
   const long i = index(key);
-  std::unique_lock<std::mutex> lock(m_mutex);
   const Entry& entry = m_elements[i];
   if (entry.key == key) {
     ++m_hits;
@@ -83,7 +80,6 @@ template <typename V>
 void LruCache<V>::put(const key_t key, const V& value)
 {
   const long i = index(key);
-  std::unique_lock<std::mutex> lock(m_mutex);
   m_elements[i] = Entry(key, value);
 }
 
@@ -91,7 +87,6 @@ template <typename V>
 void LruCache<V>::put(const key_t key, V&& value)
 {
   const long i = index(key);
-  std::unique_lock<std::mutex> lock(m_mutex);
   m_elements[i] = Entry(key, std::move(value));
 }
 
