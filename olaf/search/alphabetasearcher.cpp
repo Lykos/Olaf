@@ -24,10 +24,12 @@ AlphaBetaSearcher::AlphaBetaSearcher():
 {}
 
 AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
+                                     const MoveOrderer& orderer,
                                      std::unique_ptr<AlphaBetaSearcher> sub_searcher,
                                      const depth_t sub_searcher_depth,
                                      const bool ignore_depth):
   m_generator(move(generator)),
+  m_orderer(orderer),
   m_sub_searcher(move(sub_searcher)),
   m_sub_searcher_depth(sub_searcher_depth),
   m_ignore_depth(ignore_depth)
@@ -42,7 +44,7 @@ vector<Move> AlphaBetaSearcher::generate_ordered_moves(const SearchContext& cont
   if (moves.empty()) {
     return moves;
   }
-  MoveOrderer::order_moves(context, &moves);
+  m_orderer.order_moves(context, &moves);
   return moves;
 }
 

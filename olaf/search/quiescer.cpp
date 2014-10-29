@@ -14,10 +14,12 @@ namespace olaf
 
 Quiescer::Quiescer(unique_ptr<PositionEvaluator> evaluator,
                    unique_ptr<MoveGenerator> generator,
+                   MoveOrderer orderer,
                    unique_ptr<AlphaBetaSearcher> sub_searcher,
                    const depth_t sub_searcher_depth,
                    const bool ignore_depth):
   AlphaBetaSearcher(move(generator),
+                    orderer,
                     move(sub_searcher),
                     sub_searcher_depth,
                     ignore_depth),

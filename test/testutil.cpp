@@ -20,7 +20,10 @@ static const char c_config[] =
     "  min_depth: 1\n"
     "  sequential_depth: 2\n"
     "transposition_table:\n"
-    "  size: 65536\n";
+    "  size: 65536\n"
+    "move_ordering:\n"
+    "  use_hash_move: true\n"
+    "  use_see: true\n";
 
 ChessBoard parse_fen(const string& fen)
 {

@@ -8,6 +8,7 @@
 #include "olaf/search/searchcontext.h"
 #include "olaf/rules/magicmoves.h"
 #include "olaf/rules/magicnumbers.h"
+#include "olaf/config.h"
 
 using namespace std;
 
@@ -122,25 +123,37 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   return gain[0];
 }
 
-// static
+MoveOrderer::MoveOrderer()
+{}
+
+MoveOrderer::MoveOrderer(const Config& config):
+  m_use_hash_move(config.move_ordering().use_hash_move()),
+  m_use_see(config.move_ordering().use_see())
+{}
+
 void MoveOrderer::order_moves(const SearchContext& context,
                               vector<Move>* moves)
 {
-  const TranspositionTableEntry* const entry = context.get();
-  if (entry != nullptr && entry->has_best_move) {
-    for (Move& move : *moves) {
-      if (move == entry->best_move) {
-        swap(move, moves->front());
-        break;
+  unsigned int start = 0;
+  if (m_use_hash_move) {
+    const TranspositionTableEntry* const entry = context.get();
+    if (entry != nullptr && entry->has_best_move) {
+      ++start;
+      for (Move& move : *moves) {
+        if (move == entry->best_move) {
+          swap(move, moves->front());
+          break;
+        }
       }
     }
   }
-  unsigned int start = entry == nullptr ? 0 : 1;
   vector<Searcher::score_t> move_values(moves->size());
-  SeeState see_state;
-  init_see_state(context.board, &see_state);
-  for (unsigned int i = start; i < moves->size(); ++i) {
-    move_values[i] = see(context.board, (*moves)[i], see_state);
+  if (m_use_see) {
+    SeeState see_state;
+    init_see_state(context.board, &see_state);
+    for (unsigned int i = start; i < moves->size(); ++i) {
+      move_values[i] = see(context.board, (*moves)[i], see_state);
+    }
   }
   for (unsigned int i = start; i < moves->size() - 1; ++i) {
     int max = numeric_limits<Searcher::score_t>::min();

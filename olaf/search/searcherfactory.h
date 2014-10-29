@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "olaf/search/searcher.h"
+#include "olaf/search/moveorderer.h"
 #include "olaf/evaluation/evaluatorfactory.h"
 #include "olaf/transposition_table/transpositiontable.h"
 
@@ -23,6 +24,17 @@ class Config;
 class SearcherFactory
 {
 public:
+  // These can be created without config and are therefore static.
+  static std::unique_ptr<MoveGenerator> capture_generator();
+
+  static std::unique_ptr<MoveGenerator> move_generator();
+
+  static std::unique_ptr<Perft> perft();
+
+  static std::unique_ptr<SanParser> san_parser();
+
+  static std::unique_ptr<EpdParser> epd_parser();
+
   /**
    * @brief SearcherFactory does not take ownership of writer or config.
    *        The lifetime of those objects has to be at least the lifetime of
@@ -44,17 +56,9 @@ public:
 
   std::unique_ptr<PositionEvaluator> evaluator() const;
 
-  std::unique_ptr<MoveGenerator> capture_generator() const;
-
-  std::unique_ptr<MoveGenerator> move_generator() const;
-
-  std::unique_ptr<Perft> perft() const;
-
-  std::unique_ptr<SanParser> san_parser() const;
-
-  std::unique_ptr<EpdParser> epd_parser() const;
-
   std::unique_ptr<TranspositionTable> transposition_table() const;
+
+  MoveOrderer move_orderer() const;
 
 private:
   ThinkingWriter* const m_writer;

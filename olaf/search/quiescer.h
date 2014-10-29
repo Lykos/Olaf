@@ -17,6 +17,7 @@ class Quiescer : public AlphaBetaSearcher
 public:
   Quiescer(std::unique_ptr<PositionEvaluator> evaluator,
            std::unique_ptr<MoveGenerator> generator,
+           MoveOrderer orderer,
            std::unique_ptr<AlphaBetaSearcher> sub_searcher,
            depth_t sub_searcher_depth,
            bool ignore_depth);

@@ -42,11 +42,22 @@ public:
     long size() const;
   };
 
+  class MoveOrdering : public ConfigSection {
+  public:
+    using ConfigSection::ConfigSection;
+
+    bool use_hash_move() const;
+
+    bool use_see() const;
+  };
+
   const Evaluation& evaluation() const { return m_evaluation; }
 
   const Search& search() const { return m_search; }
 
   const TranspositionTable& transposition_table() const { return m_transposition_table; }
+
+  const MoveOrdering& move_ordering() const { return m_move_ordering; }
 
 private:
   const YAML::Node m_config;
@@ -56,6 +67,8 @@ private:
   const Search m_search;
 
   const TranspositionTable m_transposition_table;
+
+  const MoveOrdering m_move_ordering;
 };
 
 } // namespace olaf

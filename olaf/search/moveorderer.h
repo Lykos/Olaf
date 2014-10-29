@@ -8,6 +8,7 @@
 namespace olaf
 {
 
+class Config;
 class SearchContext;
 
 /**
@@ -28,8 +29,16 @@ public:
                                const Move move,
                                const SeeState& see_state);
 
-  static void order_moves(const SearchContext& context,
-                          std::vector<Move>* moves);
+  MoveOrderer(const Config& config);
+
+  MoveOrderer();
+
+  void order_moves(const SearchContext& context,
+                   std::vector<Move>* moves);
+
+private:
+  bool m_use_hash_move = false;
+  bool m_use_see = false;
 };
 
 } // namespace olaf

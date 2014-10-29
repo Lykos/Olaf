@@ -20,6 +20,41 @@ using namespace chrono;
 namespace olaf
 {
 
+// static
+unique_ptr<MoveGenerator> SearcherFactory::capture_generator()
+{
+  unique_ptr<MoveGenerator> generator(new CaptureGenerator(move_generator()));
+  return generator;
+}
+
+// static
+unique_ptr<MoveGenerator> SearcherFactory::move_generator()
+{
+  unique_ptr<MoveGenerator> generator(new SimpleMoveGenerator);
+  return generator;
+}
+
+// static
+unique_ptr<Perft> SearcherFactory::perft()
+{
+  unique_ptr<Perft> perft(new Perft(move_generator()));
+  return perft;
+}
+
+// static
+unique_ptr<SanParser> SearcherFactory::san_parser()
+{
+  unique_ptr<SanParser> parser(new SanParser(move_generator()));
+  return parser;
+}
+
+// static
+unique_ptr<EpdParser> SearcherFactory::epd_parser()
+{
+  unique_ptr<EpdParser> parser(new EpdParser(san_parser()));
+  return parser;
+}
+
 SearcherFactory::SearcherFactory(ThinkingWriter* const writer,
                                  const Config* const config):
   m_writer(writer),
@@ -48,6 +83,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() co
 {
   unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(
                                            move_generator(),
+                                           move_orderer(),
                                            sequential_alpha_beta_searcher(),
                                            m_config->search().sequential_depth(),
                                            false));
@@ -57,6 +93,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() co
 unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() const
 {
   unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
+                                                       move_orderer(),
                                                        quiescer(),
                                                        0,
                                                        false));
@@ -67,6 +104,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
   unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(evaluator(),
                                                       capture_generator(),
+                                                      move_orderer(),
                                                       evaluator(),
                                                       0,
                                                       true));
@@ -78,36 +116,6 @@ unique_ptr<PositionEvaluator> SearcherFactory::evaluator() const
   return m_evaluator_factory.evaluator();
 }
 
-unique_ptr<MoveGenerator> SearcherFactory::capture_generator() const
-{
-  unique_ptr<MoveGenerator> generator(new CaptureGenerator(move_generator()));
-  return generator;
-}
-
-unique_ptr<MoveGenerator> SearcherFactory::move_generator() const
-{
-  unique_ptr<MoveGenerator> generator(new SimpleMoveGenerator);
-  return generator;
-}
-
-unique_ptr<Perft> SearcherFactory::perft() const
-{
-  unique_ptr<Perft> perft(new Perft(move_generator()));
-  return perft;
-}
-
-unique_ptr<SanParser> SearcherFactory::san_parser() const
-{
-  unique_ptr<SanParser> parser(new SanParser(move_generator()));
-  return parser;
-}
-
-unique_ptr<EpdParser> SearcherFactory::epd_parser() const
-{
-  unique_ptr<EpdParser> parser(new EpdParser(san_parser()));
-  return parser;
-}
-
 std::unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
 {
   unique_ptr<TranspositionTable> table;
@@ -116,6 +124,11 @@ std::unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
     table.reset(new TranspositionTable(size));
   }
   return table;
+}
+
+MoveOrderer SearcherFactory::move_orderer() const
+{
+  return MoveOrderer(*m_config);
 }
 
 } // namespace olaf

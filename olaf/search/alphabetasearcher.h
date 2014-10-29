@@ -6,6 +6,7 @@
 
 #include "olaf/search/searcher.h"
 #include "olaf/rules/move.h"
+#include "olaf/search/moveorderer.h"
 #include "olaf/search/searchresult.h"
 
 namespace olaf
@@ -26,6 +27,7 @@ public:
   AlphaBetaSearcher();
 
   AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
+                    const MoveOrderer& orderer,
                     std::unique_ptr<AlphaBetaSearcher> sub_searcher,
                     depth_t sub_searcher_depth,
                     bool ignore_depth);
@@ -119,6 +121,8 @@ protected:
 
 private:
   std::unique_ptr<MoveGenerator> m_generator;
+
+  MoveOrderer m_orderer;
 
   std::unique_ptr<AlphaBetaSearcher> m_sub_searcher;
 
