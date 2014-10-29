@@ -16,9 +16,7 @@ DEFINES += OLAFSEARCHING_LIBRARY
 
 SOURCES += \
     config.cpp \
-    evaluation/materialevaluator.cpp \
     evaluation/evaluatorfactory.cpp \
-    evaluation/positionevaluator.cpp \
     search/simplemovegenerator.cpp \
     search/moveorderer.cpp \
     search/negamaxer.cpp \
@@ -28,7 +26,6 @@ SOURCES += \
     search/compositestopper.cpp \
     search/timestopper.cpp \
     search/forcedstopper.cpp \
-    search/evaluatorsearcher.cpp \
     search/parallelnegamaxer.cpp \
     search/capturegenerator.cpp \
     search/thinkingwriter.cpp \
@@ -62,12 +59,13 @@ SOURCES += \
     transposition_table/transpositiontable.cpp \
     evaluation/incrementalevaluator.cpp \
     evaluation/incrementalupdater.cpp \
-    rules/movechecker.cpp
+    rules/movechecker.cpp \
+    evaluation/resultevaluator.cpp \
+    evaluation/positionevaluator.cpp
 
 HEADERS += \
     config.h \
     evaluation/positionevaluator.h \
-    evaluation/materialevaluator.h \
     evaluation/evaluatorfactory.h \
     evaluation/positionevaluator.h \
     search/simplemovegenerator.h \
@@ -83,7 +81,6 @@ HEADERS += \
     search/compositestopper.h \
     search/timestopper.h \
     search/forcedstopper.h \
-    search/evaluatorsearcher.h \
     search/parallelnegamaxer.h \
     search/capturegenerator.h \
     search/thinkingwriter.h \
@@ -116,13 +113,11 @@ HEADERS += \
     evaluation/incrementalevaluator.h \
     evaluation/incrementalupdater.h \
     rules/undoinfo.h \
-    rules/movechecker.h
-
-headers.files = $$HEADERS
-headers.path = /usr/local/include/OlafSearching
+    rules/movechecker.h \
+    evaluation/resultevaluator.h
 
 target.path = /usr/local/lib
 
-INSTALLS += target headers
+INSTALLS += target
 
 LIBS += -lyaml-cpp

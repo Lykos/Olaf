@@ -14,34 +14,16 @@ namespace olaf
 namespace benchmark
 {
 
-static const int c_iterations = 5;
-static const int c_used_measurements = 2;
+Benchmark::Benchmark(const std::string& name):
+  m_results(name)
+{}
 
 Benchmark::~Benchmark()
 {}
 
-CompositeBenchmarkResult<BenchmarkResult> Benchmark::accumulate_results() const
+CompositeBenchmarkResult<BenchmarkResult> Benchmark::results() const
 {
-  CompositeBenchmarkResult<BenchmarkResult> results(objectName().toStdString());
-  for (vector<BenchmarkResult>::const_iterator it = m_results.begin(); it < m_results.end(); ++it) {
-    const string& description = it->description();
-    if (it->has_millis()) {
-      milliseconds millis(0);
-      int iterations = 0;
-      for (; it < m_results.end() && it->description() == description; ++it) {
-        millis += it->millis();
-        ++iterations;
-      }
-      results.add_sub_result(BenchmarkResult(
-                               description,
-                               millis / iterations));
-    } else if (it->has_score()) {
-      results.add_sub_result(BenchmarkResult(
-                               description,
-                               it->score()));
-    }
-  }
-  return results;
+  return m_results;
 }
 
 string Benchmark::current_test_id() const
@@ -54,7 +36,7 @@ string Benchmark::current_test_id() const
 
 void Benchmark::push_result(const BenchmarkResult& result)
 {
-  m_results.push_back(result);
+  m_results.add_sub_result(result);
 }
 
 void Benchmark::push_score(const long score)

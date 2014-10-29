@@ -4,12 +4,11 @@
 #include <memory>
 #include <string>
 
-#include "olaf/parse/sanparser.h"
-
 namespace olaf
 {
 
 class EpdPosition;
+class SanParser;
 
 class EpdParser
 {

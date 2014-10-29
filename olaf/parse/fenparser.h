@@ -3,10 +3,10 @@
 
 #include <string>
 
-#include "olaf/rules/chessboard.h"
-
 namespace olaf
 {
+
+class ChessBoard;
 
 class FenParser
 {

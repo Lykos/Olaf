@@ -1,8 +1,8 @@
 
-#include "bitboardtest.h"
+#include "test/bitboardtest.h"
 #include <QtTest/QTest>
 #include <vector>
-#include "testutil.h"
+#include "test/testutil.h"
 #include "olaf/rules/position.h"
 #include "olaf/rules/bitboard.h"
 

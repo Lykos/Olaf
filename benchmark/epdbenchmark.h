@@ -5,6 +5,7 @@
 #include <QtTest/QTest>
 
 #include "benchmark.h"
+#include "testutil.h"
 #include "autobenchmark.h"
 #include "olaf/search/searcherfactory.h"
 #include "olaf/search/simpletimedsearcher.h"
@@ -19,16 +20,16 @@ class EpdBenchmark : public Benchmark
 {
   Q_OBJECT
 public:
-  EpdBenchmark();
+  explicit EpdBenchmark(const std::string& epd_file);
 
   virtual ~EpdBenchmark();
 
 private:
-  NoThinkingWriter m_no_thinking_writer;
-
-  SearcherFactory m_factory;
+  TestFactoryOwner m_factory_owner;
 
   std::unique_ptr<SimpleTimedSearcher> m_searcher;
+
+  const std::string m_epd_file;
 
 private Q_SLOTS:
   void initTestCase();
@@ -37,8 +38,6 @@ private Q_SLOTS:
 
   void test_epd_data();
 };
-
-DECLARE_BENCHMARK(EpdBenchmark)
 
 } // namespace benchmark
 } // namespace olaf

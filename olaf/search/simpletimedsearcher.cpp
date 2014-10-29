@@ -1,8 +1,11 @@
 #include "olaf/search/simpletimedsearcher.h"
-#include "olaf/search/timestopper.h"
-#include "olaf/search/compositestopper.h"
+
 #include <memory>
 #include <vector>
+
+#include "olaf/search/timestopper.h"
+#include "olaf/search/compositestopper.h"
+#include "olaf/search/searchcontext.h"
 
 using namespace std;
 using namespace chrono;
@@ -31,6 +34,6 @@ SearchResult SimpleTimedSearcher::search(SearchContext* const context)
       break;
   }
   return m_sub_searcher->search(context);
+}
 
 } // namespace olaf
-}

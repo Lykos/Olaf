@@ -29,6 +29,10 @@ typedef Perft::PerftResult PerftResult;
 
 const int c_depth = 4;
 
+PerftBenchmark::PerftBenchmark():
+  Benchmark("Perft")
+{}
+
 void PerftBenchmark::test_perft_data()
 {
   QTest::addColumn<ChessBoard>("board");
@@ -47,9 +51,7 @@ void PerftBenchmark::test_perft()
     return;
   }
 
-  NoThinkingWriter no_thinking_writer;
-  SearcherFactory factory(&no_thinking_writer);
-  unique_ptr<Perft> perft = factory.perft();
+  unique_ptr<Perft> perft = m_factory_owner.factory.perft();
 
   // perft->debug_perft(c_depth, board);
   const PerftResult& expected_result = expected_results.at(c_depth);
@@ -58,7 +60,9 @@ void PerftBenchmark::test_perft()
     actual_result = perft->perft(c_depth, board);
   }
   QASSERT_THAT(actual_result, Eq(expected_result));
+}
+
+DECLARE_BENCHMARK(PerftBenchmark)
 
 } // namespace benchmark
 } // namespace olaf
-}

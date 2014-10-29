@@ -27,6 +27,8 @@ XBoardReader::XBoardReader(XBoardWriter* const writer,
 
 void XBoardReader::run()
 {
+  m_engine_helper->request_reset();
+  m_engine_helper->request_myturn(false);
   while (!m_in->eof()) {
     string message;
     getline(*m_in, message);
@@ -55,7 +57,6 @@ void XBoardReader::run()
       m_engine_helper->request_force(true);
       m_engine_helper->request_reset();
       m_engine_helper->request_deferred_pondering();
-      m_engine_helper->request_myturn(false);
       m_engine_helper->request_force(false);
     } else if (command == "random") {
     } else if (command == "force") {
@@ -84,6 +85,8 @@ void XBoardReader::run()
       m_engine_helper->request_pondering(true);
     } else if (command == "name") {
     } else if (command == "ics") {
+    } else if (command == "hint") {
+    } else if (command == "bk") {
     } else if (command == "time") {
       if (!check_args(tokens, 1)) {
         continue;
@@ -92,14 +95,62 @@ void XBoardReader::run()
       int centiseconds;
       iss >> centiseconds;
       m_engine_helper->request_set_time(milliseconds(centiseconds * 10));
+    } else if (command == "sd") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      istringstream iss(tokens.at(1));
+      int depth;
+      iss >> depth;
+      m_engine_helper->request_set_depth(depth);
+    } else if (command == "nps") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      istringstream iss(tokens.at(1));
+      int nps;
+      iss >> nps;
+      m_engine_helper->request_set_depth(nps);
     } else if (command == "otim") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      istringstream iss(tokens.at(1));
+      int centiseconds;
+      iss >> centiseconds;
+      m_engine_helper->request_set_opponent_time(milliseconds(centiseconds * 10));
     } else if (command == "computer") {
+    } else if (command == "draw") {
+    } else if (command == "analyze") {
+      m_engine_helper->request_analyze(true);
+    } else if (command == "exit") {
+      m_engine_helper->request_analyze(false);
+    } else if (command == "undo") {
+      if (!m_engine_helper->request_undo()) {
+        m_writer->error(XBoardWriter::ErrorType::NO_UNDOABLE_MOVES, "It is not possible to undo a move.");
+      }
+    } else if (command == "remove") {
+      if (!m_engine_helper->request_undo(2)) {
+        m_writer->error(XBoardWriter::ErrorType::NO_UNDOABLE_MOVES, "It is not possible to undo two moves.");
+      }
+    } else if (command == "result") {
+      m_engine_helper->request_force(true);
     } else if (command == "level") {
       // TODO
     } else if (command == "post") {
       m_engine_helper->post(true);
     } else if (command == "nopost") {
       m_engine_helper->post(false);
+    } else if (command == "variant") {
+      if (!check_args(tokens, 1)) {
+        continue;
+      }
+      const string& variant = tokens.at(1);
+      if (variant != "normal") {
+        ostringstream oss;
+        oss << "Unknown variant \"" << variant << "\"";
+        m_writer->error(XBoardWriter::ErrorType::UNKNOWN_VARIANT, oss.str());
+      }
     } else if (command == "setboard") {
       ostringstream oss;
       int size = tokens.size();
@@ -111,7 +162,7 @@ void XBoardReader::run()
         }
       }
       const string fen = oss.str();
-      if (!m_engine_helper->set_fen(fen)) {
+      if (!m_engine_helper->request_set_fen(fen)) {
         m_writer->error(XBoardWriter::ErrorType::INVALID_FEN, fen);
       }
     } else if (command == "usermove") {
@@ -188,19 +239,21 @@ void XBoardReader::handle_move(const std::string& move)
 
 void XBoardReader::write_features() const
 {
-  m_writer->feature("ping", true);
-  m_writer->feature("setboard", true);
-  m_writer->feature("usermove", true);
-  m_writer->feature("myname", "Olaf");
-  m_writer->feature("variants", "normal");
-  m_writer->feature("colors", false);
-  m_writer->feature("ics", true);
-  m_writer->feature("name", true);
-  m_writer->feature("nps", false);
-  m_writer->feature("pause", true);
-  m_writer->feature("debug", true);
-  m_writer->feature("sigint", false);
-  m_writer->feature("done", true);
+  m_writer->feature_bool("ping", true);
+  m_writer->feature_bool("setboard", true);
+  m_writer->feature_bool("usermove", true);
+  m_writer->feature_string("myname", "olaf");
+  m_writer->feature_string("variants", "normal");
+  m_writer->feature_bool("colors", false);
+  m_writer->feature_bool("ics", true);
+  m_writer->feature_bool("name", true);
+  m_writer->feature_bool("nps", false);
+  m_writer->feature_bool("analyze", true);
+  m_writer->feature_bool("pause", true);
+  m_writer->feature_bool("debug", true);
+  m_writer->feature_bool("sigint", false);
+  m_writer->feature_bool("done", true);
+  m_writer->feature_bool("playother", true);
 }
 
 bool XBoardReader::check_args(const vector<string>& tokens,

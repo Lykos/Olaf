@@ -2,9 +2,13 @@
 #define NOTHINKINGWRITER_H
 
 #include "olaf/search/thinkingwriter.h"
+#include "olaf/search/searcher.h"
 
 namespace olaf
 {
+
+class ChessBoard;
+class SearchResult;
 
 class NoThinkingWriter : public ThinkingWriter
 {
@@ -12,7 +16,7 @@ public:
   void output(const ChessBoard& board,
               const SearchResult& result,
               const std::chrono::milliseconds& time,
-              int depth) override;
+              Searcher::depth_t depth) override;
 };
 
 } // namespace olaf

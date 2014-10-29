@@ -8,6 +8,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/parse/epdposition.h"
 #include "olaf/parse/epdparser.h"
+#include "olaf/parse/sanparser.h"
 #include "olaf/search/searcherfactory.h"
 #include "olaf/search/nothinkingwriter.h"
 
@@ -17,22 +18,51 @@ namespace olaf
 {
 namespace benchmark
 {
+static const char c_config[] =
+    "search:\n"
+    "  time_millis: 2000\n"
+    "  min_depth: 1\n"
+    "  sequential_depth: 2\n"
+    "transposition_table:\n"
+    "  size: 65536\n";
 
 ChessBoard parse_fen(const string& fen)
 {
   ChessBoard board;
+#ifdef NDEBUG
+  FenParser::parse(fen, &board);
+#else
   assert(FenParser::parse(fen, &board));
+#endif
   return board;
+}
+
+TestFactoryOwner::TestFactoryOwner(const Config& config2):
+  config(config2),
+  factory(&no_thinking_writer, &config)
+{}
+
+TestFactoryOwner::TestFactoryOwner():
+  TestFactoryOwner(test_config())
+{}
+
+Config test_config()
+{
+  return Config(c_config);
 }
 
 EpdPosition parse_epd(const string& epd)
 {
   EpdPosition position;
-  NoThinkingWriter no_thinking_writer;
-  SearcherFactory factory(&no_thinking_writer);
-  assert(factory.epd_parser()->parse(epd, &position));
+  static const TestFactoryOwner factory_owner;
+  auto parser = factory_owner.factory.epd_parser();
+#ifdef NDEBUG
+  parser->parse(epd, &position);
+#else
+  assert(parser->parse(epd, &position));
+#endif
   return position;
+}
 
 } // namespace benchmark
 } // namespace olaf
-}

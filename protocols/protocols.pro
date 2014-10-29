@@ -17,49 +17,54 @@ SOURCES += \
     xboardwriter.cpp \
     xboardreader.cpp \
     enginestate.cpp \
-    moveevent.cpp \
-    forceflipevent.cpp \
-    ponderingflipevent.cpp \
-    myturnflipevent.cpp \
-    deferredponderingevent.cpp \
-    pingevent.cpp \
-    boardstate.cpp \
-    engineevent.cpp \
-    protocolwriter.cpp \
-    settimeevent.cpp \
-    engine.cpp \
-    engineeventhelper.cpp \
+    event/undoevent.cpp \
+    event/settimeevent.cpp \
+    event/setnpsevent.cpp \
+    event/setdepthevent.cpp \
+    event/setboardevent.cpp \
+    event/ponderingflipevent.cpp \
+    event/pingevent.cpp \
+    event/myturnflipevent.cpp \
+    event/moveevent.cpp \
+    event/forceflipevent.cpp \
+    event/engineevent.cpp \
+    event/deferredponderingevent.cpp \
     simplethinkingwriter.cpp \
-    setboardevent.cpp \
-    protocolreader.cpp
+    protocolwriter.cpp \
+    protocolreader.cpp \
+    engineeventhelper.cpp \
+    engine.cpp \
+    boardstate.cpp \
+    event/setanalyzeevent.cpp
 
 HEADERS +=\
     xboardwriter.h \
     xboardreader.h \
     result.h \
+    event/undoevent.h \
+    event/settimeevent.h \
+    event/setnpsevent.h \
+    event/setdepthevent.h \
+    event/setboardevent.h \
+    event/ponderingflipevent.h \
+    event/pingevent.h \
+    event/myturnflipevent.h \
+    event/moveevent.h \
+    event/forceflipevent.h \
+    event/engineevent.h \
+    event/deferredponderingevent.h \
+    simplethinkingwriter.h \
     protocolwriter.h \
     protocolreader.h \
     enginestate.h \
-    engineevent.h \
-    moveevent.h \
-    forceflipevent.h \
-    ponderingflipevent.h \
-    myturnflipevent.h \
-    deferredponderingevent.h \
-    pingevent.h \
-    boardstate.h \
-    settimeevent.h \
     engineeventhelper.h \
     engine.h \
-    simplethinkingwriter.h \
-    setboardevent.h
-
-headers.files = $$HEADERS
-headers.path = /usr/local/include/OlafProtocols
+    boardstate.h \
+    event/setanalyzeevent.h
 
 target.path = /usr/local/lib
 
-INSTALLS += target headers
+INSTALLS += target
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf

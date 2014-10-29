@@ -1,6 +1,7 @@
 #include <memory>
 #include <iostream>
 #include <fstream>
+#include <streambuf>
 #include <istream>
 #include <ostream>
 #include <gflags/gflags.h>
@@ -21,6 +22,16 @@ using namespace olaf;
 DEFINE_string(input_file, "", "If this is non-empty, the input will be read from here instead of stdin.");
 
 DEFINE_string(output_file, "", "If this is non-empty, the output will be written here instead of stdout.");
+
+DEFINE_string(config_file, "/usr/local/share/olaf/config.yml", "Config file for the engine.");
+
+Config read_config(const string& config_file)
+{
+  std::ifstream file(config_file.c_str());
+  std::string config_string((std::istreambuf_iterator<char>(file)),
+                             std::istreambuf_iterator<char>());
+  return Config(config_string);
+}
 
 int main(int argc, char* argv[])
 {
@@ -52,7 +63,8 @@ int main(int argc, char* argv[])
     return 1;
   }
   SimpleThinkingWriter thinking_writer(writer.get());
-  SearcherFactory factory(&thinking_writer);
+  const Config config = read_config(FLAGS_config_file);
+  SearcherFactory factory(&thinking_writer, &config);
   auto searcher = factory.timed_searcher();
   BoardState board_state;
   unique_ptr<ProtocolReader> reader;

@@ -4,6 +4,9 @@
 #include <algorithm>
 
 #include "olaf/rules/pieceset.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/search/searcher.h"
+#include "protocols/protocolwriter.h"
 
 using namespace std;
 using namespace chrono;
@@ -15,7 +18,10 @@ SimpleThinkingWriter::SimpleThinkingWriter(ProtocolWriter* const writer):
   m_writer(writer)
 {}
 
-void SimpleThinkingWriter::output(const ChessBoard &board, const SearchResult &result, const milliseconds &time, int depth)
+void SimpleThinkingWriter::output(const ChessBoard& board,
+                                  const SearchResult& result,
+                                  const milliseconds& time,
+                                  const Searcher::depth_t depth)
 {
   if (!post()) {
     return;

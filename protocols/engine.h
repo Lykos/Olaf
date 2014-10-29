@@ -1,10 +1,10 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "protocolwriter.h"
-#include "engineevent.h"
-#include "enginestate.h"
-#include "boardstate.h"
+#include "protocols/protocolwriter.h"
+#include "protocols/event/engineevent.h"
+#include "protocols/enginestate.h"
+#include "protocols/boardstate.h"
 #include "olaf/search/searcher.h"
 #include "olaf/search/forcedstopper.h"
 #include <memory>
@@ -46,10 +46,6 @@ private:
   std::condition_variable m_condition_variable;
 
   EngineState m_state;
-
-  std::unique_ptr<ForcedStopper> m_forced_stopper;
-
-  std::unique_ptr<ForcedStopper> m_weak_stopper;
 
   ProtocolWriter* const m_writer;
 

@@ -6,9 +6,9 @@
 #include <istream>
 #include <vector>
 
-#include "engineeventhelper.h"
-#include "protocolreader.h"
-#include "xboardwriter.h"
+#include "protocols/engineeventhelper.h"
+#include "protocols/protocolreader.h"
+#include "protocols/xboardwriter.h"
 
 namespace olaf
 {

@@ -1,10 +1,11 @@
 #ifndef COMPOSITESTOPPER_H
 #define COMPOSITESTOPPER_H
 
-#include "olaf/search/stopper.h"
 #include <vector>
 #include <initializer_list>
 #include <memory>
+
+#include "olaf/search/stopper.h"
 
 namespace olaf
 {

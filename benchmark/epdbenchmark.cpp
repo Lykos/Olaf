@@ -1,5 +1,6 @@
 #include "epdbenchmark.h"
 
+#include <cctype>
 #include <cassert>
 #include <fstream>
 #include <QtTest/QTest>
@@ -8,7 +9,10 @@
 #include <sstream>
 
 #include "olaf/parse/epdposition.h"
+#include "olaf/parse/epdparser.h"
+#include "olaf/parse/sanparser.h"
 #include "olaf/search/nostopper.h"
+#include "olaf/search/searchcontext.h"
 #include "testutil.h"
 
 using namespace std;
@@ -23,11 +27,10 @@ namespace benchmark
 {
 
 static const milliseconds c_max_time(120000);
-static const string c_epd_extension = ".epd";
-static const string c_epd_directory = "epd_files";
 
 static vector<string> list_epd_files(const string& dir_name)
 {
+  static const string c_epd_extension = ".epd";
   vector<string> result;
   DIR* const dir = opendir(dir_name.c_str());
   if (dir) {
@@ -44,8 +47,46 @@ static vector<string> list_epd_files(const string& dir_name)
   return result;
 }
 
-EpdBenchmark::EpdBenchmark():
-  m_factory(&m_no_thinking_writer)
+static vector<unique_ptr<EpdBenchmark>> create_epd_benchmarks()
+{
+  vector<unique_ptr<EpdBenchmark>> result;
+  static const string c_epd_directory = "epd_files";
+  for (const string& epd_file : list_epd_files(c_epd_directory)) {
+    result.emplace_back(new EpdBenchmark(epd_file));
+    auto_benchmark::add_benchmark(result.back().get());
+  }
+  return result;
+}
+
+static const vector<unique_ptr<EpdBenchmark>> epd_benchmarks = create_epd_benchmarks();
+
+static string file_name_to_class_name(const string& name)
+{
+  static const char c_underscore = '_';
+  static const char c_slash = '/';
+  const auto slash_index = name.rfind(c_slash);
+  auto it = name.begin() + (slash_index == string::npos ? 0 : slash_index + 1);
+  auto end = name.end();
+  string result;
+  for (; it != end && !isalpha(*it); ++it);
+  if (it != end) {
+    result.push_back(toupper(*it));
+  }
+  for (; it != end; ++it) {
+    auto next = it + 1;
+    if (next != end && *next == c_underscore) {
+      result.push_back(toupper(*it));
+      ++it; // Overjump next.
+    } else if (isalpha(*it)) {
+      result.push_back(*it);
+    }
+  }
+  return result;
+}
+
+EpdBenchmark::EpdBenchmark(const string& epd_file):
+  Benchmark(file_name_to_class_name(epd_file)),
+  m_epd_file(epd_file)
 {}
 
 EpdBenchmark::~EpdBenchmark()
@@ -53,7 +94,8 @@ EpdBenchmark::~EpdBenchmark()
 
 void EpdBenchmark::initTestCase()
 {
-  m_searcher.reset(new SimpleTimedSearcher(m_factory.iterative_searcher(), c_max_time));
+  cout << "initialized" << endl;
+  m_searcher.reset(new SimpleTimedSearcher(m_factory_owner.factory.iterative_searcher(), c_max_time));
 }
 
 void EpdBenchmark::test_epd()
@@ -68,7 +110,9 @@ void EpdBenchmark::test_epd()
   context.weak_stopper = &stopper;
   TranspositionTable transposition_table(0x1000);
   context.transposition_table = &transposition_table;
-  Move move = m_searcher->search(&context).main_variation.back();
+  const vector<Move> main_variation = m_searcher->search(&context).main_variation;
+  QVERIFY(!main_variation.empty());
+  Move move = main_variation.back();
   long score = 0;
   auto ContainsMove = Matches(Contains(move));
   if (!position.best_moves.empty()) {
@@ -87,22 +131,19 @@ void EpdBenchmark::test_epd()
 void EpdBenchmark::test_epd_data()
 {
   QTest::addColumn<EpdPosition>("position");
-
-  for (const string& epd_file : list_epd_files(c_epd_directory)) {
-    std::unique_ptr<EpdParser> parser = m_factory.epd_parser();
-    ifstream file(epd_file);
-    string line;
-    int i = 1;
-    while (getline(file, line)) {
-      EpdPosition position;
-      assert(parser->parse(line, &position));
-      ostringstream oss;
-      oss << epd_file << " " << position.id.c_str();
-      QTest::newRow(oss.str().c_str()) << position;
-      ++i;
-    }
+  std::unique_ptr<EpdParser> parser = m_factory_owner.factory.epd_parser();
+  ifstream file(m_epd_file);
+  string line;
+  int i = 1;
+  while (getline(file, line)) {
+    EpdPosition position;
+    assert(parser->parse(line, &position));
+    ostringstream oss;
+    oss << position.id.c_str();
+    QTest::newRow(oss.str().c_str()) << position;
+    ++i;
   }
+}
 
 } // namespace benchmark
 } // namespace olaf
-}

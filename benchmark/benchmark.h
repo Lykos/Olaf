@@ -19,9 +19,11 @@ class Benchmark : public QObject
   Q_OBJECT
 
 public:
+  explicit Benchmark(const std::string& name);
+
   virtual ~Benchmark();
 
-  CompositeBenchmarkResult<BenchmarkResult> accumulate_results() const;
+  CompositeBenchmarkResult<BenchmarkResult> results() const;
 
   virtual std::string current_test_id() const;
 
@@ -49,7 +51,7 @@ protected:
   };
 
 private:
-  std::vector<BenchmarkResult> m_results;
+  CompositeBenchmarkResult<BenchmarkResult> m_results;
 };
 
 #define OLAF_BENCHMARK for (PerformanceMeasurer m(this); !m.done(); m.next())

@@ -6,6 +6,7 @@
 
 #include "autotest.h"
 #include "olaf/parse/sanparser.h"
+#include "testutil.h"
 
 namespace olaf
 {
@@ -16,6 +17,8 @@ class SanParserTest : public QObject
 {
   Q_OBJECT
 private:
+  TestFactoryOwner m_factory_owner;
+
   std::unique_ptr<SanParser> m_parser;
 
 private Q_SLOTS:

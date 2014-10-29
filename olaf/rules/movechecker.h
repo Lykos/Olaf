@@ -52,9 +52,9 @@ public:
   }
 
   /**
-   * @brief is_in_check returns true if the king of the given color is currently in check.
+   * @brief is_in_check returns true if the side to move can kill the opposing king.
    */
-  static bool is_in_check(const ChessBoard& board, Color color);
+  static bool can_kill_king(const ChessBoard& board);
 };
 
 } // namespace olaf

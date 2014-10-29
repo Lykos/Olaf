@@ -69,9 +69,11 @@ bool parse_move_numbers(const string::const_iterator& end,
                         ChessBoard* const new_board) {
   CONSUME(c_space, *it, end);
   CHECK_NOT_END(*it, end);
-  if (!parse_leading_int(end, it, nullptr)) {
+  int reversible_plies;
+  if (!parse_leading_int(end, it, &reversible_plies)) {
     return false;
   }
+  new_board->reversible_plies(reversible_plies);
   CONSUME(c_space, *it, end);
   int turn_number;
   if (!parse_leading_int(end, it, &turn_number)) {
@@ -242,8 +244,7 @@ string FenParser::serialize(const ChessBoard& board)
     result << c_dash;
   }
   result << c_space;
-  // TODO Handle 50 moves rule.
-  result << 0;
+  result << board.reversible_plies();
   result << c_space;
   result << board.turn_number();
   return result.str();

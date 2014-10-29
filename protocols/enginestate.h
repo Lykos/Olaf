@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "olaf/search/searchcontext.h"
+#include "olaf/search/forcedstopper.h"
 #include "olaf/transposition_table/transpositiontable.h"
 
 namespace olaf
@@ -22,35 +23,66 @@ public:
   explicit EngineState(std::unique_ptr<TranspositionTable> transposition_table,
                        BoardState* board_state);
 
-  bool pondering() const;
+  inline bool pondering() const { return m_pondering && !m_deferred_pondering; }
 
-  void pondering(bool value);
+  inline void pondering(const bool value) { m_pondering = value; }
 
-  bool my_turn() const;
+  inline bool my_turn() const { return m_my_turn; }
 
-  void my_turn(bool value);
+  inline void my_turn(const bool value) { m_my_turn = value; }
 
-  void flip_turn();
+  inline void flip_turn() { m_deferred_pondering = false; m_my_turn = !m_my_turn; }
 
-  bool force() const;
+  inline bool force() const { return m_force; }
 
-  void force(bool value);
+  inline void force(const bool value) { m_force = value; }
 
-  void deferred_pondering();
+  inline void deferred_pondering() { m_deferred_pondering = true; m_pondering = true; }
 
-  std::chrono::milliseconds time() const;
+  inline std::chrono::milliseconds my_time() const { return m_my_time; }
 
-  void time(const std::chrono::milliseconds& time);
+  inline void my_time(const std::chrono::milliseconds& time) { m_my_time = time; }
 
-  const BoardState& board_state() const;
+  inline std::chrono::milliseconds opponent_time() const { return m_opponent_time; }
 
-  BoardState& board_state();
+  inline void opponent_time(const std::chrono::milliseconds& time) { m_opponent_time = time; }
 
-  SearchContext create_search_context(const Stopper* forced_stopper,
-                                      const Stopper* weak_stopper) const;
+  inline bool analyze() const { return m_analyze; }
+
+  inline void analyze(const bool value) { m_analyze = value; }
+
+  inline bool use_nps() const { return m_use_nps; }
+
+  inline void use_nps(const bool value) { m_use_nps = value; }
+
+  inline bool nps() const { return m_nps; }
+
+  inline void nps(const bool value) { m_nps = value; }
+
+  inline bool use_depth() const { return m_use_depth; }
+
+  inline void use_depth(const int value) { m_use_depth = value; }
+
+  inline bool depth() const { return m_depth; }
+
+  inline void depth(const int value) { m_depth = value; }
+
+  inline const BoardState& board_state() const { return *m_board_state; }
+
+  inline BoardState& board_state() { return *m_board_state; }
+
+  SearchContext create_search_context();
+
+  inline void stop() { if (m_forced_stopper) { m_forced_stopper->request_stop(); } }
+
+  inline void weak_stop() { if (m_weak_stopper) { m_weak_stopper->request_stop(); } }
 
 private:
   std::unique_ptr<TranspositionTable> m_transposition_table;
+
+  std::unique_ptr<ForcedStopper> m_forced_stopper;
+
+  std::unique_ptr<ForcedStopper> m_weak_stopper;
 
   BoardState* const m_board_state;
 
@@ -62,8 +94,19 @@ private:
 
   bool m_deferred_pondering = true;
 
-  std::chrono::milliseconds m_time;
+  bool m_use_nps = false;
 
+  bool m_use_depth = false;
+
+  bool m_analyze;
+
+  int m_depth;
+
+  int m_nps;
+
+  std::chrono::milliseconds m_my_time;
+
+  std::chrono::milliseconds m_opponent_time;
 };
 
 } // namespace olaf

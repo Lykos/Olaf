@@ -4,14 +4,12 @@
 #include <memory>
 
 #include "olaf/transposition_table/lrucache.h"
-#include "olaf/rules/position.h"
-#include "olaf/rules/piece.h"
+#include "olaf/evaluation/positionevaluator.h"
+#include "olaf/search/searcher.h"
 #include "olaf/rules/move.h"
 
 namespace olaf
 {
-
-class Move;
 
 enum class NodeType
 {
@@ -22,11 +20,25 @@ enum class NodeType
 
 struct TranspositionTableEntry
 {
-  int depth;
-  int score;
+  /**
+   * @brief depth of the search beyond the current position.
+   *        This should be used to determine how valuable a result is.
+   */
+  Searcher::depth_t depth;
+
+  /**
+   * @brief result_depth this is the actual depth of the node for which
+   *        this score was returned. This can be more than depth because
+   *        of quiescent search. It should only be used for special interior
+   *        node detection.
+   */
+  Searcher::depth_t result_depth;
+
+  PositionEvaluator::score_t score;
   NodeType node_type;
-  bool has_best_move;
   Move best_move;
+  bool has_best_move;
+  bool terminal;
 };
 
 extern template class LruCache<TranspositionTableEntry>;

@@ -1,8 +1,9 @@
 #ifndef INCREMENTALEVALUATOR_H
 #define INCREMENTALEVALUATOR_H
 
-#include "olaf/evaluation/positionevaluator.h"
 #include <vector>
+
+#include "olaf/evaluation/positionevaluator.h"
 
 namespace olaf
 {
@@ -12,11 +13,7 @@ class ChessBoard;
 class IncrementalEvaluator : public PositionEvaluator
 {
 public:
-  score_t evaluate(const ChessBoard& board) override;
-
-private:
-  std::vector<int> m_piece_values;
-
+  score_t evaluate(SearchState* state, SearchContext* context) override;
 };
 
 } // namespace olaf

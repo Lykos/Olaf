@@ -1,5 +1,6 @@
 #include "olaf/rules/chessboard.h"
 
+#include <algorithm>
 #include <cassert>
 
 using namespace std;
@@ -48,6 +49,7 @@ ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
 {
   ZobristHash::calculate(this);
   IncrementalUpdater::calculate(this);
+  m_hashes.push_back(m_zobrist_hash);
 }
 
 const ColorBoard& ChessBoard::color_board(Color color) const
@@ -84,18 +86,9 @@ void ChessBoard::turn_color(const Color new_color)
   }
 }
 
-int ChessBoard::turn_number() const
-{
-  return m_turn_number;
-}
-
-void ChessBoard::turn_number(const int new_turn_number)
-{
-  m_turn_number = new_turn_number;
-}
-
 void ChessBoard::next_turn()
 {
+  m_draw_valid = false;
   m_opponents_valid = false;
   m_friends_valid = false;
   m_occupied_valid = false;
@@ -104,18 +97,21 @@ void ChessBoard::next_turn()
   if (m_turn_color == Color::White) {
     ++m_turn_number;
   }
+  m_hashes.push_back(m_zobrist_hash);
 }
 
 void ChessBoard::previous_turn()
 {
-  m_opponents_valid = false;
-  m_friends_valid = false;
-  m_occupied_valid = false;
-  m_turn_color = other_color(m_turn_color);
-  ZobristHash::update_turn_color(this);
-  if (m_turn_color == Color::Black) {
+  m_hashes.pop_back();
+  if (m_turn_color == Color::White) {
     --m_turn_number;
   }
+  ZobristHash::update_turn_color(this);
+  m_turn_color = other_color(m_turn_color);
+  m_occupied_valid = false;
+  m_friends_valid = false;
+  m_opponents_valid = false;
+  m_draw_valid = false;
 }
 
 BitBoard ChessBoard::opponents() const
@@ -160,10 +156,13 @@ bool ChessBoard::occupied(const Position &position) const
   return occupied().get(position);
 }
 
-bool ChessBoard::finished() const
+void ChessBoard::calculate_draw() const
 {
-  // TODO 50 moves rule, repetition
-  return m_color_boards[0].finished() || m_color_boards[1].finished();
+  static const int_fast8_t c_draw_reversible_plies = 50;
+  static const int_fast8_t c_draw_repetitions = 3;
+  m_draw_valid = true;
+  m_draw = m_reversible_plies >= c_draw_reversible_plies
+      || count(m_hashes.begin(), m_hashes.end(), m_zobrist_hash) >= c_draw_repetitions;
 }
 
 void ChessBoard::add_piece(const Color color,
@@ -216,6 +215,6 @@ ChessBoard create_empty_board()
       ColorBoard::create_empty_color_board(),
       ColorBoard::create_empty_color_board()}};
   return ChessBoard(colors);
+}
 
 } // namespace olaf
-}

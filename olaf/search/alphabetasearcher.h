@@ -1,16 +1,18 @@
 #ifndef ALPHABETASEARCHER_H
 #define ALPHABETASEARCHER_H
 
-#include "olaf/search/stopper.h"
-#include "olaf/search/searcher.h"
-#include "olaf/search/movegenerator.h"
-#include "olaf/search/moveorderer.h"
-#include "olaf/rules/move.h"
 #include <memory>
 #include <vector>
 
+#include "olaf/search/searcher.h"
+#include "olaf/rules/move.h"
+#include "olaf/search/searchresult.h"
+
 namespace olaf
 {
+
+class SearchContext;
+class MoveGenerator;
 
 /**
  * @brief The RecursiveSearcher class is an abstract searcher which provides
@@ -25,7 +27,7 @@ public:
 
   AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
                     std::unique_ptr<AlphaBetaSearcher> sub_searcher,
-                    int sub_searcher_depth,
+                    depth_t sub_searcher_depth,
                     bool ignore_depth);
 
   virtual ~AlphaBetaSearcher();
@@ -42,9 +44,9 @@ public:
    *        for each recursive call.
    */
   struct SearchState {
-    int alpha;
-    int beta;
-    int depth;
+    score_t alpha;
+    score_t beta;
+    depth_t depth;
   };
 
   /**

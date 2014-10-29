@@ -1,13 +1,14 @@
 #ifndef MOVEGENERATOR_H
 #define MOVEGENERATOR_H
 
-#include "olaf/rules/move.h"
-#include "olaf/rules/chessboard.h"
-#include "olaf/rules/piece.h"
 #include <vector>
+
+#include "olaf/rules/move.h"
 
 namespace olaf
 {
+
+class ChessBoard;
 
 /**
  * @brief The MoveGenerator class is responsible for generating moves in a position for

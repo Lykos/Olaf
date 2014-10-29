@@ -52,6 +52,9 @@ vector<Move> OncePiece::moves(const Position& source,
                               const ChessBoard& board) const
 {
   vector<Move> result;
+  if (board.finished()) {
+    return result;
+  }
   for (const PositionDelta& direction : m_directions) {
     if (source.in_bounds(direction)) {
       Position destination = source + direction;
@@ -71,12 +74,9 @@ vector<Move> OncePiece::moves(const Position& source,
   return result;
 }
 
-bool OncePiece::can_move(const IncompleteMove incomplete_move,
-                         const ChessBoard& board) const
+bool OncePiece::could_move(const IncompleteMove incomplete_move,
+                           const ChessBoard& board) const
 {
-  if (!Piece::can_move(incomplete_move, board)) {
-    return false;
-  }
   const Position dst(incomplete_move.destination());
   if (is_castling_move(incomplete_move, board)) {
     if (dst.column() == Position::c_queens_bishop_column) {

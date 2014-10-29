@@ -4,10 +4,13 @@
 #include <memory>
 
 #include "olaf/search/alphabetasearcher.h"
-#include "olaf/evaluation/positionevaluator.h"
+#include "olaf/search/searchresult.h"
 
 namespace olaf
 {
+
+class MoveGenerator;
+class PositionEvaluator;
 
 class Quiescer : public AlphaBetaSearcher
 {
@@ -15,7 +18,7 @@ public:
   Quiescer(std::unique_ptr<PositionEvaluator> evaluator,
            std::unique_ptr<MoveGenerator> generator,
            std::unique_ptr<AlphaBetaSearcher> sub_searcher,
-           int sub_searcher_depth,
+           depth_t sub_searcher_depth,
            bool ignore_depth);
 
   SearchResult alpha_beta(SearchState* state,

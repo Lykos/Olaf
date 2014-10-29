@@ -31,15 +31,15 @@ constexpr bool operator !=(BitBoard, BitBoard);
  */
 class BitBoard
 {
-  friend constexpr BitBoard operator|(BitBoard, BitBoard);
+  friend constexpr BitBoard operator |(BitBoard, BitBoard);
 
-  friend constexpr BitBoard operator^(BitBoard, BitBoard);
+  friend constexpr BitBoard operator ^(BitBoard, BitBoard);
 
-  friend constexpr BitBoard operator&(BitBoard, BitBoard);
+  friend constexpr BitBoard operator &(BitBoard, BitBoard);
 
-  friend constexpr bool operator==(BitBoard, BitBoard);
+  friend constexpr bool operator ==(BitBoard, BitBoard);
 
-  friend constexpr bool operator!=(BitBoard, BitBoard);
+  friend constexpr bool operator !=(BitBoard, BitBoard);
 
 public:
   static const uint_fast8_t c_bitboard_size = Position::c_column_size * Position::c_row_size;
@@ -50,6 +50,8 @@ public:
   constexpr BitBoard(bitboard_t bits = 0): m_bits (bits) {}
 
   constexpr BitBoard(const Position& position): m_bits (1ull << index(position)) {}
+
+  constexpr BitBoard operator -() const { return BitBoard(-m_bits); }
 
   /**
    * @brief index returns the index that has to be used to access the bit of this position
@@ -105,27 +107,27 @@ private:
   bitboard_t m_bits;
 };
 
-constexpr BitBoard operator|(BitBoard a, BitBoard b)
+constexpr BitBoard operator |(BitBoard a, BitBoard b)
 {
   return BitBoard(a.m_bits | b.m_bits);
 }
 
-constexpr BitBoard operator^(BitBoard a, BitBoard b)
+constexpr BitBoard operator ^(BitBoard a, BitBoard b)
 {
   return BitBoard(a.m_bits ^ b.m_bits);
 }
 
-constexpr BitBoard operator&(BitBoard a, BitBoard b)
+constexpr BitBoard operator &(BitBoard a, BitBoard b)
 {
   return BitBoard(a.m_bits & b.m_bits);
 }
 
-constexpr bool operator==(BitBoard a, BitBoard b)
+constexpr bool operator ==(BitBoard a, BitBoard b)
 {
   return a.m_bits == b.m_bits;
 }
 
-constexpr bool operator!=(BitBoard a, BitBoard b)
+constexpr bool operator !=(BitBoard a, BitBoard b)
 {
   return a.m_bits != b.m_bits;
 }

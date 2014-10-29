@@ -1,11 +1,10 @@
 #ifndef NEGAMAXER_H
 #define NEGAMAXER_H
 
+#include <memory>
+
 #include "olaf/search/alphabetasearcher.h"
 #include "olaf/search/searchresult.h"
-#include "olaf/search/movegenerator.h"
-#include "olaf/search/moveorderer.h"
-#include <memory>
 
 namespace olaf
 {
