@@ -56,6 +56,10 @@ DEPENDPATH += $$PWD/../../../../Downloads/gmock-1.7.0/gtest/include
 
 PRE_TARGETDEPS += $$PWD/../../../../Downloads/gmock-1.7.0/build/libgmock.a
 
+OTHER_FILES += \
+    epd_files/* \
+    ../resources/config.yml
+
 copy_epd_files.commands = $(COPY_DIR) $$PWD/epd_files $$OUT_PWD
 first.depends = $(first) copy_epd_files
 export(first.depends)

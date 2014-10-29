@@ -116,8 +116,14 @@ HEADERS += \
     rules/magicnumbers.h \
     rules/magicmoves.h
 
+OTHER_FILES += \
+    ../resources/move_table.bin
+
+moves.path = /usr/local/share/olaf
+moves.files = $$OTHER_FILES
+
 target.path = /usr/local/lib
 
-INSTALLS += target
+INSTALLS += target moves
 
 LIBS += -lyaml-cpp
