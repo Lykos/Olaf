@@ -17,6 +17,6 @@ void ThinkingWriter::post(const bool value)
 bool ThinkingWriter::post() const
 {
   return m_post;
+}
 
 } // namespace olaf
-}

@@ -12,5 +12,4 @@ CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3
 # CONFIG(release, debug|release) DEFINES += NDEBUG
 
 OTHER_FILES += \
-    ../start_game.txt
     ../epd_files/*
