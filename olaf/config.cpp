@@ -8,49 +8,26 @@ namespace olaf
 
 Config::Config(const std::string& config):
   m_config(YAML::Load(config)),
-  m_evaluation(m_config["evaluation"]),
+  m_evaluation(),
   m_search(m_config["search"]),
   m_transposition_table(m_config["transposition_table"]),
   m_move_ordering(m_config["move_ordering"])
 {}
 
-Config::ConfigSection::ConfigSection(const YAML::Node& node):
-  m_node(node)
+Config::Search::Search(const YAML::Node& node):
+  m_time_millis(node["time_millis"].as<int>()),
+  m_min_depth(node["min_depth"].as<int>()),
+  m_sequential_depth(node["sequential_depth"].as<int>())
 {}
 
-long Config::Search::time_millis() const
-{
-  return m_node["time_millis"].as<long>();
-}
+Config::TranspositionTable::TranspositionTable(const YAML::Node& node):
+  m_size(node["size"].as<int>())
+{}
 
-int Config::Search::min_depth() const
-{
-  return m_node["min_depth"].as<int>();
-}
-
-int Config::Search::sequential_depth() const
-{
-  return m_node["sequential_depth"].as<int>();
-}
-
-long Config::TranspositionTable::size() const
-{
-  return m_node["size"].as<int>();
-}
-
-bool Config::MoveOrdering::use_hash_move() const
-{
-  return m_node["use_hash_move"].as<bool>();
-}
-
-bool Config::MoveOrdering::use_see() const
-{
-  return m_node["use_see"].as<bool>();
-}
-
-bool Config::MoveOrdering::use_killers() const
-{
-  return m_node["use_killers"].as<bool>();
-}
+Config::MoveOrdering::MoveOrdering(const YAML::Node& node):
+  m_use_hash_move(node["use_hash_move"].as<bool>()),
+  m_use_see(node["use_see"].as<bool>()),
+  m_use_killers(node["use_killers"].as<bool>())
+{}
 
 } // namespace olaf

@@ -3,4 +3,8 @@ search:
   min_depth: 1
   sequential_depth: 2
 transposition_table:
-  size: 65536
+  size: 1048576
+move_ordering:
+  use_hash_move: true
+  use_see: true
+  use_killers: true
