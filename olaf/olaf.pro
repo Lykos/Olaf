@@ -114,7 +114,8 @@ HEADERS += \
     evaluation/resultevaluator.h \
     transposition_table/randomnumbers.h \
     rules/magicnumbers.h \
-    rules/magicmoves.h
+    rules/magicmoves.h \
+    search/searchstate.h
 
 OTHER_FILES += \
     ../resources/move_table.bin

@@ -49,6 +49,8 @@ public:
     bool use_hash_move() const;
 
     bool use_see() const;
+
+    bool use_killers() const;
   };
 
   const Evaluation& evaluation() const { return m_evaluation; }

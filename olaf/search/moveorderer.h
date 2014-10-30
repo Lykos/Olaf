@@ -3,6 +3,8 @@
 
 #include "olaf/rules/move.h"
 #include "olaf/search/searcher.h"
+#include "olaf/search/searchstate.h"
+#include "olaf/search/searchcontext.h"
 #include <vector>
 
 namespace olaf
@@ -34,12 +36,16 @@ public:
   MoveOrderer();
 
   void order_moves(const SearchContext& context,
+                   const SearchState& state,
                    std::vector<Move>* moves);
 
 private:
   bool m_use_hash_move = false;
   bool m_use_see = false;
+  bool m_use_killers = false;
 };
+
+static_assert(SearchContext::c_no_killers < 9, "If there are 9 ore more killer, quiet moves could get below bad captures.");
 
 } // namespace olaf
 

@@ -9,6 +9,7 @@
 #include "olaf/search/moveorderer.h"
 #include "olaf/search/quiescer.h"
 #include "olaf/search/perft.h"
+#include "olaf/evaluation/positionevaluator.h"
 #include "olaf/parse/sanparser.h"
 #include "olaf/parse/epdparser.h"
 #include "olaf/transposition_table/transpositiontable.h"

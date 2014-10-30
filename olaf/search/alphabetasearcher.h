@@ -8,6 +8,7 @@
 #include "olaf/rules/move.h"
 #include "olaf/search/moveorderer.h"
 #include "olaf/search/searchresult.h"
+#include "olaf/search/searchstate.h"
 
 namespace olaf
 {
@@ -38,18 +39,6 @@ public:
    * @brief search is the entry point which sets up the initial search state and starts the search.
    */
   SearchResult search(SearchContext* context) final;
-
-  /**
-   * @brief The SearchState struct represents the current state of the search.
-   *        While the SearchContext is used for global things that have to be
-   *        carried around, the SearchState contains parameters that are different
-   *        for each recursive call.
-   */
-  struct SearchState {
-    score_t alpha;
-    score_t beta;
-    depth_t depth;
-  };
 
   /**
    * @brief recurse_alpha_beta should be called internally to recurse to the sub searcher.
@@ -83,7 +72,7 @@ public:
                             SearchContext* context);
 
 protected:
-  std::vector<Move> generate_ordered_moves(const SearchContext& context);
+  std::vector<Move> generate_ordered_moves(const SearchContext& context, const SearchState& state);
 
   /**
    * @brief The ResultReaction enum tells the searcher what to do after update_result has returned.

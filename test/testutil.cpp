@@ -23,7 +23,8 @@ static const char c_config[] =
     "  size: 65536\n"
     "move_ordering:\n"
     "  use_hash_move: true\n"
-    "  use_see: true\n";
+    "  use_see: true\n"
+    "  use_killers: true\n";
 
 ChessBoard parse_fen(const string& fen)
 {

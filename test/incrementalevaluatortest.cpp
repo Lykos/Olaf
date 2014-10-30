@@ -47,7 +47,7 @@ void IncrementalEvaluatorTest::test_evaluate()
   QASSERT_THAT(actual_score, Eq(score));
   SearchContext context;
   context.board = board;
-  AlphaBetaSearcher::SearchState state;
+  SearchState state;
   QASSERT_THAT(m_evaluator.evaluate(&state, &context), Eq(score));
   for (Move& move : m_generator->generate_valid_moves(board)) {
     UndoInfo undo_info;

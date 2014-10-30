@@ -15,7 +15,7 @@ namespace olaf
 SearchResult NegaMaxer::alpha_beta(SearchState* const state,
                                    SearchContext* const context)
 {
-  vector<Move> moves = generate_ordered_moves(*context);
+  vector<Move> moves = generate_ordered_moves(*context, *state);
   if (moves.empty()) {
     return recurse_sub_searcher(*state, context);
   }

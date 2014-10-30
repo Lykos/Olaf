@@ -64,6 +64,10 @@ static inline BitBoard consider_xrays(const BitBoard occupied, const Position& s
           & occupied;
 }
 
+static const Searcher::score_t c_killer_value = -1;
+
+static const Searcher::score_t c_quiet_value = -SearchContext::c_no_killers + c_killer_value;
+
 // static
 Searcher::score_t MoveOrderer::see(const ChessBoard& board,
                                    const Move move,
@@ -128,10 +132,12 @@ MoveOrderer::MoveOrderer()
 
 MoveOrderer::MoveOrderer(const Config& config):
   m_use_hash_move(config.move_ordering().use_hash_move()),
-  m_use_see(config.move_ordering().use_see())
+  m_use_see(config.move_ordering().use_see()),
+  m_use_killers(config.move_ordering().use_killers())
 {}
 
 void MoveOrderer::order_moves(const SearchContext& context,
+                              const SearchState& state,
                               vector<Move>* moves)
 {
   unsigned int start = 0;
@@ -148,11 +154,23 @@ void MoveOrderer::order_moves(const SearchContext& context,
     }
   }
   vector<Searcher::score_t> move_values(moves->size());
+  SeeState see_state;
   if (m_use_see) {
-    SeeState see_state;
     init_see_state(context.board, &see_state);
-    for (unsigned int i = start; i < moves->size(); ++i) {
-      move_values[i] = see(context.board, (*moves)[i], see_state);
+  }
+  for (unsigned int i = start; i < moves->size(); ++i) {
+    move_values[i] = c_quiet_value;
+    const Move move = (*moves)[i];
+    const int depth = context.search_depth - state.depth;
+    if (m_use_see && move.is_capture()) {
+      move_values[i] = see(context.board, move, see_state);
+    } else if (m_use_killers && static_cast<int>(context.killers.size()) > depth) {
+      const SearchContext::Killers& killers = context.killers[depth];
+      for (unsigned int j = 0; j < killers.size(); ++j) {
+        if (move == killers[j]) {
+          move_values[i] = c_killer_value + j;
+        }
+      }
     }
   }
   for (unsigned int i = start; i < moves->size() - 1; ++i) {

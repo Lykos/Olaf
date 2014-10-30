@@ -4,8 +4,7 @@
 #include <memory>
 
 #include "olaf/transposition_table/lrucache.h"
-#include "olaf/evaluation/positionevaluator.h"
-#include "olaf/search/searcher.h"
+#include "olaf/search/searchresult.h"
 #include "olaf/rules/move.h"
 
 namespace olaf
@@ -24,7 +23,7 @@ struct TranspositionTableEntry
    * @brief depth of the search beyond the current position.
    *        This should be used to determine how valuable a result is.
    */
-  Searcher::depth_t depth;
+  SearchResult::depth_t depth;
 
   /**
    * @brief result_depth this is the actual depth of the node for which
@@ -32,9 +31,9 @@ struct TranspositionTableEntry
    *        of quiescent search. It should only be used for special interior
    *        node detection.
    */
-  Searcher::depth_t result_depth;
+  SearchResult::depth_t result_depth;
 
-  PositionEvaluator::score_t score;
+  SearchResult::score_t score;
   NodeType node_type;
   Move best_move;
   bool has_best_move;

@@ -48,4 +48,9 @@ bool Config::MoveOrdering::use_see() const
   return m_node["use_see"].as<bool>();
 }
 
+bool Config::MoveOrdering::use_killers() const
+{
+  return m_node["use_killers"].as<bool>();
+}
+
 } // namespace olaf
