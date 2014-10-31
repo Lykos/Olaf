@@ -17,9 +17,9 @@ struct SearchResult
 
   static const SearchResult& invalid();
 
-  bool valid = true;
-
   int nodes = 0;
+
+  std::vector<Move> main_variation;
 
   // We use -max because numeric_limits is asymmetric and min
   // would not work.
@@ -27,7 +27,9 @@ struct SearchResult
 
   depth_t depth = 0;
 
-  std::vector<Move> main_variation;
+  bool valid = true;
+
+  bool terminal = false;
 };
 
 } // namespace olaf

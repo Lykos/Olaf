@@ -83,12 +83,14 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     return recurse_sub_searcher(current_state, context);
   } else {
     const TranspositionTableEntry* const entry = context->get();
-    if (entry != nullptr && entry->depth >= current_state.depth) {
+    if (entry != nullptr && (entry->depth >= current_state.depth || entry->terminal)) {
       if (entry->node_type == NodeType::PvNode
+          || entry->terminal
           || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
           || (entry->node_type == NodeType::CutNode && entry->score >= current_state.beta)) {
         SearchResult result;
         result.score = entry->score;
+        result.terminal = entry->terminal;
         result.depth = entry->result_depth;
         if (entry->has_best_move) {
           result.main_variation.emplace_back(entry->best_move);
@@ -104,6 +106,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     if (abs(result.score) >= (PositionEvaluator::c_win_score - c_safety_margin)
         && result.depth == context->search_depth - state.depth + 2 && !is_checked(&(context->board))) {
       result.score = PositionEvaluator::c_draw_score;
+      result.terminal = true;
       result.main_variation.clear();
     }
     return result;
@@ -145,6 +148,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   const score_t recursive_score = -recursive_result->score;
   TranspositionTableEntry entry;
   entry.score = recursive_score;
+  entry.terminal = recursive_result->terminal;
   entry.depth = state->depth - 1;
   entry.result_depth = recursive_result->depth;
   if (recursive_result->main_variation.empty()) {
@@ -155,6 +159,7 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   if (recursive_score > state->alpha) {
     result->score = recursive_score;
+    result->terminal = recursive_result->terminal;
     result->depth = recursive_result->depth;
     if (recursive_score >= state->beta) {
       result->main_variation.clear();

@@ -35,6 +35,7 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
   result.depth = context->search_depth - state->depth;
   if (stand_pat >= state->beta) {
     result.score = stand_pat;
+    result.terminal = context->board.finished();
     return result;
   }
   if (state->alpha < stand_pat) {

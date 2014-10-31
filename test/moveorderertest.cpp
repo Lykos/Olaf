@@ -68,11 +68,11 @@ void MoveOrdererTest::test_see_data()
   QTest::addColumn<IncompleteMove>("incomplete_move");
   QTest::addColumn<Searcher::score_t>("score");
 
-  //QTest::newRow("no capture") << create_initial_board() << IncompleteMove(Position("e2"), Position("e4")) << 0;
-  //QTest::newRow("simple capture") << parse_fen("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1")
-  //                                << IncompleteMove(Position("d5"), Position("e4")) << 100;
-  //QTest::newRow("guarded capture") << parse_fen("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1")
-  //                                 << IncompleteMove(Position("e4"), Position("d5")) << 0;
+  QTest::newRow("no capture") << create_initial_board() << IncompleteMove(Position("e2"), Position("e4")) << 0;
+  QTest::newRow("simple capture") << parse_fen("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1")
+                                  << IncompleteMove(Position("d5"), Position("e4")) << 100;
+  QTest::newRow("guarded capture") << parse_fen("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1")
+                                   << IncompleteMove(Position("e4"), Position("d5")) << 0;
   QTest::newRow("complex capture") << parse_fen("rnbqkb1r/pp3ppp/2p1pn2/3p3Q/2P1P3/2N5/PP1P1PPP/R1B1KBNR w KQkq - 2 5")
                                    << IncompleteMove(Position("e4"), Position("d5")) << 0;
   QTest::newRow("complex capture win") << parse_fen("rnb1kbnr/ppq2ppp/2p1p3/3p3Q/2P1P3/2N5/PP1P1PPP/R1B1KBNR w KQkq - 2 5")

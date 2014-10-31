@@ -41,13 +41,10 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   SearchResult result = m_searcher->search(context);
   if (!result.valid) {
     return SearchResult::invalid();
-  } else if (result.main_variation.empty()) {
-    // That should only happen for terminal positions.
-    return result;
   }
   milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
   m_writer->output(context->board, result, time, m_min_depth);
-  if (mode == SearchContext::DepthMode::FIXED_DEPTH) {
+  if (result.terminal || mode == SearchContext::DepthMode::FIXED_DEPTH) {
     return result;
   }
   // Now we have one move and can be more brutal for the weak stopper.
@@ -63,6 +60,7 @@ SearchResult IterativeDeepener::search(SearchContext* context)
     assert(!result.main_variation.empty());
     result.nodes += next_result.nodes;
     result.score = next_result.score;
+    result.terminal = next_result.terminal;
     result.depth = next_result.depth;
     result.main_variation = std::move(next_result.main_variation);
     milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
