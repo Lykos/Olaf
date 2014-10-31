@@ -12,43 +12,53 @@ class Config
 public:
   explicit Config(const std::string& config);
 
-  class ConfigSection {
-  public:
-    explicit ConfigSection(const YAML::Node& node);
-  protected:
-    const YAML::Node m_node;
+  class Evaluation {
   };
 
-  class Evaluation : public ConfigSection {
+  class Search {
   public:
-    using ConfigSection::ConfigSection;
+    explicit Search(const YAML::Node& node);
+
+    long time_millis() const { return m_time_millis; }
+
+    int min_depth() const { return m_min_depth; }
+
+    int sequential_depth() const { return m_sequential_depth; }
+
+  private:
+    const int m_time_millis;
+
+    const int m_min_depth;
+
+    const int m_sequential_depth;
   };
 
-  class Search : public ConfigSection {
+  class TranspositionTable {
   public:
-    using ConfigSection::ConfigSection;
+    explicit TranspositionTable(const YAML::Node& node);
 
-    long time_millis() const;
+    long size() const { return m_size; }
 
-    int min_depth() const;
-
-    int sequential_depth() const;
+  private:
+    const int m_size;
   };
 
-  class TranspositionTable : public ConfigSection {
+  class MoveOrdering {
   public:
-    using ConfigSection::ConfigSection;
+    explicit MoveOrdering(const YAML::Node& node);
 
-    long size() const;
-  };
+    bool use_hash_move() const { return m_use_hash_move; }
 
-  class MoveOrdering : public ConfigSection {
-  public:
-    using ConfigSection::ConfigSection;
+    bool use_see() const { return m_use_see; }
 
-    bool use_hash_move() const;
+    bool use_killers() const { return m_use_killers; }
 
-    bool use_see() const;
+  private:
+    const bool m_use_hash_move;
+
+    const bool m_use_see;
+
+    const bool m_use_killers;
   };
 
   const Evaluation& evaluation() const { return m_evaluation; }

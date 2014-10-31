@@ -38,13 +38,13 @@ AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
 AlphaBetaSearcher::~AlphaBetaSearcher()
 {}
 
-vector<Move> AlphaBetaSearcher::generate_ordered_moves(const SearchContext& context)
+vector<Move> AlphaBetaSearcher::generate_ordered_moves(const SearchContext& context, const SearchState& state)
 {
   vector<Move> moves = m_generator->generate_moves(context.board);
   if (moves.empty()) {
     return moves;
   }
-  m_orderer.order_moves(context, &moves);
+  m_orderer.order_moves(context, state, &moves);
   return moves;
 }
 
@@ -162,6 +162,17 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     result->terminal = recursive_result->terminal;
     result->depth = recursive_result->depth;
     if (recursive_score >= state->beta) {
+      if (!move.is_capture()) {
+        const depth_t depth = context->search_depth - state->depth;
+        if (static_cast<int>(context->killers.size()) <= depth) {
+          context->killers.resize(depth + 1);
+        }
+        SearchContext::Killers& killers = context->killers[depth];
+        for (unsigned int i = 1; i < killers.size(); ++i) {
+          killers[i] = killers[i - 1];
+        }
+        killers[0] = move;
+      }
       result->main_variation.clear();
       entry.node_type = NodeType::CutNode;
       reaction = ResultReaction::RETURN;
@@ -178,6 +189,6 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   context->put(std::move(entry));
   return reaction;
+}
 
 } // namespace olaf
-}

@@ -27,9 +27,15 @@ DEFINE_string(config_file, "/usr/local/share/olaf/config.yml", "Config file for 
 
 Config read_config(const string& config_file)
 {
-  std::ifstream file(config_file.c_str());
-  std::string config_string((std::istreambuf_iterator<char>(file)),
-                             std::istreambuf_iterator<char>());
+  ifstream file(config_file.c_str(), ios::in);
+  if (!file.good()) {
+    cout << "Unable to read config file " << FLAGS_config_file << ". Please specify one with --config_file=/path/to/file." << endl;
+    file.close();
+    exit(1);
+  }
+  string config_string((istreambuf_iterator<char>(file)),
+                        istreambuf_iterator<char>());
+  file.close();
   return Config(config_string);
 }
 

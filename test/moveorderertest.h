@@ -16,7 +16,14 @@ class MoveOrdererTest : public QObject
 {
   Q_OBJECT
 
+private:
+  TestFactoryOwner m_factory_owner;
+
+  MoveOrderer m_orderer;
+
 private Q_SLOTS:
+  void initTestCase();
+
   void test_order_data();
 
   void test_order();

@@ -4,6 +4,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/search/searcher.h"
+#include "olaf/rules/move.h"
 
 namespace olaf
 {
@@ -91,6 +92,12 @@ struct SearchContext
    */
   void put(const TranspositionTableEntry& entry);
   void put(TranspositionTableEntry&& entry);
+
+  static const int c_no_killers = 2;
+
+  typedef std::array<Move, c_no_killers> Killers;
+
+  std::vector<Killers> killers;
 };
 
 } // namespace olaf

@@ -12,7 +12,7 @@ namespace olaf
 {
 
 static pair<Move, SearchResult> eval_move(ParallelNegaMaxer* const searcher,
-                                          const AlphaBetaSearcher::SearchState& state,
+                                          const SearchState& state,
                                           const SearchContext& context,
                                           const Move move)
 {
@@ -26,7 +26,7 @@ static pair<Move, SearchResult> eval_move(ParallelNegaMaxer* const searcher,
 SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
                                            SearchContext* const context)
 {
-  vector<Move> moves = generate_ordered_moves(*context);
+  vector<Move> moves = generate_ordered_moves(*context, *state);
   if (moves.empty()) {
     return recurse_sub_searcher(*state, context);
   }

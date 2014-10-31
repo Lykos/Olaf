@@ -1,0 +1,10 @@
+search:
+  time_millis: 2000
+  min_depth: 1
+  sequential_depth: 2
+transposition_table:
+  size: 1048576
+move_ordering:
+  use_hash_move: true
+  use_see: true
+  use_killers: true
