@@ -15,6 +15,8 @@ public:
 
   void request_stop();
 
+  void reset();
+
   bool should_stop() const override;
 
 private:

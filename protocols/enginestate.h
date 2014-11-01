@@ -80,18 +80,20 @@ public:
 
   inline BoardState& board_state() { return *m_board_state; }
 
+  void reset_stoppers();
+
   SearchContext create_search_context();
 
-  inline void stop() { if (m_forced_stopper) { m_forced_stopper->request_stop(); } }
+  inline void stop() { m_forced_stopper.request_stop(); }
 
-  inline void weak_stop() { if (m_weak_stopper) { m_weak_stopper->request_stop(); } }
+  inline void weak_stop() { m_weak_stopper.request_stop(); }
 
 private:
   std::unique_ptr<TranspositionTable> m_transposition_table;
 
-  std::unique_ptr<ForcedStopper> m_forced_stopper;
+  ForcedStopper m_forced_stopper;
 
-  std::unique_ptr<ForcedStopper> m_weak_stopper;
+  ForcedStopper m_weak_stopper;
 
   BoardState* const m_board_state;
 

@@ -19,14 +19,18 @@ EngineState::EngineState(unique_ptr<TranspositionTable> transposition_table,
   assert(board_state);
 }
 
+void EngineState::reset_stoppers()
+{
+  m_weak_stopper.reset();
+  m_forced_stopper.reset();
+}
+
 SearchContext EngineState::create_search_context()
 {
-  m_weak_stopper.reset(new ForcedStopper);
-  m_forced_stopper.reset(new ForcedStopper);
   SearchContext context;
   context.board = m_board_state->copy_board();
-  context.forced_stopper = m_forced_stopper.get();
-  context.weak_stopper = m_weak_stopper.get();
+  context.forced_stopper = &m_forced_stopper;
+  context.weak_stopper = &m_weak_stopper;
   if (m_my_turn && !m_force) {
     context.time_mode = SearchContext::TimeMode::ADAPTED;
     context.total_time = m_my_time;

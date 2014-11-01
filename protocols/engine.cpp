@@ -55,6 +55,9 @@ void Engine::handle_events()
     m_event_queue.front()->execute(&m_state);
     m_event_queue.pop();
   }
+  // This has to happen while we are still holding the lock.
+  // Otherwise, enqueueing of a move can still get the old stoppers resulting in infinite pondering.
+  m_state.reset_stoppers();
 }
 
 void Engine::enqueue(unique_ptr<EngineEvent> event)
