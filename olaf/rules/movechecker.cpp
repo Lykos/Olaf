@@ -58,7 +58,7 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
                            const ChessBoard& board)
 {
   const Position src(incomplete_move.source());
-  const Piece::piece_index_t piece_index = board.turn_board().piece_index(src);
+  const Piece::piece_index_t piece_index = board.piece_index(src);
   const Position dst(incomplete_move.destination());
   const int color_index = static_cast<int>(board.turn_color());
   if (BitBoard(src) & BitBoard(MagicNumbers::c_king_positions[color_index])
@@ -91,7 +91,7 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
 bool MoveChecker::can_kill_king(const ChessBoard& board)
 {
   const BitBoard king_captures =
-      board.noturn_board().piece_board(PieceSet::c_king_index).bit_board() | board.king_captures();
+      board.noturn_board().piece_board(PieceSet::c_king_index) | board.king_captures();
   if (!king_captures) {
     return false;
   }

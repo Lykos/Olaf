@@ -20,14 +20,11 @@ void ZobristHash::calculate(ChessBoard* const board)
 {
   board->m_zobrist_hash = 0;
   for (const Color color : c_colors) {
-    for (const PieceBoard& piece_board : board->color_board(color).piece_boards()) {
-      if (!piece_board.bit_board()) {
-        continue;
-      }
-      const Piece::piece_index_t piece_index =
-          piece_board.piece().piece_index();
-      for (BitBoard bit_board = piece_board.bit_board(); bit_board; ) {
-        update(color, piece_index, bit_board.next_position(), board);
+    const ColorBoard& color_board = board->color_board(color);
+    for (Piece::piece_index_t piece_index = 0; piece_index < PieceSet::c_no_pieces; ++piece_index) {
+      BitBoard piece_board = color_board.piece_board(piece_index);
+      while (piece_board) {
+        update(color, piece_index, piece_board.next_position(), board);
       }
     }
     if (board->color_board(color).can_castle_k()) {

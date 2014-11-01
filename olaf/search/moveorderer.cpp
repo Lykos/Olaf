@@ -26,7 +26,7 @@ BitBoard least_valuable_piece(const ChessBoard& board, const Color color, const 
     PieceSet::c_king_index};
   const ColorBoard& color_board = board.color_board(color);
   for (const Piece::piece_index_t piece_index : piece_values) {
-    const BitBoard subset = color_board.piece_board(piece_index).bit_board() & attackers;
+    const BitBoard subset = color_board.piece_board(piece_index) & attackers;
     if (subset) {
       return subset & -subset;
     }
@@ -46,14 +46,14 @@ void MoveOrderer::init_see_state(const ChessBoard& board, SeeState* const see_st
   for (const Color color : c_colors) {
     const ColorBoard& color_board = board.color_board(color);
     for (Piece::piece_index_t piece_index : xray_pieces) {
-      see_state->may_xray = see_state->may_xray | color_board.piece_board(piece_index).bit_board();
+      see_state->may_xray = see_state->may_xray | color_board.piece_board(piece_index);
     }
     see_state->straight_pieces = see_state->straight_pieces
-        | color_board.piece_board(PieceSet::c_rook_index).bit_board()
-        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
+        | color_board.piece_board(PieceSet::c_rook_index)
+        | color_board.piece_board(PieceSet::c_queen_index);
     see_state->diagonal_pieces = see_state->diagonal_pieces
-        | color_board.piece_board(PieceSet::c_bishop_index).bit_board()
-        | color_board.piece_board(PieceSet::c_queen_index).bit_board();
+        | color_board.piece_board(PieceSet::c_bishop_index)
+        | color_board.piece_board(PieceSet::c_queen_index);
   }
 }
 
@@ -90,14 +90,14 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
     BitBoard pawn_attackers(MagicNumbers::c_pawn_capture_table[color_index + dst_index]);
     attackers = attackers | (pawn_attackers & color_board.piece_board(PieceSet::c_pawn_index));
     // We use the fact that the knights and kings move symmetrically.
-    attackers = attackers | (MagicNumbers::c_knight_table[dst_index] & color_board.piece_board(PieceSet::c_knight_index));
-    attackers = attackers | (MagicNumbers::c_king_table[dst_index] & color_board.piece_board(PieceSet::c_king_index));
+    attackers = attackers | (BitBoard(MagicNumbers::c_knight_table[dst_index]) & color_board.piece_board(PieceSet::c_knight_index));
+    attackers = attackers | (BitBoard(MagicNumbers::c_king_table[dst_index]) & color_board.piece_board(PieceSet::c_king_index));
   }
   attackers = attackers | consider_xrays(occupied, dst, see_state);
   array<Searcher::score_t, 32> gain;
   Searcher::depth_t depth = 0;
-  gain[depth] = values[board.noturn_board().piece_index(dst)];
-  Piece::piece_index_t attacker = board.turn_board().piece_index(move.source());
+  gain[depth] = values[board.piece_index(dst)];
+  Piece::piece_index_t attacker = board.piece_index(move.source());
   BitBoard from = BitBoard(src);
   Color color = board.turn_color();
   while (true) {
@@ -115,7 +115,7 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
     }
     from = least_valuable_piece(board, color, attackers);
     if (from) {
-      attacker = board.color_board(color).piece_index(from.first_position());
+      attacker = board.piece_index(from.first_position());
       assert(attacker != Piece::c_no_piece);
     } else {
       break;

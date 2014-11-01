@@ -2,7 +2,6 @@
 #include "olaf/rules/bitboard.h"
 #include "olaf/rules/position.h"
 #include "olaf/rules/piece.h"
-#include "olaf/rules/pieceboard.h"
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/movechecker.h"
 #include "olaf/rules/magicmoves.h"

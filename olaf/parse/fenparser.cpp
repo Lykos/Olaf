@@ -199,9 +199,9 @@ string FenParser::serialize(const ChessBoard& board)
           free_columns = 0;
         }
         if (board.friendd(pos)) {
-         result << board.turn_board().piece(pos).symbol(board.turn_color());
+         result << board.piece(pos).symbol(board.turn_color());
        } else if (board.opponent(pos)) {
-         result << board.noturn_board().piece(pos).symbol(other_color(board.turn_color()));
+         result << board.piece(pos).symbol(other_color(board.turn_color()));
        }
       } else {
         ++free_columns;

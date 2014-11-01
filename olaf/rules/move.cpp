@@ -32,7 +32,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   const Color turn_color = board->turn_color();
   const int color_index = static_cast<int>(turn_color);
   const Color noturn_color = other_color(turn_color);
-  const Piece::piece_index_t piece_index = board->turn_board().piece_index(src);
+  const Piece::piece_index_t piece_index = board->piece_index(src);
   undo_info->ep_captures = board->ep_captures();
   if (is_double_pawn_push()) {
     board->ep_captures(MagicNumbers::c_pawn_one_step_table[src.index()]);
@@ -47,12 +47,12 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
       victim_position = Position(c_ep_victims[dst.index()]);
     } else if (BitBoard(dst) & board->king_captures()) {
       victim_position =
-          board->color_board(noturn_color).piece_board(c_king_index).bit_board().first_position();
+          board->color_board(noturn_color).piece_board(c_king_index).first_position();
     } else {
       victim_position = dst;
     }
     const Piece::piece_index_t captured_piece =
-        board->color_board(noturn_color).piece_index(victim_position);
+        board->piece_index(victim_position);
     undo_info->captured_piece = captured_piece;
     undo_info->victim_position = victim_position;
     board->remove_piece(noturn_color, captured_piece, victim_position);
@@ -116,7 +116,7 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
   const Position dst(destination());
   const Color turn_color = board->turn_color();
   const Color noturn_color = other_color(turn_color);
-  const Piece::piece_index_t piece_index = board->turn_board().piece_index(dst);
+  const Piece::piece_index_t piece_index = board->piece_index(dst);
   if (is_castle()) {
     static const Piece::piece_index_t c_rook_index =
         PieceSet::c_rook_index;

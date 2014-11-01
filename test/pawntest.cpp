@@ -2,7 +2,6 @@
 
 #include "olaf/rules/position.h"
 #include "olaf/rules/colorboard.h"
-#include "olaf/rules/pieceboard.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/movechecker.h"
 #include "olaf/rules/move.h"

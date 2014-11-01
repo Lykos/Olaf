@@ -220,7 +220,7 @@ public:
     return m_king_captures;
   }
 
-  inline void king_captures(BitBoard new_king_captures)
+  inline void king_captures(const BitBoard new_king_captures)
   {
     m_king_captures = new_king_captures;
   }
@@ -244,10 +244,19 @@ public:
     return m_turn_color == Color::White ? m_incremental_score_white : -m_incremental_score_white;
   }
 
+  inline Piece::piece_index_t piece_index(const Position pos) const
+  {
+    return m_pieces[pos.index()];
+  }
+
+  const Piece& piece(const Position pos) const;
+
 private:
   void calculate_draw() const;
 
   std::array<ColorBoard, c_no_colors> m_color_boards;
+
+  std::array<Piece::piece_index_t, Position::c_index_size> m_pieces;
 
   Color m_turn_color;
 
@@ -280,7 +289,6 @@ private:
   mutable BitBoard m_friends;
 
   mutable BitBoard m_occupied;
-
 };
 
 ChessBoard create_initial_board();

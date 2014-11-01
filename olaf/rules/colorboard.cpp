@@ -32,31 +32,15 @@ const ColorBoard::PieceBoards& ColorBoard::piece_boards() const
   return m_piece_boards;
 }
 
-const PieceBoard& ColorBoard::piece_board(const Piece::piece_index_t piece_index) const
+const BitBoard& ColorBoard::piece_board(const Piece::piece_index_t piece_index) const
 {
   return m_piece_boards[piece_index];
 }
 
 
-PieceBoard& ColorBoard::piece_board(const Piece::piece_index_t piece_index)
+BitBoard& ColorBoard::piece_board(const Piece::piece_index_t piece_index)
 {
   return m_piece_boards[piece_index];
-}
-
-Piece::piece_index_t ColorBoard::piece_index(const Position &position) const
-{
-  const Piece::piece_index_t size = m_piece_boards.size();
-  for (Piece::piece_index_t index = 0; index < size; ++index) {
-    if (m_piece_boards[index].get(position)) {
-      return index;
-    }
-  }
-  return Piece::c_no_piece;
-}
-
-const Piece& ColorBoard::piece(const Position &position) const
-{
-  return m_piece_boards[piece_index(position)].piece();
 }
 
 bool ColorBoard::can_castle_q() const
@@ -87,7 +71,7 @@ void ColorBoard::can_castle_k(const bool new_can_castle_k)
 BitBoard ColorBoard::occupied() const
 {
   BitBoard bla(0);
-  for (const PieceBoard& piece_board : m_piece_boards) {
+  for (const BitBoard& piece_board : m_piece_boards) {
     bla = bla | piece_board;
   }
   return bla;
@@ -96,7 +80,7 @@ BitBoard ColorBoard::occupied() const
 bool ColorBoard::dead() const
 {
   static const Piece::piece_index_t king_index = PieceSet::c_king_index;
-  return !m_piece_boards[king_index].bit_board();
+  return !m_piece_boards[king_index];
 }
 
 // static
@@ -105,9 +89,8 @@ ColorBoard ColorBoard::create_initial_color_board(Color color)
   ColorBoard::PieceBoards piece_boards;
   int i = 0;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
-    BitBoard initial_board = piece->initial_board(color);
-    const PieceBoard piece_board(piece, initial_board);
-    piece_boards[i] = piece_board;
+    const BitBoard initial_board = piece->initial_board(color);
+    piece_boards[i] = initial_board;
     ++i;
   }
   return ColorBoard(piece_boards, true, true);
@@ -118,10 +101,8 @@ ColorBoard ColorBoard::create_empty_color_board()
 {
   ColorBoard::PieceBoards piece_boards;
   int i = 0;
-  for (const Piece* const piece : PieceSet::instance().pieces()) {
-    const BitBoard empty_board(0);
-    const PieceBoard piece_board(piece, empty_board);
-    piece_boards[i] = piece_board;
+  for (Piece::piece_index_t piece_index = 0; piece_index < PieceSet::c_no_pieces; ++piece_index) {
+    piece_boards[i] = BitBoard(0);
     ++i;
   }
   return ColorBoard(piece_boards, false, false);

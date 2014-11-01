@@ -51,7 +51,7 @@ public:
   static inline BitBoard king_unmoved(const ChessBoard& board, const Color color)
   {
     int index = static_cast<int>(color);
-    const BitBoard king_positions = board.color_board(color).piece_board(PieceSet::c_king_index).bit_board();
+    const BitBoard king_positions = board.color_board(color).piece_board(PieceSet::c_king_index);
     return king_positions == BitBoard(MagicNumbers::c_king_positions[index]);
   }
 

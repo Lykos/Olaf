@@ -130,13 +130,10 @@ void IncrementalUpdater::calculate(ChessBoard* board)
   board->m_incremental_score_white = 0;
   for (const Color color : c_colors) {
     const ColorBoard& color_board = board->color_board(color);
-    for (const PieceBoard& piece_board : color_board.piece_boards()) {
-      if (!piece_board.bit_board()) {
-        continue;
-      }
-      const Piece::piece_index_t index = piece_board.piece().piece_index();
-      for (BitBoard bit_board = piece_board.bit_board(); bit_board; ) {
-        add_piece(color, index, bit_board.next_position(), board);
+    for (Piece::piece_index_t piece_index = 0; piece_index < PieceSet::c_no_pieces; ++piece_index) {
+      BitBoard piece_board = color_board.piece_board(piece_index);
+      while (piece_board) {
+        add_piece(color, piece_index, piece_board.next_position(), board);
       }
     }
   }

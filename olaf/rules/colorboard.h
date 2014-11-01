@@ -6,7 +6,6 @@
 
 #include "color.h"
 #include "olaf/rules/position.h"
-#include "olaf/rules/pieceboard.h"
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/bitboard.h"
@@ -30,7 +29,7 @@ public:
 
   static ColorBoard create_empty_color_board();
 
-  typedef std::array<PieceBoard, PieceSet::c_no_pieces> PieceBoards;
+  typedef std::array<BitBoard, PieceSet::c_no_pieces> PieceBoards;
 
   /**
    * @brief ColorBoard
@@ -48,20 +47,16 @@ public:
   /**
    * @brief piece_board returns the bitboard that belongs to a given piece.
    * @param piece_index the index of the piece.
-   * @return the PieceBoard of that piece.
+   * @return the BitBoard of that piece.
    */
-  PieceBoard& piece_board(Piece::piece_index_t piece_index);
+  BitBoard& piece_board(Piece::piece_index_t piece_index);
 
   /**
    * @brief piece_board returns the bitboard that belongs to a given piece.
    * @param piece_index the index of the piece.
-   * @return the PieceBoard of that piece.
+   * @return the BitBoard of that piece.
    */
-  const PieceBoard& piece_board(Piece::piece_index_t piece_index) const;
-
-  Piece::piece_index_t piece_index(const Position&) const;
-
-  const Piece& piece(const Position&) const;
+  const BitBoard& piece_board(Piece::piece_index_t piece_index) const;
 
   bool can_castle_q() const;
 

@@ -45,7 +45,6 @@ SOURCES += \
     parse/fenparser.cpp \
     rules/position.cpp \
     rules/pieceset.cpp \
-    rules/pieceboard.cpp \
     rules/piece.cpp \
     rules/colorboard.cpp \
     rules/chessboard.cpp \
@@ -95,7 +94,6 @@ HEADERS += \
     parse/fenparser.h \
     rules/position.h \
     rules/pieceset.h \
-    rules/pieceboard.h \
     rules/piece.h \
     rules/colorboard.h \
     rules/color.h \

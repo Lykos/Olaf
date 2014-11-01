@@ -11,6 +11,7 @@
 #include "testutil.h"
 
 using namespace std;
+using namespace testing;
 
 namespace olaf
 {
@@ -135,7 +136,7 @@ void FenParserTest::test_parse()
   QCOMPARE(FenParser::parse(fen.toStdString(), &actual_board), parseable);
   if (parseable) {
     QFETCH(ChessBoard, board);
-    QCOMPARE(board, actual_board);
+    QASSERT_THAT(actual_board, Eq(board));
   }
 }
 
@@ -150,7 +151,7 @@ void FenParserTest::test_serialize()
   if (serializable) {
     QFETCH(QString, fen);
     QFETCH(ChessBoard, board);
-    QCOMPARE(FenParser::serialize(board), fen.toStdString());
+    QASSERT_THAT(fen.toStdString(), Eq(FenParser::serialize(board)));
   }
 
 } // namespace test

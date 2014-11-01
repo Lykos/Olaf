@@ -14,9 +14,9 @@ std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
     for (Position::index_t column = 0; column < Position::c_column_size; ++column) {
       const Position pos(row, column);
       if (board.friendd(pos)) {
-        out << board.turn_board().piece(pos).symbol(board.turn_color());
+        out << board.piece(pos).symbol(board.turn_color());
       } else if (board.opponent(pos)) {
-        out << board.noturn_board().piece(pos).symbol(board.noturn_color());
+        out << board.piece(pos).symbol(board.noturn_color());
       } else {
         out << ".";
       }
@@ -45,10 +45,20 @@ ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
                        const BitBoard ep_captures):
   m_color_boards(color_boards),
   m_turn_color(turn_color),
-  m_ep_captures(ep_captures)
+  m_ep_captures(ep_captures),
+  m_zobrist_hash(0),
+  m_incremental_score_white(0)
 {
+  for (Color color : c_colors) {
+    const ColorBoard& board = color_board(color);
+    for (Piece::piece_index_t piece_index = 0; piece_index < PieceSet::c_no_pieces; ++piece_index) {
+      BitBoard piece_board = board.piece_board(piece_index);
+      while (piece_board) {
+        add_piece(color, piece_index, piece_board.next_position());
+      }
+    }
+  }
   ZobristHash::calculate(this);
-  IncrementalUpdater::calculate(this);
   m_hashes.push_back(m_zobrist_hash);
 }
 
@@ -170,6 +180,7 @@ void ChessBoard::add_piece(const Color color,
                            const Position& position)
 {
   m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, true);
+  m_pieces[position.index()] = piece_index;
   ZobristHash::update(color, piece_index, position, this);
   IncrementalUpdater::add_piece(color, piece_index, position, this);
 }
@@ -179,6 +190,7 @@ void ChessBoard::remove_piece(const Color color,
                               const Position& position)
 {
   m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, false);
+  m_pieces[position.index()] = PieceSet::c_no_pieces;
   ZobristHash::update(color, piece_index, position, this);
   IncrementalUpdater::remove_piece(color, piece_index, position, this);
 }
@@ -199,6 +211,11 @@ void ChessBoard::can_castle_q(const Color color, const bool new_can_castle_q)
     color_board.can_castle_q(new_can_castle_q);
     ZobristHash::update_castle_q(color, this);
   }
+}
+
+const Piece& ChessBoard::piece(const Position pos) const
+{
+  return PieceSet::instance().piece(piece_index(pos));
 }
 
 ChessBoard create_initial_board()
