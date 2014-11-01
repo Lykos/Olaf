@@ -7,7 +7,7 @@
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/undoinfo.h"
 #include "olaf/rules/color.h"
-
+#include "olaf/rules/magicnumbers.h"
 
 using namespace std;
 
@@ -34,7 +34,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   const Piece::piece_index_t piece_index = board->turn_board().piece_index(src);
   undo_info->ep_captures = board->ep_captures();
   if (is_double_pawn_push()) {
-    board->ep_captures(BitBoard(Position((src.row() + dst.row()) / 2, src.column())));
+    board->ep_captures(MagicNumbers::c_pawn_one_step_table[src.index()]);
   } else {
     board->disable_ep();
   }
@@ -68,6 +68,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   const Position::index_t gnd = ground_line(board->turn_color());
   static const Piece::piece_index_t c_rook_index =
       PieceSet::c_rook_index;
+  const BitBoard src_board(src);
   if (is_castle()) {
     board->can_castle_k(board->turn_color(), false);
     board->can_castle_q(board->turn_color(), false);
@@ -86,16 +87,16 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
     undo_info->rook_destination = rook_destination;
     board->remove_piece(turn_color, c_rook_index, rook_source);
     board->add_piece(turn_color, c_rook_index, rook_destination);
-    board->king_captures(BitBoard(src) | BitBoard(rook_destination));
+    board->king_captures(src_board | BitBoard(rook_destination));
   } else {
     board->disable_king_captures();
     if (piece_index == c_king_index) {
       board->can_castle_k(turn_color, false);
       board->can_castle_q(turn_color, false);
-    } else if (piece_index == c_rook_index && src.row() == gnd) {
-      if (src.column() == Position::c_kings_rook_column) {
+    } else if (piece_index == c_rook_index) {
+      if (src_board & BitBoard(MagicNumbers::c_castle_k_rook[static_cast<int>(turn_color)])) {
         board->can_castle_k(turn_color, false);
-      } else if (src.column() == Position::c_queens_rook_column) {
+      } else if (src_board & BitBoard(MagicNumbers::c_castle_q_rook[static_cast<int>(turn_color)])) {
         board->can_castle_q(turn_color, false);
       }
     }
