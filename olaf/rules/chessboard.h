@@ -122,41 +122,73 @@ public:
   }
 
   /**
-   * @attention Result caching might be invalid if the user is not careful.
    * @brief opponents returns a bitboard indicating positions at which an opposing piece
    * is present and caches the result until the next turn flip.
    */
-  BitBoard opponents() const;
+  inline BitBoard opponents() const
+  {
+    return occupied(noturn_color());
+  }
 
   /**
    * @brief opponent is a shortcut for opponents().get(position)
    */
-  bool opponent(Position position) const;
+  inline bool opponent(Position position) const
+  {
+    return occupied(noturn_color(), position);
+  }
 
   /**
-   * @attention Result caching might be invalid if the user is not careful.
    * @brief opponents returns a bitboard indicating positions at which a friendly piece
    * is present and caches the result until the next turn flip.
    */
-  BitBoard friends() const;
+  inline BitBoard friends() const
+  {
+    return occupied(m_turn_color);
+  }
 
   /**
    * @brief friendd is a shortcut for friends().get(position)
    * @return
    */
-  bool friendd(Position position) const;
+  inline bool friendd(Position position) const
+  {
+    return occupied(m_turn_color, position);
+  }
 
   /**
-   * @attention Result caching might be invalid if the user is not careful.
    * @brief opponents returns a bitboard indicating positions at which any piece
-   * is present and caches the result until the next turn flip.
+   * is present.
    */
-  BitBoard occupied() const;
+  inline BitBoard occupied() const
+  {
+    return occupied(Color::White) | occupied(Color::Black);
+  }
 
   /**
    * @brief occupied is a shortcut for occupied().get(position)
    */
-  bool occupied(Position position) const;
+  inline bool occupied(Position position) const
+  {
+    return occupied().get(position);
+  }
+
+  /**
+   * @brief opponents returns a bitboard indicating positions at which any piece
+   * is present for the given color.
+   */
+  inline BitBoard occupied(const Color color) const
+  {
+    return m_occupied[static_cast<int>(color)];
+  }
+
+  /**
+   * @brief occupied is a shortcut for occupied().get(position)
+   */
+  inline bool occupied(const Color color, Position position) const
+  {
+    return occupied(color).get(position);
+  }
 
   /**
    * @brief won returns true if the given color has won, i.e.
@@ -276,19 +308,9 @@ private:
 
   mutable bool m_draw;
 
-  mutable bool m_opponents_valid = false;
-
-  mutable bool m_friends_valid = false;
-
-  mutable bool m_occupied_valid = false;
-
   mutable bool m_draw_valid = false;
 
-  mutable BitBoard m_opponents;
-
-  mutable BitBoard m_friends;
-
-  mutable BitBoard m_occupied;
+  std::array<BitBoard, c_no_colors> m_occupied;
 };
 
 ChessBoard create_initial_board();

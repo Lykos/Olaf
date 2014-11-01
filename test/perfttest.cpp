@@ -45,7 +45,7 @@ void PerftTest::test_perft()
 
   unique_ptr<Perft> perft = m_factory_owner.factory.perft();
 
-  // perft->debug_perft(c_depth, board);
+  //perft->debug_perft(c_depth, board);
   const PerftResult& expected_result = expected_results.at(c_depth);
   const PerftResult& actual_result = perft->perft(c_depth, board);
   QASSERT_THAT(actual_result, Eq(expected_result));

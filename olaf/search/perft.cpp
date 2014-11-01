@@ -127,9 +127,7 @@ Perft::PerftResult Perft::internal_perft(const int depth,
   vector<Move> moves = m_generator->generate_valid_moves(*board);
   for (Move& move : moves) {
     UndoInfo undo_info;
-    const ChessBoard copy = *board;
     move.execute(board, &undo_info);
-    const ChessBoard copy2 = *board;
     if (depth > 1) {
       result += internal_perft(depth - 1, board);
     } else if (m_generator->generate_valid_moves(*board).empty()) {

@@ -66,13 +66,13 @@ public:
 
   constexpr bool get(const Position position) const
   {
-    return ((m_bits >> position.index()) & 1) != 0;
+    return m_bits & (1ULL << position.index());
   }
 
   inline void set(const Position position, bool value)
   {
     const uint_fast8_t i = position.index();
-    m_bits = (m_bits & ~(1ull << i)) | static_cast<bitboard_t>(value) << i;
+    m_bits = (m_bits & ~(1ULL << i)) | static_cast<bitboard_t>(value) << i;
   }
 
   BitBoard mirror_rows() const;

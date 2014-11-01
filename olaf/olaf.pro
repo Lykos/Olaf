@@ -59,7 +59,8 @@ SOURCES += \
     evaluation/positionevaluator.cpp \
     transposition_table/randomnumbers.cpp \
     rules/magicnumbers.cpp \
-    rules/magicmoves.cpp
+    rules/magicmoves.cpp \
+    evaluation/incrementalstate.cpp
 
 HEADERS += \
     config.h \
@@ -111,7 +112,8 @@ HEADERS += \
     transposition_table/randomnumbers.h \
     rules/magicnumbers.h \
     rules/magicmoves.h \
-    search/searchstate.h
+    search/searchstate.h \
+    evaluation/incrementalstate.h
 
 OTHER_FILES += \
     ../resources/move_table.bin

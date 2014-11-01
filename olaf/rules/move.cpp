@@ -35,7 +35,8 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   const Piece::piece_index_t piece_index = board->piece_index(src);
   undo_info->ep_captures = board->ep_captures();
   if (is_double_pawn_push()) {
-    board->ep_captures(MagicNumbers::c_pawn_one_step_table[src.index()]);
+    const int color_square_index = color_index * Position::c_index_size + src.index();
+    board->ep_captures(MagicNumbers::c_pawn_one_step_table[color_square_index]);
   } else {
     board->disable_ep();
   }

@@ -65,6 +65,9 @@ SearchResult IterativeDeepener::search(SearchContext* context)
     result.main_variation = std::move(next_result.main_variation);
     milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
     m_writer->output(context->board, result, time, context->search_depth);
+    if (result.terminal) {
+      break;
+    }
   }
   return result;
 
