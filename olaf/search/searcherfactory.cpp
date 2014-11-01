@@ -67,7 +67,7 @@ unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
   unique_ptr<Searcher> searcher(new SimpleTimedSearcher(
                                   iterative_searcher(),
-                                  milliseconds(m_config->search().time_millis())));
+                                  m_config->search().default_moves_to_play()));
   return searcher;
 }
 

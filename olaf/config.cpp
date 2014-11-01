@@ -15,7 +15,7 @@ Config::Config(const std::string& config):
 {}
 
 Config::Search::Search(const YAML::Node& node):
-  m_time_millis(node["time_millis"].as<int>()),
+  m_default_moves_to_play(node["default_moves_to_play"].as<int>()),
   m_min_depth(node["min_depth"].as<int>()),
   m_sequential_depth(node["sequential_depth"].as<int>()),
   m_use_quiescent_search(node["use_quiescent_search"])

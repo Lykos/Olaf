@@ -16,7 +16,7 @@ namespace test
 
 static const char c_config[] =
     "search:\n"
-    "  time_millis: 2000\n"
+    "  default_moves_to_play: 40\n"
     "  min_depth: 1\n"
     "  sequential_depth: 2\n"
     "  use_quiescent_search: true\n"

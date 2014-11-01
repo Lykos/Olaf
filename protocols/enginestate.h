@@ -47,6 +47,15 @@ public:
 
   inline void opponent_time(const std::chrono::milliseconds& time) { m_opponent_time = time; }
 
+  inline void level(const int moves_to_play,
+                    const std::chrono::milliseconds& total_time,
+                    const std::chrono::milliseconds& increment) {
+    m_my_time = total_time;
+    m_opponent_time = total_time;
+    m_increment = increment;
+    m_moves = moves_to_play;
+  }
+
   inline bool analyze() const { return m_analyze; }
 
   inline void analyze(const bool value) { m_analyze = value; }
@@ -104,7 +113,11 @@ private:
 
   int m_nps;
 
+  int m_moves;
+
   std::chrono::milliseconds m_my_time;
+
+  std::chrono::milliseconds m_increment;
 
   std::chrono::milliseconds m_opponent_time;
 };

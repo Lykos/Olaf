@@ -19,7 +19,7 @@ public:
   public:
     explicit Search(const YAML::Node& node);
 
-    long time_millis() const { return m_time_millis; }
+    int default_moves_to_play() const { return m_default_moves_to_play; }
 
     int min_depth() const { return m_min_depth; }
 
@@ -28,7 +28,7 @@ public:
     bool use_quiescent_search() const { return m_use_quiescent_search; }
 
   private:
-    const int m_time_millis;
+    const int m_default_moves_to_play;
 
     const int m_min_depth;
 

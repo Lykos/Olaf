@@ -25,6 +25,8 @@ XBoardReader::XBoardReader(XBoardWriter* const writer,
   m_in(in)
 {}
 
+static const char c_colon = ':';
+
 void XBoardReader::run()
 {
   m_engine_helper->request_reset();
@@ -136,7 +138,26 @@ void XBoardReader::run()
     } else if (command == "result") {
       m_engine_helper->request_force(true);
     } else if (command == "level") {
-      // TODO
+      if (!check_args(tokens, 3)) {
+        continue;
+      }
+      istringstream iss1(tokens.at(1));
+      int moves;
+      iss1 >> moves;
+      istringstream iss2(tokens.at(2));
+      int time_min;
+      iss2 >> time_min;
+      int time_s = 0;
+      if (iss2.peek() == c_colon) {
+        iss2.get();
+        iss2 >> time_s;
+      }
+      istringstream iss3(tokens.at(3));
+      int increment_s;
+      iss3 >> increment_s;
+      const milliseconds total_time = minutes(time_min) + seconds(time_s);
+      const milliseconds increment = seconds(increment_s);
+      m_engine_helper->set_level(moves, total_time, increment);
     } else if (command == "post") {
       m_engine_helper->post(true);
     } else if (command == "nopost") {

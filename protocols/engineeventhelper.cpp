@@ -10,6 +10,7 @@
 #include "protocols/event/undoevent.h"
 #include "protocols/event/settimeevent.h"
 #include "protocols/event/setanalyzeevent.h"
+#include "protocols/event/setlevelevent.h"
 #include "olaf/rules/move.h"
 #include "olaf/parse/fenparser.h"
 #include "protocols/event/setboardevent.h"
@@ -147,6 +148,14 @@ void EngineEventHelper::enqueue_move(const Move& move)
 {
   unique_ptr<EngineEvent> move_event(new MoveEvent(move));
   m_engine->enqueue(std::move(move_event));
+}
+
+void EngineEventHelper::set_level(const int moves_to_play,
+                                  const chrono::milliseconds& total_time,
+                                  const chrono::milliseconds& increment)
+{
+  unique_ptr<EngineEvent> set_level_event(new SetLevelEvent(moves_to_play, total_time, increment));
+  m_engine->enqueue(std::move(set_level_event));
 }
 
 } // namespace olaf

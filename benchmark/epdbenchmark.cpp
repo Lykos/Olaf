@@ -95,7 +95,7 @@ EpdBenchmark::~EpdBenchmark()
 void EpdBenchmark::initTestCase()
 {
   m_factory.reset(new SearcherFactory(&m_writer, config()));
-  m_searcher.reset(new SimpleTimedSearcher(m_factory->iterative_searcher(), c_max_time));
+  m_searcher.reset(new SimpleTimedSearcher(m_factory->iterative_searcher(), 40));
 }
 
 void EpdBenchmark::test_epd()
@@ -104,7 +104,8 @@ void EpdBenchmark::test_epd()
 
   SearchContext context;
   context.board = position.board;
-  context.time_mode = SearchContext::TimeMode::BOUNDED;
+  context.time_mode = SearchContext::TimeMode::FIXED;
+  context.total_time = c_max_time;
   NoStopper stopper;
   context.forced_stopper = &stopper;
   context.weak_stopper = &stopper;

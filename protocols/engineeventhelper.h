@@ -65,6 +65,10 @@ public:
 
   void request_analyze(bool value);
 
+  void set_level(const int moves_to_play,
+                 const std::chrono::milliseconds& total_time,
+                 const std::chrono::milliseconds& increment);
+
 private:
   void enqueue_move(const Move& move);
 

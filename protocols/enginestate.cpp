@@ -28,7 +28,15 @@ SearchContext EngineState::create_search_context()
   context.forced_stopper = m_forced_stopper.get();
   context.weak_stopper = m_weak_stopper.get();
   if (m_my_turn && !m_force) {
-    context.time_mode = SearchContext::TimeMode::BOUNDED;
+    context.time_mode = SearchContext::TimeMode::ADAPTED;
+    context.total_time = m_my_time;
+    context.increment = m_increment;
+    if (m_moves == 0) {
+      context.sudden_death = true;
+    } else {
+      context.sudden_death = false;
+      context.moves_to_play = m_moves--;
+    }
   } else {
     context.time_mode = SearchContext::TimeMode::INFINITE;
   }

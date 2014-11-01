@@ -19,16 +19,14 @@ class SearchContext;
 class SimpleTimedSearcher : public Searcher
 {
 public:
-  explicit SimpleTimedSearcher(std::unique_ptr<Searcher> sub_searcher,
-                               const std::chrono::milliseconds& search_millis);
+  SimpleTimedSearcher(std::unique_ptr<Searcher> sub_searcher, int moves_to_play);
 
   SearchResult search(SearchContext* context) override;
 
 private:
   std::unique_ptr<Searcher> m_sub_searcher;
 
-  const std::chrono::milliseconds m_search_millis;
-
+  const int m_default_moves_to_play;
 };
 
 } // namespace olaf

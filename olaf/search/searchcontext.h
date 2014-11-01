@@ -28,17 +28,32 @@ struct SearchContext
 
   /**
    * @brief The TimeMode enum indicates what kind of time limit is used.
-   *        Infinite indicates whether this is an infinite search/search, only the stoppers
+   *        INFINITE indicates whether this is an infinite search/search, only the stoppers
    *        or a depth limit can stop the search/search. This is set e.g. in analysis
    *        mode and pondering.
-   *        Bounded means that there is a time bound (implemented via a weak_stopper).
+   *        FIXED means that the field time is used as a time bound.
+   *        ADAPTED means that the engine decides how much time to use based on moves_to_play,
+   *                total_time and increment.
    */
   enum class TimeMode {
     INFINITE,
-    BOUNDED
+    FIXED,
+    ADAPTED
   };
 
   TimeMode time_mode;
+
+  std::chrono::milliseconds total_time;
+
+  std::chrono::milliseconds increment;
+
+  /**
+   * @brief sudden_death if this is true, then the total_time has to suffice for the whole game. Otherwise,
+   *        moves_to_play says how may moves have to be played before new time is added.
+   */
+  bool sudden_death;
+
+  int moves_to_play;
 
   /**
    * @brief forced_stopper is a stopper that is used to immediately break off the search/search.

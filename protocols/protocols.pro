@@ -35,7 +35,8 @@ SOURCES += \
     engineeventhelper.cpp \
     engine.cpp \
     boardstate.cpp \
-    event/setanalyzeevent.cpp
+    event/setanalyzeevent.cpp \
+    event/setlevelevent.cpp
 
 HEADERS +=\
     xboardwriter.h \
@@ -60,7 +61,8 @@ HEADERS +=\
     engineeventhelper.h \
     engine.h \
     boardstate.h \
-    event/setanalyzeevent.h
+    event/setanalyzeevent.h \
+    event/setlevelevent.h
 
 target.path = /usr/local/lib
 
