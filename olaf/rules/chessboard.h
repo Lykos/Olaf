@@ -311,7 +311,7 @@ private:
 
   BitBoard m_king_captures;
 
-  ZobristHash::hash_t m_zobrist_hash;
+  ZobristHash::hash_t m_zobrist_hash = 0;
 
   IncrementalState m_incremental_state;
 

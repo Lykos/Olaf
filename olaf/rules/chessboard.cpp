@@ -42,13 +42,25 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
       && left.m_king_captures == right.m_king_captures;
 }
 
+static array<Piece::piece_index_t, Position::c_index_size> c_empty_piece_board = {
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0
+};
+
 ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
                        const Color turn_color,
                        const BitBoard ep_captures):
   m_color_boards(color_boards),
+  m_pieces(c_empty_piece_board),
   m_turn_color(turn_color),
   m_ep_captures(ep_captures),
-  m_zobrist_hash(0)
+  m_occupied({0, 0})
 {
   for (Color color : c_colors) {
     const ColorBoard& board = color_board(color);
@@ -59,6 +71,7 @@ ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
       }
     }
   }
+  IncrementalUpdater::calculate(*this, &m_incremental_state);
   ZobristHash::calculate(this);
   m_hashes.push_back(m_zobrist_hash);
 }
@@ -177,7 +190,7 @@ const Piece& ChessBoard::piece(const Position pos) const
 
 ChessBoard create_initial_board()
 {
-  static const array<ColorBoard, 2> colors{{
+  const array<ColorBoard, 2> colors{{
       ColorBoard::create_initial_color_board(Color::White),
       ColorBoard::create_initial_color_board(Color::Black)}};
   return ChessBoard(colors);
@@ -185,7 +198,7 @@ ChessBoard create_initial_board()
 
 ChessBoard create_empty_board()
 {
-  static const array<ColorBoard, 2> colors{{
+  const array<ColorBoard, 2> colors{{
       ColorBoard::create_empty_color_board(),
       ColorBoard::create_empty_color_board()}};
   return ChessBoard(colors);

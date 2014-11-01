@@ -7,6 +7,8 @@
 #include "olaf/rules/undoinfo.h"
 #include "test/testutil.h"
 
+using namespace testing;
+
 namespace olaf
 {
 namespace test
@@ -18,7 +20,7 @@ void ChessBoardTest::test_friends()
   board.add_piece(board.turn_color(), PieceSet::c_bishop_index, Position("e5"));
   board.add_piece(board.noturn_color(), PieceSet::c_bishop_index, Position("c3"));
   BitBoard result(Position("e5"));
-  QCOMPARE(result, board.friends());
+  QASSERT_THAT(board.friends(), Eq(result));
 }
 
 void ChessBoardTest::test_opponents()
@@ -27,7 +29,7 @@ void ChessBoardTest::test_opponents()
   board.add_piece(board.turn_color(), PieceSet::c_bishop_index, Position("e5"));
   board.add_piece(board.noturn_color(), PieceSet::c_bishop_index, Position("f3"));
   BitBoard result(Position("f3"));
-  QCOMPARE(result, board.opponents());
+  QASSERT_THAT(board.opponents(), Eq(result));
 }
 
 void ChessBoardTest::test_occupied()
@@ -38,7 +40,7 @@ void ChessBoardTest::test_occupied()
   BitBoard result(0);
   result.set(Position("e5"), true);
   result.set(Position("f3"), true);
-  QCOMPARE(result, board.occupied());
+  QASSERT_THAT(board.occupied(), Eq(result));
 }
 
 void ChessBoardTest::test_finished_data()

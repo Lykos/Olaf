@@ -87,11 +87,9 @@ bool ColorBoard::dead() const
 ColorBoard ColorBoard::create_initial_color_board(Color color)
 {
   ColorBoard::PieceBoards piece_boards;
-  int i = 0;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
     const BitBoard initial_board = piece->initial_board(color);
-    piece_boards[i] = initial_board;
-    ++i;
+    piece_boards[piece->piece_index()] = initial_board;
   }
   return ColorBoard(piece_boards, true, true);
 }
@@ -100,12 +98,10 @@ ColorBoard ColorBoard::create_initial_color_board(Color color)
 ColorBoard ColorBoard::create_empty_color_board()
 {
   ColorBoard::PieceBoards piece_boards;
-  int i = 0;
   for (Piece::piece_index_t piece_index = 0; piece_index < PieceSet::c_no_pieces; ++piece_index) {
-    piece_boards[i] = BitBoard(0);
-    ++i;
+    piece_boards[piece_index] = BitBoard(0);
   }
   return ColorBoard(piece_boards, false, false);
+}
 
 } // namespace olaf
-}
