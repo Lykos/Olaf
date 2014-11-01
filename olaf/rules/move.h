@@ -28,14 +28,14 @@ public:
     m_state(0)
   {}
 
-  constexpr IncompleteMove(const Position& source,
-                           const Position& destination):
+  constexpr IncompleteMove(const Position source,
+                           const Position destination):
     IncompleteMove(source, destination, 0)
   {}
 
   static constexpr IncompleteMove promotion(
-      const Position& source,
-      const Position& destination,
+      const Position source,
+      const Position destination,
       const Piece::piece_index_t created_piece)
   {
     return IncompleteMove(source, destination, created_piece << 12 | c_promotion_flag);
@@ -109,8 +109,8 @@ public:
   }
 
 protected:
-  constexpr IncompleteMove(const Position& source,
-                           const Position& destination,
+  constexpr IncompleteMove(const Position source,
+                           const Position destination,
                            const std::uint16_t flags):
     m_state(flags | source.index() << 6 | destination.index())
   {}
@@ -137,8 +137,8 @@ public:
    */
   void undo(const UndoInfo& undo_info, ChessBoard* board) const;
 private:
-  constexpr Move(const Position& source,
-                 const Position& destination,
+  constexpr Move(const Position source,
+                 const Position destination,
                  const std::uint16_t flags):
     IncompleteMove(source, destination, flags)
   {}

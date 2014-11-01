@@ -37,14 +37,14 @@ public:
    */
   static Move complete(IncompleteMove incomplete_move,
                        const ChessBoard& board);
-  inline static Move complete(const Position& source,
-                              const Position& destination,
+  inline static Move complete(const Position source,
+                              const Position destination,
                               const ChessBoard& board)
   {
     return complete(IncompleteMove(source, destination), board);
   }
-  inline static Move complete_promotion(const Position& source,
-                                        const Position& destination,
+  inline static Move complete_promotion(const Position source,
+                                        const Position destination,
                                         const Piece::piece_index_t created_piece,
                                         const ChessBoard& board)
   {

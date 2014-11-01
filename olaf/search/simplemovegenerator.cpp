@@ -15,7 +15,7 @@ using namespace std;
 namespace olaf
 {
 
-static inline void add_moves(const Position& source,
+static inline void add_moves(const Position source,
                              BitBoard destinations,
                              const ChessBoard& board,
                              vector<Move>* const moves)
@@ -25,7 +25,7 @@ static inline void add_moves(const Position& source,
   }
 }
 
-static inline void add_pawn_moves(const Position& source,
+static inline void add_pawn_moves(const Position source,
                                   BitBoard destinations,
                                   const ChessBoard& board,
                                   vector<Move>* const moves)

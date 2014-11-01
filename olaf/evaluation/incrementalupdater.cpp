@@ -110,7 +110,7 @@ array<int, PieceSet::c_no_pieces> IncrementalUpdater::piece_values() {
 
 static int piece_value(const Color color,
                        const Piece::piece_index_t index,
-                       const Position& position)
+                       const Position position)
 {
   static const array<array<int, BitBoard::c_bitboard_size>, PieceSet::c_no_pieces> piece_square_values = generate_piece_square_values();
   int result = IncrementalUpdater::piece_values()[index];
@@ -141,7 +141,7 @@ void IncrementalUpdater::calculate(ChessBoard* board)
 
 void IncrementalUpdater::remove_piece(const Color color,
                                       const Piece::piece_index_t index,
-                                      const Position& position,
+                                      const Position position,
                                       ChessBoard* const board)
 {
   const int value = -piece_value(color, index, position);
@@ -150,7 +150,7 @@ void IncrementalUpdater::remove_piece(const Color color,
 
 void IncrementalUpdater::add_piece(const Color color,
                                    const Piece::piece_index_t index,
-                                   const Position& position,
+                                   const Position position,
                                    ChessBoard* const board)
 {
   const int value = piece_value(color, index, position);

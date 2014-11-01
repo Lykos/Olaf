@@ -52,7 +52,7 @@ public:
 
   constexpr BitBoard(bitboard_t bits = 0): m_bits (bits) {}
 
-  constexpr explicit BitBoard(const Position& position): m_bits (1ull << position.index()) {}
+  constexpr explicit BitBoard(const Position position): m_bits (1ull << position.index()) {}
 
   constexpr BitBoard operator -() const { return BitBoard(-m_bits); }
 
@@ -64,12 +64,12 @@ public:
     return Position(index / Position::c_column_size, index % Position::c_column_size);
   }
 
-  constexpr bool get(const Position& position) const
+  constexpr bool get(const Position position) const
   {
     return ((m_bits >> position.index()) & 1) != 0;
   }
 
-  inline void set(const Position& position, bool value)
+  inline void set(const Position position, bool value)
   {
     const uint_fast8_t i = position.index();
     m_bits = (m_bits & ~(1ull << i)) | static_cast<bitboard_t>(value) << i;

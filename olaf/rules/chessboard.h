@@ -131,7 +131,7 @@ public:
   /**
    * @brief opponent is a shortcut for opponents().get(position)
    */
-  bool opponent(const Position&) const;
+  bool opponent(Position position) const;
 
   /**
    * @attention Result caching might be invalid if the user is not careful.
@@ -144,7 +144,7 @@ public:
    * @brief friendd is a shortcut for friends().get(position)
    * @return
    */
-  bool friendd(const Position&) const;
+  bool friendd(Position position) const;
 
   /**
    * @attention Result caching might be invalid if the user is not careful.
@@ -156,7 +156,7 @@ public:
   /**
    * @brief occupied is a shortcut for occupied().get(position)
    */
-  bool occupied(const Position& position) const;
+  bool occupied(Position position) const;
 
   /**
    * @brief won returns true if the given color has won, i.e.
@@ -192,14 +192,14 @@ public:
    */
   void add_piece(Color color,
                  Piece::piece_index_t piece_index,
-                 const Position& position);
+                 Position position);
 
   /**
    * @brief remove_piece removes a piece at the location in question.
    */
   void remove_piece(Color color,
                     Piece::piece_index_t piece_index,
-                    const Position& position);
+                    Position position);
 
   /**
    * @brief can_castle_k sets the king castling right for the given color.

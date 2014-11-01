@@ -26,8 +26,6 @@ namespace benchmark
   } \
 }
 
-Move make_move(const Position& source, const Position& destination, const bool is_capture);
-
 ChessBoard parse_fen(const std::string& fen);
 
 EpdPosition parse_epd(const std::string& epd);

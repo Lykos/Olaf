@@ -45,7 +45,7 @@ void ZobristHash::calculate(ChessBoard* const board)
 // static
 void ZobristHash::update(Color color,
                          Piece::piece_index_t piece_index,
-                         const Position& position,
+                         const Position position,
                          ChessBoard* board)
 {
   const int color_index = static_cast<int>(color);
@@ -71,7 +71,7 @@ void ZobristHash::update_castle_q(const Color color,
 }
 
 // static
-void ZobristHash::update_ep(const Position& position,
+void ZobristHash::update_ep(const Position position,
                             ChessBoard* const board)
 {
   board->m_zobrist_hash ^= RandomNumbers::c_ep_randomness[position.index()];

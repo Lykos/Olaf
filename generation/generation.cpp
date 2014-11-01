@@ -546,7 +546,7 @@ void print(uint64_t bla)
   }
 }
 
-uint64_t do_magic(const Position& position, const uint64_t board, const bool is_rook)
+uint64_t do_magic(const Position position, const uint64_t board, const bool is_rook)
 {
   const Magic& magic = (is_rook ? rook_magic : bishop_magic)[position.index()];
   return optimized_magic_moves[magic.index + (((board & magic.mask) * magic.magic) >> magic.shift)];

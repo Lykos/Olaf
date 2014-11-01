@@ -12,8 +12,8 @@ namespace olaf
 {
 
 bool SimpleMoveCreator::valid_move(const ChessBoard& board,
-                                   const Position& source,
-                                   const Position& destination)
+                                   const Position source,
+                                   const Position destination)
 {
   if (!pseudo_valid_move(board, source, destination)) {
     return false;
@@ -26,8 +26,8 @@ bool SimpleMoveCreator::valid_move(const ChessBoard& board,
 }
 
 bool SimpleMoveCreator::valid_move(const ChessBoard& board,
-                                   const Position& source,
-                                   const Position& destination,
+                                   const Position source,
+                                   const Position destination,
                                    Piece::piece_index_t conversion)
 {
   if (!pseudo_valid_move(board, source, destination, conversion)) {
@@ -41,16 +41,16 @@ bool SimpleMoveCreator::valid_move(const ChessBoard& board,
 }
 
 bool SimpleMoveCreator::pseudo_valid_move(const ChessBoard& board,
-                                          const Position& source,
-                                          const Position& destination)
+                                          const Position source,
+                                          const Position destination)
 {
   return board.friendd(source)
       && board.turn_board().piece(source).can_move(source, destination, board);
 }
 
 bool SimpleMoveCreator::pseudo_valid_move(const ChessBoard& board,
-                                          const Position& source,
-                                          const Position& destination,
+                                          const Position source,
+                                          const Position destination,
                                           Piece::piece_index_t conversion)
 {
   const Pawn& pawn = PieceSet::instance().pawn();
@@ -60,16 +60,16 @@ bool SimpleMoveCreator::pseudo_valid_move(const ChessBoard& board,
 }
 
 Move SimpleMoveCreator::create_move(const ChessBoard& board,
-                                    const Position& source,
-                                    const Position& destination)
+                                    const Position source,
+                                    const Position destination)
 {
   assert(board.friendd(source));
   return board.turn_board().piece(source).move(source, destination, board);
 }
 
 Move SimpleMoveCreator::create_move(const ChessBoard& board,
-                                    const Position& source,
-                                    const Position& destination,
+                                    const Position source,
+                                    const Position destination,
                                     const Piece::piece_index_t conversion)
 {
   static const Pawn& pawn = PieceSet::instance().pawn();
@@ -94,7 +94,7 @@ bool SimpleMoveCreator::is_killable(const ChessBoard& board)
   for (const PieceBoard& piece_board : board.turn_board().piece_boards()) {
     const Piece& piece = piece_board.piece();
     for (Position source : piece_board.positions()) {
-      for (const Position& king_position : king_positions) {
+      for (const Position king_position : king_positions) {
         static const Pawn& pawn = PieceSet::instance().pawn();
         static const Piece::piece_index_t queen_index =
             PieceSet::instance().queen().piece_index();

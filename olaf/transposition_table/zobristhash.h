@@ -21,14 +21,14 @@ public:
 
   static void update(Color color,
                      Piece::piece_index_t piece_index,
-                     const Position& position,
+                     Position position,
                      ChessBoard* board);
 
   static void update_castle_k(Color color, ChessBoard* board);
 
   static void update_castle_q(Color color, ChessBoard* board);
 
-  static void update_ep(const Position& position, ChessBoard* board);
+  static void update_ep(Position position, ChessBoard* board);
 
   static void update_turn_color(ChessBoard* board);
 };

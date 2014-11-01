@@ -133,7 +133,7 @@ BitBoard ChessBoard::opponents() const
   return m_opponents;
 }
 
-bool ChessBoard::opponent(const Position &position) const
+bool ChessBoard::opponent(const Position position) const
 {
   return opponents().get(position);
 }
@@ -147,7 +147,7 @@ BitBoard ChessBoard::friends() const
   return m_friends;
 }
 
-bool ChessBoard::friendd(const Position &position) const
+bool ChessBoard::friendd(const Position position) const
 {
   return friends().get(position);
 }
@@ -161,7 +161,7 @@ BitBoard ChessBoard::occupied() const
   return m_occupied;
 }
 
-bool ChessBoard::occupied(const Position &position) const
+bool ChessBoard::occupied(const Position position) const
 {
   return occupied().get(position);
 }
@@ -177,7 +177,7 @@ void ChessBoard::calculate_draw() const
 
 void ChessBoard::add_piece(const Color color,
                            const Piece::piece_index_t piece_index,
-                           const Position& position)
+                           const Position position)
 {
   m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, true);
   m_pieces[position.index()] = piece_index;
@@ -187,7 +187,7 @@ void ChessBoard::add_piece(const Color color,
 
 void ChessBoard::remove_piece(const Color color,
                               const Piece::piece_index_t piece_index,
-                              const Position& position)
+                              const Position position)
 {
   m_color_boards[static_cast<int>(color)].piece_board(piece_index).set(position, false);
   m_pieces[position.index()] = PieceSet::c_no_pieces;

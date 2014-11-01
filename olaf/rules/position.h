@@ -12,26 +12,26 @@ namespace olaf
 
 class Position;
 
-std::ostream& operator<<(std::ostream &out, const Position &position);
+std::ostream& operator<<(std::ostream& out, Position position);
 
-std::istream& operator>>(std::istream &in, Position &position);
+std::istream& operator>>(std::istream& in, Position& position);
 
-constexpr bool operator==(const Position& left, const Position& right);
+constexpr bool operator==(Position left, Position right);
 
-constexpr bool operator<(const Position& left, const Position& right);
+constexpr bool operator<(Position left, Position right);
 
 /**
  * @brief The Position class represents the coordinates of one particular square of the board.
  */
 class Position
 {
-  friend std::ostream& operator<<(std::ostream &out, const Position &position);
+  friend std::ostream& operator<<(std::ostream& out, Position position);
 
-  friend std::istream& operator>>(std::istream &in, Position &position);
+  friend std::istream& operator>>(std::istream& in, Position& position);
 
-  friend constexpr bool operator==(const Position& left, const Position& right);
+  friend constexpr bool operator==(Position left, Position right);
 
-  friend constexpr bool operator<(const Position& left, const Position& right);
+  friend constexpr bool operator<(Position left, Position right);
 
 public:
   typedef std::int_fast8_t index_t;
@@ -85,12 +85,12 @@ private:
   index_t m_index;
 };
 
-constexpr bool operator==(const Position& left, const Position& right)
+constexpr bool operator==(const Position left, const Position right)
 {
   return left.m_index == right.m_index;
 }
 
-constexpr bool operator<(const Position& left, const Position& right)
+constexpr bool operator<(const Position left, const Position right)
 {
   return left.m_index < right.m_index;
 }

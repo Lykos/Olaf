@@ -24,7 +24,7 @@ const std::string Position::rows = "12345678";
 
 const std::string Position::columns = "abcdefgh";
 
-std::ostream& operator<<(std::ostream& out, const Position& position)
+std::ostream& operator<<(std::ostream& out, const Position position)
 {
   assert(0 <= position.m_index && position.m_index < Position::c_index_size);
   return out << Position::columns[position.column()] << Position::rows[position.row()];
@@ -47,7 +47,7 @@ const vector<Position>& Position::all_positions()
   return positions;
 }
 
-Position::Position(const string &pos)
+Position::Position(const string& pos)
 {
   istringstream iss(pos);
   iss >> *this;
