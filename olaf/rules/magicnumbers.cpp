@@ -388,6 +388,11 @@ const MagicNumbers::ColorTable MagicNumbers::c_castle_q_square = {
   1ULL << (7 * 8 + 2)
 };
 
+const MagicNumbers::ColorTable MagicNumbers::c_castle_squares = {
+  MagicNumbers::c_castle_k_square[0] | MagicNumbers::c_castle_q_square[0],
+  MagicNumbers::c_castle_k_square[1] | MagicNumbers::c_castle_q_square[1]
+};
+
 const MagicNumbers::ColorTable MagicNumbers::c_castle_k_room = {
   3ULL << 5,
   3ULL << (7 * 8 + 5)
@@ -398,14 +403,24 @@ const MagicNumbers::ColorTable MagicNumbers::c_castle_q_room = {
   7ULL << (7 * 8 + 1)
 };
 
-const MagicNumbers::ColorTable MagicNumbers::c_castle_k_rook = {
+const MagicNumbers::ColorTable MagicNumbers::c_castle_k_rook_src = {
   1ULL << 7,
   1ULL << (7 * 8 + 7),
 };
 
-const MagicNumbers::ColorTable MagicNumbers::c_castle_q_rook = {
+const MagicNumbers::ColorTable MagicNumbers::c_castle_q_rook_src = {
   1ULL,
-  1ULL << 7 * 8
+  1ULL << (7 * 8)
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_k_rook_dst = {
+  1ULL << 5,
+  1ULL << (7 * 8 + 5),
+};
+
+const MagicNumbers::ColorTable MagicNumbers::c_castle_q_rook_dst = {
+  1ULL << 3,
+  1ULL << (7 * 8 + 3)
 };
 
 } // namespace olaf

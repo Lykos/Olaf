@@ -30,6 +30,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   const Position src(source());
   const Position dst(destination());
   const Color turn_color = board->turn_color();
+  const int color_index = static_cast<int>(turn_color);
   const Color noturn_color = other_color(turn_color);
   const Piece::piece_index_t piece_index = board->turn_board().piece_index(src);
   undo_info->ep_captures = board->ep_captures();
@@ -65,24 +66,21 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   undo_info->can_castle_k = board->turn_board().can_castle_k();
   undo_info->can_castle_q = board->turn_board().can_castle_q();
   undo_info->king_captures = board->king_captures();
-  const Position::index_t gnd = ground_line(board->turn_color());
   static const Piece::piece_index_t c_rook_index =
       PieceSet::c_rook_index;
   const BitBoard src_board(src);
   if (is_castle()) {
     board->can_castle_k(board->turn_color(), false);
     board->can_castle_q(board->turn_color(), false);
-    Position::index_t rook_source_column;
-    Position::index_t rook_destination_column;
+    Position rook_source;
+    Position rook_destination;
     if (is_king_castle()) {
-      rook_source_column = Position::c_kings_rook_column;
-      rook_destination_column = Position::c_kings_bishop_column;
+      rook_source = BitBoard(MagicNumbers::c_castle_k_rook_src[color_index]).first_position();
+      rook_destination = BitBoard(MagicNumbers::c_castle_k_rook_dst[color_index]).first_position();
     } else {
-      rook_source_column = Position::c_queens_rook_column;
-      rook_destination_column = Position::c_queen_column;
+      rook_source = BitBoard(MagicNumbers::c_castle_q_rook_src[color_index]).first_position();
+      rook_destination = BitBoard(MagicNumbers::c_castle_q_rook_dst[color_index]).first_position();
     }
-    const Position rook_source(gnd, rook_source_column);
-    const Position rook_destination(gnd, rook_destination_column);
     undo_info->rook_source = rook_source;
     undo_info->rook_destination = rook_destination;
     board->remove_piece(turn_color, c_rook_index, rook_source);
@@ -94,9 +92,9 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
       board->can_castle_k(turn_color, false);
       board->can_castle_q(turn_color, false);
     } else if (piece_index == c_rook_index) {
-      if (src_board & BitBoard(MagicNumbers::c_castle_k_rook[static_cast<int>(turn_color)])) {
+      if (src_board & BitBoard(MagicNumbers::c_castle_k_rook_src[color_index])) {
         board->can_castle_k(turn_color, false);
-      } else if (src_board & BitBoard(MagicNumbers::c_castle_q_rook[static_cast<int>(turn_color)])) {
+      } else if (src_board & BitBoard(MagicNumbers::c_castle_q_rook_src[color_index])) {
         board->can_castle_q(turn_color, false);
       }
     }

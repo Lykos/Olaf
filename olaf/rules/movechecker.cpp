@@ -7,6 +7,7 @@
 #include "olaf/rules/move.h"
 #include "olaf/rules/undoinfo.h"
 #include "olaf/rules/magicmoves.h"
+#include "olaf/rules/magicnumbers.h"
 
 using namespace std;
 
@@ -59,11 +60,9 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
   const Position src(incomplete_move.source());
   const Piece::piece_index_t piece_index = board.turn_board().piece_index(src);
   const Position dst(incomplete_move.destination());
-  const Color turn_color = board.turn_color();
-  const Position::index_t gnd = ground_line(turn_color);
-  if (src.row() == gnd
-      && dst.row() == gnd
-      && abs(src.column() - dst.column()) == 2
+  const int color_index = static_cast<int>(board.turn_color());
+  if (BitBoard(src) & BitBoard(MagicNumbers::c_king_positions[color_index])
+      && BitBoard(dst) & BitBoard(MagicNumbers::c_castle_squares[color_index])
       && piece_index == PieceSet::c_king_index) {
     if (dst.column() == Position::c_kings_knight_column) {
       return Move(src, dst, Move::c_castle_k_flag);

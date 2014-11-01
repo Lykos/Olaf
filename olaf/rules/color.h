@@ -32,16 +32,6 @@ constexpr Position::index_t ground_line(Color color)
   return color == Color::White ? 0 : 7;
 }
 
-constexpr Position::index_t pawn_row(Color color)
-{
-  return color == Color::White ? 1 : 6;
-}
-
-constexpr Position::index_t promotion_row(Color color)
-{
-  return color == Color::White ? 7 : 0;
-}
-
 } // namespace olaf
 
 #endif // COLOR_H

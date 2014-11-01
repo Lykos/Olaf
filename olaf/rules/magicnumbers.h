@@ -57,13 +57,19 @@ struct MagicNumbers
 
   static const ColorTable c_castle_q_square;
 
+  static const ColorTable c_castle_squares;
+
   static const ColorTable c_castle_k_room;
 
   static const ColorTable c_castle_q_room;
 
-  static const ColorTable c_castle_k_rook;
+  static const ColorTable c_castle_k_rook_src;
 
-  static const ColorTable c_castle_q_rook;
+  static const ColorTable c_castle_q_rook_src;
+
+  static const ColorTable c_castle_k_rook_dst;
+
+  static const ColorTable c_castle_q_rook_dst;
 };
 
 } // namespace olaf
