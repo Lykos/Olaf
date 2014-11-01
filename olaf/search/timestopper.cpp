@@ -15,6 +15,6 @@ bool TimeStopper::should_stop() const
 {
   milliseconds elapsed = duration_cast<milliseconds>(steady_clock::now() - m_start);
   return elapsed >= m_millis;
+}
 
 } // namespace olaf
-}
