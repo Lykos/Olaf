@@ -5,7 +5,6 @@
 #include <cstdint>
 
 #include "olaf/rules/position.h"
-#include "olaf/rules/positiondelta.h"
 
 namespace olaf
 {
@@ -28,22 +27,17 @@ constexpr Color other_color(Color color)
   return static_cast<Color>(1 - static_cast<uint_fast8_t>(color));
 }
 
-constexpr Position::row_t ground_line(Color color)
+constexpr Position::index_t ground_line(Color color)
 {
   return color == Color::White ? 0 : 7;
 }
 
-constexpr PositionDelta forward_direction(Color color)
-{
-  return color == Color::White ? PositionDelta(1, 0) : PositionDelta(-1, 0);
-}
-
-constexpr Position::row_t pawn_row(Color color)
+constexpr Position::index_t pawn_row(Color color)
 {
   return color == Color::White ? 1 : 6;
 }
 
-constexpr Position::row_t promotion_row(Color color)
+constexpr Position::index_t promotion_row(Color color)
 {
   return color == Color::White ? 7 : 0;
 }

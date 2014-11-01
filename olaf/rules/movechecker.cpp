@@ -60,7 +60,7 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
   const Piece::piece_index_t piece_index = board.turn_board().piece_index(src);
   const Position dst(incomplete_move.destination());
   const Color turn_color = board.turn_color();
-  const Position::row_t gnd = ground_line(turn_color);
+  const Position::index_t gnd = ground_line(turn_color);
   if (src.row() == gnd
       && dst.row() == gnd
       && abs(src.column() - dst.column()) == 2

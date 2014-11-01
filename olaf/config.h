@@ -25,12 +25,16 @@ public:
 
     int sequential_depth() const { return m_sequential_depth; }
 
+    bool use_quiescent_search() const { return m_use_quiescent_search; }
+
   private:
     const int m_time_millis;
 
     const int m_min_depth;
 
     const int m_sequential_depth;
+
+    const bool m_use_quiescent_search;
   };
 
   class TranspositionTable {

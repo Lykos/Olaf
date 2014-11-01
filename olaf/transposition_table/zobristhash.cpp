@@ -52,7 +52,9 @@ void ZobristHash::update(Color color,
                          ChessBoard* board)
 {
   const int color_index = static_cast<int>(color);
-  board->m_zobrist_hash ^= RandomNumbers::c_piece_randomness[color_index * PieceSet::c_no_pieces * BitBoard::c_bitboard_size + piece_index * BitBoard::c_bitboard_size + BitBoard::index(position)];
+  const int index = color_index * PieceSet::c_no_pieces * BitBoard::c_bitboard_size
+      + piece_index * BitBoard::c_bitboard_size + position.index();
+  board->m_zobrist_hash ^= RandomNumbers::c_piece_randomness[index];
 }
 
 // static
@@ -75,7 +77,7 @@ void ZobristHash::update_castle_q(const Color color,
 void ZobristHash::update_ep(const Position& position,
                             ChessBoard* const board)
 {
-  board->m_zobrist_hash ^= RandomNumbers::c_ep_randomness[BitBoard::index(position)];
+  board->m_zobrist_hash ^= RandomNumbers::c_ep_randomness[position.index()];
 }
 
 // static

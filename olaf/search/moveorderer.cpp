@@ -84,7 +84,7 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   BitBoard occupied = board.occupied();
   for (const Color color : c_colors) {
     const ColorBoard& color_board = board.color_board(color);
-    const int dst_index = BitBoard::index(dst);
+    const int dst_index = dst.index();
     // Pawns can attack this square from the squares an opposing pawn would attack from here.
     const int color_index = static_cast<int>(other_color(color)) * BitBoard::c_bitboard_size;
     BitBoard pawn_attackers(MagicNumbers::c_pawn_capture_table[color_index + dst_index]);

@@ -2,6 +2,7 @@ search:
   time_millis: 2000
   min_depth: 1
   sequential_depth: 2
+  use_quiescent_search: true
 transposition_table:
   size: 1048576
 move_ordering:

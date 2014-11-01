@@ -116,10 +116,10 @@ static int piece_value(const Color color,
   int result = IncrementalUpdater::piece_values()[index];
   int position_index;
   if (color == Color::White) {
-    position_index = BitBoard::index(position);
+    position_index = position.index();
   } else {
     Position pos(Position::c_row_size - 1 - position.row(), position.column());
-    position_index = BitBoard::index(pos);
+    position_index = pos.index();
   }
   result += piece_square_values[index][position_index];
   return result;

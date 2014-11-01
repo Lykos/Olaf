@@ -112,7 +112,7 @@ protected:
   constexpr IncompleteMove(const Position& source,
                            const Position& destination,
                            const std::uint16_t flags):
-    m_state(flags | BitBoard::index(source) << 6 | BitBoard::index(destination))
+    m_state(flags | source.index() << 6 | destination.index())
   {}
 
 private:

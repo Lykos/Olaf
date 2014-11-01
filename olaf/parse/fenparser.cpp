@@ -91,7 +91,7 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
   string::const_iterator it = begin;
   const string::const_iterator end = fen.end();
   const PieceSet& piece_set = PieceSet::instance();
-  for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
+  for (Position::index_t row = Position::c_row_size - 1; row >= 0; --row) {
     int column = 0;
     while (column < Position::c_column_size) {
       CHECK_NOT_END(it, end);
@@ -189,9 +189,9 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
 string FenParser::serialize(const ChessBoard& board)
 {
   ostringstream result;
-  for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
+  for (Position::index_t row = Position::c_row_size - 1; row >= 0; --row) {
     int free_columns = 0;
-    for (Position::column_t column = 0; column < Position::c_column_size; ++column) {
+    for (Position::index_t column = 0; column < Position::c_column_size; ++column) {
       const Position pos(row, column);
       if (board.occupied(pos)) {
         if (free_columns > 0) {

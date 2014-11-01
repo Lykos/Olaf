@@ -11,17 +11,14 @@ namespace olaf
 {
 
 class Position;
-class PositionDelta;
 
 std::ostream& operator<<(std::ostream &out, const Position &position);
 
 std::istream& operator>>(std::istream &in, Position &position);
 
-bool operator==(const Position& left, const Position& right);
+constexpr bool operator==(const Position& left, const Position& right);
 
-bool operator<(const Position& left, const Position& right);
-
-PositionDelta operator-(const Position&, const Position&);
+constexpr bool operator<(const Position& left, const Position& right);
 
 /**
  * @brief The Position class represents the coordinates of one particular square of the board.
@@ -32,33 +29,25 @@ class Position
 
   friend std::istream& operator>>(std::istream &in, Position &position);
 
-  friend bool operator==(const Position& left, const Position& right);
+  friend constexpr bool operator==(const Position& left, const Position& right);
 
-  friend bool operator<(const Position& left, const Position& right);
-
-  friend Position operator+(const Position&, const PositionDelta&);
-
-  friend Position operator+(const PositionDelta&, const Position&);
-
-  friend PositionDelta operator-(const Position&, const Position&);
+  friend constexpr bool operator<(const Position& left, const Position& right);
 
 public:
-  typedef std::int_fast8_t row_t;
+  typedef std::int_fast8_t index_t;
 
-  typedef std::int_fast8_t column_t;
+  static const index_t c_row_size = 8;
+  static const index_t c_column_size = 8;
+  static const index_t c_index_size = c_row_size * c_column_size;
 
-  static const row_t c_row_size = 8;
-
-  static const column_t c_column_size = 8;
-
-  static const column_t c_queens_rook_column = 0;
-  static const column_t c_queens_knight_column = 1;
-  static const column_t c_queens_bishop_column = 2;
-  static const column_t c_queen_column = 3;
-  static const column_t c_king_column = 4;
-  static const column_t c_kings_bishop_column = 5;
-  static const column_t c_kings_knight_column = 6;
-  static const column_t c_kings_rook_column = 7;
+  static const index_t c_queens_rook_column = 0;
+  static const index_t c_queens_knight_column = 1;
+  static const index_t c_queens_bishop_column = 2;
+  static const index_t c_queen_column = 3;
+  static const index_t c_king_column = 4;
+  static const index_t c_kings_bishop_column = 5;
+  static const index_t c_kings_knight_column = 6;
+  static const index_t c_kings_rook_column = 7;
 
   static const std::string columns;
 
@@ -75,29 +64,37 @@ public:
    * @param row has to fulfill 0 <= row < ROW_SIZE
    * @param column has to fulfill 0 <= column < COLUMN_SIZE
    */
-  constexpr Position(row_t row, column_t column): m_row (row), m_column (column) {}
+  constexpr Position(index_t row, index_t column): m_index(row * c_column_size + column) {}
 
   /**
    * @brief Position with row = column = 0
    */
-  constexpr Position(): Position(0, 0) {}
+  constexpr Position(): Position(0) {}
 
   explicit Position(const std::string& pos);
 
-  constexpr row_t row() const { return m_row; }
+  constexpr explicit Position(const index_t index): m_index(index) {}
 
-  constexpr column_t column() const { return m_column; }
+  constexpr index_t row() const { return m_index / c_column_size; }
 
-  bool in_bounds(const PositionDelta& d_pos) const;
+  constexpr index_t column() const { return m_index % c_column_size; }
+
+  constexpr index_t index() const { return m_index; }
 
 private:
-  row_t m_row;
-
-  column_t m_column;
+  index_t m_index;
 };
 
-} // namespace olaf
+constexpr bool operator==(const Position& left, const Position& right)
+{
+  return left.m_index == right.m_index;
+}
 
-#include "olaf/rules/positiondelta.h"
+constexpr bool operator<(const Position& left, const Position& right)
+{
+  return left.m_index < right.m_index;
+}
+
+} // namespace olaf
 
 #endif // POSITION_H

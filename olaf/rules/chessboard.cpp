@@ -10,8 +10,8 @@ namespace olaf
 
 std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
 {
-  for (Position::row_t row = Position::c_row_size - 1; row >= 0; --row) {
-    for (Position::column_t column = 0; column < Position::c_column_size; ++column) {
+  for (Position::index_t row = Position::c_row_size - 1; row >= 0; --row) {
+    for (Position::index_t column = 0; column < Position::c_column_size; ++column) {
       const Position pos(row, column);
       if (board.friendd(pos)) {
         out << board.turn_board().piece(pos).symbol(board.turn_color());

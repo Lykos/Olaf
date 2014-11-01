@@ -19,7 +19,7 @@ static_assert(MagicNumbers::c_no_squares == BitBoard::c_bitboard_size, "Differen
 // static
 BitBoard MagicMoves::moves_king(const Position& source, const ChessBoard& board)
 {
-  BitBoard result = BitBoard(MagicNumbers::c_king_table[BitBoard::index(source)]) & BitBoard(~board.friends());
+  BitBoard result = BitBoard(MagicNumbers::c_king_table[source.index()]) & BitBoard(~board.friends());
   const Color color = board.turn_color();
   const int index = static_cast<int>(color);
   if (king_unmoved(board, color)) {
@@ -38,7 +38,7 @@ BitBoard MagicMoves::moves_pawn(const Position& source, const ChessBoard& board)
 {
   const BitBoard free = ~board.occupied();
   const int color_index = static_cast<int>(board.turn_color()) * BitBoard::c_bitboard_size;
-  const int position_index = BitBoard::index(source);
+  const int position_index = source.index();
   BitBoard result = BitBoard(MagicNumbers::c_pawn_one_step_table[color_index + position_index]) & free;
   if (result) {
     result = result | (BitBoard(MagicNumbers::c_pawn_two_step_table[color_index + position_index]) & free);

@@ -9,8 +9,8 @@ BitBoard BitBoard::mirror_rows() const
 {
   bitboard_t bits = 0;
   static const bitboard_t row_mask = (1 << Position::c_column_size) - 1;
-  for (Position::row_t row_index = 0; row_index < Position::c_row_size; ++row_index) {
-    Position::row_t old_row_index = Position::c_column_size - 1 - row_index;
+  for (Position::index_t row_index = 0; row_index < Position::c_row_size; ++row_index) {
+    const Position::index_t old_row_index = Position::c_column_size - 1 - row_index;
     bitboard_t old_row_content = (m_bits >> old_row_index * Position::c_column_size) & row_mask;
     bits |= old_row_content << row_index * Position::c_column_size;
   }
@@ -47,8 +47,8 @@ Position BitBoard::next_position()
 
 ostream& operator <<(ostream& out, const BitBoard bit_board)
 {
-  for (Position::row_t row = 7; row >= 0; --row) {
-    for (Position::column_t column = 0; column < 8; ++column) {
+  for (Position::index_t row = 7; row >= 0; --row) {
+    for (Position::index_t column = 0; column < 8; ++column) {
       out << (bit_board.get(Position(row, column)) ? 1 : 0);
     }
     out << endl;

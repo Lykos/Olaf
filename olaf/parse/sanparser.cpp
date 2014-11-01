@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <string>
 #include <memory>
+#include <iostream>
 
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceset.h"
@@ -32,7 +33,7 @@ bool SanParser::parse(const string& san_move,
   const bool is_castle_q = san_move.find(c_castle_q) == 0;
   if (is_castle_k || is_castle_q) {
     // Note that we cannot change the order here since c_castle_k is a prefix of c_castle_q.
-    const Position::column_t destination_column = is_castle_q
+    const Position::index_t destination_column = is_castle_q
         ? Position::c_queens_bishop_column
         : Position::c_kings_knight_column;
     Position source(ground_line(board.turn_color()), Position::c_king_column);
@@ -64,7 +65,7 @@ bool SanParser::parse(const string& san_move,
   bool source_column_valid = false;
   bool capture = false;
   if (Position::rows.find(*it) != string::npos) {
-    source = Position(Position::rows.find(*it), -1);
+    source = Position(Position::rows.find(*it), 0);
     source_row_valid = true;
     ++it;
   } else if (Position::columns.find(*it) != string::npos) {
@@ -73,7 +74,7 @@ bool SanParser::parse(const string& san_move,
     if (Position::columns.find(*next) != string::npos
         || c_capture_symbols.find(*next) != string::npos) {
       // The found row is certainly the column disambiguation
-      source = Position(-1, Position::columns.find(*it));
+      source = Position(0, Position::columns.find(*it));
       source_column_valid = true;
       ++it;
     } else if (Position::rows.find(*next) != string::npos) {

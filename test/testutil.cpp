@@ -19,6 +19,7 @@ static const char c_config[] =
     "  time_millis: 2000\n"
     "  min_depth: 1\n"
     "  sequential_depth: 2\n"
+    "  use_quiescent_search: true\n"
     "transposition_table:\n"
     "  size: 65536\n"
     "move_ordering:\n"

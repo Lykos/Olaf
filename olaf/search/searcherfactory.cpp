@@ -93,9 +93,11 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() co
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() const
 {
+  unique_ptr<AlphaBetaSearcher> sub_searcher =
+      m_config->search().use_quiescent_search() ? quiescer() : evaluator();
   unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
                                                        move_orderer(),
-                                                       quiescer(),
+                                                       move(sub_searcher),
                                                        0,
                                                        false));
   return searcher;

@@ -14,6 +14,17 @@ using namespace std;
 namespace olaf
 {
 
+static array<Position::index_t, Position::c_index_size> c_ep_victims = {
+   0,  0,  0,  0,  0,  0,  0,  0,
+   0,  0,  0,  0,  0,  0,  0,  0,
+  24, 25, 26, 27, 28, 29, 30, 31,
+   0,  0,  0,  0,  0,  0,  0,  0,
+   0,  0,  0,  0,  0,  0,  0,  0,
+  32, 33, 34, 35, 36, 37, 38, 39,
+   0,  0,  0,  0,  0,  0,  0,  0,
+   0,  0,  0,  0,  0,  0,  0,  0
+};
+
 void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
 {
   const Position src(source());
@@ -32,7 +43,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   if (is_capture()) {
     Position victim_position;
     if (is_ep()) {
-      victim_position = dst + forward_direction(noturn_color);
+      victim_position = Position(c_ep_victims[dst.index()]);
     } else if (BitBoard(dst) & board->king_captures()) {
       victim_position =
           board->color_board(noturn_color).piece_board(c_king_index).bit_board().first_position();
@@ -54,14 +65,14 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   undo_info->can_castle_k = board->turn_board().can_castle_k();
   undo_info->can_castle_q = board->turn_board().can_castle_q();
   undo_info->king_captures = board->king_captures();
-  const Position::row_t gnd = ground_line(board->turn_color());
+  const Position::index_t gnd = ground_line(board->turn_color());
   static const Piece::piece_index_t c_rook_index =
       PieceSet::c_rook_index;
   if (is_castle()) {
     board->can_castle_k(board->turn_color(), false);
     board->can_castle_q(board->turn_color(), false);
-    Position::column_t rook_source_column;
-    Position::column_t rook_destination_column;
+    Position::index_t rook_source_column;
+    Position::index_t rook_destination_column;
     if (is_king_castle()) {
       rook_source_column = Position::c_kings_rook_column;
       rook_destination_column = Position::c_kings_bishop_column;

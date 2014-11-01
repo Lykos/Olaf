@@ -320,7 +320,7 @@ vector<int> indices(const uint64_t bits)
 {
   vector<int> result;
   for (BitBoard bit_board(bits); bit_board; ) {
-    result.push_back(BitBoard::index(bit_board.next_position()));
+    result.push_back(bit_board.next_position().index());
   }
   return result;
 }
@@ -548,7 +548,7 @@ void print(uint64_t bla)
 
 uint64_t do_magic(const Position& position, const uint64_t board, const bool is_rook)
 {
-  const Magic& magic = (is_rook ? rook_magic : bishop_magic)[BitBoard::index(position)];
+  const Magic& magic = (is_rook ? rook_magic : bishop_magic)[position.index()];
   return optimized_magic_moves[magic.index + (((board & magic.mask) * magic.magic) >> magic.shift)];
 }
 

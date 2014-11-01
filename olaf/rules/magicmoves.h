@@ -2,11 +2,14 @@
 #define MAGICMOVES_H
 
 #include <array>
+#include <cstdint>
 
 #include "olaf/rules/bitboard.h"
 #include "olaf/rules/magicnumbers.h"
 #include "olaf/rules/chessboard.h"
 #include "olaf/rules/position.h"
+
+using namespace std;
 
 namespace olaf
 {
@@ -18,9 +21,10 @@ public:
                                              const Position& source,
                                              const BitBoard occupied)
   {
-    const Magic& magic = magics[BitBoard::index(source)];
+    const Magic& magic = magics[source.index()];
     const uint64_t board = occupied;
-    return magic.ptr[((board & magic.mask) * magic.magic) >> magic.shift];
+    const uint64_t index = ((board & magic.mask) * magic.magic) >> magic.shift;
+    return magic.ptr[index];
   }
 
   static inline BitBoard moves_rook(const Position& source, const ChessBoard& board)
@@ -41,7 +45,7 @@ public:
 
   static inline BitBoard moves_knight(const Position& source, const ChessBoard& board)
   {
-    return BitBoard(MagicNumbers::c_knight_table[BitBoard::index(source)]) & BitBoard(~board.friends());
+    return BitBoard(MagicNumbers::c_knight_table[source.index()]) & BitBoard(~board.friends());
   }
 
   static inline BitBoard king_unmoved(const ChessBoard& board, const Color color)

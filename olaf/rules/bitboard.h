@@ -45,28 +45,19 @@ class BitBoard
   friend constexpr bool operator !=(BitBoard, BitBoard);
 
 public:
-  static const uint_fast8_t c_bitboard_size = Position::c_column_size * Position::c_row_size;
+  static const uint_fast8_t c_bitboard_size = Position::c_index_size;
 
   static_assert(sizeof(bitboard_t) * CHAR_BIT >= c_bitboard_size,
                 "Not enough space for a bit board in the used type.");
 
   constexpr BitBoard(bitboard_t bits = 0): m_bits (bits) {}
 
-  constexpr BitBoard(const Position& position): m_bits (1ull << index(position)) {}
+  constexpr explicit BitBoard(const Position& position): m_bits (1ull << position.index()) {}
 
   constexpr BitBoard operator -() const { return BitBoard(-m_bits); }
 
   constexpr operator bitboard_t() const { return m_bits; }
 
-  /**
-   * @brief index returns the index that has to be used to access the bit of this position
-   * @param position
-   * @return
-   */
-  static constexpr uint_fast8_t index(const Position& position)
-  {
-    return position.row() * Position::c_column_size + position.column();
-  }
 
   static constexpr Position reverse_index(const uint_fast8_t index)
   {
@@ -75,12 +66,12 @@ public:
 
   constexpr bool get(const Position& position) const
   {
-    return ((m_bits >> index(position)) & 1) != 0;
+    return ((m_bits >> position.index()) & 1) != 0;
   }
 
   inline void set(const Position& position, bool value)
   {
-    const uint_fast8_t i = index(position);
+    const uint_fast8_t i = position.index();
     m_bits = (m_bits & ~(1ull << i)) | static_cast<bitboard_t>(value) << i;
   }
 

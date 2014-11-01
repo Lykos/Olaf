@@ -43,7 +43,6 @@ SOURCES += \
     parse/epdparser.cpp \
     parse/epdposition.cpp \
     parse/fenparser.cpp \
-    rules/positiondelta.cpp \
     rules/position.cpp \
     rules/pieceset.cpp \
     rules/pieceboard.cpp \
@@ -94,7 +93,6 @@ HEADERS += \
     parse/epdparser.h \
     parse/epdposition.h \
     parse/fenparser.h \
-    rules/positiondelta.h \
     rules/position.h \
     rules/pieceset.h \
     rules/pieceboard.h \
