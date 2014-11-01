@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include "olaf/evaluation/incrementalupdater.h"
+
 using namespace std;
 
 namespace olaf
@@ -34,7 +36,7 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
   return left.m_turn_color == right.m_turn_color
       && left.m_turn_number == right.m_turn_number
       && left.m_color_boards == right.m_color_boards
-      && left.m_incremental_score_white == right.m_incremental_score_white
+      && left.m_incremental_state == right.m_incremental_state
       && left.m_zobrist_hash == right.m_zobrist_hash
       && left.m_ep_captures == right.m_ep_captures
       && left.m_king_captures == right.m_king_captures;
@@ -46,8 +48,7 @@ ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
   m_color_boards(color_boards),
   m_turn_color(turn_color),
   m_ep_captures(ep_captures),
-  m_zobrist_hash(0),
-  m_incremental_score_white(0)
+  m_zobrist_hash(0)
 {
   for (Color color : c_colors) {
     const ColorBoard& board = color_board(color);
@@ -136,7 +137,7 @@ void ChessBoard::add_piece(const Color color,
   m_occupied[color_index].set(position, true);
   m_pieces[position.index()] = piece_index;
   ZobristHash::update(color, piece_index, position, this);
-  IncrementalUpdater::add_piece(color, piece_index, position, this);
+  IncrementalUpdater::add_piece(color, piece_index, position, &m_incremental_state);
 }
 
 void ChessBoard::remove_piece(const Color color,
@@ -148,7 +149,7 @@ void ChessBoard::remove_piece(const Color color,
   m_occupied[color_index].set(position, false);
   m_color_boards[color_index].piece_board(piece_index).set(position, false);
   ZobristHash::update(color, piece_index, position, this);
-  IncrementalUpdater::remove_piece(color, piece_index, position, this);
+  IncrementalUpdater::remove_piece(color, piece_index, position, &m_incremental_state);
 }
 
 void ChessBoard::can_castle_k(const Color color, const bool new_can_castle_k)

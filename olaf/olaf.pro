@@ -59,8 +59,7 @@ SOURCES += \
     evaluation/positionevaluator.cpp \
     transposition_table/randomnumbers.cpp \
     rules/magicnumbers.cpp \
-    rules/magicmoves.cpp \
-    evaluation/incrementalstate.cpp
+    rules/magicmoves.cpp
 
 HEADERS += \
     config.h \

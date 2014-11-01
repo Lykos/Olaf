@@ -7,6 +7,7 @@
 #include "olaf/search/nothinkingwriter.h"
 #include "olaf/search/searcherfactory.h"
 #include "olaf/search/searchcontext.h"
+#include "olaf/evaluation/incrementalupdater.h"
 #include "olaf/rules/undoinfo.h"
 #include "testutil.h"
 
@@ -43,7 +44,7 @@ void IncrementalEvaluatorTest::test_evaluate()
   QFETCH(int, score);
 
   const int actual_score = board.incremental_score();
-  IncrementalUpdater::calculate(&board);
+  IncrementalUpdater::calculate(board, &(board.incremental_state()));
   QASSERT_THAT(actual_score, Eq(score));
   SearchContext context;
   context.board = board;
@@ -53,11 +54,11 @@ void IncrementalEvaluatorTest::test_evaluate()
     UndoInfo undo_info;
     move.execute(&board, &undo_info);
     const int move_score = board.incremental_score();
-    IncrementalUpdater::calculate(&board);
+    IncrementalUpdater::calculate(board, &(board.incremental_state()));
     QASSERT_THAT(board.incremental_score(), Eq(move_score));
     move.undo(undo_info, &board);
     const int undo_score = board.incremental_score();
-    IncrementalUpdater::calculate(&board);
+    IncrementalUpdater::calculate(board, &(board.incremental_state()));
     QASSERT_THAT(board.incremental_score(), Eq(undo_score));
     QASSERT_THAT(undo_score, Eq(score));
   }

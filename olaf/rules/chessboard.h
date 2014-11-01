@@ -12,7 +12,7 @@
 #include "olaf/rules/bitboard.h"
 #include "olaf/rules/piece.h"
 #include "olaf/transposition_table/zobristhash.h"
-#include "olaf/evaluation/incrementalupdater.h"
+#include "olaf/evaluation/incrementalstate.h"
 
 namespace olaf
 {
@@ -33,7 +33,6 @@ class ChessBoard
   friend std::ostream& operator <<(std::ostream& out, const ChessBoard& board);
   friend bool operator ==(const ChessBoard& left, const ChessBoard& right);
   friend class ZobristHash;
-  friend class IncrementalUpdater;
 
 public:
   ChessBoard(
@@ -271,9 +270,10 @@ public:
    * @brief incremental_score returns the score regarding all the things that are updated incrementally.
    *        It always returns the score for the side whose turn it is;
    */
-  inline int incremental_score() const
+  inline IncrementalState::score_t incremental_score() const
   {
-    return m_turn_color == Color::White ? m_incremental_score_white : -m_incremental_score_white;
+    const IncrementalState::score_t incremental_score_white = m_incremental_state.incremental_score_white;
+    return m_turn_color == Color::White ? incremental_score_white : -incremental_score_white;
   }
 
   inline Piece::piece_index_t piece_index(const Position pos) const
@@ -282,6 +282,17 @@ public:
   }
 
   const Piece& piece(const Position pos) const;
+
+  const IncrementalState& incremental_state() const
+  {
+    return m_incremental_state;
+  }
+
+
+  IncrementalState& incremental_state()
+  {
+    return m_incremental_state;
+  }
 
 private:
   void calculate_draw() const;
@@ -302,7 +313,7 @@ private:
 
   ZobristHash::hash_t m_zobrist_hash;
 
-  int m_incremental_score_white;
+  IncrementalState m_incremental_state;
 
   std::vector<ZobristHash::hash_t> m_hashes;
 

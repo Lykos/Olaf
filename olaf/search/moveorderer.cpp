@@ -9,6 +9,7 @@
 #include "olaf/rules/magicmoves.h"
 #include "olaf/rules/magicnumbers.h"
 #include "olaf/config.h"
+#include "olaf/evaluation/incrementalupdater.h"
 
 using namespace std;
 
