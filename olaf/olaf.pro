@@ -130,4 +130,4 @@ target.path = /usr/local/lib
 
 INSTALLS += target moves
 
-LIBS += -lyaml-cpp -gflags
+LIBS += -lyaml-cpp -gflags -ldl
