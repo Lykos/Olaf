@@ -168,10 +168,10 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
           context->killers.resize(depth + 1);
         }
         SearchContext::Killers& killers = context->killers[depth];
-        for (unsigned int i = 1; i < killers.size(); ++i) {
-          killers[i] = killers[i - 1];
+        if (!(killers[0] == move)) {
+          killers[1] = killers[0];
+          killers[0] = move;
         }
-        killers[0] = move;
       }
       result->main_variation.clear();
       entry.node_type = NodeType::CutNode;

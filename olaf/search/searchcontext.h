@@ -108,6 +108,9 @@ struct SearchContext
   void put(const TranspositionTableEntry& entry);
   void put(TranspositionTableEntry&& entry);
 
+  /**
+   * @brief c_no_killers if this is changed, the replacement logic has to be changed as well.
+   */
   static const int c_no_killers = 2;
 
   typedef std::array<Move, c_no_killers> Killers;
