@@ -22,7 +22,7 @@ void EgbbProberTest::test_no_so()
   EgbbProber prober(c_cache_size);
   const string old_value = FLAGS_egbb_shared_library;
   FLAGS_egbb_shared_library = "invalidnonexisting";
-  QASSERT_THAT(prober.load_egbb(""), Eq(Status::error("Could not load shared library invalidnonexisting")));
+  QVERIFY(!prober.load_egbb("").ok());
   FLAGS_egbb_shared_library = old_value;
 }
 
@@ -31,14 +31,14 @@ void EgbbProberTest::test_wrong_so()
   EgbbProber prober(c_cache_size);
   const string old_value = FLAGS_egbb_shared_library;
   FLAGS_egbb_shared_library = "libolaf.so";
-  QASSERT_THAT(prober.load_egbb(""), Eq(Status::error("Could not find symbol load_egbb_xmen in shared library libolaf.so")));
+  QVERIFY(!prober.load_egbb("").ok());
   FLAGS_egbb_shared_library = old_value;
 }
 
 void EgbbProberTest::test_wrong_path()
 {
   EgbbProber prober(c_cache_size);
-  prober.load_egbb("/path/to/madness");
+  QVERIFY(prober.load_egbb("/path/to/madness").ok());
 }
 
 void EgbbProberTest::test_probe_without_load()

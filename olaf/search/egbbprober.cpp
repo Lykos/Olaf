@@ -79,6 +79,10 @@ Status EgbbProber::load_egbb(const string& egbb_path)
     if (!m_lib_handle) {
       ostringstream oss;
       oss << "Could not load shared library " << FLAGS_egbb_shared_library;
+      const char* error = dlerror();
+      if (error) {
+        oss << ": " << error;
+      }
       return Status::error(oss.str());
     }
   }
@@ -87,6 +91,10 @@ Status EgbbProber::load_egbb(const string& egbb_path)
     if (!m_load_egbb) {
       ostringstream oss;
       oss << "Could not find symbol " << c_load_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
+      const char* error = dlerror();
+      if (error) {
+        oss << ": " << error;
+      }
       return Status::error(oss.str());
     }
   }
@@ -95,6 +103,10 @@ Status EgbbProber::load_egbb(const string& egbb_path)
     if (!m_probe_egbb) {
       ostringstream oss;
       oss << "Could not find symbol " << c_probe_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
+      const char* error = dlerror();
+      if (error) {
+        oss << ": " << error;
+      }
       return Status::error(oss.str());
     }
   }
