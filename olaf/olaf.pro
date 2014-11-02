@@ -60,7 +60,9 @@ SOURCES += \
     transposition_table/randomnumbers.cpp \
     rules/magicnumbers.cpp \
     rules/magicmoves.cpp \
-    evaluation/kingsafetyevaluator.cpp
+    evaluation/kingsafetyevaluator.cpp \
+    search/egbbprober.cpp \
+    status.cpp
 
 HEADERS += \
     config.h \
@@ -114,7 +116,9 @@ HEADERS += \
     rules/magicmoves.h \
     search/searchstate.h \
     evaluation/incrementalstate.h \
-    evaluation/kingsafetyevaluator.h
+    evaluation/kingsafetyevaluator.h \
+    search/egbbprober.h \
+    status.h
 
 OTHER_FILES += \
     ../resources/move_table.bin
@@ -126,4 +130,4 @@ target.path = /usr/local/lib
 
 INSTALLS += target moves
 
-LIBS += -lyaml-cpp
+LIBS += -lyaml-cpp -gflags
