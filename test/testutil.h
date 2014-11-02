@@ -1,5 +1,5 @@
-#ifndef TEST_UTIL_H
-#define TEST_UTIL_H
+#ifndef TESTUTIL_H
+#define TESTUTIL_H
 
 #include <QtTest/qtest.h>
 #include <string>
@@ -59,4 +59,4 @@ Config test_config();
 } // namespace test
 } // namespace olaf
 
-#endif // TEST_UTIL_H
+#endif // TESTUTIL_H

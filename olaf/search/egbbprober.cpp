@@ -8,7 +8,7 @@
 #include "olaf/status.h"
 #include "olaf/rules/chessboard.h"
 
-DEFINE_string(egbb_shared_library, "egbbso", "Name of the shared library for egbb probing.");
+DEFINE_string(egbb_shared_library, "libegbbso.so", "Name of the shared library for egbb probing.");
 
 using namespace std;
 
@@ -47,15 +47,16 @@ enum {
 
 const int c_not_found = 99999;
 
-extern "C" typedef void (*load_egbb_t) (const char* path, int cache_size, int load_options);
-
 const char c_load_egbb_xmen[] = "load_egbb_xmen";
 
-const char c_probe_egbb_xmen[] = "load_probe_xmen";
+const char c_probe_egbb_xmen[] = "probe_egbb_xmen";
+
+const int c_min_cache_size = 8216;
 
 EgbbProber::EgbbProber(const long cache_size):
   m_lib_handle(nullptr),
   m_probe_egbb(nullptr),
+  m_load_egbb(nullptr),
   m_cache_size(cache_size)
 {}
 
@@ -68,29 +69,40 @@ EgbbProber::~EgbbProber()
 
 Status EgbbProber::load_egbb(const string& egbb_path)
 {
-  m_lib_handle = dlopen(FLAGS_egbb_shared_library.c_str(), RTLD_LAZY);
+  if (m_cache_size < c_min_cache_size) {
+    ostringstream oss;
+    oss << "The cache size has to be at least " << c_min_cache_size;
+    return Status::error(oss.str());
+  }
   if (!m_lib_handle) {
-    ostringstream oss;
-    oss << "Could not load shared library " << FLAGS_egbb_shared_library;
-    return Status::error(oss.str());
+    m_lib_handle = dlopen(FLAGS_egbb_shared_library.c_str(), RTLD_LAZY);
+    if (!m_lib_handle) {
+      ostringstream oss;
+      oss << "Could not load shared library " << FLAGS_egbb_shared_library;
+      return Status::error(oss.str());
+    }
   }
-  load_egbb_t load_egbb = load_egbb_t(long(dlsym(m_lib_handle, c_load_egbb_xmen)));
-  if (!load_egbb) {
-    ostringstream oss;
-    oss << "Could not find symbol " << c_load_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
-    return Status::error(oss.str());
+  if (!m_load_egbb) {
+    m_load_egbb = load_egbb_t(long(dlsym(m_lib_handle, c_load_egbb_xmen)));
+    if (!m_load_egbb) {
+      ostringstream oss;
+      oss << "Could not find symbol " << c_load_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
+      return Status::error(oss.str());
+    }
   }
-  m_probe_egbb = probe_egbb_t(long(dlsym(m_lib_handle, c_probe_egbb_xmen)));
   if (!m_probe_egbb) {
-    ostringstream oss;
-    oss << "Could not find symbol " << c_probe_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
-    return Status::error(oss.str());
+    m_probe_egbb = probe_egbb_t(long(dlsym(m_lib_handle, c_probe_egbb_xmen)));
+    if (!m_probe_egbb) {
+      ostringstream oss;
+      oss << "Could not find symbol " << c_probe_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
+      return Status::error(oss.str());
+    }
   }
-  load_egbb(egbb_path.c_str(), m_cache_size, LOAD_5MEN);
+  m_load_egbb(egbb_path.c_str(), m_cache_size, LOAD_4MEN);
   return Status::valid();
 }
 
-static const int c_max_pieces = 5;
+static const int c_max_pieces = 6;
 
 bool EgbbProber::probe(const ChessBoard& board, int* const score) const
 {
@@ -117,15 +129,17 @@ bool EgbbProber::probe(const ChessBoard& board, int* const score) const
   ADD_PIECE(white_board.piece_board(PieceSet::c_king_index), _WKING);
   ADD_PIECE(white_board.piece_board(PieceSet::c_pawn_index), _WPAWN);
   const ColorBoard& black_board = board.color_board(Color::Black);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_rook_index), _WROOK);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_knight_index), _WKNIGHT);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_bishop_index), _WBISHOP);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_queen_index), _WQUEEN);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_king_index), _WKING);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_pawn_index), _WPAWN);
+  ADD_PIECE(black_board.piece_board(PieceSet::c_rook_index), _BROOK);
+  ADD_PIECE(black_board.piece_board(PieceSet::c_knight_index), _BKNIGHT);
+  ADD_PIECE(black_board.piece_board(PieceSet::c_bishop_index), _BBISHOP);
+  ADD_PIECE(black_board.piece_board(PieceSet::c_queen_index), _BQUEEN);
+  ADD_PIECE(black_board.piece_board(PieceSet::c_king_index), _BKING);
+  ADD_PIECE(black_board.piece_board(PieceSet::c_pawn_index), _BPAWN);
+#undef ADD_PIECE
   pieces[count] = _EMPTY;
   squares[count] = board.ep_captures().first_position().index();
-  const int found_score = m_probe_egbb(board.turn_color() == Color::White ? _WHITE : _BLACK, pieces, squares);
+  const int player = board.turn_color() == Color::White ? _WHITE : _BLACK;
+  const int found_score = m_probe_egbb(player, pieces, squares);
   if (found_score == c_not_found) {
     return false;
   }

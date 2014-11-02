@@ -33,7 +33,8 @@ SOURCES += \
     incrementalevaluatortest.cpp \
     chessboardtest.cpp \
     searchertest.cpp \
-    moveorderertest.cpp
+    moveorderertest.cpp \
+    egbbprobertest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -53,7 +54,8 @@ HEADERS += \
     incrementalevaluatortest.h \
     chessboardtest.h \
     searchertest.h \
-    moveorderertest.h
+    moveorderertest.h \
+    egbbprobertest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf

@@ -1,13 +1,24 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef STATUS_H
+#define STATUS_H
 
 #include <string>
+#include <ostream>
 
 namespace olaf
 {
 
+class Status;
+
+std::ostream& operator <<(std::ostream& out, const Status& status);
+
+bool operator ==(const Status& left, const Status& right);
+
 class Status
 {
+  friend std::ostream& operator <<(std::ostream& out, const Status& status);
+
+  friend bool operator ==(const Status& left, const Status& right);
+
 public:
   static Status error(const std::string& message);
 
@@ -18,7 +29,7 @@ public:
   bool ok() const;
 
 private:
-  Status(const bool ok, const std::string& message);
+  Status(bool ok, const std::string& message);
 
   std::string m_message;
 
@@ -27,4 +38,4 @@ private:
 
 } // namespace olaf
 
-#endif // CONFIG_H
+#endif // STATUS_H
