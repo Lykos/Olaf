@@ -12,6 +12,8 @@ class Config
 public:
   explicit Config(const std::string& config);
 
+  Config();
+
   class Evaluation {
   };
 
@@ -27,6 +29,8 @@ public:
 
     bool use_quiescent_search() const { return m_use_quiescent_search; }
 
+    int initial_window() const { return m_initial_window; }
+
   private:
     const int m_default_moves_to_play;
 
@@ -35,6 +39,8 @@ public:
     const int m_sequential_depth;
 
     const bool m_use_quiescent_search;
+
+    const int m_initial_window;
   };
 
   class TranspositionTable {
