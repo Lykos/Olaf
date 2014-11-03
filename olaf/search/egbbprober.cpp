@@ -116,7 +116,7 @@ Status EgbbProber::load_egbb(const string& egbb_path)
 
 static const int c_max_pieces = 6;
 
-bool EgbbProber::probe(const ChessBoard& board, int* const score) const
+bool EgbbProber::probe(const ChessBoard& board, score_t* const score)
 {
   if (board.occupied().number() > c_max_pieces || m_probe_egbb == nullptr) {
     return false;
@@ -158,10 +158,4 @@ bool EgbbProber::probe(const ChessBoard& board, int* const score) const
   *score = found_score;
   return true;
 }
-
-void EgbbProber::cache_size(const long cache_size)
-{
-  m_cache_size = cache_size;
-}
-
 } // namespace olaf

@@ -12,27 +12,38 @@ SearchContext::SearchContext():
   forced_stopper(nullptr),
   weak_stopper(nullptr),
   depth_mode(DepthMode::ITERATIVE),
+  prober(nullptr),
   transposition_table(nullptr)
 {}
 
+bool SearchContext::probe(score_t* const score)
+{
+  if (prober) {
+    return prober->probe(board, score);
+  } else {
+    return false;
+  }
+}
+
 const TranspositionTableEntry* SearchContext::get() const
 {
-  if (transposition_table == nullptr) {
+  if (transposition_table) {
+    return transposition_table->get(board.zobrist_hash());
+  } else {
     return nullptr;
   }
-  return transposition_table->get(board.zobrist_hash());
 }
 
 void SearchContext::put(const TranspositionTableEntry& entry)
 {
-  if (transposition_table != nullptr) {
+  if (transposition_table) {
     transposition_table->put(board.zobrist_hash(), entry);
   }
 }
 
 void SearchContext::put(TranspositionTableEntry&& entry)
 {
-  if (transposition_table != nullptr) {
+  if (transposition_table) {
     transposition_table->put(board.zobrist_hash(), move(entry));
   }
 }

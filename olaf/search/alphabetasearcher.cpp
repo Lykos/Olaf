@@ -95,36 +95,41 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
   } else if ((!m_ignore_depth && recurse_depth <= m_sub_searcher_depth)
              || (m_sub_searcher != nullptr && context->board.finished())) {
     return recurse_sub_searcher(current_state, context);
-  } else {
-    const TranspositionTableEntry* const entry = context->get();
-    if (entry != nullptr && (entry->depth >= current_state.depth || entry->terminal)) {
-      if (entry->node_type == NodeType::PvNode
-          || entry->terminal
-          || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
-          || (entry->node_type == NodeType::CutNode && entry->score >= current_state.beta)) {
-        SearchResult result;
-        result.score = entry->score;
-        result.terminal = entry->terminal;
-        result.depth = entry->result_depth;
-        if (entry->has_best_move) {
-          result.main_variation.emplace_back(entry->best_move);
-        }
+  }
+  score_t endgame_score;
+  if (recurse_depth < context->search_depth && context->probe(&endgame_score)) {
+    SearchResult result;
+    result.score = endgame_score;
+    result.terminal = true;
+  }
+  const TranspositionTableEntry* const entry = context->get();
+  if (entry != nullptr && (entry->depth >= current_state.depth || entry->terminal)) {
+    if (entry->node_type == NodeType::PvNode
+        || entry->terminal
+        || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
+        || (entry->node_type == NodeType::CutNode && entry->score >= current_state.beta)) {
+      SearchResult result;
+      result.score = entry->score;
+      result.terminal = entry->terminal;
+      result.depth = entry->result_depth;
+      if (entry->has_best_move) {
+        result.main_variation.emplace_back(entry->best_move);
       }
     }
-    SearchState state{static_cast<score_t>(-current_state.beta),
-                      static_cast<score_t>(-current_state.alpha),
-                      recurse_depth};
-    SearchResult result = alpha_beta(&state, context);
-    const score_t c_safety_margin = 10000;
-    // Stalemate. Not in check, but all moves lead to an immediate loss of the king.
-    if (abs(result.score) >= (PositionEvaluator::c_win_score - c_safety_margin)
-        && result.depth == context->search_depth - state.depth + 2 && !is_checked(&(context->board))) {
-      result.score = PositionEvaluator::c_draw_score;
-      result.terminal = true;
-      result.main_variation.clear();
-    }
-    return result;
   }
+  SearchState state{static_cast<score_t>(-current_state.beta),
+                    static_cast<score_t>(-current_state.alpha),
+                    recurse_depth};
+  SearchResult result = alpha_beta(&state, context);
+  const score_t c_safety_margin = 10000;
+  // Stalemate. Not in check, but all moves lead to an immediate loss of the king.
+  if (abs(result.score) >= (PositionEvaluator::c_win_score - c_safety_margin)
+      && result.depth == context->search_depth - state.depth + 2 && !is_checked(&(context->board))) {
+    result.score = PositionEvaluator::c_draw_score;
+    result.terminal = true;
+    result.main_variation.clear();
+  }
+  return result;
 }
 
 SearchResult AlphaBetaSearcher::recurse_move_noundo(const Move move,

@@ -4,6 +4,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/search/searcher.h"
+#include "olaf/search/tablebaseprober.h"
 #include "olaf/rules/move.h"
 
 namespace olaf
@@ -18,6 +19,7 @@ class Stopper;
 struct SearchContext
 {
   typedef Searcher::depth_t depth_t;
+  typedef Searcher::score_t score_t;
 
   SearchContext();
 
@@ -94,6 +96,10 @@ struct SearchContext
    * @brief max_depth the depth for MAX_DEPTH mode.
    */
   depth_t max_depth;
+
+  TablebaseProber* prober;
+
+  bool probe(score_t* score);
 
   TranspositionTable* transposition_table;
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include "olaf/status.h"
+#include "olaf/search/tablebaseprober.h"
 
 namespace olaf
 {
@@ -13,7 +14,7 @@ extern "C" typedef int (*probe_egbb_t) (int player, int* piece, int* square);
 
 extern "C" typedef void (*load_egbb_t) (const char* path, int cache_size, int load_options);
 
-class EgbbProber
+class EgbbProber : public TablebaseProber
 {
 public:
   explicit EgbbProber(long cache_size);
@@ -22,9 +23,8 @@ public:
 
   Status load_egbb(const std::string& egbb_path);
 
-  bool probe(const ChessBoard& board, int* score) const;
+  bool probe(const ChessBoard& board, score_t* score) override;
 
-  void cache_size(long cache_size);
 private:
   void* m_lib_handle;
 
@@ -32,7 +32,7 @@ private:
 
   load_egbb_t m_load_egbb;
 
-  long m_cache_size;
+  const long m_cache_size;
 };
 
 } // namespace olaf
