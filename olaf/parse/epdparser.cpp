@@ -22,11 +22,12 @@ EpdParser::EpdParser(unique_ptr<SanParser> san_parser):
   m_san_parser(move(san_parser))
 {}
 
-bool EpdParser::parse(const string& epd, EpdPosition* const position) const
+Status EpdParser::parse(const string& epd, EpdPosition* const position) const
 {
   int fen_end_position;
-  if (!FenParser::parse(epd, &(position->board), &fen_end_position)) {
-    return false;
+  const Status& status = FenParser::parse(epd, &(position->board), &fen_end_position);
+  if (!status.ok()) {
+    return status;
   }
   unsigned int it = fen_end_position;
   while (it < epd.size()) {
@@ -51,7 +52,7 @@ bool EpdParser::parse(const string& epd, EpdPosition* const position) const
     }
     it += command_length + 1;
   }
-  return true;
+  return Status::valid();
 }
 
 void EpdParser::parse_id(const string& id, EpdPosition* const position) const

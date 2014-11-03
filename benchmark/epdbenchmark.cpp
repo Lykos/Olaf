@@ -138,7 +138,7 @@ void EpdBenchmark::test_epd_data()
   int i = 1;
   while (getline(file, line)) {
     EpdPosition position;
-    assert(parser->parse(line, &position));
+    QVERIFY(parser->parse(line, &position).ok());
     ostringstream oss;
     oss << position.id.c_str();
     QTest::newRow(oss.str().c_str()) << position;

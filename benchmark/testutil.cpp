@@ -25,7 +25,7 @@ ChessBoard parse_fen(const string& fen)
 #ifdef NDEBUG
   FenParser::parse(fen, &board);
 #else
-  assert(FenParser::parse(fen, &board));
+  assert(FenParser::parse(fen, &board).ok());
 #endif
   return board;
 }
@@ -37,7 +37,7 @@ EpdPosition parse_epd(const string& epd)
 #ifdef NDEBUG
   parser->parse(epd, &position);
 #else
-  assert(parser->parse(epd, &position));
+  assert(parser->parse(epd, &position).ok());
 #endif
   return position;
 }

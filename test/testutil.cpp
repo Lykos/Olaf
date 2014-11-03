@@ -33,7 +33,7 @@ ChessBoard parse_fen(const string& fen)
 #ifdef NDEBUG
   FenParser::parse(fen, &board);
 #else
-  assert(FenParser::parse(fen, &board));
+  assert(FenParser::parse(fen, &board).ok());
 #endif
   return board;
 }

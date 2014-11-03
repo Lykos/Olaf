@@ -39,7 +39,7 @@ std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
   }
   out << "turn color: " << (board.m_turn_color == Color::White ? "White" : "Black") << endl;
   out << "turn number: " << board.m_turn_number << endl;
-  out << "reversible plies: " << board.m_reversible_plies << endl;
+  out << "reversible plies: " << int(board.m_reversible_plies) << endl;
   if (board.m_ep_captures) {
     out << "ep: " << board.m_ep_captures.first_position() << endl;
   }

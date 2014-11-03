@@ -183,8 +183,9 @@ void XBoardReader::run()
         }
       }
       const string fen = oss.str();
-      if (!m_engine_helper->request_set_fen(fen)) {
-        m_writer->error(XBoardWriter::ErrorType::INVALID_FEN, fen);
+      const Status& status = m_engine_helper->request_set_fen(fen);
+      if (!status.ok()) {
+        m_writer->error(XBoardWriter::ErrorType::INVALID_FEN, status.message());
       }
     } else if (command == "usermove") {
       if (!check_args(tokens, 1)) {

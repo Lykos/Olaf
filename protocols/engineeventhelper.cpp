@@ -117,15 +117,16 @@ bool EngineEventHelper::request_move(const IncompleteMove incomplete_move)
   return true;
 }
 
-bool EngineEventHelper::request_set_fen(const string& fen)
+Status EngineEventHelper::request_set_fen(const string& fen)
 {
   ChessBoard board;
-  if (!FenParser::parse(fen, &board)) {
-    return false;
+  const Status& status = FenParser::parse(fen, &board);
+  if (!status.ok()) {
+    return status;
   }
   unique_ptr<SetBoardEvent> set_board_event(new SetBoardEvent(board));
   m_engine->enqueue(move(set_board_event));
-  return true;
+  return Status::valid();
 }
 
 bool EngineEventHelper::request_undo(int moves)

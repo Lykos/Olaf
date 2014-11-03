@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "olaf/status.h"
+
 namespace olaf
 {
 
@@ -16,9 +18,9 @@ public:
    * @param fen a string starting with a FEN code.
    * @param board if parsed successfully, this board will contain the described position.
    * @param end_position if provided, this will be set to the end of the parsed FEN in the string.
-   * @return
+   * @return Status::valid() if everything is ok, otherwise Status::error(a descriptive error mesage).
    */
-  static bool parse(const std::string& fen, ChessBoard* board, int* end_position = nullptr);
+  static Status parse(const std::string& fen, ChessBoard* board, int* end_position = nullptr);
 
   static std::string serialize(const ChessBoard& board);
 

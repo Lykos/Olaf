@@ -40,16 +40,27 @@ int to_digit(const char c)
   return c - c_zero;
 }
 
-#define CONSUME(c, it, end) if (it == end || *it != c) { return false; }; ++it
-#define CHECK_NOT_END(it, end) if (it == end) { return false; }
+#define SYNTAX_ERROR "FEN syntax error: "
+#define CONSUME(c, it, end) \
+  if (it == end) { ostringstream oss; oss << SYNTAX_ERROR << "Expected " << c << " got end"; return Status::error(oss.str()); }; \
+  if (*it != c) { ostringstream oss; oss << SYNTAX_ERROR << "Expected " << c << " got " << *it; return Status::error(oss.str()); }; \
+  ++it
+#define CHECK_NOT_END(it, end, message) if (it == end) { return Status::error(SYNTAX_ERROR message); }
+#define FORWARD_BAD(expr) \
+  { \
+    const Status& status = expr; \
+    if (!status.ok()) { return status; } \
+  }
 
-bool parse_leading_int(const string::const_iterator& end,
-                       string::const_iterator* const it,
-                       int* const number)
+Status parse_leading_int(const string::const_iterator& end,
+                         string::const_iterator* const it,
+                         int* const number)
 {
-  CHECK_NOT_END(*it, end);
+  CHECK_NOT_END(*it, end, "Expected number, got end of string");
   if (!is_digit(**it)) {
-    return false;
+    ostringstream oss;
+    oss << SYNTAX_ERROR << "Expected digit, got " << **it;
+    return Status::error(oss.str());
   }
   if (number) {
     *number = to_digit(**it);
@@ -61,30 +72,26 @@ bool parse_leading_int(const string::const_iterator& end,
     }
     ++*it;
   }
-  return true;
+  return Status::valid();
 }
 
-bool parse_move_numbers(const string::const_iterator& end,
-                        string::const_iterator* const it,
-                        ChessBoard* const new_board) {
+Status parse_move_numbers(const string::const_iterator& end,
+                          string::const_iterator* const it,
+                          ChessBoard* const new_board) {
   CONSUME(c_space, *it, end);
-  CHECK_NOT_END(*it, end);
+  CHECK_NOT_END(*it, end, "Expected move numbers, got end of string");
   int reversible_plies;
-  if (!parse_leading_int(end, it, &reversible_plies)) {
-    return false;
-  }
+  FORWARD_BAD(parse_leading_int(end, it, &reversible_plies));
   new_board->reversible_plies(reversible_plies);
   CONSUME(c_space, *it, end);
   int turn_number;
-  if (!parse_leading_int(end, it, &turn_number)) {
-    return false;
-  }
+  FORWARD_BAD(parse_leading_int(end, it, &turn_number));
   new_board->turn_number(turn_number);
-  return true;
+  return Status::valid();
 }
 
 // static
-bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_position)
+Status FenParser::parse(const string& fen, ChessBoard* const board, int* end_position)
 {
   ChessBoard new_board = create_empty_board();
   const string::const_iterator begin = fen.begin();
@@ -94,7 +101,7 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
   for (Position::index_t row = Position::c_row_size - 1; row >= 0; --row) {
     int column = 0;
     while (column < Position::c_column_size) {
-      CHECK_NOT_END(it, end);
+      CHECK_NOT_END(it, end, "");
       const char c = *it;
       if (c >= c_one && c <= c_eight) {
         column += c - c_zero;
@@ -116,29 +123,35 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
           break;
         }
         if (!found) {
-          return false;
+          ostringstream oss;
+          oss << SYNTAX_ERROR << "Invalid symbol " << *it << " on the FEN board. Only 1-8 and rnbqkpRNBQkP are allowed.";
+          return Status::error(oss.str());
         }
       }
       ++it;
     }
     if (column > Position::c_column_size) {
-      return false;
+      ostringstream oss;
+      oss << SYNTAX_ERROR << "Row " << Position::c_row_size - row << " has more than 8 columns.";
+      return Status::error(oss.str());
     }
     if (row > 0) {
       CONSUME(c_row_separator, it, end);
     }
   }
   CONSUME(c_space, it, end);
-  CHECK_NOT_END(it, end);
+  CHECK_NOT_END(it, end, "Expected turn color, got end");
   if (*it == c_black) {
     new_board.turn_color(Color::Black);
   } else if (*it != c_white) {
-    return false;
+    ostringstream oss;
+    oss << SYNTAX_ERROR << *it << " is not a valid color. Only w and b are possible.";
+    return Status::error(oss.str());
   }
   ++it;
   CONSUME(c_space, it, end);
   while (true) {
-    CHECK_NOT_END(it, end);
+    CHECK_NOT_END(it, end, "");
     const char c = *it;
     if (c == c_white_castle_k) {
       new_board.can_castle_k(Color::White, true);
@@ -157,23 +170,27 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
     ++it;
   }
   CONSUME(c_space, it, end);
-  CHECK_NOT_END(it, end);
+  CHECK_NOT_END(it, end, "Expected en passent position, got end");
   if (*it >= c_a && *it <= c_h) {
     const int column = *it - c_a;
     ++it;
-    CHECK_NOT_END(it, end);
+    CHECK_NOT_END(it, end, "");
     int row;
     if (*it == c_three) {
       row = 2;
     } else if (*it == c_six) {
       row = 5;
     } else {
-      return false;
+      ostringstream oss;
+      oss << SYNTAX_ERROR << *it << " is not a valid en passent row. Only 3 and 6 are possible.";
+      return Status::error(oss.str());
     }
     const Position ep_position(row, column);
     new_board.ep_captures(BitBoard(ep_position));
   } else if (*it != c_dash) {
-    return false;
+    ostringstream oss;
+    oss << SYNTAX_ERROR << "Expected en passent position or dash, got " << *it;
+    return Status::error(oss.str());
   }
   ++it;
   parse_move_numbers(end, &it, &new_board);
@@ -182,8 +199,13 @@ bool FenParser::parse(const string& fen, ChessBoard* const board, int* end_posit
   if (end_position) {
     *end_position = it - begin;
   }
-  return true;
+  return Status::valid();
 }
+
+#undef CONSUME
+#undef CHECK_NOT_END
+#undef FORWARD_BAD
+#undef SYNTAX_ERROR
 
 // static
 string FenParser::serialize(const ChessBoard& board)
@@ -250,7 +272,4 @@ string FenParser::serialize(const ChessBoard& board)
   return result.str();
 }
 
-#undef CONSUME
-
 } // namespace olaf
-#undef CHECK_NOT_END

@@ -5,6 +5,7 @@
 #include "protocols/engine.h"
 #include "protocols/boardstate.h"
 #include "olaf/search/thinkingwriter.h"
+#include "olaf/status.h"
 #include <memory>
 #include <chrono>
 
@@ -55,7 +56,7 @@ public:
 
   void post(bool value);
 
-  bool request_set_fen(const std::string& fen);
+  Status request_set_fen(const std::string& fen);
 
   /**
    * @brief undo undoes a given number of moves. One per default.

@@ -133,7 +133,7 @@ void FenParserTest::test_parse()
   QFETCH(QString, fen);
   QFETCH(bool, parseable);
   ChessBoard actual_board;
-  QCOMPARE(FenParser::parse(fen.toStdString(), &actual_board), parseable);
+  QASSERT_THAT(FenParser::parse(fen.toStdString(), &actual_board).ok(), Eq(parseable));
   if (parseable) {
     QFETCH(ChessBoard, board);
     QASSERT_THAT(actual_board, Eq(board));
