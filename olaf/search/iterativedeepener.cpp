@@ -44,12 +44,12 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   if (!result.valid) {
     return SearchResult::invalid();
   }
-  assert(!result.main_variation.empty());
   milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
   m_writer->output(context->board, result, context->nodes, time, m_min_depth);
   if (result.terminal || mode == SearchContext::DepthMode::FIXED_DEPTH) {
     return result;
   }
+  assert(!result.main_variation.empty());
   // Now we have one move and can be more brutal for the weak stopper.
   CompositeStopper composite_stopper{context->forced_stopper, context->weak_stopper};
   context->forced_stopper = &composite_stopper;
