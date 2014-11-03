@@ -71,7 +71,7 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
       return Move(src, dst, Move::c_castle_q_flag);
     }
   }
-  BitBoard capturable = board.opponents() | board.king_captures();
+  const BitBoard capturable = board.opponents();
   const BitBoard dst_board(dst);
   const bool is_capture = capturable & dst_board;
   if (piece_index == PieceSet::c_pawn_index) {

@@ -40,22 +40,21 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   } else {
     board->disable_ep();
   }
-  static const Piece::piece_index_t c_king_index =
-      PieceSet::c_king_index;
+  if (BitBoard(dst) & board->king_captures()) {
+    undo_info->king_victim_position =
+        board->color_board(noturn_color).piece_board(PieceSet::c_king_index).first_position();
+    board->remove_piece(noturn_color, PieceSet::c_king_index, undo_info->king_victim_position);
+  }
   if (is_capture()) {
     Position victim_position;
     if (is_ep()) {
       victim_position = Position(c_ep_victims[dst.index()]);
-    } else if (BitBoard(dst) & board->king_captures()) {
-      victim_position =
-          board->color_board(noturn_color).piece_board(c_king_index).first_position();
     } else {
       victim_position = dst;
     }
     const Piece::piece_index_t captured_piece =
         board->piece_index(victim_position);
     undo_info->captured_piece = captured_piece;
-    undo_info->victim_position = victim_position;
     board->remove_piece(noturn_color, captured_piece, victim_position);
   }
   board->remove_piece(turn_color, piece_index, src);
@@ -67,8 +66,6 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   undo_info->can_castle_k = board->turn_board().can_castle_k();
   undo_info->can_castle_q = board->turn_board().can_castle_q();
   undo_info->king_captures = board->king_captures();
-  static const Piece::piece_index_t c_rook_index =
-      PieceSet::c_rook_index;
   const BitBoard src_board(src);
   if (is_castle()) {
     board->can_castle_k(board->turn_color(), false);
@@ -84,15 +81,15 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
     }
     undo_info->rook_source = rook_source;
     undo_info->rook_destination = rook_destination;
-    board->remove_piece(turn_color, c_rook_index, rook_source);
-    board->add_piece(turn_color, c_rook_index, rook_destination);
+    board->remove_piece(turn_color, PieceSet::c_rook_index, rook_source);
+    board->add_piece(turn_color, PieceSet::c_rook_index, rook_destination);
     board->king_captures(src_board | BitBoard(rook_destination));
   } else {
     board->disable_king_captures();
-    if (piece_index == c_king_index) {
+    if (piece_index == PieceSet::c_king_index) {
       board->can_castle_k(turn_color, false);
       board->can_castle_q(turn_color, false);
-    } else if (piece_index == c_rook_index) {
+    } else if (piece_index == PieceSet::c_rook_index) {
       if (src_board & BitBoard(MagicNumbers::c_castle_k_rook_src[color_index])) {
         board->can_castle_k(turn_color, false);
       } else if (src_board & BitBoard(MagicNumbers::c_castle_q_rook_src[color_index])) {
@@ -135,7 +132,16 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
     board->add_piece(turn_color, piece_index, src);
   }
   if (is_capture()) {
-    board->add_piece(noturn_color, undo_info.captured_piece, undo_info.victim_position);
+    Position victim_position;
+    if (is_ep()) {
+      victim_position = Position(c_ep_victims[dst.index()]);
+    } else {
+      victim_position = dst;
+    }
+    board->add_piece(noturn_color, undo_info.captured_piece, victim_position);
+  }
+  if (BitBoard(dst) & board->king_captures()) {
+    board->add_piece(noturn_color, PieceSet::c_king_index, undo_info.king_victim_position);
   }
   board->ep_captures(undo_info.ep_captures);
 }

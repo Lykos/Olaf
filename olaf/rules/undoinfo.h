@@ -16,7 +16,7 @@ struct UndoInfo
 {
   BitBoard ep_captures;
   BitBoard king_captures;
-  Position victim_position;
+  Position king_victim_position;
   Position rook_source;
   Position rook_destination;
   Piece::piece_index_t captured_piece;
