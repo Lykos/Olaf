@@ -194,7 +194,8 @@ static void update_total_score(IncrementalState* const state)
 {
   static const double c_material_factor = generate_material_factor();
   const double middlegame_weight = min(state->material_score * c_material_factor, 1.0);
-  assert(middlegame_weight >= 0 && middlegame_weight <= 1);
+  assert(middlegame_weight >= 0);
+  assert(middlegame_weight <= 1);
   state->incremental_score_white =
       state->incremental_score_white_endgame * (1 - middlegame_weight)
       + state->incremental_score_white_middlegame * middlegame_weight;
@@ -205,6 +206,7 @@ void IncrementalUpdater::remove_piece(const Color color,
                                       const Position position,
                                       IncrementalState* const state)
 {
+  assert(0 <= index && index < PieceSet::c_no_pieces);
   const score_t middlegame_value = -piece_value(color, 0, index, position);
   const score_t endgame_value = -piece_value(color, 1, index, position);
   state->incremental_score_white_middlegame += middlegame_value;
@@ -218,6 +220,7 @@ void IncrementalUpdater::add_piece(const Color color,
                                    const Position position,
                                    IncrementalState* const state)
 {
+  assert(0 <= index && index < PieceSet::c_no_pieces);
   const score_t middlegame_value = piece_value(color, 0, index, position);
   const score_t endgame_value = piece_value(color, 1, index, position);
   state->incremental_score_white_middlegame += middlegame_value;
