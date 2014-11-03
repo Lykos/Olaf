@@ -34,7 +34,7 @@ void SanParserTest::test_parse_data()
   QTest::newRow("initial pawnmove") << create_initial_board()
                << "e4"
                << MoveChecker::complete(Position("e2"), Position("e4"), create_initial_board());
-  ChessBoard board = parse_fen("3k2n1/7P/n1Q2n2/3pP1QQ/2Q1Q1Q1/7p/8/R3K2R w KQ d6 0 1");/*
+  ChessBoard board = parse_fen("3k2n1/7P/n1Q2n2/3pP1QQ/2Q1Q1Q1/7p/8/R3K2R w KQ d6 0 1");
   QTest::newRow("pawn capture")
       << board << "exf6" << MoveChecker::complete(
            Position("e5"),
@@ -117,7 +117,7 @@ void SanParserTest::test_parse_data()
       << board << "Qc4xd5" << MoveChecker::complete(
               Position("c4"),
               Position("d5"),
-              board);*/
+              board);
   QTest::newRow("ep")
       << board << "exd6" << MoveChecker::complete(
             Position("e5"),
