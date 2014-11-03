@@ -3,12 +3,13 @@
 #include <algorithm>
 #include <string>
 #include <memory>
-#include <iostream>
+#include <sstream>
 
 #include "olaf/rules/piece.h"
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/move.h"
 #include "olaf/rules/movechecker.h"
+#include "olaf/status.h"
 
 using namespace std;
 
@@ -24,11 +25,12 @@ SanParser::SanParser(unique_ptr<MoveGenerator> generator):
   m_generator(move(generator))
 {}
 
-bool SanParser::parse(const string& san_move,
-                      const ChessBoard& board,
-                      Move* const move) const
+Status SanParser::parse(const string& san_move,
+                        const ChessBoard& board,
+                        Move* const move) const
 {
-#define CHECK_NOT_END(it, end) if (it == end) { return false; }
+#define SYNTAX_ERROR "SAN syntax error: "
+#define CHECK_NOT_END(it, end, message) if (it == end) { return Status::error(SYNTAX_ERROR message); }
   const bool is_castle_k = san_move.find(c_castle_k) == 0;
   const bool is_castle_q = san_move.find(c_castle_q) == 0;
   if (is_castle_k || is_castle_q) {
@@ -40,15 +42,15 @@ bool SanParser::parse(const string& san_move,
     Position destination(ground_line(board.turn_color()), destination_column);
     Move castle = MoveChecker::complete(source, destination, board);
     if (!MoveChecker::valid_move(board, castle)) {
-      return false;
+      return Status::error("Invalid SAN move: castling is not possible.");
     }
     *move = castle;
-    return true;
+    return Status::valid();
   }
   const string::const_iterator begin = san_move.begin();
   string::const_iterator it = begin;
   const string::const_iterator end = san_move.end();
-  CHECK_NOT_END(it, end);
+  CHECK_NOT_END(it, end, "Expected piece, capture symbol, file or rank, got end");
   const char symbol = *it;
   Piece::piece_index_t piece_index = PieceSet::c_pawn_index;
   for (const Piece* const piece : PieceSet::instance().pieces()) {
@@ -59,7 +61,7 @@ bool SanParser::parse(const string& san_move,
   if (piece_index != PieceSet::c_pawn_index) {
     ++it;
   }
-  CHECK_NOT_END(it, end);
+  CHECK_NOT_END(it, end, "Expected capture symbol, file or rank, got end");
   Position source;
   bool source_row_valid = false;
   bool source_column_valid = false;
@@ -70,7 +72,7 @@ bool SanParser::parse(const string& san_move,
     ++it;
   } else if (Position::columns.find(*it) != string::npos) {
     const string::const_iterator next = it + 1;
-    CHECK_NOT_END(next, end);
+    CHECK_NOT_END(next, end, "Expected capture symbol, file or rank, got end");
     if (Position::columns.find(*next) != string::npos
         || c_capture_symbols.find(*next) != string::npos) {
       // The found row is certainly the column disambiguation
@@ -93,18 +95,24 @@ bool SanParser::parse(const string& san_move,
       }
     }
   }
-  CHECK_NOT_END(it, end);
+  CHECK_NOT_END(it, end, "Expected capture symbol or file, got end");
   if (c_capture_symbols.find(*it) != string::npos) {
     ++it;
     capture = true;
   }
   const string::const_iterator column_it = it;
   const string::const_iterator row_it = it + 1;
-  CHECK_NOT_END(row_it, end);
-  CHECK_NOT_END(column_it, end);
-  if (Position::rows.find(*row_it) == string::npos
-      || Position::columns.find(*column_it) == string::npos) {
-    return false;
+  CHECK_NOT_END(row_it, end, "Expected file, got end");
+  CHECK_NOT_END(column_it, end, "Expected rank, got end");
+  if (Position::rows.find(*row_it) == string::npos) {
+    ostringstream oss;
+    oss << SYNTAX_ERROR << "Expected file, got " << *row_it;
+    return Status::error(oss.str());
+  }
+  if (Position::columns.find(*column_it) == string::npos) {
+    ostringstream oss;
+    oss << SYNTAX_ERROR << "Expected rank, got " << *column_it;
+    return Status::error(oss.str());
   }
   const Position destination(Position::rows.find(*row_it),
                              Position::columns.find(*column_it));
@@ -113,7 +121,7 @@ bool SanParser::parse(const string& san_move,
   it += 2;
   if (it != end && *it == c_promotion_symbol) {
     ++it;
-    CHECK_NOT_END(it, end);
+    CHECK_NOT_END(it, end, "Expected promoted piece, got end");
     const char symbol = *it;
     for (const Piece* const piece : PieceSet::instance().pieces()) {
       if (piece->symbol(Color::White) == symbol) {
@@ -121,7 +129,9 @@ bool SanParser::parse(const string& san_move,
       }
     }
     if (conversion_piece_index == Piece::c_no_piece) {
-      return false;
+      ostringstream oss;
+      oss << SYNTAX_ERROR << "Invalid promoted piece " << symbol << ". Allowed are only RNBQ.";
+      return Status::error(oss.str());
     }
     conversion = true;
   }
@@ -146,18 +156,17 @@ bool SanParser::parse(const string& san_move,
       continue;
     }
     if (found_move != nullptr) {
-      // Ambiguity!
-      return false;
+      return Status::error("Ambiguous SAN move");
     }
     found_move = &mov;
   }
   if (found_move == nullptr) {
-    // No valid move found!
-    return false;
+    return Status::error("Illegal SAN move");
   }
   *move = *found_move;
-  return true;
+  return Status::valid();
 #undef CHECK_END
+#undef SYNTAX_ERROR
+}
 
 } // namespace olaf
-}

@@ -142,9 +142,7 @@ void SanParserTest::test_parse()
   QFETCH(Move, move);
 
   Move actual_move;
-  if (QTest::currentDataTag() != string("ep"))
-    return;
-  QVERIFY(m_parser->parse(san.toStdString(), board, &actual_move));
+  QVERIFY(m_parser->parse(san.toStdString(), board, &actual_move).ok());
   QASSERT_THAT(actual_move, Eq(move));
 
 } // namespace test

@@ -75,7 +75,7 @@ void EpdParser::parse_id(const string& id, EpdPosition* const position) const
 void EpdParser::parse_am(const string& am, EpdPosition* const position) const
 {
   Move move;
-  if (m_san_parser->parse(am, position->board, &move)) {
+  if (m_san_parser->parse(am, position->board, &move).ok()) {
     position->avoid_moves.push_back(move);
   }
 }
@@ -83,7 +83,7 @@ void EpdParser::parse_am(const string& am, EpdPosition* const position) const
 void EpdParser::parse_bm(const string& bm, EpdPosition* const position) const
 {
   Move move;
-  if (m_san_parser->parse(bm, position->board, &move)) {
+  if (m_san_parser->parse(bm, position->board, &move).ok()) {
     position->best_moves.push_back(move);
   }
 
