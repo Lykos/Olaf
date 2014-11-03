@@ -1,9 +1,11 @@
 #ifndef EGBBPROBER_H
 #define EGBBPROBER_H
 
+#include <memory>
 #include <string>
+
 #include "olaf/status.h"
-#include "olaf/search/tablebaseprober.h"
+#include "olaf/tablebases/tablebaseprober.h"
 
 namespace olaf
 {
@@ -19,14 +21,14 @@ class EgbbProber : public TablebaseProber
 public:
   explicit EgbbProber(long cache_size);
 
-  ~EgbbProber();
-
-  Status load_egbb(const std::string& egbb_path);
+  Status load(const std::string& egbb_path);
 
   bool probe(const ChessBoard& board, score_t* score) override;
 
+  inline bool is_initialized() const { return m_probe_egbb; }
+
 private:
-  void* m_lib_handle;
+  std::shared_ptr<void> m_lib_handle;
 
   probe_egbb_t m_probe_egbb;
 

@@ -4,7 +4,7 @@
 #include "olaf/rules/chessboard.h"
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/search/searcher.h"
-#include "olaf/search/tablebaseprober.h"
+#include "olaf/tablebases/tablebaseprober.h"
 #include "olaf/rules/move.h"
 
 namespace olaf

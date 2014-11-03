@@ -12,9 +12,10 @@ namespace olaf
 
 Engine::Engine(ProtocolWriter* const writer,
                unique_ptr<TranspositionTable> transposition_table,
+               unique_ptr<EgbbProber> egbb_prober,
                BoardState* const board_state,
                unique_ptr<Searcher> searcher):
-  m_state(std::move(transposition_table), board_state),
+  m_state(std::move(transposition_table), std::move(egbb_prober), board_state),
   m_writer(writer),
   m_searcher(std::move(searcher)),
   m_quit(false)

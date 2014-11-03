@@ -61,9 +61,9 @@ SOURCES += \
     rules/magicnumbers.cpp \
     rules/magicmoves.cpp \
     evaluation/kingsafetyevaluator.cpp \
-    search/egbbprober.cpp \
     status.cpp \
-    search/tablebaseprober.cpp
+    tablebases/tablebaseprober.cpp \
+    tablebases/egbbprober.cpp
 
 HEADERS += \
     config.h \
@@ -118,9 +118,9 @@ HEADERS += \
     search/searchstate.h \
     evaluation/incrementalstate.h \
     evaluation/kingsafetyevaluator.h \
-    search/egbbprober.h \
     status.h \
-    search/tablebaseprober.h
+    tablebases/tablebaseprober.h \
+    tablebases/egbbprober.h
 
 OTHER_FILES += \
     ../resources/move_table.bin

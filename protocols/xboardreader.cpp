@@ -121,6 +121,24 @@ void XBoardReader::run()
       int centiseconds;
       iss >> centiseconds;
       m_engine_helper->request_set_opponent_time(milliseconds(centiseconds * 10));
+    } else if (command == "egtpath") {
+      if (!check_args(tokens, 2)) {
+        continue;
+      }
+      if (tokens.at(1) != "scorpio") {
+        continue;
+      }
+      ostringstream oss;
+      int size = tokens.size();
+      // We have to put the path back together.
+      for (int i = 2; i < size; ++i) {
+        oss << tokens.at(i);
+        if (i < size - 1) {
+          oss << " ";
+        }
+      }
+      const string path = oss.str();
+      m_engine_helper->request_set_egt_path(path);
     } else if (command == "computer") {
     } else if (command == "draw") {
     } else if (command == "analyze") {
@@ -157,7 +175,7 @@ void XBoardReader::run()
       iss3 >> increment_s;
       const milliseconds total_time = minutes(time_min) + seconds(time_s);
       const milliseconds increment = seconds(increment_s);
-      m_engine_helper->set_level(moves, total_time, increment);
+      m_engine_helper->request_set_level(moves, total_time, increment);
     } else if (command == "post") {
       m_engine_helper->post(true);
     } else if (command == "nopost") {
@@ -266,6 +284,7 @@ void XBoardReader::write_features() const
   m_writer->feature_bool("usermove", true);
   m_writer->feature_string("myname", "olaf");
   m_writer->feature_string("variants", "normal");
+  m_writer->feature_string("egt", "scorpio");
   m_writer->feature_bool("colors", false);
   m_writer->feature_bool("ics", true);
   m_writer->feature_bool("name", true);

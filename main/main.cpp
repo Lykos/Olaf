@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
   auto searcher = factory.timed_searcher();
   BoardState board_state;
   unique_ptr<ProtocolReader> reader;
-  Engine engine(writer.get(), factory.transposition_table(), &board_state, move(searcher));
+  Engine engine(writer.get(), factory.transposition_table(), factory.egbb_prober(), &board_state, move(searcher));
   std::unique_ptr<EngineEventHelper> engine_helper(
         new EngineEventHelper(writer.get(), &board_state, &engine, &thinking_writer));
   if (protocol_name == "xboard") {

@@ -7,6 +7,7 @@
 #include "olaf/search/searchcontext.h"
 #include "olaf/search/forcedstopper.h"
 #include "olaf/transposition_table/transpositiontable.h"
+#include "olaf/tablebases/egbbprober.h"
 
 namespace olaf
 {
@@ -21,6 +22,7 @@ class EngineState
 {
 public:
   explicit EngineState(std::unique_ptr<TranspositionTable> transposition_table,
+                       std::unique_ptr<EgbbProber> eggb_prober,
                        BoardState* board_state);
 
   inline bool pondering() const { return m_pondering && !m_deferred_pondering; }
@@ -88,8 +90,12 @@ public:
 
   inline void weak_stop() { m_weak_stopper.request_stop(); }
 
+  void set_egt_path(const std::string& path);
+
 private:
   std::unique_ptr<TranspositionTable> m_transposition_table;
+
+  std::unique_ptr<EgbbProber> m_egbb_prober;
 
   ForcedStopper m_forced_stopper;
 

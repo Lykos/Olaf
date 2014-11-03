@@ -22,6 +22,7 @@ Config::Config(const std::string& config):
   m_evaluation(),
   m_search(m_config["search"]),
   m_transposition_table(m_config["transposition_table"]),
+  m_tablebases(m_config["tablebases"]),
   m_move_ordering(m_config["move_ordering"])
 {}
 
@@ -38,7 +39,11 @@ Config::Search::Search(const YAML::Node& node):
 {}
 
 Config::TranspositionTable::TranspositionTable(const YAML::Node& node):
-  m_size(find_with_default(node, "size", 65536))
+  m_size(find_with_default(node, "size", 1 << 20))
+{}
+
+Config::Tablebases::Tablebases(const YAML::Node& node):
+  m_cache_size(find_with_default(node, "size", 1 << 20))
 {}
 
 Config::MoveOrdering::MoveOrdering(const YAML::Node& node):

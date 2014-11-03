@@ -1,4 +1,4 @@
-#include "olaf/search/egbbprober.h"
+#include "olaf/tablebases/egbbprober.h"
 
 #include <cassert>
 #include <sstream>
@@ -7,6 +7,8 @@
 
 #include "olaf/status.h"
 #include "olaf/rules/chessboard.h"
+#include "olaf/rules/movechecker.h"
+#include "olaf/evaluation/positionevaluator.h"
 
 DEFINE_string(egbb_shared_library, "libegbbso.so", "Name of the shared library for egbb probing.");
 
@@ -53,6 +55,13 @@ const char c_probe_egbb_xmen[] = "probe_egbb_xmen";
 
 const int c_min_cache_size = 8216;
 
+static void delete_shared_library(void* handle)
+{
+  if (handle) {
+    dlclose(handle);
+  }
+}
+
 EgbbProber::EgbbProber(const long cache_size):
   m_lib_handle(nullptr),
   m_probe_egbb(nullptr),
@@ -60,14 +69,7 @@ EgbbProber::EgbbProber(const long cache_size):
   m_cache_size(cache_size)
 {}
 
-EgbbProber::~EgbbProber()
-{
-  if (m_lib_handle) {
-    dlclose(m_lib_handle);
-  }
-}
-
-Status EgbbProber::load_egbb(const string& egbb_path)
+Status EgbbProber::load(const string& egbb_path)
 {
   if (m_cache_size < c_min_cache_size) {
     ostringstream oss;
@@ -75,7 +77,7 @@ Status EgbbProber::load_egbb(const string& egbb_path)
     return Status::error(oss.str());
   }
   if (!m_lib_handle) {
-    m_lib_handle = dlopen(FLAGS_egbb_shared_library.c_str(), RTLD_LAZY);
+    m_lib_handle.reset(dlopen(FLAGS_egbb_shared_library.c_str(), RTLD_LAZY), delete_shared_library);
     if (!m_lib_handle) {
       ostringstream oss;
       oss << "Could not load shared library " << FLAGS_egbb_shared_library;
@@ -87,7 +89,7 @@ Status EgbbProber::load_egbb(const string& egbb_path)
     }
   }
   if (!m_load_egbb) {
-    m_load_egbb = load_egbb_t(long(dlsym(m_lib_handle, c_load_egbb_xmen)));
+    m_load_egbb = load_egbb_t(long(dlsym(m_lib_handle.get(), c_load_egbb_xmen)));
     if (!m_load_egbb) {
       ostringstream oss;
       oss << "Could not find symbol " << c_load_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
@@ -99,18 +101,18 @@ Status EgbbProber::load_egbb(const string& egbb_path)
     }
   }
   if (!m_probe_egbb) {
-    m_probe_egbb = probe_egbb_t(long(dlsym(m_lib_handle, c_probe_egbb_xmen)));
+    m_probe_egbb = probe_egbb_t(long(dlsym(m_lib_handle.get(), c_probe_egbb_xmen)));
     if (!m_probe_egbb) {
       ostringstream oss;
       oss << "Could not find symbol " << c_probe_egbb_xmen << " in shared library " << FLAGS_egbb_shared_library;
-      const char* error = dlerror();
+      const char* const error = dlerror();
       if (error) {
         oss << ": " << error;
       }
       return Status::error(oss.str());
     }
   }
-  m_load_egbb(egbb_path.c_str(), m_cache_size, LOAD_4MEN);
+  m_load_egbb(egbb_path.c_str(), m_cache_size, SMART_LOAD);
   return Status::valid();
 }
 
@@ -118,8 +120,11 @@ static const int c_max_pieces = 6;
 
 bool EgbbProber::probe(const ChessBoard& board, score_t* const score)
 {
-  if (board.occupied().number() > c_max_pieces || m_probe_egbb == nullptr) {
+  if (board.occupied().number() > c_max_pieces || m_probe_egbb == nullptr || board.finished()) {
     return false;
+  }
+  if (MoveChecker::can_kill_king(board)) {
+    return PositionEvaluator::c_win_score;
   }
   int pieces[c_max_pieces + 1];
   int squares[c_max_pieces + 1];

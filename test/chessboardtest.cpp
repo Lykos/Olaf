@@ -50,7 +50,7 @@ void ChessBoardTest::test_finished_data()
   QTest::addColumn<bool>("black_won");
   QTest::addColumn<bool>("draw");
 
-  QTest::newRow("empty") << create_empty_board() << true << true << false;
+  QTest::newRow("empty") << create_empty_board() << true << true << true;
   QTest::newRow("initial") << create_initial_board() << false << false << false;
   QTest::newRow("normal position") << parse_fen("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -") << false << false << false;
   QTest::newRow("50 moves") << parse_fen("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 50 50") << false << false << true;

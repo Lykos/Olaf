@@ -5,7 +5,9 @@ search:
   use_quiescent_search: true
   initial_window: 25
 transposition_table:
-  size: 1048576
+  size: 33554432
+tablebases:
+  cache_size: 33554432
 move_ordering:
   use_hash_move: true
   use_see: true

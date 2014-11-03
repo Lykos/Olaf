@@ -8,6 +8,7 @@
 #include "olaf/search/moveorderer.h"
 #include "olaf/evaluation/evaluatorfactory.h"
 #include "olaf/transposition_table/transpositiontable.h"
+#include "olaf/tablebases/egbbprober.h"
 
 namespace olaf
 {
@@ -57,6 +58,8 @@ public:
   std::unique_ptr<PositionEvaluator> evaluator() const;
 
   std::unique_ptr<TranspositionTable> transposition_table() const;
+
+  std::unique_ptr<EgbbProber> egbb_prober() const;
 
   MoveOrderer move_orderer() const;
 

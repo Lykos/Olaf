@@ -121,7 +121,7 @@ unique_ptr<PositionEvaluator> SearcherFactory::evaluator() const
   return m_evaluator_factory.evaluator();
 }
 
-std::unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
+unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
 {
   unique_ptr<TranspositionTable> table;
   const long size = m_config->transposition_table().size();
@@ -129,6 +129,12 @@ std::unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
     table.reset(new TranspositionTable(size));
   }
   return table;
+}
+
+unique_ptr<EgbbProber> SearcherFactory::egbb_prober() const
+{
+  unique_ptr<EgbbProber> prob(new EgbbProber(m_config->tablebases().cache_size()));
+  return prob;
 }
 
 MoveOrderer SearcherFactory::move_orderer() const

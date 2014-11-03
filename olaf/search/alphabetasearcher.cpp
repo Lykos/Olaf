@@ -101,6 +101,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     SearchResult result;
     result.score = endgame_score;
     result.terminal = true;
+    return result;
   }
   const TranspositionTableEntry* const entry = context->get();
   if (entry != nullptr && (entry->depth >= current_state.depth || entry->terminal)) {

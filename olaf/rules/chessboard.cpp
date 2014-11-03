@@ -161,6 +161,8 @@ void ChessBoard::calculate_draw() const
   static const int_fast8_t c_draw_repetitions = 3;
   m_draw_valid = true;
   m_draw = m_reversible_plies >= c_draw_reversible_plies
+      || (friends() == turn_board().piece_board(PieceSet::c_king_index)
+          && opponents() == noturn_board().piece_board(PieceSet::c_king_index))
       || count(m_hashes.begin(), m_hashes.end(), m_zobrist_hash) >= c_draw_repetitions;
 }
 

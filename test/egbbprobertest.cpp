@@ -3,7 +3,7 @@
 #include <gflags/gflags.h>
 
 #include "test/testutil.h"
-#include "olaf/search/egbbprober.h"
+#include "olaf/tablebases/egbbprober.h"
 
 using namespace std;
 using namespace testing;
@@ -22,7 +22,7 @@ void EgbbProberTest::test_no_so()
   EgbbProber prober(c_cache_size);
   const string old_value = FLAGS_egbb_shared_library;
   FLAGS_egbb_shared_library = "invalidnonexisting";
-  QVERIFY(!prober.load_egbb("").ok());
+  QVERIFY(!prober.load("").ok());
   FLAGS_egbb_shared_library = old_value;
 }
 
@@ -31,14 +31,14 @@ void EgbbProberTest::test_wrong_so()
   EgbbProber prober(c_cache_size);
   const string old_value = FLAGS_egbb_shared_library;
   FLAGS_egbb_shared_library = "libolaf.so";
-  QVERIFY(!prober.load_egbb("").ok());
+  QVERIFY(!prober.load("").ok());
   FLAGS_egbb_shared_library = old_value;
 }
 
 void EgbbProberTest::test_wrong_path()
 {
   EgbbProber prober(c_cache_size);
-  QVERIFY(prober.load_egbb("/path/to/madness").ok());
+  QVERIFY(prober.load("/path/to/madness").ok());
 }
 
 void EgbbProberTest::test_probe_without_load()
@@ -52,7 +52,7 @@ void EgbbProberTest::test_probe_without_load()
 void EgbbProberTest::test_probe_for_unknown()
 {
   EgbbProber prober(c_cache_size);
-  prober.load_egbb("/home/bernhard/endgames/egbb4men/");
+  prober.load("/home/bernhard/endgames/egbb4men/");
   const ChessBoard& board = create_initial_board();
   int score;
   QVERIFY(!prober.probe(board, &score));
@@ -61,7 +61,7 @@ void EgbbProberTest::test_probe_for_unknown()
 void EgbbProberTest::test_probe_draw()
 {
   EgbbProber prober(c_cache_size);
-  prober.load_egbb("/home/bernhard/endgames/egbb4men/");
+  prober.load("/home/bernhard/endgames/egbb4men/");
   const ChessBoard& board = parse_fen("8/6p1/2K2R2/8/8/8/6k1/8 b - - 0 1");
   int score = 0;
   QVERIFY(prober.probe(board, &score));
@@ -71,7 +71,7 @@ void EgbbProberTest::test_probe_draw()
 void EgbbProberTest::test_probe_win()
 {
   EgbbProber prober(c_cache_size);
-  prober.load_egbb("/home/bernhard/endgames/egbb4men/");
+  prober.load("/home/bernhard/endgames/egbb4men/");
   const ChessBoard& board = parse_fen("8/6p1/2K2R2/8/8/8/6k1/8 w - - 0 1");
   int score = 0;
   QVERIFY(prober.probe(board, &score));

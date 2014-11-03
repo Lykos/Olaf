@@ -53,6 +53,16 @@ public:
     const int m_size;
   };
 
+  class Tablebases {
+  public:
+    explicit Tablebases(const YAML::Node& node);
+
+    int cache_size() const { return m_cache_size; }
+
+  private:
+    const int m_cache_size;
+  };
+
   class MoveOrdering {
   public:
     explicit MoveOrdering(const YAML::Node& node);
@@ -77,6 +87,8 @@ public:
 
   const TranspositionTable& transposition_table() const { return m_transposition_table; }
 
+  const Tablebases& tablebases() const { return m_tablebases; }
+
   const MoveOrdering& move_ordering() const { return m_move_ordering; }
 
 private:
@@ -87,6 +99,8 @@ private:
   const Search m_search;
 
   const TranspositionTable m_transposition_table;
+
+  const Tablebases m_tablebases;
 
   const MoveOrdering m_move_ordering;
 };

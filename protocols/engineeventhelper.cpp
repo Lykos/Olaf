@@ -16,6 +16,7 @@
 #include "protocols/event/setboardevent.h"
 #include "protocols/event/setdepthevent.h"
 #include "protocols/event/setnpsevent.h"
+#include "protocols/event/setegtpathevent.h"
 
 using namespace std;
 
@@ -151,12 +152,18 @@ void EngineEventHelper::enqueue_move(const Move& move)
   m_engine->enqueue(std::move(move_event));
 }
 
-void EngineEventHelper::set_level(const int moves_to_play,
-                                  const chrono::milliseconds& total_time,
-                                  const chrono::milliseconds& increment)
+void EngineEventHelper::request_set_level(const int moves_to_play,
+                                          const chrono::milliseconds& total_time,
+                                          const chrono::milliseconds& increment)
 {
   unique_ptr<EngineEvent> set_level_event(new SetLevelEvent(moves_to_play, total_time, increment));
   m_engine->enqueue(std::move(set_level_event));
+}
+
+void EngineEventHelper::request_set_egt_path(const string &path)
+{
+  unique_ptr<EngineEvent> set_egt_path_event(new SetEgtPathEvent(path));
+  m_engine->enqueue(std::move(set_egt_path_event));
 }
 
 } // namespace olaf
