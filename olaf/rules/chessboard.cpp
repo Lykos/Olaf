@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 
 #include "olaf/evaluation/incrementalupdater.h"
 
@@ -9,6 +10,17 @@ using namespace std;
 
 namespace olaf
 {
+
+bool piece_invariant(const ChessBoard& board)
+{
+  BitBoard pieces(0);
+  for (const Position position : Position::all_positions()) {
+    if (board.piece_index(position) != Piece::c_no_piece) {
+      pieces.set(position, true);
+    }
+  }
+  return pieces == board.occupied() && !(board.opponents() & board.friends());
+}
 
 std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
 {
@@ -25,6 +37,13 @@ std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
     }
     out << endl;
   }
+  out << "turn color: " << (board.m_turn_color == Color::White ? "White" : "Black") << endl;
+  out << "turn number: " << board.m_turn_number << endl;
+  out << "reversible plies: " << board.m_reversible_plies << endl;
+  if (board.m_ep_captures) {
+    out << "ep: " << board.m_ep_captures.first_position() << endl;
+  }
+  out << "Zobrist hash: " << board.m_zobrist_hash;
   return out;
 }
 
@@ -35,6 +54,7 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
   }
   return left.m_turn_color == right.m_turn_color
       && left.m_turn_number == right.m_turn_number
+      && left.m_reversible_plies == right.m_reversible_plies
       && left.m_color_boards == right.m_color_boards
       && left.m_incremental_state == right.m_incremental_state
       && left.m_zobrist_hash == right.m_zobrist_hash
@@ -42,16 +62,18 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
       && left.m_king_captures == right.m_king_captures;
 }
 
+#define NO Piece::c_no_piece
 static array<Piece::piece_index_t, Position::c_index_size> c_empty_piece_board = {
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0
+  NO, NO, NO, NO, NO, NO, NO, NO,
+  NO, NO, NO, NO, NO, NO, NO, NO,
+  NO, NO, NO, NO, NO, NO, NO, NO,
+  NO, NO, NO, NO, NO, NO, NO, NO,
+  NO, NO, NO, NO, NO, NO, NO, NO,
+  NO, NO, NO, NO, NO, NO, NO, NO,
+  NO, NO, NO, NO, NO, NO, NO, NO,
+  NO, NO, NO, NO, NO, NO, NO, NO
 };
+#undef NO
 
 ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
                        const Color turn_color,
@@ -74,6 +96,7 @@ ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
   IncrementalUpdater::calculate(*this, &m_incremental_state);
   ZobristHash::calculate(this);
   m_hashes.push_back(m_zobrist_hash);
+  assert(piece_invariant(*this));
 }
 
 const ColorBoard& ChessBoard::color_board(Color color) const
@@ -145,6 +168,7 @@ void ChessBoard::add_piece(const Color color,
                            const Piece::piece_index_t piece_index,
                            const Position position)
 {
+  assert(0 <= piece_index && piece_index < PieceSet::c_no_pieces);
   const int color_index = static_cast<int>(color);
   m_color_boards[color_index].piece_board(piece_index).set(position, true);
   m_occupied[color_index].set(position, true);
@@ -157,8 +181,9 @@ void ChessBoard::remove_piece(const Color color,
                               const Piece::piece_index_t piece_index,
                               const Position position)
 {
+  assert(0 <= piece_index && piece_index < PieceSet::c_no_pieces);
   const int color_index = static_cast<int>(color);
-  m_pieces[position.index()] = PieceSet::c_no_pieces;
+  m_pieces[position.index()] = Piece::c_no_piece;
   m_occupied[color_index].set(position, false);
   m_color_boards[color_index].piece_board(piece_index).set(position, false);
   ZobristHash::update(color, piece_index, position, this);
@@ -185,7 +210,9 @@ void ChessBoard::can_castle_q(const Color color, const bool new_can_castle_q)
 
 const Piece& ChessBoard::piece(const Position pos) const
 {
-  return PieceSet::instance().piece(piece_index(pos));
+  const Piece::piece_index_t index = piece_index(pos);
+  assert(0 <= index && index < PieceSet::c_no_pieces);
+  return PieceSet::instance().piece(index);
 }
 
 ChessBoard create_initial_board()
