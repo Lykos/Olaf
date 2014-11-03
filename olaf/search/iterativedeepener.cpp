@@ -16,10 +16,12 @@ namespace olaf
 
 IterativeDeepener::IterativeDeepener(unique_ptr<AlphaBetaSearcher> searcher,
                                      ThinkingWriter* const writer,
-                                     const depth_t min_depth):
+                                     const depth_t min_depth,
+                                     const score_t initial_window):
   m_searcher(move(searcher)),
   m_writer(writer),
-  m_min_depth(min_depth)
+  m_min_depth(min_depth),
+  m_initial_window(initial_window)
 {}
 
 SearchResult IterativeDeepener::search(SearchContext* context)
@@ -42,8 +44,9 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   if (!result.valid) {
     return SearchResult::invalid();
   }
+  assert(!result.main_variation.empty());
   milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
-  m_writer->output(context->board, result, time, m_min_depth);
+  m_writer->output(context->board, result, context->nodes, time, m_min_depth);
   if (result.terminal || mode == SearchContext::DepthMode::FIXED_DEPTH) {
     return result;
   }
@@ -52,24 +55,41 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   context->forced_stopper = &composite_stopper;
   while (context->search_depth < max_depth) {
     ++context->search_depth;
-    const SearchResult& next_result =
-        m_searcher->search(context);
+    SearchResult next_result = windowed_search(context, result.score);
     if (!next_result.valid) {
       break;
     }
-    assert(!result.main_variation.empty());
-    result.nodes += next_result.nodes;
-    result.score = next_result.score;
-    result.terminal = next_result.terminal;
-    result.depth = next_result.depth;
-    result.main_variation = std::move(next_result.main_variation);
+    assert(!next_result.main_variation.empty());
+    result = std::move(next_result);
     milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
-    m_writer->output(context->board, result, time, context->search_depth);
+    m_writer->output(context->board, result, context->nodes, time, context->search_depth);
     if (result.terminal) {
       break;
     }
   }
   return result;
+}
+
+SearchResult IterativeDeepener::windowed_search(SearchContext* context, const score_t score)
+{
+  score_t lower_window = m_initial_window;
+  score_t upper_window = m_initial_window;
+  while (true) {
+    const score_t lower_bound = score - lower_window;
+    const score_t upper_bound = score + upper_window;
+    const SearchResult result = m_searcher->search_windowed(context, lower_bound, upper_bound);
+    if (!result.valid) {
+      return result;
+    }
+    const score_t found_score = result.score;
+    if (found_score <= lower_bound) {
+      lower_window <<= 1;
+    } else if (found_score >= upper_bound) {
+      upper_window <<= 1;
+    } else {
+      return result;
+    }
+  }
+}
 
 } // namespace olaf
-}

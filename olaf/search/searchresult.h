@@ -17,8 +17,6 @@ struct SearchResult
 
   static const SearchResult& invalid();
 
-  int nodes = 0;
-
   std::vector<Move> main_variation;
 
   // We use -max because numeric_limits is asymmetric and min

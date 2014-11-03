@@ -54,8 +54,6 @@ struct TestFactoryOwner {
   SearcherFactory factory;
 };
 
-Config test_config();
-
 } // namespace test
 } // namespace olaf
 

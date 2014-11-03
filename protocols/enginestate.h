@@ -109,19 +109,19 @@ private:
 
   bool m_use_depth = false;
 
-  bool m_analyze;
+  bool m_analyze = false;
 
   int m_depth;
 
   int m_nps;
 
-  int m_moves;
+  int m_moves = 0;
 
   std::chrono::milliseconds m_my_time;
 
-  std::chrono::milliseconds m_increment;
-
   std::chrono::milliseconds m_opponent_time;
+
+  std::chrono::milliseconds m_increment;
 };
 
 } // namespace olaf

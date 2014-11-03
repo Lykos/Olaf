@@ -84,6 +84,6 @@ vector<Move> SimpleMoveGenerator::generate_valid_moves(const ChessBoard& board)
     }
   }
   return result;
+}
 
 } // namespace olaf
-}

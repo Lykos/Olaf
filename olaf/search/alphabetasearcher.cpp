@@ -58,6 +58,18 @@ SearchResult AlphaBetaSearcher::search(SearchContext* const context)
   return recurse_alpha_beta(initial_state, context);
 }
 
+SearchResult AlphaBetaSearcher::search_windowed(SearchContext* const context,
+                                                const score_t alpha,
+                                                const score_t beta)
+{
+  assert(context->depth_mode == SearchContext::DepthMode::FIXED_DEPTH);
+  // We increment the depth by 1 because it gets immediately decremented again.
+  SearchState initial_state{-beta,
+                            -alpha,
+                            static_cast<depth_t>(context->search_depth + 1)};
+  return recurse_alpha_beta(initial_state, context);
+}
+
 SearchResult AlphaBetaSearcher::recurse_sub_searcher(const SearchState& current_state,
                                                      SearchContext* const context)
 {
@@ -72,11 +84,13 @@ static bool is_checked(ChessBoard* const board)
   return result;
 }
 
+const int c_stop_check_nodes = 10000;
+
 SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_state,
                                                    SearchContext* const context)
 {
   const depth_t recurse_depth = current_state.depth - 1;
-  if (context->forced_stopper->should_stop()) {
+  if (context->nodes % c_stop_check_nodes == 0 && context->forced_stopper->should_stop()) {
     return SearchResult::invalid();
   } else if ((!m_ignore_depth && recurse_depth <= m_sub_searcher_depth)
              || (m_sub_searcher != nullptr && context->board.finished())) {
@@ -144,7 +158,6 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
     return ResultReaction::INVALID;
   }
   ResultReaction reaction;
-  result->nodes += recursive_result->nodes;
   const score_t recursive_score = -recursive_result->score;
   TranspositionTableEntry entry;
   entry.score = recursive_score;

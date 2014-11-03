@@ -20,6 +20,7 @@ SimpleThinkingWriter::SimpleThinkingWriter(ProtocolWriter* const writer):
 
 void SimpleThinkingWriter::output(const ChessBoard& board,
                                   const SearchResult& result,
+                                  const int nodes,
                                   const milliseconds& time,
                                   const Searcher::depth_t depth)
 {
@@ -51,7 +52,7 @@ void SimpleThinkingWriter::output(const ChessBoard& board,
   m_writer->thinking_output(depth,
                             score,
                             time.count() / 10,
-                            result.nodes,
+                            nodes,
                             oss.str());
 
 } // namespace olaf

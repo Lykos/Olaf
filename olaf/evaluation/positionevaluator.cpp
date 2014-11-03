@@ -14,9 +14,9 @@ SearchResult PositionEvaluator::alpha_beta(
 {
   SearchResult result;
   result.depth = context->search_depth - state->depth;
-  result.nodes = 1;
   result.score = evaluate(state, context);
   result.terminal = context->board.finished();
+  ++context->nodes;
   return result;
 }
 

@@ -14,19 +14,6 @@ namespace olaf
 namespace test
 {
 
-static const char c_config[] =
-    "search:\n"
-    "  default_moves_to_play: 40\n"
-    "  min_depth: 1\n"
-    "  sequential_depth: 2\n"
-    "  use_quiescent_search: true\n"
-    "transposition_table:\n"
-    "  size: 65536\n"
-    "move_ordering:\n"
-    "  use_hash_move: true\n"
-    "  use_see: true\n"
-    "  use_killers: true\n";
-
 ChessBoard parse_fen(const string& fen)
 {
   ChessBoard board;
@@ -44,13 +31,8 @@ TestFactoryOwner::TestFactoryOwner(const Config& config2):
 {}
 
 TestFactoryOwner::TestFactoryOwner():
-  TestFactoryOwner(test_config())
+  TestFactoryOwner(Config())
 {}
-
-Config test_config()
-{
-  return Config(c_config);
-}
 
 } // namespace test
 } // namespace olaf

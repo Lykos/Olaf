@@ -3,6 +3,7 @@ search:
   min_depth: 1
   sequential_depth: 2
   use_quiescent_search: true
+  initial_window: 25
 transposition_table:
   size: 1048576
 move_ordering:

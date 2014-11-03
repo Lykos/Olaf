@@ -76,7 +76,8 @@ unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
   unique_ptr<Searcher> searcher(new IterativeDeepener(
                                   sequential_alpha_beta_searcher(),
                                   m_writer,
-                                  m_config->search().min_depth()));
+                                  m_config->search().min_depth(),
+                                  m_config->search().initial_window()));
   return searcher;
 }
 

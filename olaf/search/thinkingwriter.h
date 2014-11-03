@@ -21,6 +21,7 @@ public:
 
   virtual void output(const ChessBoard& board,
                       const SearchResult& result,
+                      int nodes,
                       const std::chrono::milliseconds& time,
                       Searcher::depth_t depth) = 0;
 

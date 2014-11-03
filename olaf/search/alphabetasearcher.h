@@ -40,6 +40,8 @@ public:
    */
   SearchResult search(SearchContext* context) final;
 
+  SearchResult search_windowed(SearchContext* context, score_t alpha, score_t beta);
+
   /**
    * @brief recurse_alpha_beta should be called internally to recurse to the sub searcher.
    * @param current_state the SearchState of the calling method.

@@ -31,7 +31,6 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
 {
   SearchResult result;
   const PositionEvaluator::score_t stand_pat = m_evaluator->evaluate(state, context);
-  result.nodes = 1;
   result.depth = context->search_depth - state->depth;
   if (stand_pat >= state->beta) {
     result.score = stand_pat;

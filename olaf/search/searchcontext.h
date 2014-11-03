@@ -116,6 +116,11 @@ struct SearchContext
   typedef std::array<Move, c_no_killers> Killers;
 
   std::vector<Killers> killers;
+
+  /**
+   * @brief nodes is the number of searched nodes.
+   */
+  int nodes = 0;
 };
 
 } // namespace olaf

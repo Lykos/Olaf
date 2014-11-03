@@ -14,7 +14,10 @@ namespace olaf
 EngineState::EngineState(unique_ptr<TranspositionTable> transposition_table,
                          BoardState* const board_state):
   m_transposition_table(move(transposition_table)),
-  m_board_state(board_state)
+  m_board_state(board_state),
+  m_my_time(minutes(5)),
+  m_opponent_time(minutes(5)),
+  m_increment(0)
 {
   assert(board_state);
 }
