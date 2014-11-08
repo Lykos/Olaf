@@ -15,7 +15,7 @@ class PositionEvaluator
 public:
   typedef std::int_fast16_t score_t;
 
-  static const score_t c_win_score = 50000;
+  static const score_t c_win_score = 25000;
   static const score_t c_draw_score = 0;
 
   virtual score_t evaluate(const ChessBoard& board) = 0;

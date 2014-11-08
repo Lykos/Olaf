@@ -62,7 +62,10 @@ SOURCES += \
     evaluation/incrementalevaluator.cpp \
     evaluation/incrementalupdater.cpp \
     rules/movechecker.cpp \
-    evaluation/resultevaluator.cpp
+    evaluation/resultevaluator.cpp \
+    search/myclass.cpp \
+    transposition_table/pawntable.cpp \
+    evaluation/pawnevaluator.cpp
 
 HEADERS += \
     config.h \
@@ -116,7 +119,10 @@ HEADERS += \
     evaluation/incrementalupdater.h \
     rules/undoinfo.h \
     rules/movechecker.h \
-    evaluation/resultevaluator.h
+    evaluation/resultevaluator.h \
+    search/myclass.h \
+    transposition_table/pawntable.h \
+    evaluation/pawnevaluator.h
 
 headers.files = $$HEADERS
 headers.path = /usr/local/include/OlafSearching

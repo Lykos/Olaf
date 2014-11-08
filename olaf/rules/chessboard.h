@@ -236,6 +236,11 @@ public:
     return m_zobrist_hash;
   }
 
+  inline ZobristHash::hash_t pawn_zobrist_hash() const
+  {
+    return m_pawn_zobrist_hash;
+  }
+
   /**
    * @brief incremental_score returns the score regarding all the things that are updated incrementally.
    *        It always returns the score for the side whose turn it is;
@@ -259,6 +264,8 @@ private:
   BitBoard m_king_captures;
 
   ZobristHash::hash_t m_zobrist_hash;
+
+  ZobristHash::hash_t m_pawn_zobrist_hash;
 
   int m_incremental_score_white;
 
