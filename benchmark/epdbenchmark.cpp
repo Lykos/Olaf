@@ -65,15 +65,19 @@ static string file_name_to_class_name(const string& name)
   static const char c_underscore = '_';
   static const char c_slash = '/';
   const auto slash_index = name.rfind(c_slash);
-  auto it = name.begin() + (slash_index == string::npos ? 0 : slash_index);
+  auto it = name.begin() + (slash_index == string::npos ? 0 : slash_index + 1);
   auto end = name.end();
   string result;
+  for (; it != end && !isalpha(*it); ++it);
+  if (it != end) {
+    result.push_back(toupper(*it));
+  }
   for (; it != end; ++it) {
     auto next = it + 1;
     if (next != end && *next == c_underscore) {
       result.push_back(toupper(*it));
       ++it; // Overjump next.
-    } else {
+    } else if (isalpha(*it)) {
       result.push_back(*it);
     }
   }
@@ -82,7 +86,6 @@ static string file_name_to_class_name(const string& name)
 
 EpdBenchmark::EpdBenchmark(const string& epd_file):
   Benchmark(file_name_to_class_name(epd_file)),
-  m_factory(&m_no_thinking_writer),
   m_epd_file(epd_file)
 {}
 
@@ -91,7 +94,8 @@ EpdBenchmark::~EpdBenchmark()
 
 void EpdBenchmark::initTestCase()
 {
-  m_searcher.reset(new SimpleTimedSearcher(m_factory.iterative_searcher(), c_max_time));
+  cout << "initialized" << endl;
+  m_searcher.reset(new SimpleTimedSearcher(m_factory_owner.factory.iterative_searcher(), c_max_time));
 }
 
 void EpdBenchmark::test_epd()
@@ -106,7 +110,9 @@ void EpdBenchmark::test_epd()
   context.weak_stopper = &stopper;
   TranspositionTable transposition_table(0x1000);
   context.transposition_table = &transposition_table;
-  Move move = m_searcher->search(&context).main_variation.back();
+  const vector<Move> main_variation = m_searcher->search(&context).main_variation;
+  QVERIFY(!main_variation.empty());
+  Move move = main_variation.back();
   long score = 0;
   auto ContainsMove = Matches(Contains(move));
   if (!position.best_moves.empty()) {
@@ -125,7 +131,7 @@ void EpdBenchmark::test_epd()
 void EpdBenchmark::test_epd_data()
 {
   QTest::addColumn<EpdPosition>("position");
-  std::unique_ptr<EpdParser> parser = m_factory.epd_parser();
+  std::unique_ptr<EpdParser> parser = m_factory_owner.factory.epd_parser();
   ifstream file(m_epd_file);
   string line;
   int i = 1;

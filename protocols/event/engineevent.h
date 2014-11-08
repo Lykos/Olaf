@@ -1,7 +1,7 @@
 #ifndef ENGINEEVENT_H
 #define ENGINEEVENT_H
 
-#include "enginestate.h"
+#include "protocols/enginestate.h"
 
 namespace olaf
 {

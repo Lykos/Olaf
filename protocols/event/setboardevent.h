@@ -2,7 +2,7 @@
 #define SETBOARDEVENT_H
 
 #include "olaf/rules/chessboard.h"
-#include "engineevent.h"
+#include "protocols/event/engineevent.h"
 
 namespace olaf
 {

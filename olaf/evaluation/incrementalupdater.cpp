@@ -103,13 +103,18 @@ static array<array<int, BitBoard::c_bitboard_size>, PieceSet::c_no_pieces> gener
   return piece_square_values;
 }
 
+// static
+array<int, PieceSet::c_no_pieces> IncrementalUpdater::piece_values() {
+  static const array<int, PieceSet::c_no_pieces> piece_values = generate_piece_values();
+  return piece_values;
+}
+
 static int piece_value(const Color color,
                        const Piece::piece_index_t index,
                        const Position& position)
 {
-  static const array<int, PieceSet::c_no_pieces> piece_values = generate_piece_values();
   static const array<array<int, BitBoard::c_bitboard_size>, PieceSet::c_no_pieces> piece_square_values = generate_piece_square_values();
-  int result = piece_values[index];
+  int result = IncrementalUpdater::piece_values()[index];
   int position_index;
   if (color == Color::White) {
     position_index = BitBoard::index(position);

@@ -4,7 +4,8 @@
 #include <QObject>
 #include <memory>
 
-#include "autotest.h"
+#include "test/autotest.h"
+#include "test/testutil.h"
 #include "olaf/parse/sanparser.h"
 #include "olaf/parse/epdparser.h"
 
@@ -18,6 +19,8 @@ class EpdParserTest : public QObject
   Q_OBJECT
 
 private:
+  TestFactoryOwner m_factory_owner;
+
   std::unique_ptr<EpdParser> m_parser;
 
 private Q_SLOTS:

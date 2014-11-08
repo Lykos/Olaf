@@ -1,4 +1,4 @@
-#include "pingevent.h"
+#include "protocols/event/pingevent.h"
 
 using namespace std;
 

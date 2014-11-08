@@ -60,8 +60,17 @@ public:
 
   BitBoard initial_board(Color color) const;
 
-  virtual bool can_move(IncompleteMove incomplete_move,
-                        const ChessBoard& board) const;
+  bool can_move(IncompleteMove incomplete_move,
+                const ChessBoard& board) const;
+
+  /**
+   * @brief could_move indicates whether the piece could perform the move independent
+   *        of whether it is its turn.
+   */
+  virtual bool could_move(IncompleteMove incomplete_move,
+                          const ChessBoard& board) const = 0;
+
+  virtual bool can_xray(const PositionDelta& direction) const;
 
   static const piece_index_t c_no_piece = -1;
 

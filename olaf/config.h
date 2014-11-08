@@ -28,11 +28,11 @@ public:
   public:
     using ConfigSection::ConfigSection;
 
-    long search_time_millis() const;
+    long time_millis() const;
 
-    int min_search_depth() const;
+    int min_depth() const;
 
-    int sequential_search_depth() const;
+    int sequential_depth() const;
   };
 
   class TranspositionTable : public ConfigSection {

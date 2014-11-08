@@ -1,7 +1,7 @@
 #ifndef MOVEEVENT_H
 #define MOVEEVENT_H
 
-#include "engineevent.h"
+#include "protocols/event/engineevent.h"
 #include "olaf/rules/move.h"
 
 namespace olaf
@@ -14,7 +14,7 @@ namespace olaf
 class MoveEvent : public EngineEvent
 {
 public:
-  MoveEvent(const Move& move);
+  MoveEvent(Move move);
 
   void execute(EngineState* engine_state) override;
 

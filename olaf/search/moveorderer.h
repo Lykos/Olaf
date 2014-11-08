@@ -2,6 +2,7 @@
 #define MOVEORDERER_H
 
 #include "olaf/rules/move.h"
+#include "olaf/search/searcher.h"
 #include <vector>
 
 namespace olaf
@@ -15,6 +16,9 @@ class SearchContext;
 class MoveOrderer
 {
 public:
+  static Searcher::score_t see(const ChessBoard& board,
+                               const Move move);
+
   static void order_moves(const SearchContext& context,
                           std::vector<Move>* moves);
 };

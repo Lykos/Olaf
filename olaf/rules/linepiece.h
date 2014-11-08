@@ -24,8 +24,10 @@ public:
   std::vector<Move> moves(const Position& source,
                           const ChessBoard& board) const override;
 
-  bool can_move(IncompleteMove incomplete_move,
-                const ChessBoard& board) const override;
+  bool could_move(IncompleteMove incomplete_move,
+                  const ChessBoard& board) const override;
+
+  bool can_xray(const PositionDelta& direction) const override;
 
 private:
   const std::vector<PositionDelta> m_directions;

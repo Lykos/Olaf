@@ -7,6 +7,7 @@
 
 #include "autotest.h"
 #include "olaf/search/movegenerator.h"
+#include "test/testutil.h"
 
 namespace olaf
 {
@@ -17,7 +18,10 @@ class ZobristHashTest : public QObject
 {
   Q_OBJECT
 
+
 private:
+  TestFactoryOwner m_factory_owner;
+
   std::unique_ptr<MoveGenerator> m_generator;
 
 private Q_SLOTS:

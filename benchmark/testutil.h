@@ -9,6 +9,9 @@
 #include "olaf/rules/position.h"
 #include "olaf/rules/move.h"
 #include "olaf/parse/epdposition.h"
+#include "olaf/config.h"
+#include "olaf/search/nothinkingwriter.h"
+#include "olaf/search/searcherfactory.h"
 
 namespace olaf
 {
@@ -24,6 +27,20 @@ namespace benchmark
 }
 
 Move make_move(const Position& source, const Position& destination, const bool is_capture);
+
+struct TestFactoryOwner {
+  TestFactoryOwner();
+
+  TestFactoryOwner(const Config& config);
+
+  Config config;
+
+  NoThinkingWriter no_thinking_writer;
+
+  SearcherFactory factory;
+};
+
+Config test_config();
 
 ChessBoard parse_fen(const std::string& fen);
 

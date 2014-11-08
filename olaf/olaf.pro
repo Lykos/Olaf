@@ -17,7 +17,6 @@ DEFINES += OLAFSEARCHING_LIBRARY
 SOURCES += \
     config.cpp \
     evaluation/evaluatorfactory.cpp \
-    evaluation/positionevaluator.cpp \
     search/simplemovegenerator.cpp \
     search/moveorderer.cpp \
     search/negamaxer.cpp \
@@ -27,7 +26,6 @@ SOURCES += \
     search/compositestopper.cpp \
     search/timestopper.cpp \
     search/forcedstopper.cpp \
-    search/evaluatorsearcher.cpp \
     search/parallelnegamaxer.cpp \
     search/capturegenerator.cpp \
     search/thinkingwriter.cpp \
@@ -65,7 +63,8 @@ SOURCES += \
     evaluation/resultevaluator.cpp \
     search/myclass.cpp \
     transposition_table/pawntable.cpp \
-    evaluation/pawnevaluator.cpp
+    evaluation/pawnevaluator.cpp \
+    evaluation/positionevaluator.cpp
 
 HEADERS += \
     config.h \
@@ -85,7 +84,6 @@ HEADERS += \
     search/compositestopper.h \
     search/timestopper.h \
     search/forcedstopper.h \
-    search/evaluatorsearcher.h \
     search/parallelnegamaxer.h \
     search/capturegenerator.h \
     search/thinkingwriter.h \
@@ -124,11 +122,8 @@ HEADERS += \
     transposition_table/pawntable.h \
     evaluation/pawnevaluator.h
 
-headers.files = $$HEADERS
-headers.path = /usr/local/include/OlafSearching
-
 target.path = /usr/local/lib
 
-INSTALLS += target headers
+INSTALLS += target
 
 LIBS += -lyaml-cpp

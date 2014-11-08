@@ -12,6 +12,8 @@
 #include "olaf/rules/move.h"
 #include "olaf/rules/piece.h"
 #include "olaf/search/perft.h"
+#include "olaf/search/nothinkingwriter.h"
+#include "olaf/search/searcherfactory.h"
 #include "olaf/config.h"
 
 Q_DECLARE_METATYPE(olaf::BitBoard)
@@ -22,6 +24,8 @@ Q_DECLARE_METATYPE(std::vector<olaf::Move>)
 Q_DECLARE_METATYPE(std::vector<olaf::Position>)
 Q_DECLARE_METATYPE(const olaf::Piece*)
 Q_DECLARE_METATYPE(olaf::Move)
+Q_DECLARE_METATYPE(olaf::IncompleteMove)
+Q_DECLARE_METATYPE(olaf::TranspositionTableEntry)
 
 namespace olaf
 {
@@ -36,15 +40,21 @@ namespace test
   } \
 }
 
-Move make_move(const Position& source, const Position& destination, const bool is_capture);
-
 ChessBoard parse_fen(const std::string& fen);
 
-struct SearchFactoryOwner {
-  std::unique_ptr<Config> config;
+struct TestFactoryOwner {
+  TestFactoryOwner();
+
+  TestFactoryOwner(const Config& config);
+
+  Config config;
+
+  NoThinkingWriter no_thinking_writer;
+
+  SearcherFactory factory;
 };
 
-std::unique_ptr<Config> test_config();
+Config test_config();
 
 } // namespace test
 } // namespace olaf

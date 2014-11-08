@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "olaf/rules/pieceset.h"
+#include "olaf/rules/chessboard.h"
 #include "olaf/search/searcher.h"
 #include "protocols/protocolwriter.h"
 

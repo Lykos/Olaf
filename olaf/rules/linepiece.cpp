@@ -1,5 +1,6 @@
 #include "olaf/rules/linepiece.h"
 
+#include <algorithm>
 #include <utility>
 
 #include "olaf/rules/chessboard.h"
@@ -39,28 +40,14 @@ vector<Move> LinePiece::moves(const Position& source,
   return result;
 }
 
-bool LinePiece::can_move(const IncompleteMove incomplete_move,
-                         const ChessBoard& board) const
+bool LinePiece::could_move(const IncompleteMove incomplete_move,
+                           const ChessBoard& board) const
 {
   const Position src(incomplete_move.source());
   const Position dst(incomplete_move.destination());
-  if (!Piece::can_move(incomplete_move, board)) {
-    return false;
-  }
   const PositionDelta difference = dst - src;
-  const uint_fast8_t length = max(abs(difference.d_row()), abs(difference.d_column()));
-  if (difference.d_row() % length != 0 || difference.d_column() % length != 0) {
-    return false;
-  }
-  const PositionDelta direction(difference.d_row() / length, difference.d_column() / length);
-  bool valid_direction = false;
-  for (const PositionDelta& dir : m_directions) {
-    if (dir == direction) {
-      valid_direction = true;
-      break;
-    }
-  }
-  if (!valid_direction) {
+  const PositionDelta direction = difference.unit();
+  if (!can_xray(direction)) {
     return false;
   }
   for (Position position = src + direction;
@@ -71,6 +58,11 @@ bool LinePiece::can_move(const IncompleteMove incomplete_move,
     }
   }
   return true;
+}
+
+bool LinePiece::can_xray(const PositionDelta& direction) const
+{
+  return find(m_directions.begin(), m_directions.end(), direction) != m_directions.end();
 }
 
 } // namespace olaf

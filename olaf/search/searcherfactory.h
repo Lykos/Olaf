@@ -42,7 +42,7 @@ public:
 
   std::unique_ptr<AlphaBetaSearcher> evaluation_searcher() const;
 
-  std::unique_ptr<PositionEvaluator> position_evaluator() const;
+  std::unique_ptr<PositionEvaluator> evaluator() const;
 
   std::unique_ptr<MoveGenerator> capture_generator() const;
 

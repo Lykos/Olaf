@@ -5,6 +5,7 @@
 #include <QtTest/QTest>
 
 #include "benchmark.h"
+#include "testutil.h"
 #include "autobenchmark.h"
 #include "olaf/search/searcherfactory.h"
 #include "olaf/search/simpletimedsearcher.h"
@@ -24,9 +25,7 @@ public:
   virtual ~EpdBenchmark();
 
 private:
-  NoThinkingWriter m_no_thinking_writer;
-
-  SearcherFactory m_factory;
+  TestFactoryOwner m_factory_owner;
 
   std::unique_ptr<SimpleTimedSearcher> m_searcher;
 

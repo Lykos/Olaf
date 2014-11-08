@@ -40,6 +40,8 @@ public:
 
   constexpr d_column_t d_column() const { return m_d_column; }
 
+  PositionDelta unit() const;
+
 private:
   const d_row_t m_d_row;
 

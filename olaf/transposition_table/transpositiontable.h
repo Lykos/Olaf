@@ -20,7 +20,20 @@ enum class NodeType
 
 struct TranspositionTableEntry
 {
+  /**
+   * @brief depth of the search beyond the current position.
+   *        This should be used to determine how valuable a result is.
+   */
   Searcher::depth_t depth;
+
+  /**
+   * @brief result_depth this is the actual depth of the node for which
+   *        this score was returned. This can be more than depth because
+   *        of quiescent search. It should only be used for special interior
+   *        node detection.
+   */
+  Searcher::depth_t result_depth;
+
   PositionEvaluator::score_t score;
   NodeType node_type;
   Move best_move;

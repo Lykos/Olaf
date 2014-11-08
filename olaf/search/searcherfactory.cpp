@@ -4,7 +4,6 @@
 #include "olaf/search/iterativedeepener.h"
 #include "olaf/search/parallelnegamaxer.h"
 #include "olaf/search/negamaxer.h"
-#include "olaf/search/evaluatorsearcher.h"
 #include "olaf/search/capturegenerator.h"
 #include "olaf/search/simplemovegenerator.h"
 #include "olaf/search/moveorderer.h"
@@ -32,7 +31,7 @@ unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
   unique_ptr<Searcher> searcher(new SimpleTimedSearcher(
                                   iterative_searcher(),
-                                  milliseconds(m_config->search().search_time_millis())));
+                                  milliseconds(m_config->search().time_millis())));
   return searcher;
 }
 
@@ -41,7 +40,7 @@ unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
   unique_ptr<Searcher> searcher(new IterativeDeepener(
                                   sequential_alpha_beta_searcher(),
                                   m_writer,
-                                  m_config->search().min_search_depth()));
+                                  m_config->search().min_depth()));
   return searcher;
 }
 
@@ -50,7 +49,7 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() co
   unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(
                                            move_generator(),
                                            sequential_alpha_beta_searcher(),
-                                           m_config->search().sequential_search_depth(),
+                                           m_config->search().sequential_depth(),
                                            false));
   return searcher;
 }
@@ -66,21 +65,15 @@ unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() 
 
 unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(position_evaluator(),
+  unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(evaluator(),
                                                       capture_generator(),
-                                                      evaluation_searcher(),
+                                                      evaluator(),
                                                       0,
                                                       true));
   return searcher;
 }
 
-unique_ptr<AlphaBetaSearcher> SearcherFactory::evaluation_searcher() const
-{
-  unique_ptr<AlphaBetaSearcher> searcher(new EvaluatorSearcher(position_evaluator()));
-  return searcher;
-}
-
-unique_ptr<PositionEvaluator> SearcherFactory::position_evaluator() const
+unique_ptr<PositionEvaluator> SearcherFactory::evaluator() const
 {
   return m_evaluator_factory.evaluator();
 }

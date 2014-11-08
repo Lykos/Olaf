@@ -1,11 +1,11 @@
-#include "moveevent.h"
+#include "protocols/event/moveevent.h"
 
-#include "boardstate.h"
+#include "protocols/boardstate.h"
 
 namespace olaf
 {
 
-MoveEvent::MoveEvent(const Move &move):
+MoveEvent::MoveEvent(const Move move):
   m_move(move)
 {}
 
