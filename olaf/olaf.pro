@@ -63,7 +63,11 @@ SOURCES += \
     evaluation/kingsafetyevaluator.cpp \
     status.cpp \
     tablebases/tablebaseprober.cpp \
-    tablebases/egbbprober.cpp
+    tablebases/egbbprober.cpp \
+    search/myclass.cpp \
+    transposition_table/pawntable.cpp \
+    evaluation/pawnevaluator.cpp \
+    evaluation/positionevaluator.cpp
 
 HEADERS += \
     config.h \
@@ -120,7 +124,10 @@ HEADERS += \
     evaluation/kingsafetyevaluator.h \
     status.h \
     tablebases/tablebaseprober.h \
-    tablebases/egbbprober.h
+    tablebases/egbbprober.h \
+    search/myclass.h \
+    transposition_table/pawntable.h \
+    evaluation/pawnevaluator.h
 
 OTHER_FILES += \
     ../resources/move_table.bin

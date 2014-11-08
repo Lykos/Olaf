@@ -51,7 +51,11 @@ void ZobristHash::update(Color color,
   const int color_index = static_cast<int>(color);
   const int index = color_index * PieceSet::c_no_pieces * BitBoard::c_bitboard_size
       + piece_index * BitBoard::c_bitboard_size + position.index();
-  board->m_zobrist_hash ^= RandomNumbers::c_piece_randomness[index];
+  const hash_t value = RandomNumbers::c_piece_randomness[index];
+  board->m_zobrist_hash ^= value
+  if (piece_index == PieceSet::c_pawn_index) {
+    board->m_pawn_zobrist_hash ^= value;
+  }
 }
 
 // static

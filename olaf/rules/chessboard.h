@@ -266,6 +266,11 @@ public:
     return m_zobrist_hash;
   }
 
+  inline ZobristHash::hash_t pawn_zobrist_hash() const
+  {
+    return m_pawn_zobrist_hash;
+  }
+
   /**
    * @brief incremental_score returns the score regarding all the things that are updated incrementally.
    *        It always returns the score for the side whose turn it is;
@@ -313,9 +318,11 @@ private:
 
   ZobristHash::hash_t m_zobrist_hash = 0;
 
-  IncrementalState m_incremental_state;
+  ZobristHash::hash_t m_pawn_zobrist_hash;
 
   std::vector<ZobristHash::hash_t> m_hashes;
+
+  IncrementalState m_incremental_state;
 
   mutable bool m_draw;
 
