@@ -1,4 +1,4 @@
-#include "pawnevaluator"
+#include "olaf/evaluation/pawnevaluator.h"
 
 using namespace std;
 

@@ -4,7 +4,7 @@
 #include <cassert>
 #include <mutex>
 #include <vector>
-#include "olaf/transposition_table/zobristhash.h"
+#include "olaf/transposition_table/hashstate.h"
 
 namespace olaf
 {
@@ -13,7 +13,7 @@ template <typename V>
 class LruCache
 {
 public:
-  typedef ZobristHash::hash_t key_t;
+  typedef HashState::hash_t key_t;
 
   explicit LruCache(long capacity_bytes);
 

@@ -56,7 +56,6 @@ SOURCES += \
     evaluation/incrementalupdater.cpp \
     rules/movechecker.cpp \
     evaluation/resultevaluator.cpp \
-    evaluation/positionevaluator.cpp \
     transposition_table/randomnumbers.cpp \
     rules/magicnumbers.cpp \
     rules/magicmoves.cpp \
@@ -64,10 +63,10 @@ SOURCES += \
     status.cpp \
     tablebases/tablebaseprober.cpp \
     tablebases/egbbprober.cpp \
-    search/myclass.cpp \
     transposition_table/pawntable.cpp \
     evaluation/pawnevaluator.cpp \
-    evaluation/positionevaluator.cpp
+    evaluation/positionevaluator.cpp \
+    transposition_table/hashstate.cpp
 
 HEADERS += \
     config.h \
@@ -125,9 +124,9 @@ HEADERS += \
     status.h \
     tablebases/tablebaseprober.h \
     tablebases/egbbprober.h \
-    search/myclass.h \
     transposition_table/pawntable.h \
-    evaluation/pawnevaluator.h
+    evaluation/pawnevaluator.h \
+    transposition_table/hashstate.h
 
 OTHER_FILES += \
     ../resources/move_table.bin

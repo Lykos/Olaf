@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "olaf/evaluation/incrementalupdater.h"
+#include "olaf/transposition_table/zobristhash.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ std::ostream& operator <<(std::ostream& out, const ChessBoard& board)
   if (board.m_ep_captures) {
     out << "ep: " << board.m_ep_captures.first_position() << endl;
   }
-  out << "Zobrist hash: " << board.m_zobrist_hash;
+  out << board.m_hash_state;
   return out;
 }
 
@@ -57,7 +58,7 @@ bool operator ==(const ChessBoard& left, const ChessBoard& right)
       && left.m_reversible_plies == right.m_reversible_plies
       && left.m_color_boards == right.m_color_boards
       && left.m_incremental_state == right.m_incremental_state
-      && left.m_zobrist_hash == right.m_zobrist_hash
+      && left.m_hash_state == right.m_hash_state
       && left.m_ep_captures == right.m_ep_captures
       && left.m_king_captures == right.m_king_captures;
 }
@@ -94,8 +95,8 @@ ChessBoard::ChessBoard(const array<ColorBoard, c_no_colors>& color_boards,
     }
   }
   IncrementalUpdater::calculate(*this, &m_incremental_state);
-  ZobristHash::calculate(this);
-  m_hashes.push_back(m_zobrist_hash);
+  ZobristHash::calculate(*this, &m_hash_state);
+  m_hashes.push_back(m_hash_state.zobrist_hash);
   assert(piece_invariant(*this));
 }
 
@@ -117,11 +118,11 @@ const ColorBoard& ChessBoard::noturn_board() const
 void ChessBoard::ep_captures(const BitBoard new_ep_captures)
 {
   if (m_ep_captures) {
-    ZobristHash::update_ep(m_ep_captures.first_position(), this);
+    ZobristHash::update_ep(m_ep_captures.first_position(), &m_hash_state);
   }
   m_ep_captures = new_ep_captures;
   if (new_ep_captures) {
-    ZobristHash::update_ep(new_ep_captures.first_position(), this);
+    ZobristHash::update_ep(new_ep_captures.first_position(), &m_hash_state);
   }
 }
 
@@ -129,7 +130,7 @@ void ChessBoard::turn_color(const Color new_color)
 {
   if (new_color != m_turn_color) {
     m_turn_color = new_color;
-    ZobristHash::update_turn_color(this);
+    ZobristHash::update_turn_color(&m_hash_state);
   }
 }
 
@@ -137,11 +138,11 @@ void ChessBoard::next_turn()
 {
   m_draw_valid = false;
   m_turn_color = other_color(m_turn_color);
-  ZobristHash::update_turn_color(this);
+  ZobristHash::update_turn_color(&m_hash_state);
   if (m_turn_color == Color::White) {
     ++m_turn_number;
   }
-  m_hashes.push_back(m_zobrist_hash);
+  m_hashes.push_back(m_hash_state.zobrist_hash);
 }
 
 void ChessBoard::previous_turn()
@@ -150,7 +151,7 @@ void ChessBoard::previous_turn()
   if (m_turn_color == Color::White) {
     --m_turn_number;
   }
-  ZobristHash::update_turn_color(this);
+  ZobristHash::update_turn_color(&m_hash_state);
   m_turn_color = other_color(m_turn_color);
   m_draw_valid = false;
 }
@@ -163,7 +164,7 @@ void ChessBoard::calculate_draw() const
   m_draw = m_reversible_plies >= c_draw_reversible_plies
       || (friends() == turn_board().piece_board(PieceSet::c_king_index)
           && opponents() == noturn_board().piece_board(PieceSet::c_king_index))
-      || count(m_hashes.begin(), m_hashes.end(), m_zobrist_hash) >= c_draw_repetitions;
+      || count(m_hashes.begin(), m_hashes.end(), m_hash_state.zobrist_hash) >= c_draw_repetitions;
 }
 
 void ChessBoard::add_piece(const Color color,
@@ -175,7 +176,7 @@ void ChessBoard::add_piece(const Color color,
   m_color_boards[color_index].piece_board(piece_index).set(position, true);
   m_occupied[color_index].set(position, true);
   m_pieces[position.index()] = piece_index;
-  ZobristHash::update(color, piece_index, position, this);
+  ZobristHash::update(color, piece_index, position, &m_hash_state);
   IncrementalUpdater::add_piece(color, piece_index, position, &m_incremental_state);
 }
 
@@ -188,7 +189,7 @@ void ChessBoard::remove_piece(const Color color,
   m_pieces[position.index()] = Piece::c_no_piece;
   m_occupied[color_index].set(position, false);
   m_color_boards[color_index].piece_board(piece_index).set(position, false);
-  ZobristHash::update(color, piece_index, position, this);
+  ZobristHash::update(color, piece_index, position, &m_hash_state);
   IncrementalUpdater::remove_piece(color, piece_index, position, &m_incremental_state);
 }
 
@@ -197,7 +198,7 @@ void ChessBoard::can_castle_k(const Color color, const bool new_can_castle_k)
   ColorBoard& color_board = m_color_boards[static_cast<int>(color)];
   if (color_board.can_castle_k() != new_can_castle_k) {
     color_board.can_castle_k(new_can_castle_k);
-    ZobristHash::update_castle_k(color, this);
+    ZobristHash::update_castle_k(color, &m_hash_state);
   }
 }
 
@@ -206,7 +207,7 @@ void ChessBoard::can_castle_q(const Color color, const bool new_can_castle_q)
   ColorBoard& color_board = m_color_boards[static_cast<int>(color)];
   if (color_board.can_castle_q() != new_can_castle_q) {
     color_board.can_castle_q(new_can_castle_q);
-    ZobristHash::update_castle_q(color, this);
+    ZobristHash::update_castle_q(color, &m_hash_state);
   }
 }
 

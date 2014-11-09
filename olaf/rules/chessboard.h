@@ -11,7 +11,7 @@
 #include "olaf/rules/position.h"
 #include "olaf/rules/bitboard.h"
 #include "olaf/rules/piece.h"
-#include "olaf/transposition_table/zobristhash.h"
+#include "olaf/transposition_table/hashstate.h"
 #include "olaf/evaluation/incrementalstate.h"
 
 namespace olaf
@@ -261,14 +261,24 @@ public:
     king_captures(BitBoard(0));
   }
 
-  inline ZobristHash::hash_t zobrist_hash() const
+  inline HashState::hash_t zobrist_hash() const
   {
-    return m_zobrist_hash;
+    return m_hash_state.zobrist_hash;
   }
 
-  inline ZobristHash::hash_t pawn_zobrist_hash() const
+  inline HashState::hash_t pawn_zobrist_hash() const
   {
-    return m_pawn_zobrist_hash;
+    return m_hash_state.pawn_zobrist_hash;
+  }
+
+  inline const HashState& hash_state() const
+  {
+    return m_hash_state;
+  }
+
+  inline HashState& hash_state()
+  {
+    return m_hash_state;
   }
 
   /**
@@ -316,11 +326,9 @@ private:
 
   BitBoard m_king_captures;
 
-  ZobristHash::hash_t m_zobrist_hash = 0;
+  HashState m_hash_state;
 
-  ZobristHash::hash_t m_pawn_zobrist_hash;
-
-  std::vector<ZobristHash::hash_t> m_hashes;
+  std::vector<HashState::hash_t> m_hashes;
 
   IncrementalState m_incremental_state;
 

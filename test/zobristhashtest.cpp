@@ -35,23 +35,23 @@ void ZobristHashTest::test_calculate()
 {
   QFETCH(ChessBoard, board);
 
-  const ZobristHash::hash_t hash = board.zobrist_hash();
-  ZobristHash::calculate(&board);
-  QASSERT_THAT(board.zobrist_hash(), Eq(hash));
-  set<ZobristHash::hash_t> hashes{hash};
+  const HashState& initial_hash_state = board.hash_state();
+  ZobristHash::calculate(board, &(board.hash_state()));
+  QASSERT_THAT(board.hash_state(), Eq(initial_hash_state));
+  set<ZobristHash::hash_t> hashes{initial_hash_state.zobrist_hash};
   for (Move& move : m_generator->generate_valid_moves(board)) {
     UndoInfo undo_info;
     move.execute(&board, &undo_info);
-    const ZobristHash::hash_t move_hash = board.zobrist_hash();
-    QVERIFY(!hashes.count(move_hash));
-    hashes.insert(move_hash);
-    ZobristHash::calculate(&board);
-    QASSERT_THAT(board.zobrist_hash(), Eq(move_hash));
+    const HashState& move_hash_state = board.hash_state();
+    QVERIFY(!hashes.count(move_hash_state.zobrist_hash));
+    hashes.insert(move_hash_state.zobrist_hash);
+    ZobristHash::calculate(board, &(board.hash_state()));
+    QASSERT_THAT(board.hash_state(), Eq(move_hash_state));
     move.undo(undo_info, &board);
-    const ZobristHash::hash_t undo_hash = board.zobrist_hash();
-    ZobristHash::calculate(&board);
-    QASSERT_THAT(board.zobrist_hash(), Eq(undo_hash));
-    QASSERT_THAT(undo_hash, Eq(hash));
+    const HashState& undo_hash_state = board.hash_state();
+    ZobristHash::calculate(board, &(board.hash_state()));
+    QASSERT_THAT(board.hash_state(), Eq(undo_hash_state));
+    QASSERT_THAT(undo_hash_state, Eq(initial_hash_state));
   }
 }
 

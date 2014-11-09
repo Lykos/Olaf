@@ -6,6 +6,7 @@
 #include "olaf/rules/pieceset.h"
 #include "olaf/rules/undoinfo.h"
 #include "test/testutil.h"
+#include "olaf/transposition_table/hashstate.h"
 
 using namespace testing;
 
@@ -60,22 +61,22 @@ void ChessBoardTest::test_finished_data()
     ChessBoard repetition_board = parse_fen("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w - -");
     UndoInfo dummy;
 #ifndef NDEBUG
-    const ZobristHash::hash_t hash0 = repetition_board.zobrist_hash();
+    const HashState::hash_t hash0 = repetition_board.zobrist_hash();
 #endif
     const Move move_white_1 = MoveChecker::complete(Position("a1"), Position("b1"), repetition_board);
     move_white_1.execute(&repetition_board, &dummy);
 #ifndef NDEBUG
-    const ZobristHash::hash_t hash1 = repetition_board.zobrist_hash();
+    const HashState::hash_t hash1 = repetition_board.zobrist_hash();
 #endif
     const Move move_black_1 = MoveChecker::complete(Position("a8"), Position("b8"), repetition_board);
     move_black_1.execute(&repetition_board, &dummy);
 #ifndef NDEBUG
-    const ZobristHash::hash_t hash2 = repetition_board.zobrist_hash();
+    const HashState::hash_t hash2 = repetition_board.zobrist_hash();
 #endif
     const Move move_white_2 = MoveChecker::complete(Position("b1"), Position("a1"), repetition_board);
     move_white_2.execute(&repetition_board, &dummy);
 #ifndef NDEBUG
-    const ZobristHash::hash_t hash3 = repetition_board.zobrist_hash();
+    const HashState::hash_t hash3 = repetition_board.zobrist_hash();
 #endif
     const Move move_black_2 = MoveChecker::complete(Position("b8"), Position("a8"), repetition_board);
     move_black_2.execute(&repetition_board, &dummy);
@@ -90,7 +91,6 @@ void ChessBoardTest::test_finished_data()
     assert(hash0 == repetition_board.zobrist_hash());
     move_white_1.execute(&repetition_board, &dummy);
     assert(hash1 == repetition_board.zobrist_hash());
-    repetition_board.draw();
     QTest::newRow("repetition") << repetition_board << false << false << true;
   }
 }
