@@ -1,7 +1,5 @@
 #include "generation.h"
 
-#include "olaf/rules/pieceset.h"
-
 #include <array>
 #include <cassert>
 #include <algorithm>
@@ -15,7 +13,6 @@
 #include <gflags/gflags.h>
 
 #include "olaf/rules/bitboard.h"
-#include "olaf/rules/chessboard.h"
 
 DEFINE_string(output_file, "", "If this is non-empty, the output will be written here.");
 
