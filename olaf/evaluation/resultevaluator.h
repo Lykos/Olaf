@@ -17,7 +17,7 @@ class ChessBoard;
 class ResultEvaluator : public PositionEvaluator
 {
 public:
-  ResultEvaluator(std::unique_ptr<PositionEvaluator> evaluator);
+  explicit ResultEvaluator(std::unique_ptr<PositionEvaluator> evaluator);
 
   score_t evaluate(SearchState* state, SearchContext* context) override;
 

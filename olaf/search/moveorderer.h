@@ -35,7 +35,7 @@ public:
 
   MoveOrderer();
 
-  void order_moves(const SearchContext& context,
+  bool order_moves(const SearchContext& context,
                    const SearchState& state,
                    std::vector<Move>* moves);
 

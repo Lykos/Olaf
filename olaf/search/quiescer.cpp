@@ -41,7 +41,8 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
     state->alpha = stand_pat;
   }
   result.score = state->alpha;
-  vector<Move> moves = generate_ordered_moves(*context, *state);
+  vector<Move> moves;
+  generate_ordered_moves(*context, *state, &moves);
   if (moves.empty()) {
     return recurse_sub_searcher(*state, context);
   }

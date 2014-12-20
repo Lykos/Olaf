@@ -17,6 +17,8 @@ public:
 
   std::unique_ptr<PositionEvaluator> evaluator() const;
 
+  std::unique_ptr<PositionEvaluator> tablebase_evaluator() const;
+
   std::unique_ptr<PositionEvaluator> incremental_evaluator() const;
 
 private:

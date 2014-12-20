@@ -137,10 +137,11 @@ MoveOrderer::MoveOrderer(const Config& config):
   m_use_killers(config.move_ordering().use_killers())
 {}
 
-void MoveOrderer::order_moves(const SearchContext& context,
+bool MoveOrderer::order_moves(const SearchContext& context,
                               const SearchState& state,
                               vector<Move>* moves)
 {
+  bool hash_move_found = false;
   unsigned int start = 0;
   if (m_use_hash_move) {
     const TranspositionTableEntry* const entry = context.get();
@@ -149,6 +150,7 @@ void MoveOrderer::order_moves(const SearchContext& context,
       for (Move& move : *moves) {
         if (move == entry->best_move) {
           swap(move, moves->front());
+          hash_move_found = true;
           break;
         }
       }
@@ -188,6 +190,7 @@ void MoveOrderer::order_moves(const SearchContext& context,
       swap((*moves)[i], (*moves)[max_index]);
     }
   }
+  return hash_move_found;
 }
 
 } // namespace olaf

@@ -2,6 +2,7 @@
 
 #include "olaf/evaluation/incrementalevaluator.h"
 #include "olaf/evaluation/resultevaluator.h"
+#include "olaf/evaluation/tablebaseevaluator.h"
 
 using namespace std;
 
@@ -14,7 +15,13 @@ EvaluatorFactory::EvaluatorFactory(const Config::Evaluation* const config):
 
 unique_ptr<PositionEvaluator> EvaluatorFactory::evaluator() const
 {
-  unique_ptr<PositionEvaluator> evaluator(new ResultEvaluator(incremental_evaluator()));
+  unique_ptr<PositionEvaluator> evaluator(new ResultEvaluator(tablebase_evaluator()));
+  return evaluator;
+}
+
+unique_ptr<PositionEvaluator> EvaluatorFactory::tablebase_evaluator() const
+{
+  unique_ptr<PositionEvaluator> evaluator(new TablebaseEvaluator(incremental_evaluator()));
   return evaluator;
 }
 

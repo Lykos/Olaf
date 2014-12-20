@@ -74,7 +74,10 @@ public:
                             SearchContext* context);
 
 protected:
-  std::vector<Move> generate_ordered_moves(const SearchContext& context, const SearchState& state);
+  /**
+   * @brief generate_ordered_moves generates moves and orders them. It returns true if the first move is very likely the best.
+   */
+  bool generate_ordered_moves(const SearchContext& context, const SearchState& state, std::vector<Move>* moves);
 
   /**
    * @brief The ResultReaction enum tells the searcher what to do after update_result has returned.

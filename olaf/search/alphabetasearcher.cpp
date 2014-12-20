@@ -38,14 +38,16 @@ AlphaBetaSearcher::AlphaBetaSearcher(std::unique_ptr<MoveGenerator> generator,
 AlphaBetaSearcher::~AlphaBetaSearcher()
 {}
 
-vector<Move> AlphaBetaSearcher::generate_ordered_moves(const SearchContext& context, const SearchState& state)
+bool AlphaBetaSearcher::generate_ordered_moves(
+    const SearchContext& context,
+    const SearchState& state,
+    vector<Move>* const moves)
 {
-  vector<Move> moves = m_generator->generate_moves(context.board);
-  if (moves.empty()) {
-    return moves;
+  *moves = m_generator->generate_moves(context.board);
+  if (moves->empty()) {
+    return false;
   }
-  m_orderer.order_moves(context, state, &moves);
-  return moves;
+  return m_orderer.order_moves(context, state, moves);
 }
 
 SearchResult AlphaBetaSearcher::search(SearchContext* const context)
@@ -89,6 +91,7 @@ const int c_stop_check_nodes = 10000;
 SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_state,
                                                    SearchContext* const context)
 {
+  ++context->nodes;
   const depth_t recurse_depth = current_state.depth - 1;
   if (context->nodes % c_stop_check_nodes == 0 && context->forced_stopper->should_stop()) {
     return SearchResult::invalid();
@@ -96,18 +99,22 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
              || (m_sub_searcher != nullptr && context->board.finished())) {
     return recurse_sub_searcher(current_state, context);
   }
+  SearchState recurse_state{static_cast<score_t>(-current_state.beta),
+                            static_cast<score_t>(-current_state.alpha),
+                            recurse_depth};
   score_t endgame_score;
-  if (recurse_depth < context->search_depth && context->probe(&endgame_score)) {
+  if (context->probe(&endgame_score)
+      && (endgame_score >= recurse_state.beta
+          || endgame_score <= recurse_state.alpha)) {
     SearchResult result;
     result.score = endgame_score;
-    result.terminal = true;
     return result;
   }
   const TranspositionTableEntry* const entry = context->get();
   if (entry != nullptr && (entry->depth >= current_state.depth || entry->terminal)) {
     if (entry->node_type == NodeType::PvNode
         || entry->terminal
-        || (entry->node_type == NodeType::AllNode && entry->score < current_state.alpha)
+        || (entry->node_type == NodeType::AllNode && entry->score <= current_state.alpha)
         || (entry->node_type == NodeType::CutNode && entry->score >= current_state.beta)) {
       SearchResult result;
       result.score = entry->score;
@@ -118,14 +125,11 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
       }
     }
   }
-  SearchState state{static_cast<score_t>(-current_state.beta),
-                    static_cast<score_t>(-current_state.alpha),
-                    recurse_depth};
-  SearchResult result = alpha_beta(&state, context);
+  SearchResult result = alpha_beta(&recurse_state, context);
   const score_t c_safety_margin = 10000;
   // Stalemate. Not in check, but all moves lead to an immediate loss of the king.
   if (abs(result.score) >= (PositionEvaluator::c_win_score - c_safety_margin)
-      && result.depth == context->search_depth - state.depth + 2 && !is_checked(&(context->board))) {
+      && result.depth == context->search_depth - recurse_depth + 2 && !is_checked(&(context->board))) {
     result.score = PositionEvaluator::c_draw_score;
     result.terminal = true;
     result.main_variation.clear();
