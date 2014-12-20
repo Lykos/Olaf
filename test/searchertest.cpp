@@ -30,7 +30,7 @@ void SearcherTest::test_mate()
   QVERIFY(result.valid);
   QASSERT_THAT(result.depth, Eq(2));
   QVERIFY(result.terminal);
-  QASSERT_THAT(result.score, Eq(-99998));
+  QASSERT_THAT(result.score, Eq(-24998));
 }
 
 void SearcherTest::test_mate_in_one()
@@ -40,7 +40,7 @@ void SearcherTest::test_mate_in_one()
   QVERIFY(result.valid);
   QASSERT_THAT(result.depth, Eq(3));
   QVERIFY(result.terminal);
-  QASSERT_THAT(result.score, Eq(99997));
+  QASSERT_THAT(result.score, Eq(24997));
   QASSERT_THAT(result.main_variation, SizeIs(Gt(0)));
 }
 
