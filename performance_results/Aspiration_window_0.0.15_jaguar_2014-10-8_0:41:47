@@ -1,0 +1,311 @@
+Aspiration_window 0.0.15 jaguar 2014-10-8 0:41:47:
+  Perft:
+    test_perft(initial):
+      time: 1867 ms
+    test_perft(position2):
+      time: 72902 ms
+    test_perft(position3):
+      time: 247 ms
+    test_perft(position4):
+      time: 6277 ms
+  total time: 81293 ms
+  Bbkepd:
+    test_epd(BK.01):
+      score: 1
+    test_epd(BK.01):
+      score: 0
+    test_epd(BK.02):
+      score: 0
+    test_epd(BK.03):
+      score: 1
+    test_epd(BK.03):
+      score: 0
+    test_epd(BK.04):
+      score: 0
+    test_epd(BK.05):
+      score: 0
+    test_epd(BK.06):
+      score: 0
+    test_epd(BK.07):
+      score: 1
+    test_epd(BK.07):
+      score: 0
+    test_epd(BK.08):
+      score: 1
+    test_epd(BK.08):
+      score: 0
+    test_epd(BK.09):
+      score: 0
+    test_epd(BK.10):
+      score: 0
+    test_epd(BK.11):
+      score: 0
+    test_epd(BK.12):
+      score: 1
+    test_epd(BK.12):
+      score: 0
+    test_epd(BK.13):
+      score: 0
+    test_epd(BK.14):
+      score: 1
+    test_epd(BK.14):
+      score: 0
+    test_epd(BK.15):
+      score: 1
+    test_epd(BK.15):
+      score: 0
+    test_epd(BK.16):
+      score: 0
+    test_epd(BK.17):
+      score: 0
+    test_epd(BK.18):
+      score: 0
+    test_epd(BK.19):
+      score: 1
+    test_epd(BK.19):
+      score: 0
+    test_epd(BK.20):
+      score: 0
+    test_epd(BK.21):
+      score: 1
+    test_epd(BK.21):
+      score: 0
+    test_epd(BK.22):
+      score: 1
+    test_epd(BK.22):
+      score: 0
+    test_epd(BK.23):
+      score: 0
+    test_epd(BK.24):
+      score: 0
+  total score: 10
+  Llctepd:
+    test_epd(LCTII.POS.01):
+      score: 1
+    test_epd(LCTII.POS.01):
+      score: 0
+    test_epd(LCTII.POS.02):
+      score: 1
+    test_epd(LCTII.POS.02):
+      score: 0
+    test_epd(LCTII.POS.03):
+      score: 0
+    test_epd(LCTII.POS.04):
+      score: 0
+    test_epd(LCTII.POS.05):
+      score: 0
+    test_epd(LCTII.POS.06):
+      score: 0
+    test_epd(LCTII.POS.07):
+      score: 0
+    test_epd(LCTII.POS.08):
+      score: 0
+    test_epd(LCTII.POS.09):
+      score: 0
+    test_epd(LCTII.POS.10):
+      score: 0
+    test_epd(LCTII.POS.11):
+      score: 0
+    test_epd(LCTII.POS.12):
+      score: 0
+    test_epd(LCTII.POS.13):
+      score: 0
+    test_epd(LCTII.POS.14):
+      score: 0
+    test_epd(LCTII.CMB.01):
+      score: 0
+    test_epd(LCTII.CMB.02):
+      score: 0
+    test_epd(LCTII.CMB.03):
+      score: 0
+    test_epd(LCTII.CMB.04):
+      score: 0
+    test_epd(LCTII.CMB.05):
+      score: 0
+    test_epd(LCTII.CMB.06):
+      score: 0
+    test_epd(LCTII.CMB.07):
+      score: 0
+    test_epd(LCTII.CMB.08):
+      score: 0
+    test_epd(LCTII.CMB.09):
+      score: 0
+    test_epd(LCTII.CMB.10):
+      score: 0
+    test_epd(LCTII.CMB.11):
+      score: 0
+    test_epd(LCTII.CMB.12):
+      score: 0
+    test_epd(LCTII.FIN.01):
+      score: 0
+    test_epd(LCTII.FIN.02):
+      score: 0
+    test_epd(LCTII.FIN.03):
+      score: 0
+    test_epd(LCTII.FIN.04):
+      score: 0
+    test_epd(LCTII.FIN.05):
+      score: 0
+    test_epd(LCTII.FIN.06):
+      score: 0
+    test_epd(LCTII.FIN.07):
+      score: 0
+    test_epd(LCTII.FIN.08):
+      score: 0
+    test_epd(LCTII.FIN.09):
+      score: 0
+  total score: 2
+  Cccrepd:
+    test_epd(CCR01):
+      score: 0
+    test_epd(CCR02):
+      score: 1
+    test_epd(CCR02):
+      score: 0
+    test_epd(CCR03):
+      score: 0
+    test_epd(CCR04):
+      score: 0
+    test_epd(CCR05):
+      score: 0
+    test_epd(CCR06):
+      score: 1
+    test_epd(CCR06):
+      score: 0
+    test_epd(CCR07):
+      score: 0
+    test_epd(CCR08):
+      score: 0
+    test_epd(CCR09):
+      score: 0
+    test_epd(CCR10):
+      score: 0
+    test_epd(CCR11):
+      score: 0
+    test_epd(CCR12):
+      score: 1
+    test_epd(CCR12):
+      score: 0
+    test_epd(CCR13):
+      score: 1
+    test_epd(CCR13):
+      score: 0
+    test_epd(CCR14):
+      score: 1
+    test_epd(CCR14):
+      score: 0
+    test_epd(CCR15):
+      score: 1
+    test_epd(CCR15):
+      score: 0
+    test_epd(CCR16):
+      score: 0
+    test_epd(CCR17):
+      score: 1
+    test_epd(CCR17):
+      score: 0
+    test_epd(CCR18):
+      score: 0
+    test_epd(CCR19):
+      score: 1
+    test_epd(CCR19):
+      score: 0
+    test_epd(CCR20):
+      score: 1
+    test_epd(CCR20):
+      score: 0
+    test_epd(CCR21):
+      score: 0
+    test_epd(CCR22):
+      score: 0
+    test_epd(CCR23):
+      score: 0
+    test_epd(CCR24):
+      score: 1
+    test_epd(CCR24):
+      score: 0
+    test_epd(CCR25):
+      score: 1
+    test_epd(CCR25):
+      score: 0
+  total score: 11
+  Kkaufmanepd:
+    test_epd(position 01):
+      score: 0
+    test_epd(position 02):
+      score: 0
+    test_epd(position 03):
+      score: 0
+    test_epd(position 04):
+      score: 1
+    test_epd(position 04):
+      score: 0
+    test_epd(position 05):
+      score: 1
+    test_epd(position 05):
+      score: 0
+    test_epd(position 06):
+      score: 1
+    test_epd(position 06):
+      score: 0
+    test_epd(position 07):
+      score: 1
+    test_epd(position 07):
+      score: 0
+    test_epd(position 08):
+      score: 0
+    test_epd(position 09):
+      score: 1
+    test_epd(position 09):
+      score: 0
+    test_epd(position 10):
+      score: 1
+    test_epd(position 10):
+      score: 0
+    test_epd(position 11):
+      score: 1
+    test_epd(position 11):
+      score: 0
+    test_epd(position 12):
+      score: 0
+    test_epd(position 13):
+      score: 1
+    test_epd(position 13):
+      score: 0
+    test_epd(position 14):
+      score: 1
+    test_epd(position 14):
+      score: 0
+    test_epd(position 15):
+      score: 0
+    test_epd(position 16):
+      score: 0
+    test_epd(position 17):
+      score: 1
+    test_epd(position 17):
+      score: 0
+    test_epd(position 18):
+      score: 1
+    test_epd(position 18):
+      score: 0
+    test_epd(position 19):
+      score: 1
+    test_epd(position 19):
+      score: 0
+    test_epd(position 20):
+      score: 1
+    test_epd(position 20):
+      score: 0
+    test_epd(position 21):
+      score: 0
+    test_epd(position 22):
+      score: 0
+    test_epd(position 23):
+      score: 0
+    test_epd(position 24):
+      score: 0
+    test_epd(position 25):
+      score: 0
+  total score: 13
+total time: 81293 ms
+total score: 36
