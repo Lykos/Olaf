@@ -9,7 +9,7 @@ namespace olaf
 class PawnEvaluator : public PositionEvaluator
 {
 public:
-  score_t evaluate(const ChessBoard& board);
+  virtual score_t evaluate(SearchState* state, SearchContext* context) override;
 };
 
 } // namespace olaf

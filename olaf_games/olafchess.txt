@@ -3011,3 +3011,4 @@ Tue Dec 30 00:17:15 2014: olafchess logged out.
 Tue Dec 30 00:21:31 2014: olafchess logged in.
 Tue Dec 30 00:21:32 2014: HarryJr 1443 vs olafchess 1944 rated Blitz 2 12 started.
 Tue Dec 30 00:22:00 2014: Game aborted by HarryJr at move 1 (*).
+Tue Dec 30 00:22:30 2014: verdugo21 1970 vs olafchess 1944 rated Blitz 5 0 started.

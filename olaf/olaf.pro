@@ -67,7 +67,8 @@ SOURCES += \
     transposition_table/pawntable.cpp \
     evaluation/pawnevaluator.cpp \
     evaluation/positionevaluator.cpp \
-    transposition_table/hashstate.cpp
+    transposition_table/hashstate.cpp \
+    evaluation/compositeevaluator.cpp
 
 HEADERS += \
     config.h \
@@ -128,7 +129,8 @@ HEADERS += \
     evaluation/tablebaseevaluator.h \
     transposition_table/pawntable.h \
     evaluation/pawnevaluator.h \
-    transposition_table/hashstate.h
+    transposition_table/hashstate.h \
+    evaluation/compositeevaluator.h
 
 OTHER_FILES += \
     ../resources/move_table.bin

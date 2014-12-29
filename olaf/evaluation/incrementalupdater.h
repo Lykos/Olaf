@@ -19,6 +19,10 @@ class IncrementalUpdater
 public:
   typedef SearchResult::score_t score_t;
 
+  static score_t weighted_score(score_t middlegame_score,
+                                score_t endgame_score,
+                                score_t total_material_score);
+
   static void calculate(const ChessBoard& board, IncrementalState* state);
 
   static std::array<score_t, PieceSet::c_no_pieces> piece_values();

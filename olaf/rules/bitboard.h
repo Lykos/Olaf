@@ -1,6 +1,7 @@
 #ifndef BITBOARD_H
 #define BITBOARD_H
 
+#include <array>
 #include <cstdint>
 #include <climits>
 #include <ostream>
@@ -58,7 +59,6 @@ public:
 
   constexpr operator bitboard_t() const { return m_bits; }
 
-
   static constexpr Position reverse_index(const uint_fast8_t index)
   {
     return Position(index / Position::c_column_size, index % Position::c_column_size);
@@ -108,6 +108,46 @@ public:
 
 private:
   bitboard_t m_bits;
+};
+
+const BitBoard c_a_column(0x0101010101010101);
+const BitBoard c_b_column(0x0202020202020202);
+const BitBoard c_c_column(0x0404040404040404);
+const BitBoard c_d_column(0x0808080808080808);
+const BitBoard c_e_column(0x1010101010101010);
+const BitBoard c_f_column(0x2020202020202020);
+const BitBoard c_g_column(0x4040404040404040);
+const BitBoard c_h_column(0x8080808080808080);
+
+const std::array<BitBoard, Position::c_column_size> c_columns = {
+  c_a_column,
+  c_b_column,
+  c_c_column,
+  c_d_column,
+  c_e_column,
+  c_f_column,
+  c_g_column,
+  c_h_column
+};
+
+const BitBoard c_1_row(0xff);
+const BitBoard c_2_row(0xff00);
+const BitBoard c_3_row(0xff0000);
+const BitBoard c_4_row(0xff000000);
+const BitBoard c_5_row(0xff00000000);
+const BitBoard c_6_row(0xff0000000000);
+const BitBoard c_7_row(0xff000000000000);
+const BitBoard c_8_row(0xff00000000000000);
+
+const std::array<BitBoard, Position::c_row_size> c_rows = {
+  c_1_row,
+  c_2_row,
+  c_3_row,
+  c_4_row,
+  c_5_row,
+  c_6_row,
+  c_7_row,
+  c_8_row
 };
 
 constexpr BitBoard operator |(BitBoard a, BitBoard b)
