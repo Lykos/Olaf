@@ -2942,3 +2942,72 @@ Mon Dec 29 18:24:48 2014: Heian resigns (0-1).
 Mon Dec 29 18:24:52 2014: gornostay 1976 vs olafchess 2096 rated Blitz 5 0 started.
 Mon Dec 29 18:30:27 2014: gornostay resigns (1-0).
 Mon Dec 29 18:39:27 2014: Gunslinger45 1429 vs olafchess 2107 rated Blitz 2 12 started.
+Mon Dec 29 19:01:28 2014: olafchess resigns (1-0).
+Mon Dec 29 19:03:35 2014: maxmuld 1698 vs olafchess 2076 rated Blitz 5 0 started.
+Mon Dec 29 19:11:48 2014: maxmuld resigns (1-0).
+Mon Dec 29 19:13:27 2014: nightly 1581 vs olafchess 2079 rated Blitz 2 12 started.
+Mon Dec 29 19:22:55 2014: nightly resigns (0-1).
+Mon Dec 29 19:28:27 2014: damjan04 1493 vs olafchess 2081 rated Blitz 5 0 started.
+Mon Dec 29 19:34:21 2014: damjan04 checkmated (1-0).
+Mon Dec 29 19:35:27 2014: bobbyforever 1589 vs olafchess 2082 rated Blitz 2 12 started.
+Mon Dec 29 19:36:04 2014: bobbyforever resigns (0-1).
+Mon Dec 29 19:36:42 2014: maxmuld 1746 vs olafchess 2082 rated Blitz 5 0 started.
+Mon Dec 29 19:38:00 2014: Game aborted when maxmuld disconnected (*).
+Mon Dec 29 19:40:54 2014: bobbyforever 1572 vs olafchess 2082 rated Blitz 2 12 started.
+Mon Dec 29 19:44:56 2014: bobbyforever resigns (0-1).
+Mon Dec 29 19:56:28 2014: Lorets 1624 vs olafchess 2084 rated Blitz 2 12 started.
+Mon Dec 29 20:07:17 2014: Lorets resigns (1-0).
+Mon Dec 29 20:08:53 2014: Drooler 1801 vs olafchess 2086 rated Blitz 2 12 started.
+Mon Dec 29 20:25:25 2014: Drooler resigns (1-0).
+Mon Dec 29 20:25:30 2014: Drooler 1796 vs olafchess 2091 rated Blitz 2 12 started.
+Mon Dec 29 21:04:50 2014: olafchess checkmated (1-0).
+Mon Dec 29 21:05:03 2014: nightly 1594 vs olafchess 2064 rated Blitz 2 12 started.
+Mon Dec 29 21:20:21 2014: nightly resigns (0-1).
+Mon Dec 29 21:23:28 2014: sceptic 1449 vs olafchess 2066 rated Blitz 5 0 started.
+Mon Dec 29 21:29:28 2014: sceptic resigns (1-0).
+Mon Dec 29 21:29:29 2014: Dagnabit 1591 vs olafchess 2067 rated Blitz 2 12 started.
+Mon Dec 29 21:42:10 2014: Dagnabit resigns (1-0).
+Mon Dec 29 21:43:28 2014: Dagnabit 1589 vs olafchess 2069 rated Blitz 2 12 started.
+Mon Dec 29 22:00:51 2014: Dagnabit checkmated (0-1).
+Mon Dec 29 22:01:05 2014: Dagnabit 1587 vs olafchess 2071 rated Blitz 2 12 started.
+Mon Dec 29 22:13:48 2014: Dagnabit forfeits on time (1-0).
+Mon Dec 29 22:13:59 2014: Zhivago 1759 vs olafchess 2073 rated Blitz 5 0 started.
+Mon Dec 29 22:16:32 2014: olafchess checkmated (1-0).
+Mon Dec 29 22:16:34 2014: Zhivago 1786 vs olafchess 2046 rated Blitz 5 0 started.
+Mon Dec 29 22:23:26 2014: olafchess checkmated (0-1).
+Mon Dec 29 22:23:28 2014: Zhivago 1812 vs olafchess 2020 rated Blitz 5 0 started.
+Mon Dec 29 22:31:01 2014: olafchess checkmated (1-0).
+Mon Dec 29 22:31:07 2014: Zhivago 1837 vs olafchess 1995 rated Blitz 5 0 started.
+Mon Dec 29 22:37:32 2014: Zhivago resigns (1-0).
+Mon Dec 29 22:37:36 2014: Zhivago 1828 vs olafchess 2004 rated Blitz 5 0 started.
+Mon Dec 29 22:40:00 2014: olafchess checkmated (1-0).
+Mon Dec 29 22:40:02 2014: Zhivago 1851 vs olafchess 1981 rated Blitz 5 0 started.
+Mon Dec 29 22:46:03 2014: Zhivago checkmated (1-0).
+Mon Dec 29 22:46:04 2014: Zhivago 1841 vs olafchess 1991 rated Blitz 5 0 started.
+Mon Dec 29 22:48:29 2014: olafchess checkmated (1-0).
+Mon Dec 29 22:48:31 2014: Zhivago 1864 vs olafchess 1968 rated Blitz 5 0 started.
+Mon Dec 29 22:54:48 2014: olafchess checkmated (0-1).
+Mon Dec 29 22:57:55 2014: Katze 1646 vs olafchess 1947 rated Blitz 5 0 started.
+Mon Dec 29 23:06:01 2014: Katze resigns (0-1).
+Mon Dec 29 23:06:20 2014: Katze 1641 vs olafchess 1952 rated Blitz 5 0 started.
+Mon Dec 29 23:13:42 2014: Katze resigns (1-0).
+Mon Dec 29 23:13:50 2014: Katze 1636 vs olafchess 1957 rated Blitz 5 0 started.
+Mon Dec 29 23:17:04 2014: Katze resigns (0-1).
+Mon Dec 29 23:17:28 2014: StillAlive 1687 vs olafchess 1961 rated Blitz 5 0 started.
+Mon Dec 29 23:26:32 2014: StillAlive checkmated (1-0).
+Mon Dec 29 23:26:34 2014: StillAlive 1682 vs olafchess 1966 rated Blitz 5 0 started.
+Mon Dec 29 23:30:55 2014: StillAlive resigns (0-1).
+Mon Dec 29 23:31:59 2014: Dagnabit 1598 vs olafchess 1971 rated Blitz 2 12 started.
+Mon Dec 29 23:55:54 2014: Dagnabit checkmated (1-0).
+Mon Dec 29 23:55:56 2014: Zhivago 1761 vs olafchess 1974 rated Blitz 5 0 started.
+Mon Dec 29 23:58:30 2014: olafchess checkmated (1-0).
+Mon Dec 29 23:58:33 2014: Zhivago 1786 vs olafchess 1949 rated Blitz 5 0 started.
+Tue Dec 30 00:08:19 2014: Zhivago forfeits on time (1-0).
+Tue Dec 30 00:08:28 2014: Zhivago 1777 vs olafchess 1958 rated Blitz 5 0 started.
+Tue Dec 30 00:10:54 2014: olafchess checkmated (1-0).
+Tue Dec 30 00:10:56 2014: Zhivago 1801 vs olafchess 1934 rated Blitz 5 0 started.
+Tue Dec 30 00:17:13 2014: Zhivago resigns (1-0).
+Tue Dec 30 00:17:15 2014: olafchess logged out.
+Tue Dec 30 00:21:31 2014: olafchess logged in.
+Tue Dec 30 00:21:32 2014: HarryJr 1443 vs olafchess 1944 rated Blitz 2 12 started.
+Tue Dec 30 00:22:00 2014: Game aborted by HarryJr at move 1 (*).
