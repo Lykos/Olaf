@@ -62,9 +62,9 @@ void XBoardWriter::result(Result result, const string& comment)
 {
   unique_lock<mutex> lock(m_mutex);
   switch (result) {
-  case Win: *m_out << "1-0";
-  case Lose: *m_out << "0-1";
-  case Draw: *m_out << "1/2-1/2";
+  case Result::Win: *m_out << "1-0";
+  case Result::Lose: *m_out << "0-1";
+  case Result::Draw: *m_out << "1/2-1/2";
   }
   *m_out << " {" << comment << "}" << endl;
 }

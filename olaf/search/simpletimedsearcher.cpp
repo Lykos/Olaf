@@ -19,6 +19,8 @@ SimpleTimedSearcher::SimpleTimedSearcher(unique_ptr<Searcher> sub_searcher,
   m_default_moves_to_play(default_moves_to_play)
 {}
 
+static const milliseconds c_safety_margin(1000);
+
 SearchResult SimpleTimedSearcher::search(SearchContext* const context)
 {
   unique_ptr<TimeStopper> time_stopper;
@@ -33,7 +35,9 @@ SearchResult SimpleTimedSearcher::search(SearchContext* const context)
       break;
     case SearchContext::TimeMode::ADAPTED:
       const int moves_to_play = context->sudden_death ? m_default_moves_to_play : context->moves_to_play;
-      const milliseconds time = (context->total_time + moves_to_play * context->increment) / (moves_to_play + 1);
+      // Try to never use up all our time. We need a safety margin.
+      const milliseconds total_time = max(context->total_time - c_safety_margin, milliseconds(0));
+      const milliseconds time = (total_time + moves_to_play * context->increment) / (moves_to_play + 1);
       time_stopper.reset(new TimeStopper(time));
       composite_stopper.reset(new CompositeStopper{context->weak_stopper, time_stopper.get()});
       context->weak_stopper = composite_stopper.get();

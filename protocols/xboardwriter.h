@@ -48,13 +48,13 @@ public:
 
   void move(const Move& mov) override;
 
-  void error(const ErrorType type, const std::string& message);
+  void error(ErrorType type, const std::string& message);
 
   void resign();
 
   void offer_draw();
 
-  void result(Result, const std::string&);
+  void result(Result, const std::string&) override;
 
   void tell_opponent(const std::string&);
 

@@ -211,6 +211,12 @@ public:
   }
 
   /**
+   * @brief draw_reason returns a human readable string explaining why the position is drawn.
+   *                    The returned string is empty if the draw reason is unknown. This can only be called if the game is drawn.
+   */
+  std::string draw_reason() const;
+
+  /**
    * @brief finished returns true if the game is finished.
    */
   inline bool finished() const
@@ -310,6 +316,12 @@ public:
   }
 
 private:
+  bool draw_50_moves() const;
+
+  bool draw_insufficient_material() const;
+
+  bool draw_repetitions() const;
+
   void calculate_draw() const;
 
   std::array<ColorBoard, c_no_colors> m_color_boards;

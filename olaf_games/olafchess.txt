@@ -3012,3 +3012,27 @@ Tue Dec 30 00:21:31 2014: olafchess logged in.
 Tue Dec 30 00:21:32 2014: HarryJr 1443 vs olafchess 1944 rated Blitz 2 12 started.
 Tue Dec 30 00:22:00 2014: Game aborted by HarryJr at move 1 (*).
 Tue Dec 30 00:22:30 2014: verdugo21 1970 vs olafchess 1944 rated Blitz 5 0 started.
+Tue Dec 30 00:28:13 2014: olafchess resigns (1-0).
+Tue Dec 30 00:28:19 2014: verdugo21 1985 vs olafchess 1929 rated Blitz 5 0 started.
+Tue Dec 30 00:38:11 2014: verdugo21 forfeits on time (1-0).
+Tue Dec 30 00:38:30 2014: Zhivago 1807 vs olafchess 1948 rated Blitz 5 0 started.
+Tue Dec 30 00:43:02 2014: Zhivago resigns (0-1).
+Tue Dec 30 00:43:05 2014: Zhivago 1797 vs olafchess 1958 rated Blitz 5 0 started.
+Tue Dec 30 00:46:11 2014: Zhivago resigns (1-0).
+Tue Dec 30 00:46:14 2014: Zhivago 1788 vs olafchess 1967 rated Blitz 5 0 started.
+Tue Dec 30 00:51:04 2014: Zhivago resigns (0-1).
+Tue Dec 30 00:51:06 2014: Zhivago 1780 vs olafchess 1975 rated Blitz 5 0 started.
+Tue Dec 30 00:56:29 2014: Zhivago resigns (1-0).
+Tue Dec 30 00:56:30 2014: Zhivago 1772 vs olafchess 1983 rated Blitz 5 0 started.
+Tue Dec 30 01:00:52 2014: Zhivago resigns (0-1).
+Tue Dec 30 01:01:04 2014: Zhivago 1765 vs olafchess 1990 rated Blitz 5 0 started.
+Tue Dec 30 01:06:18 2014: Zhivago resigns (1-0).
+Tue Dec 30 01:06:19 2014: Zhivago 1758 vs olafchess 1997 rated Blitz 5 0 started.
+Tue Dec 30 01:14:09 2014: Zhivago checkmated (0-1).
+Tue Dec 30 01:14:20 2014: slonik 1488 vs olafchess 2003 rated Blitz 2 12 started.
+Tue Dec 30 01:20:30 2014: slonik resigns (0-1).
+Tue Dec 30 01:24:30 2014: SpasticFugue 1661 vs olafchess 2005 rated Blitz 5 0 started.
+Tue Dec 30 01:32:18 2014: SpasticFugue forfeits on time (1-0).
+Tue Dec 30 01:35:52 2014: Cancervezero 1699 vs olafchess 2009 rated Blitz 5 0 started.
+Tue Dec 30 01:44:23 2014: olafchess checkmated (1-0).
+Tue Dec 30 01:44:25 2014: Cancervezero 1726 vs olafchess 1982 rated Blitz 5 0 started.
