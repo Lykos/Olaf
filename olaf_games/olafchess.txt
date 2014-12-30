@@ -3036,3 +3036,95 @@ Tue Dec 30 01:32:18 2014: SpasticFugue forfeits on time (1-0).
 Tue Dec 30 01:35:52 2014: Cancervezero 1699 vs olafchess 2009 rated Blitz 5 0 started.
 Tue Dec 30 01:44:23 2014: olafchess checkmated (1-0).
 Tue Dec 30 01:44:25 2014: Cancervezero 1726 vs olafchess 1982 rated Blitz 5 0 started.
+Tue Dec 30 01:52:02 2014: Cancervezero checkmated (1-0).
+Tue Dec 30 01:52:03 2014: Cancervezero 1720 vs olafchess 1988 rated Blitz 5 0 started.
+Tue Dec 30 01:59:12 2014: Cancervezero resigns (0-1).
+Tue Dec 30 01:59:15 2014: Cancervezero 1714 vs olafchess 1994 rated Blitz 5 0 started.
+Tue Dec 30 01:59:18 2014: Game aborted when Cancervezero disconnected (*).
+Tue Dec 30 02:04:30 2014: Wonk 1788 vs olafchess 1994 rated Blitz 2 12 started.
+Tue Dec 30 02:18:36 2014: Wonk resigns (1-0).
+Tue Dec 30 02:18:45 2014: Wonk: thank you
+Tue Dec 30 02:18:46 2014: Wonk 1770 vs olafchess 1997 rated Blitz 2 12 started.
+Tue Dec 30 02:40:09 2014: olafchess checkmated (1-0).
+Tue Dec 30 02:40:11 2014: Wonk: thank you
+Tue Dec 30 02:41:03 2014: Wonk 1837 vs olafchess 1986 rated Blitz 2 12 started.
+Tue Dec 30 03:11:39 2014: olafchess checkmated (0-1).
+Tue Dec 30 03:11:41 2014: Wonk: thank you
+Tue Dec 30 03:12:30 2014: Wonk 1891 vs olafchess 1975 rated Blitz 2 12 started.
+Tue Dec 30 03:15:41 2014: Wonk resigns (0-1).
+Tue Dec 30 03:15:43 2014: Wonk: thank you
+Tue Dec 30 03:16:05 2014: slonik 1509 vs olafchess 1981 rated Blitz 2 12 started.
+Tue Dec 30 03:27:47 2014: slonik forfeits on time (1-0).
+Tue Dec 30 03:35:31 2014: Heian 1637 vs olafchess 1983 rated Blitz 5 0 started.
+Tue Dec 30 03:38:54 2014: Heian checkmated (1-0).
+Tue Dec 30 03:38:55 2014: Heian 1633 vs olafchess 1987 rated Blitz 5 0 started.
+Tue Dec 30 03:43:04 2014: Heian resigns (0-1).
+Tue Dec 30 03:43:17 2014: Heian 1629 vs olafchess 1991 rated Blitz 5 0 started.
+Tue Dec 30 03:51:05 2014: olafchess resigns (0-1).
+Tue Dec 30 03:54:48 2014: Jal 1630 vs olafchess 1963 rated Blitz 2 12 started.
+Tue Dec 30 04:15:06 2014: olafchess checkmated (1-0).
+Tue Dec 30 04:16:31 2014: coach999 1503 vs olafchess 1935 rated Blitz 2 12 started.
+Tue Dec 30 04:30:05 2014: coach999 resigns (1-0).
+Tue Dec 30 04:31:31 2014: garik 1740 vs olafchess 1937 rated Blitz 5 0 started.
+Tue Dec 30 04:37:03 2014: olafchess checkmated (1-0).
+Tue Dec 30 04:37:17 2014: garik 1764 vs olafchess 1913 rated Blitz 5 0 started.
+Tue Dec 30 04:40:15 2014: garik resigns (1-0).
+Tue Dec 30 04:40:31 2014: garik 1754 vs olafchess 1923 rated Blitz 5 0 started.
+Tue Dec 30 04:47:43 2014: garik resigns (0-1).
+Tue Dec 30 04:48:31 2014: enfatico53 2031 vs olafchess 1932 rated Blitz 5 0 started.
+Tue Dec 30 04:48:54 2014: Game aborted by enfatico53 at move 1 (*).
+Tue Dec 30 05:04:44 2014: avlc 1039 vs olafchess 1932 rated Blitz 2 12 started.
+Tue Dec 30 05:09:32 2014: avlc resigns (1-0).
+Tue Dec 30 05:11:31 2014: Lurens-King 1808 vs olafchess 1932 rated Blitz 5 0 started.
+Tue Dec 30 05:17:12 2014: Lurens-King resigns (0-1).
+Tue Dec 30 05:17:15 2014: Lurens-King 1797 vs olafchess 1943 rated Blitz 5 0 started.
+Tue Dec 30 05:25:12 2014: Lurens-King resigns (1-0).
+Tue Dec 30 05:32:31 2014: bulldog31 1543 vs olafchess 1953 rated Blitz 2 12 started.
+Tue Dec 30 05:42:07 2014: bulldog31 forfeits on time (0-1).
+Tue Dec 30 05:43:32 2014: garik 1733 vs olafchess 1956 rated Blitz 5 0 started.
+Tue Dec 30 05:52:18 2014: olafchess checkmated (0-1).
+Tue Dec 30 05:52:27 2014: garik 1758 vs olafchess 1931 rated Blitz 5 0 started.
+Tue Dec 30 05:59:43 2014: garik resigns (0-1).
+Tue Dec 30 05:59:49 2014: garik 1749 vs olafchess 1940 rated Blitz 5 0 started.
+Tue Dec 30 06:08:16 2014: garik resigns (1-0).
+Tue Dec 30 06:14:32 2014: svatejas 1790 vs olafchess 1948 rated Blitz 5 0 started.
+Tue Dec 30 06:20:17 2014: olafchess resigns (1-0).
+Tue Dec 30 06:21:21 2014: svatejas 1807 vs olafchess 1400 rated Bullet 2 0 started.
+Tue Dec 30 06:21:24 2014: Game aborted by svatejas at move 1 (*).
+Tue Dec 30 06:21:34 2014: svatejas 1813 vs olafchess 1925 rated Blitz 3 0 started.
+Tue Dec 30 06:26:08 2014: svatejas checkmated (1-0).
+Tue Dec 30 06:26:11 2014: svatejas 1802 vs olafchess 1936 rated Blitz 3 0 started.
+Tue Dec 30 06:31:33 2014: svatejas checkmated (0-1).
+Tue Dec 30 06:32:30 2014: Boden 1574 vs olafchess 1946 rated Blitz 2 12 started.
+Tue Dec 30 06:47:24 2014: Boden checkmated (0-1).
+Tue Dec 30 06:48:32 2014: SpasticFugue 1657 vs olafchess 1949 rated Blitz 5 0 started.
+Tue Dec 30 06:57:16 2014: olafchess resigns (0-1).
+Tue Dec 30 07:15:32 2014: Boden 1569 vs olafchess 1922 rated Blitz 2 12 started.
+Tue Dec 30 07:35:12 2014: Boden resigns (1-0).
+Tue Dec 30 07:35:31 2014: Boden 1565 vs olafchess 1926 rated Blitz 2 12 started.
+Tue Dec 30 07:47:53 2014: Boden forfeits on time (0-1).
+Tue Dec 30 07:47:54 2014: svatejas 1792 vs olafchess 1930 rated Blitz 3 0 started.
+Tue Dec 30 07:54:06 2014: svatejas forfeits on time (1-0).
+Tue Dec 30 07:56:32 2014: svatejas 1782 vs olafchess 1940 rated Blitz 5 0 started.
+Tue Dec 30 08:01:40 2014: olafchess resigns (1-0).
+Tue Dec 30 08:02:11 2014: svatejas 1805 vs olafchess 1917 rated Blitz 5 0 started.
+Tue Dec 30 08:06:02 2014: svatejas checkmated (1-0).
+Tue Dec 30 08:06:32 2014: PieceAssassin 1611 vs olafchess 1928 rated Blitz 5 0 started.
+Tue Dec 30 08:12:58 2014: PieceAssassin resigns (0-1).
+Tue Dec 30 08:13:41 2014: kingzal 1557 vs olafchess 1932 rated Blitz 2 12 started.
+Tue Dec 30 08:27:14 2014: olafchess checkmated (0-1).
+Tue Dec 30 08:27:31 2014: kingzal 1586 vs olafchess 1903 rated Blitz 2 12 started.
+Tue Dec 30 08:38:47 2014: kingzal resigns (0-1).
+Tue Dec 30 08:38:54 2014: kingzal 1582 vs olafchess 1907 rated Blitz 2 12 started.
+Tue Dec 30 08:43:02 2014: kingzal resigns (1-0).
+Tue Dec 30 08:43:04 2014: svatejas 1788 vs olafchess 1911 rated Blitz 3 0 started.
+Tue Dec 30 08:48:11 2014: olafchess checkmated (1-0).
+Tue Dec 30 08:56:33 2014: maxmuld 1582 vs olafchess 1890 rated Blitz 5 0 started.
+Tue Dec 30 09:03:21 2014: maxmuld resigns (1-0).
+Tue Dec 30 09:03:24 2014: maxmuld 1577 vs olafchess 1895 rated Blitz 5 0 started.
+Tue Dec 30 09:11:27 2014: maxmuld checkmated (0-1).
+Tue Dec 30 09:11:38 2014: visubhau 1595 vs olafchess 1899 rated Blitz 2 12 started.
+Tue Dec 30 09:19:28 2014: visubhau checkmated (1-0).
+Tue Dec 30 09:19:32 2014: visubhau 1590 vs olafchess 1904 rated Blitz 2 12 started.
+Tue Dec 30 09:25:03 2014: visubhau checkmated (0-1).
+Tue Dec 30 09:25:33 2014: visubhau 1585 vs olafchess 1909 rated Blitz 2 12 started.
