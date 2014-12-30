@@ -44,25 +44,30 @@ static PositionEvaluator::score_t pawn_shield_score(const ChessBoard& board,
   return pawn_shield.number() * c_pawn_shield_score;
 }
 
-static const PositionEvaluator::score_t c_open_file_score = 10;
+static const PositionEvaluator::score_t c_own_semi_open_file_score = -12;
+static const PositionEvaluator::score_t c_opposing_semi_open_file_score = -8;
+
+static PositionEvaluator::score_t column_score(const ChessBoard& board, const Color color, const Position::index_t column)
+{
+  const BitBoard opponent_pawns = board.color_board(other_color(color)).piece_board(PieceSet::c_pawn_index);
+  const BitBoard friend_pawns = board.color_board(other_color(color)).piece_board(PieceSet::c_pawn_index);
+  const BitBoard column_board = c_columns[column];
+  return ((column_board & friend_pawns) == BitBoard(0)) * c_own_semi_open_file_score
+      + ((column_board & opponent_pawns) == BitBoard(0)) * c_opposing_semi_open_file_score;
+}
 
 static PositionEvaluator::score_t open_files_score(const ChessBoard& board,
                                                    const Position king_position,
                                                    const Color color)
 {
-#define has_pawns(col) ((c_columns[col] & pawns) != BitBoard(0))
-  const BitBoard pawns = board.color_board(other_color(color)).piece_board(PieceSet::c_pawn_index);
   const Position::index_t column = king_position.column();
-  PositionEvaluator::score_t open_files;
   if (column == 0) {
-    open_files = has_pawns(column) + has_pawns(column + 1);
+    return column_score(board, color, column) + column_score(board, color, column + 1);
   } else if (column == Position::c_column_size - 1) {
-    open_files = has_pawns(column - 1) + has_pawns(column);
+    return column_score(board, color, column - 1) + column_score(board, color, column);
   } else {
-    open_files = has_pawns(column - 1) + has_pawns(column) + has_pawns(column + 1);
+    return column_score(board, color, column - 1) + column_score(board, color, column) + column_score(board, color, column + 1);
   }
-#undef has_pawns
-  return open_files * c_open_file_score;
 }
 
 static PositionEvaluator::score_t king_safety_score(const ChessBoard& board, const Color color)
