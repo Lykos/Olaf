@@ -78,7 +78,7 @@ const vector<Perft::PerftExample>& Perft::examples()
     PerftResult{1352, 95, 0, 0, 0, 0},
     PerftResult{53392, 4381, 75, 969, 0, 24},
     PerftResult{1761505, 147485, 0, 6768, 0, 4},
-    PerftResult{0, 0, 0, 0, 0, 0},
+    PerftResult{70202861, 6440150, 80978, 1006722, 4700, 45964},
     PerftResult{0, 0, 0, 0, 0, 0}};
 
   static const string fen_position6 = "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10";
@@ -88,7 +88,7 @@ const vector<Perft::PerftExample>& Perft::examples()
     PerftResult{2079, 203, 0, 0, 0, 0},
     PerftResult{89890, 9470, 0, 0, 0, 0},
     PerftResult{3894594, 440388, 0, 0, 0, 0},
-    PerftResult{164075551, 0, 0, 0, 0, 0},
+    PerftResult{164075551, 19528068, 122, 0, 0, 228},
     PerftResult{6923051137ull, 0, 0, 0, 0, 0}};
 
   static const vector<PerftExample> examples{
