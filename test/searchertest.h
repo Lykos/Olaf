@@ -23,8 +23,6 @@ class SearcherTest : public QObject
 private:
   TestFactoryOwner m_factory_owner;
 
-  NoThinkingWriter m_no_thinking_writer;
-
   std::unique_ptr<Searcher> m_searcher;
 
   NoStopper m_stopper;
