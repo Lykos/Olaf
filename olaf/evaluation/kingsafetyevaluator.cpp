@@ -38,7 +38,7 @@ static PositionEvaluator::score_t pawn_shield_score(const ChessBoard& board,
                                                     const Color color)
 {
   const ColorBoard& color_board = board.color_board(color);
-  const int color_index = static_cast<int>(board.turn_color()) * BitBoard::c_bitboard_size;
+  const int color_index = static_cast<int>(color) * BitBoard::c_bitboard_size;
   const BitBoard potential_pawn_shield(c_pawn_shield[color_index + king_position.index()]);
   const BitBoard pawn_shield = potential_pawn_shield & color_board.piece_board(PieceSet::c_pawn_index);
   return pawn_shield.number() * c_pawn_shield_score;
@@ -73,7 +73,8 @@ static PositionEvaluator::score_t open_files_score(const ChessBoard& board,
 static PositionEvaluator::score_t king_safety_score(const ChessBoard& board, const Color color)
 {
   const Position king_position = board.color_board(color).piece_board(PieceSet::c_king_index).first_position();
-  return pawn_shield_score(board, king_position, color) + open_files_score(board, king_position, color);
+  const PositionEvaluator::score_t score = pawn_shield_score(board, king_position, color) + open_files_score(board, king_position, color);
+  return score;
 }
 
 PositionEvaluator::score_t KingSafetyEvaluator::evaluate(
