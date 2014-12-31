@@ -21,6 +21,10 @@ public:
 
   std::unique_ptr<PositionEvaluator> incremental_evaluator() const;
 
+  std::unique_ptr<PositionEvaluator> kingsafety_evaluator() const;
+
+  std::unique_ptr<PositionEvaluator> pawn_evaluator() const;
+
 private:
   const Config::Evaluation* const m_config;
 };

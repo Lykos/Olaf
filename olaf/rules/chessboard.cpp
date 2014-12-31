@@ -156,15 +156,65 @@ void ChessBoard::previous_turn()
   m_draw_valid = false;
 }
 
-void ChessBoard::calculate_draw() const
+bool ChessBoard::draw_50_moves() const
 {
   static const int_fast8_t c_draw_reversible_plies = 50;
-  static const int_fast8_t c_draw_repetitions = 3;
-  m_draw_valid = true;
-  m_draw = m_reversible_plies >= c_draw_reversible_plies
-      || (friends() == turn_board().piece_board(PieceSet::c_king_index)
+  return m_reversible_plies >= c_draw_reversible_plies;
+}
+
+bool ChessBoard::draw_insufficient_material() const
+{
+  return false ||
+      // two kings
+      (friends() == turn_board().piece_board(PieceSet::c_king_index)
           && opponents() == noturn_board().piece_board(PieceSet::c_king_index))
-      || count(m_hashes.begin(), m_hashes.end(), m_hash_state.zobrist_hash) >= c_draw_repetitions;
+      // active player one minor piece and one king, other player one king
+      || (friends() == (turn_board().piece_board(PieceSet::c_king_index)
+                        | turn_board().piece_board(PieceSet::c_bishop_index)
+                        | turn_board().piece_board(PieceSet::c_knight_index))
+          && friends().number() == 3
+          && opponents() == noturn_board().piece_board(PieceSet::c_king_index))
+      // active player one king, other player one minor piece and one king
+      || (opponents() == (noturn_board().piece_board(PieceSet::c_king_index)
+                          | noturn_board().piece_board(PieceSet::c_bishop_index)
+                          | noturn_board().piece_board(PieceSet::c_knight_index))
+          && opponents().number() == 3
+          && friends() == turn_board().piece_board(PieceSet::c_king_index))
+      // only two kings and two same color bishops
+      || (friends() == (turn_board().piece_board(PieceSet::c_king_index)
+                        | turn_board().piece_board(PieceSet::c_bishop_index))
+          && opponents() == (noturn_board().piece_board(PieceSet::c_king_index)
+                             | noturn_board().piece_board(PieceSet::c_bishop_index))
+          && friends().number() == 2
+          && opponents().number() == 2
+          && (turn_board().piece_board(PieceSet::c_bishop_index).first_position().index() % 2
+              == noturn_board().piece_board(PieceSet::c_bishop_index).first_position().index() % 2));
+}
+
+bool ChessBoard::draw_repetitions() const
+{
+  static const int_fast8_t c_draw_repetitions = 3;
+  return count(m_hashes.begin(), m_hashes.end(), m_hash_state.zobrist_hash) >= c_draw_repetitions;
+}
+
+void ChessBoard::calculate_draw() const
+{
+  m_draw_valid = true;
+  m_draw = draw_50_moves() || draw_insufficient_material() || draw_repetitions();
+}
+
+string ChessBoard::draw_reason() const
+{
+  assert(draw());
+  if (draw_repetitions()) {
+    return "Repetition";
+  } else if (draw_insufficient_material()) {
+    return "Insufficient material";
+  } else if (draw_50_moves()) {
+    return "50 moves rule";
+  } else {
+    return "";
+  }
 }
 
 void ChessBoard::add_piece(const Color color,

@@ -4,6 +4,7 @@
 
 #include "olaf/search/stopper.h"
 #include "olaf/rules/chessboard.h"
+#include "protocols/result.h"
 
 using namespace std;
 
@@ -29,6 +30,11 @@ void Engine::run()
       return;
     }
     if (m_state.force()) {
+      continue;
+    }
+    SearchContext context = m_state.create_search_context();
+    if (context.board.draw()) {
+      m_writer->result(Result::Draw, context.board.draw_reason());
       continue;
     }
     if (m_state.my_turn() && !m_state.analyze()) {

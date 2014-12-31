@@ -53,8 +53,6 @@ public:
 
   std::unique_ptr<AlphaBetaSearcher> quiescer() const;
 
-  std::unique_ptr<AlphaBetaSearcher> evaluation_searcher() const;
-
   std::unique_ptr<PositionEvaluator> evaluator() const;
 
   std::unique_ptr<TranspositionTable> transposition_table() const;

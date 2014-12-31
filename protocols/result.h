@@ -7,7 +7,7 @@ namespace olaf
 /**
  * @brief The Result enum represents the outcome of a game.
  */
-enum Result {
+enum class Result {
   Win, Lose, Draw
 };
 

@@ -76,14 +76,28 @@ const vector<Perft::PerftExample>& Perft::examples()
     PerftResult{1, 0, 0, 0, 0, 0},
     PerftResult{42, 3, 0, 1, 0, 0},
     PerftResult{1352, 95, 0, 0, 0, 0},
-    PerftResult{53392, 4381, 75, 969, 0, 24}};
+    PerftResult{53392, 4381, 75, 969, 0, 24},
+    PerftResult{1761505, 147485, 0, 6768, 0, 4},
+    PerftResult{70202861, 6440150, 80978, 1006722, 4700, 45964},
+    PerftResult{0, 0, 0, 0, 0, 0}};
+
+  static const string fen_position6 = "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10";
+  static const vector<PerftResult> expected_results_position6{
+    PerftResult{1, 0, 0, 0, 0, 0},
+    PerftResult{46, 4, 0, 0, 0, 0},
+    PerftResult{2079, 203, 0, 0, 0, 0},
+    PerftResult{89890, 9470, 0, 0, 0, 0},
+    PerftResult{3894594, 440388, 0, 0, 0, 0},
+    PerftResult{164075551, 19528068, 122, 0, 0, 228},
+    PerftResult{6923051137ull, 0, 0, 0, 0, 0}};
 
   static const vector<PerftExample> examples{
     PerftExample{"initial", fen_initial, expected_results_initial},
     PerftExample{"position2", fen_position2, expected_results_position2},
     PerftExample{"position3", fen_position3, expected_results_position3},
     PerftExample{"position4", fen_position4, expected_results_position4},
-    PerftExample{"position5", fen_position5, expected_results_position5}};
+    PerftExample{"position5", fen_position5, expected_results_position5},
+    PerftExample{"position6", fen_position6, expected_results_position6}};
   return examples;
 }
 
@@ -117,6 +131,14 @@ void Perft::debug_perft(const int depth,
   cout << "sum " << sum << endl;
 }
 
+static bool is_checked(ChessBoard* const board)
+{
+  board->next_turn();
+  const bool result = MoveChecker::can_kill_king(*board);
+  board->previous_turn();
+  return result;
+}
+
 Perft::PerftResult Perft::internal_perft(const int depth,
                                          ChessBoard* const board)
 {
@@ -130,7 +152,7 @@ Perft::PerftResult Perft::internal_perft(const int depth,
     move.execute(board, &undo_info);
     if (depth > 1) {
       result += internal_perft(depth - 1, board);
-    } else if (m_generator->generate_valid_moves(*board).empty()) {
+    } else if (is_checked(board) && m_generator->generate_valid_moves(*board).empty()) {
       ++result.mates;
     }
     move.undo(undo_info, board);

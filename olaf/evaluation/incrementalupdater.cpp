@@ -190,15 +190,23 @@ static double generate_material_factor()
   return 1.0 / sum;
 }
 
-static void update_total_score(IncrementalState* const state)
+IncrementalUpdater::score_t IncrementalUpdater::weighted_score(const score_t middlegame_score,
+                                                               const score_t endgame_score,
+                                                               const score_t total_material_score)
 {
   static const double c_material_factor = generate_material_factor();
-  const double middlegame_weight = min(state->material_score * c_material_factor, 1.0);
+  const double middlegame_weight = min(total_material_score * c_material_factor, 1.0);
   assert(middlegame_weight >= 0);
   assert(middlegame_weight <= 1);
-  state->incremental_score_white =
-      state->incremental_score_white_endgame * (1 - middlegame_weight)
-      + state->incremental_score_white_middlegame * middlegame_weight;
+  return middlegame_score * middlegame_weight + endgame_score * (1.0 - middlegame_weight);
+}
+
+static void update_total_score(IncrementalState* const state)
+{
+  state->incremental_score_white = IncrementalUpdater::weighted_score(
+        state->incremental_score_white_middlegame,
+        state->incremental_score_white_endgame,
+        state->material_score);
 }
 
 void IncrementalUpdater::remove_piece(const Color color,
