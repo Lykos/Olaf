@@ -60,8 +60,8 @@ void MoveOrderer::init_see_state(const ChessBoard& board, SeeState* const see_st
 
 static inline BitBoard consider_xrays(const BitBoard occupied, const Position src, const MoveOrderer::SeeState& see_state)
 {
-  return ((MagicMoves::sliding_magic_moves(MagicNumbers::c_rook_magic, src, occupied) & see_state.straight_pieces)
-          | (MagicMoves::sliding_magic_moves(MagicNumbers::c_bishop_magic, src, occupied) & see_state.diagonal_pieces))
+  return ((MagicMoves::rook_magic_moves(src, occupied) & see_state.straight_pieces)
+          | (MagicMoves::bishop_magic_moves(src, occupied) & see_state.diagonal_pieces))
           & occupied;
 }
 

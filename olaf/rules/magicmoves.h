@@ -16,7 +16,7 @@ namespace olaf
 
 class MagicMoves
 {
-public:
+private:
   static inline BitBoard sliding_magic_moves(const std::array<Magic, BitBoard::c_bitboard_size>& magics,
                                              const Position source,
                                              const BitBoard occupied)
@@ -27,20 +27,39 @@ public:
     return magic.ptr[index];
   }
 
+public:
+  /**
+   * @brief rook_magic_moves returns the reachable squares for a rook from the given source assuming
+   *        every piece (even friends) can be captured.
+   */
+  static inline BitBoard rook_magic_moves(const Position source, const BitBoard occupied)
+  {
+    return sliding_magic_moves(MagicNumbers::instance()->rook_magic, source, occupied);
+  }
+
+  /**
+   * @brief bishop_magic_moves returns the reachable squares for a bishop from the given source assuming
+   *        every piece (even friends) can be captured.
+   */
+  static inline BitBoard bishop_magic_moves(const Position source, const BitBoard occupied)
+  {
+    return sliding_magic_moves(MagicNumbers::instance()->bishop_magic, source, occupied);
+  }
+
   static inline BitBoard moves_rook(const Position source, const ChessBoard& board)
   {
-    return sliding_magic_moves(MagicNumbers::c_rook_magic, source, board.occupied()) & BitBoard(~board.friends());
+    return rook_magic_moves(source, board.occupied()) & BitBoard(~board.friends());
   }
 
   static inline BitBoard moves_bishop(const Position source, const ChessBoard& board)
   {
-    return sliding_magic_moves(MagicNumbers::c_bishop_magic, source, board.occupied()) & BitBoard(~board.friends());
+    return bishop_magic_moves(source, board.occupied()) & BitBoard(~board.friends());
   }
 
   static inline BitBoard moves_queen(const Position source, const ChessBoard& board)
   {
-    return (sliding_magic_moves(MagicNumbers::c_rook_magic, source, board.occupied())
-            | sliding_magic_moves(MagicNumbers::c_bishop_magic, source, board.occupied())) & BitBoard(~board.friends());
+    return (sliding_magic_moves(MagicNumbers::instance()->rook_magic, source, board.occupied())
+            | sliding_magic_moves(MagicNumbers::instance()->bishop_magic, source, board.occupied())) & BitBoard(~board.friends());
   }
 
   static inline BitBoard moves_knight(const Position source, const ChessBoard& board)
