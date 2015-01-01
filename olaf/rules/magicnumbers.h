@@ -5,8 +5,11 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <gflags/gflags.h>
 
 #include "olaf/status.h"
+
+DECLARE_string(move_table_file);
 
 namespace olaf
 {

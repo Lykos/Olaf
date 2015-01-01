@@ -2,12 +2,15 @@
 #define GENERATION_H
 
 #include <cstdint>
+#include <string>
+
+#include "olaf/status.h"
 
 namespace olaf
 {
 namespace generation
 {
-void generate_magic();
+Status generate_magic(const std::string& output_file, bool verbose);
 } // namespace generation
 } // namespace olaf
 

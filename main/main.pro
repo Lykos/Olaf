@@ -22,6 +22,9 @@ CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/protocols -lolafprotocols
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/protocols -lolafprotocols
 
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/generation -lolafgeneration
+CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/generation -lolafgeneration
+
 OTHER_FILES += \
     ../resources/config.yml
 

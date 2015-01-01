@@ -10,7 +10,7 @@
 
 #include "olaf/status.h"
 
-DEFINE_string(move_table, "/usr/local/share/olaf/move_table.bin",
+DEFINE_string(move_table_file, "/home/bernhard/.local/share/olaf/move_table.bin",
               "The lookup table for magic numbers for rooks and bishops.");
 
 using namespace std;
@@ -159,10 +159,11 @@ static MagicNumbers::MagicTable create_bishop_magic(const MagicNumbers::MoveTabl
 
 MagicNumbers::MagicNumbers()
 {
-  ifstream file(FLAGS_move_table, ios::in | ios::binary | ios::ate);
+  ifstream file(FLAGS_move_table_file, ios::in | ios::binary | ios::ate);
   const int size = file.tellg();
   if (size != sizeof(MoveTable)) {
-    cout << "If your move table resides in a place different from " << FLAGS_move_table
+    cout << "Could not find the move table which is used for magic move generation. "
+            "If your move table resides in a place different from " << FLAGS_move_table_file
          << ", please set it with --move_table=/path/to/movetable." << endl;
     exit(1);
   }
