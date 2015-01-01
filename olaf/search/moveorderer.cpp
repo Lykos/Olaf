@@ -65,7 +65,9 @@ static inline BitBoard consider_xrays(const BitBoard occupied, const Position sr
           & occupied;
 }
 
-static const Searcher::score_t c_killer_value = -1;
+static const Searcher::score_t c_queen_promotion_value = -1;
+
+static const Searcher::score_t c_killer_value = -2;
 
 static const Searcher::score_t c_quiet_value = -SearchContext::c_no_killers + c_killer_value;
 
@@ -166,6 +168,8 @@ bool MoveOrderer::order_moves(const SearchContext& context,
     const int depth = context.search_depth - state.depth;
     if (m_use_see && move.is_capture()) {
       move_values[i] = see(context.board, move, see_state);
+    } else if (move.is_promotion() && move.created_piece() == PieceSet::c_queen_index) {
+      move_values[i] = c_queen_promotion_value;
     } else if (m_use_killers && static_cast<int>(context.killers.size()) > depth) {
       const SearchContext::Killers& killers = context.killers[depth];
       for (unsigned int j = 0; j < killers.size(); ++j) {
