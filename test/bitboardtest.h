@@ -30,6 +30,30 @@ private Q_SLOTS:
 
   void test_set_data();
 
+  void test_one_up();
+
+  void test_one_up_data();
+
+  void test_one_down();
+
+  void test_one_down_data();
+
+  void test_one_left();
+
+  void test_one_left_data();
+
+  void test_one_right();
+
+  void test_one_right_data();
+
+  void test_north_fill();
+
+  void test_north_fill_data();
+
+  void test_south_fill();
+
+  void test_south_fill_data();
+
 };
 
 DECLARE_TEST(BitboardTest)
