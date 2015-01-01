@@ -70,7 +70,7 @@ public:
   static inline BitBoard king_unmoved(const ChessBoard& board, const Color color)
   {
     int index = static_cast<int>(color);
-    const BitBoard king_positions = board.color_board(color).piece_board(PieceSet::c_king_index);
+    const BitBoard king_positions = board.king_board(color);
     return king_positions == BitBoard(MagicNumbers::c_king_positions[index]);
   }
 
@@ -80,7 +80,7 @@ public:
     const ColorBoard& color_board = board.color_board(color);
     return color_board.can_castle_k()
         && !(board.occupied() & BitBoard(MagicNumbers::c_castle_k_room[index]))
-        && (color_board.piece_board(PieceSet::c_rook_index) & BitBoard(MagicNumbers::c_castle_k_rook_src[index]));
+        && (board.rook_board(color) & BitBoard(MagicNumbers::c_castle_k_rook_src[index]));
   }
 
   static inline BitBoard can_castle_q(const ChessBoard& board, const Color color)
@@ -89,7 +89,7 @@ public:
     const ColorBoard& color_board = board.color_board(color);
     return color_board.can_castle_q()
         && !(board.occupied() & BitBoard(MagicNumbers::c_castle_q_room[index]))
-        && (color_board.piece_board(PieceSet::c_rook_index) & BitBoard(MagicNumbers::c_castle_q_rook_src[index]));
+        && (board.rook_board(color) & BitBoard(MagicNumbers::c_castle_q_rook_src[index]));
   }
 
   static BitBoard moves_king(Position source, const ChessBoard& board);

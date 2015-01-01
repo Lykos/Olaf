@@ -138,20 +138,20 @@ bool EgbbProber::probe(const ChessBoard& board, score_t* const score)
       ++count; \
     } \
   }
-  const ColorBoard& white_board = board.color_board(Color::White);
-  ADD_PIECE(white_board.piece_board(PieceSet::c_rook_index), _WROOK);
-  ADD_PIECE(white_board.piece_board(PieceSet::c_knight_index), _WKNIGHT);
-  ADD_PIECE(white_board.piece_board(PieceSet::c_bishop_index), _WBISHOP);
-  ADD_PIECE(white_board.piece_board(PieceSet::c_queen_index), _WQUEEN);
-  ADD_PIECE(white_board.piece_board(PieceSet::c_king_index), _WKING);
-  ADD_PIECE(white_board.piece_board(PieceSet::c_pawn_index), _WPAWN);
-  const ColorBoard& black_board = board.color_board(Color::Black);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_rook_index), _BROOK);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_knight_index), _BKNIGHT);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_bishop_index), _BBISHOP);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_queen_index), _BQUEEN);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_king_index), _BKING);
-  ADD_PIECE(black_board.piece_board(PieceSet::c_pawn_index), _BPAWN);
+
+  ADD_PIECE(board.rook_board(Color::White), _WROOK);
+  ADD_PIECE(board.knight_board(Color::White), _WKNIGHT);
+  ADD_PIECE(board.bishop_board(Color::White), _WBISHOP);
+  ADD_PIECE(board.queen_board(Color::White), _WQUEEN);
+  ADD_PIECE(board.king_board(Color::White), _WKING);
+  ADD_PIECE(board.pawn_board(Color::White), _WPAWN);
+
+  ADD_PIECE(board.rook_board(Color::Black), _BROOK);
+  ADD_PIECE(board.knight_board(Color::Black), _BKNIGHT);
+  ADD_PIECE(board.bishop_board(Color::Black), _BBISHOP);
+  ADD_PIECE(board.queen_board(Color::Black), _BQUEEN);
+  ADD_PIECE(board.king_board(Color::Black), _BKING);
+  ADD_PIECE(board.pawn_board(Color::Black), _BPAWN);
 #undef ADD_PIECE
   pieces[count] = _EMPTY;
   squares[count] = board.ep_captures().first_position().index();

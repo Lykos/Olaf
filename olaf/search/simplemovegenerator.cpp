@@ -46,28 +46,27 @@ static inline void add_pawn_moves(const Position source,
 vector<Move> SimpleMoveGenerator::generate_moves(const ChessBoard& board)
 {
   vector<Move> moves;
-  const ColorBoard& turn_board = board.turn_board();
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_rook_index); sources;) {
+  for (BitBoard sources = board.rook_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     add_moves(source, MagicMoves::moves_rook(source, board), board, &moves);
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_knight_index); sources;) {
+  for (BitBoard sources = board.knight_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     add_moves(source, MagicMoves::moves_knight(source, board), board, &moves);
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_bishop_index); sources;) {
+  for (BitBoard sources = board.bishop_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     add_moves(source, MagicMoves::moves_bishop(source, board), board, &moves);
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_queen_index); sources;) {
+  for (BitBoard sources = board.queen_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     add_moves(source, MagicMoves::moves_queen(source, board), board, &moves);
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_king_index); sources;) {
+  for (BitBoard sources = board.king_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     add_moves(source, MagicMoves::moves_king(source, board), board, &moves);
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_pawn_index); sources;) {
+  for (BitBoard sources = board.pawn_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     add_pawn_moves(source, MagicMoves::moves_pawn(source, board), board, &moves);
   }

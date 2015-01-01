@@ -37,10 +37,9 @@ static PositionEvaluator::score_t pawn_shield_score(const ChessBoard& board,
                                                     const Position king_position,
                                                     const Color color)
 {
-  const ColorBoard& color_board = board.color_board(color);
   const int color_index = static_cast<int>(color) * BitBoard::c_bitboard_size;
   const BitBoard potential_pawn_shield(c_pawn_shield[color_index + king_position.index()]);
-  const BitBoard pawn_shield = potential_pawn_shield & color_board.piece_board(PieceSet::c_pawn_index);
+  const BitBoard pawn_shield = potential_pawn_shield & board.pawn_board(color);
   return pawn_shield.number() * c_pawn_shield_score;
 }
 
@@ -49,8 +48,8 @@ static const PositionEvaluator::score_t c_opposing_semi_open_file_score = -8;
 
 static PositionEvaluator::score_t column_score(const ChessBoard& board, const Color color, const Position::index_t column)
 {
-  const BitBoard opponent_pawns = board.color_board(other_color(color)).piece_board(PieceSet::c_pawn_index);
-  const BitBoard friend_pawns = board.color_board(other_color(color)).piece_board(PieceSet::c_pawn_index);
+  const BitBoard opponent_pawns = board.pawn_board(other_color(color));
+  const BitBoard friend_pawns = board.pawn_board(other_color(color));
   const BitBoard column_board = c_columns[column];
   return ((column_board & friend_pawns) == BitBoard(0)) * c_own_semi_open_file_score
       + ((column_board & opponent_pawns) == BitBoard(0)) * c_opposing_semi_open_file_score;
@@ -72,7 +71,7 @@ static PositionEvaluator::score_t open_files_score(const ChessBoard& board,
 
 static PositionEvaluator::score_t king_safety_score(const ChessBoard& board, const Color color)
 {
-  const Position king_position = board.color_board(color).piece_board(PieceSet::c_king_index).first_position();
+  const Position king_position = board.king_board(color).first_position();
   const PositionEvaluator::score_t score = pawn_shield_score(board, king_position, color) + open_files_score(board, king_position, color);
   return score;
 }
