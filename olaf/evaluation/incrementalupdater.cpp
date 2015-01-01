@@ -99,14 +99,16 @@ static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_pie
   -50,-40,-30,-20,-20,-30,-40,-50,
 };
 
+// Note that pawns on the 7th row are guaranteed to be passed pawns.
+// Passed pawns on previous lines get also nice bonuses, but not from piece square tables.
 static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_piece_square_values_pawn = {
   0,  0,  0,  0,  0,  0,  0,  0,
-  5, 10, 10,-20,-20, 10, 10,  5,
-  5, -5,-10,  0,  0,-10, -5,  5,
-  0,  0,  0, 20, 20,  0,  0,  0,
-  5,  5, 10, 25, 25, 10,  5,  5,
-  10, 10, 20, 30, 30, 20, 10, 10,
-  50, 50, 50, 50, 50, 50, 50, 50,
+-10, 10, 10,-20,-20, 10, 10,-10,
+-10,  5,  0,  0,  0,  0,  5,-10,
+-15,  0,  0, 20, 20,  0,  0,-15,
+-10,  5, 10, 25, 25, 10,  5,-10,
+  5, 10, 20, 30, 30, 20, 10,  5,
+375,400,400,400,400,400,400,375,
   0,  0,  0,  0,  0,  0,  0,  0
 };
 
