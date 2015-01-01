@@ -57,6 +57,8 @@ public:
 
   std::unique_ptr<TranspositionTable> transposition_table() const;
 
+  std::unique_ptr<PawnTable> pawn_table() const;
+
   std::unique_ptr<EgbbProber> egbb_prober() const;
 
   MoveOrderer move_orderer() const;

@@ -7,6 +7,7 @@
 #include "olaf/search/searchcontext.h"
 #include "olaf/search/forcedstopper.h"
 #include "olaf/transposition_table/transpositiontable.h"
+#include "olaf/transposition_table/pawntable.h"
 #include "olaf/tablebases/egbbprober.h"
 
 namespace olaf
@@ -22,6 +23,7 @@ class EngineState
 {
 public:
   explicit EngineState(std::unique_ptr<TranspositionTable> transposition_table,
+                       std::unique_ptr<PawnTable> pawn_table,
                        std::unique_ptr<EgbbProber> eggb_prober,
                        BoardState* board_state);
 
@@ -94,6 +96,8 @@ public:
 
 private:
   std::unique_ptr<TranspositionTable> m_transposition_table;
+
+  std::unique_ptr<PawnTable> m_pawn_table;
 
   std::unique_ptr<EgbbProber> m_egbb_prober;
 

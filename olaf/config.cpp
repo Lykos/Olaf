@@ -39,7 +39,8 @@ Config::Search::Search(const YAML::Node& node):
 {}
 
 Config::TranspositionTable::TranspositionTable(const YAML::Node& node):
-  m_size(find_with_default(node, "size", 1 << 20))
+  m_size(find_with_default(node, "size", 1 << 20)),
+  m_pawn_size(find_with_default(node, "pawn_size", 1 << 20))
 {}
 
 Config::Tablebases::Tablebases(const YAML::Node& node):

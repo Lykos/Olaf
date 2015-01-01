@@ -111,6 +111,8 @@ void EpdBenchmark::test_epd()
   context.weak_stopper = &stopper;
   TranspositionTable transposition_table(0x1000);
   context.transposition_table = &transposition_table;
+  PawnTable pawn_table(0x1000);
+  context.pawn_table = &pawn_table;
   const vector<Move> main_variation = m_searcher->search(&context).main_variation;
   QVERIFY(!main_variation.empty());
   Move move = main_variation.back();

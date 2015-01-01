@@ -131,6 +131,17 @@ unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
   return table;
 }
 
+
+unique_ptr<PawnTable> SearcherFactory::pawn_table() const
+{
+  unique_ptr<PawnTable> table;
+  const long size = m_config->transposition_table().pawn_size();
+  if (size) {
+    table.reset(new PawnTable(size));
+  }
+  return table;
+}
+
 unique_ptr<EgbbProber> SearcherFactory::egbb_prober() const
 {
   unique_ptr<EgbbProber> prob(new EgbbProber(m_config->tablebases().cache_size()));
