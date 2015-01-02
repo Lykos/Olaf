@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
   SimpleThinkingWriter thinking_writer(writer.get());
   const Config config = read_config(FLAGS_config_file);
   SearcherFactory factory(&thinking_writer, &config);
-  auto searcher = factory.timed_searcher();
+  auto searcher = factory.searcher();
   BoardState board_state;
   unique_ptr<ProtocolReader> reader;
   Engine engine(writer.get(),

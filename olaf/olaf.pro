@@ -68,7 +68,9 @@ SOURCES += \
     evaluation/pawnevaluator.cpp \
     evaluation/positionevaluator.cpp \
     transposition_table/hashstate.cpp \
-    evaluation/compositeevaluator.cpp
+    evaluation/compositeevaluator.cpp \
+    search/openingbooksearcher.cpp \
+    opening_book/openingbook.cpp
 
 HEADERS += \
     config.h \
@@ -130,7 +132,9 @@ HEADERS += \
     transposition_table/pawntable.h \
     evaluation/pawnevaluator.h \
     transposition_table/hashstate.h \
-    evaluation/compositeevaluator.h
+    evaluation/compositeevaluator.h \
+    search/openingbooksearcher.h \
+    opening_book/openingbook.h
 
 OTHER_FILES += \
     ../resources/move_table.bin

@@ -43,6 +43,10 @@ public:
    */
   SearcherFactory(ThinkingWriter* writer, const Config* config);
 
+  std::unique_ptr<Searcher> searcher() const;
+
+  std::unique_ptr<Searcher> opening_book_searcher() const;
+
   std::unique_ptr<Searcher> timed_searcher() const;
 
   std::unique_ptr<Searcher> iterative_searcher() const;
