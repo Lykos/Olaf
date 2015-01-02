@@ -6,7 +6,9 @@ search:
   initial_window: 25
 transposition_table:
   size: 33554432
+  pawn_size: 33554432
 tablebases:
+  enabled: false
   cache_size: 33554432
 move_ordering:
   use_hash_move: true
