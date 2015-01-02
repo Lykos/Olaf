@@ -71,6 +71,8 @@ static const Searcher::score_t c_killer_value = -2;
 
 static const Searcher::score_t c_quiet_value = -SearchContext::c_no_killers + c_killer_value;
 
+static const Searcher::score_t c_other_promotion_value = -10000;
+
 // static
 Searcher::score_t MoveOrderer::see(const ChessBoard& board,
                                    const Move move,
@@ -132,10 +134,11 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
 MoveOrderer::MoveOrderer()
 {}
 
-MoveOrderer::MoveOrderer(const Config& config):
-  m_use_hash_move(config.move_ordering().use_hash_move()),
-  m_use_see(config.move_ordering().use_see()),
-  m_use_killers(config.move_ordering().use_killers())
+MoveOrderer::MoveOrderer(const Config::MoveOrdering& config):
+  m_use_hash_move(config.use_hash_move),
+  m_use_promotions(config.use_promotions),
+  m_use_see(config.use_see),
+  m_use_killers(config.use_killers)
 {}
 
 bool MoveOrderer::order_moves(const SearchContext& context,
@@ -168,8 +171,12 @@ bool MoveOrderer::order_moves(const SearchContext& context,
     const int depth = context.search_depth - state.depth;
     if (m_use_see && move.is_capture()) {
       move_values[i] = see(context.board, move, see_state);
-    } else if (move.is_promotion() && move.created_piece() == PieceSet::c_queen_index) {
-      move_values[i] = c_queen_promotion_value;
+    } else if (m_use_promotions && move.is_promotion()) {
+      if (move.created_piece() == PieceSet::c_queen_index) {
+        move_values[i] = c_queen_promotion_value;
+      } else {
+        move_values[i] = c_other_promotion_value;
+      }
     } else if (m_use_killers && static_cast<int>(context.killers.size()) > depth) {
       const SearchContext::Killers& killers = context.killers[depth];
       for (unsigned int j = 0; j < killers.size(); ++j) {

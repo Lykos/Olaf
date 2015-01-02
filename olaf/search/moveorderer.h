@@ -1,16 +1,17 @@
 #ifndef MOVEORDERER_H
 #define MOVEORDERER_H
 
+#include <vector>
+
 #include "olaf/rules/move.h"
 #include "olaf/search/searcher.h"
 #include "olaf/search/searchstate.h"
 #include "olaf/search/searchcontext.h"
-#include <vector>
+#include "olaf/config.h"
 
 namespace olaf
 {
 
-class Config;
 class SearchContext;
 
 /**
@@ -31,7 +32,7 @@ public:
                                const Move move,
                                const SeeState& see_state);
 
-  MoveOrderer(const Config& config);
+  MoveOrderer(const Config::MoveOrdering& config);
 
   MoveOrderer();
 
@@ -41,6 +42,7 @@ public:
 
 private:
   bool m_use_hash_move = false;
+  bool m_use_promotions = false;
   bool m_use_see = false;
   bool m_use_killers = false;
 };
