@@ -94,7 +94,6 @@ int main(int argc, char* argv[])
   SimpleThinkingWriter thinking_writer(writer.get());
   const Config config = read_config(FLAGS_config_file);
   SearcherFactory factory(&thinking_writer, &config);
-  auto searcher = factory.searcher();
   BoardState board_state;
   unique_ptr<ProtocolReader> reader;
   Engine engine(writer.get(),
@@ -102,7 +101,7 @@ int main(int argc, char* argv[])
                 factory.pawn_table(),
                 factory.egbb_prober(),
                 &board_state,
-                move(searcher));
+                factory.searcher());
   std::unique_ptr<EngineEventHelper> engine_helper(
         new EngineEventHelper(writer.get(), &board_state, &engine, &thinking_writer));
   if (protocol_name == "xboard") {
