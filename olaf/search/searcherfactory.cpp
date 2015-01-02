@@ -66,7 +66,7 @@ SearcherFactory::SearcherFactory(ThinkingWriter* const writer,
 
 unique_ptr<Searcher> SearcherFactory::searcher() const
 {
-  return timed_searcher();
+  return opening_book_searcher();
 }
 
 unique_ptr<Searcher> SearcherFactory::opening_book_searcher() const
