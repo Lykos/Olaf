@@ -108,7 +108,7 @@ static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_pie
 -15,  0,  0, 20, 20,  0,  0,-15,
 -10,  5, 10, 25, 25, 10,  5,-10,
   5, 10, 20, 30, 30, 20, 10,  5,
-375,400,400,400,400,400,400,375,
+50, 60,  60, 60, 60, 60, 60, 50,
   0,  0,  0,  0,  0,  0,  0,  0
 };
 
@@ -145,7 +145,6 @@ static IncrementalUpdater::score_t piece_value(const Color color,
       generate_piece_square_values();
   IncrementalUpdater::score_t result = IncrementalUpdater::piece_values()[piece_index];
   const int index = endgame * PieceSet::c_no_pieces + piece_index;
-  // TODO Do this logic by lookup.
   if (color == Color::White) {
     const Position::index_t position_index = position.index();
     result += piece_square_values[index][position_index];
