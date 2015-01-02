@@ -2,9 +2,14 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <fstream>
+#include <gflags/gflags.h>
 
 #include "olaf/rules/movechecker.h"
+
+DEFINE_string(opening_book_file, "/home/bernhard/.local/share/olaf/book.bin",
+              "The opening book file.");
 
 using namespace std;
 
@@ -12,30 +17,29 @@ namespace olaf
 {
 
 template <typename T>
-static void fill_number(const char* const bytes, T* const number)
+static void fill_number(const char* const bytes,
+                        T* const number_field_pointer)
 {
-  *number = 0;
+  *number_field_pointer = 0;
   for (int i = 0; i < sizeof(T); ++i) {
-    *number = (*number << 8) | bytes[i];
+    const T byte = bytes[i] & 0xff;
+    *number_field_pointer = (*number_field_pointer << 8) | byte;
   }
 }
 
 static vector<InternalOpeningBookEntry> create_entries(const char* const bytes,
                                                        const uint64_t size)
 {
+  static const int c_entry_size = sizeof(std::uint64_t) + 2 * sizeof(std::uint16_t) + sizeof(std::uint32_t);
   vector<InternalOpeningBookEntry> result;
-  for (uint64_t i = 0;
-       i <= size - sizeof(InternalOpeningBookEntry);
-       i += sizeof(InternalOpeningBookEntry)) {
+  for (uint64_t i = 0; i <= size - c_entry_size; i += c_entry_size) {
     result.emplace_back();
-    fill_number(bytes + i, &(result.back().opening_zobrist_hash));
-    fill_number(bytes + i + sizeof(uint64_t),
-                &(result.back().move));
-    fill_number(bytes + i + sizeof(uint64_t) + sizeof(uint16_t),
-                &(result.back().weight));
-    fill_number(bytes + i + sizeof(uint64_t) + 2 * sizeof(uint16_t),
-                &(result.back().learn));
-    if (result.back().move == 0 || result.back().weight == 0) {
+    InternalOpeningBookEntry* const back = &(result.back());
+    fill_number(bytes + i, &(back->opening_zobrist_hash));
+    fill_number(bytes + i + sizeof(std::uint64_t), &(back->move));
+    fill_number(bytes + i + sizeof(std::uint64_t) + sizeof(std::uint16_t), &(back->weight));
+    fill_number(bytes + i + sizeof(std::uint64_t) + 2 * sizeof(std::uint16_t), &(back->learn));
+    if (back->move == 0 || back->weight == 0) {
       result.pop_back();
     }
   }
@@ -43,9 +47,9 @@ static vector<InternalOpeningBookEntry> create_entries(const char* const bytes,
 }
 
 // static
-unique_ptr<OpeningBook> OpeningBook::load(const string& book_file_name)
+unique_ptr<OpeningBook> OpeningBook::load()
 {
-  ifstream file(book_file_name, ios::in | ios::binary | ios::ate);
+  ifstream file(FLAGS_opening_book_file, ios::in | ios::binary | ios::ate);
   const int size = file.tellg();
   char* const bytes = new char[size];
   file.seekg(0, ios::beg);
@@ -291,13 +295,12 @@ static uint_fast8_t opening_piece_index(Color color, Piece::piece_index_t piece_
   return index;
 }
 
-OpeningBook::OpeningBook() {}
-
 OpeningBook::OpeningBook(vector<InternalOpeningBookEntry>&& entries): m_entries(entries) {}
 
-uint64_t OpeningBook::opening_zobrist_hash(const ChessBoard& board) const
+// static
+uint64_t OpeningBook::opening_zobrist_hash(const ChessBoard& board)
 {
-  uint64_t hash;
+  uint64_t hash = 0;
   for (Color color : c_colors) {
     const ColorBoard& color_board = board.color_board(color);
     for (Piece::piece_index_t piece_index = 0; piece_index < PieceSet::c_no_pieces; ++piece_index) {
@@ -322,7 +325,12 @@ uint64_t OpeningBook::opening_zobrist_hash(const ChessBoard& board) const
     hash ^= c_hash_values[c_castle_offset + 3];
   }
   if (board.ep_possible()) {
-    hash ^= c_hash_values[c_ep_offset + board.ep_captures().first_position().column()];
+    const BitBoard pawns = board.pawn_board(board.turn_color());
+    const BitBoard pawn_neighbors = pawns.one_left() | pawns.one_right();
+    const BitBoard pawn_attacks = (board.turn_color() == Color::White ? pawn_neighbors.one_up() : pawn_neighbors.one_down());
+    if (board.ep_captures() & pawn_attacks) {
+      hash ^= c_hash_values[c_ep_offset + board.ep_captures().first_position().column()];
+    }
   }
   if (board.turn_color() == Color::White) {
     hash ^= c_hash_values[c_turn_offset];
@@ -338,12 +346,10 @@ struct CompareHashes {
   }
 };
 
-static OpeningBookEntry transform_entry(const ChessBoard& board,
-                                        const InternalOpeningBookEntry& entry)
+static bool transform_entry(const ChessBoard& board,
+                            const InternalOpeningBookEntry& entry,
+                            OpeningBookEntry* const transformed_entry)
 {
-  OpeningBookEntry result;
-  result.weight = entry.weight;
-  result.learn = entry.learn;
   Position to(entry.move & 63);
   const Position from((entry.move >> 6) & 63);
   // Handle weird castle encoding.
@@ -355,19 +361,33 @@ static OpeningBookEntry transform_entry(const ChessBoard& board,
       to = Position(to.row(), 6);
     }
   }
+  IncompleteMove incomplete_move;
   switch ((entry.move >> 12) & 7) {
     case 0:
-      result.move = MoveChecker::complete(from, to, board);
+      incomplete_move = IncompleteMove(from, to);
+      break;
     case 1:
-      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_knight_index, board);
+      incomplete_move = IncompleteMove::promotion(from, to, PieceSet::c_knight_index);
+      break;
     case 2:
-      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_bishop_index, board);
+      incomplete_move = IncompleteMove::promotion(from, to, PieceSet::c_bishop_index);
+      break;
     case 3:
-      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_rook_index, board);
+      incomplete_move = IncompleteMove::promotion(from, to, PieceSet::c_rook_index);
+      break;
     case 4:
-      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_queen_index, board);
+      incomplete_move = IncompleteMove::promotion(from, to, PieceSet::c_queen_index);
+      break;
+    default:
+      return false;
   }
-  return result;
+  if (!MoveChecker::valid_move(board, incomplete_move)) {
+    return false;
+  }
+  transformed_entry->weight = entry.weight;
+  transformed_entry->learn = entry.learn;
+  transformed_entry->move = MoveChecker::complete(incomplete_move, board);
+  return true;
 }
 
 bool OpeningBook::get(const ChessBoard& board, vector<OpeningBookEntry>* const entries) const
@@ -378,10 +398,13 @@ bool OpeningBook::get(const ChessBoard& board, vector<OpeningBookEntry>* const e
   InternalOpeningBookEntry fake;
   fake.opening_zobrist_hash = opening_hash;
   const auto start = lower_bound(m_entries.begin(), m_entries.end(), fake, CompareHashes());
-  const auto stop = lower_bound(m_entries.begin(), m_entries.end(), fake, CompareHashes());
+  const auto stop = upper_bound(m_entries.begin(), m_entries.end(), fake, CompareHashes());
   for (auto it = start; it != stop; ++it) {
     if (it->weight != 0 && it->move != 0) {
-      entries->push_back(transform_entry(board, *it));
+      entries->emplace_back();
+      if (!transform_entry(board, *it, &(entries->back()))) {
+        entries->pop_back();
+      }
     }
   }
   return entries->size();

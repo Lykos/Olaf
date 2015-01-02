@@ -35,7 +35,8 @@ SOURCES += \
     searchertest.cpp \
     moveorderertest.cpp \
     egbbprobertest.cpp \
-    evaluatortest.cpp
+    evaluatortest.cpp \
+    openingbooktest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -57,7 +58,8 @@ HEADERS += \
     searchertest.h \
     moveorderertest.h \
     egbbprobertest.h \
-    evaluatortest.h
+    evaluatortest.h \
+    openingbooktest.h
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf

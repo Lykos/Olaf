@@ -28,13 +28,16 @@ struct InternalOpeningBookEntry {
 class OpeningBook
 {
 public:
-  static std::unique_ptr<OpeningBook> load(const std::string& book_file_name);
+  static std::unique_ptr<OpeningBook> load();
 
-  OpeningBook();
-
-  std::uint64_t opening_zobrist_hash(const ChessBoard& board) const;
+  static std::uint64_t opening_zobrist_hash(const ChessBoard& board);
 
   bool get(const ChessBoard& board, std::vector<OpeningBookEntry>* entries) const;
+
+  inline int size() const
+  {
+    return m_entries.size();
+  }
 
 private:
   explicit OpeningBook(std::vector<InternalOpeningBookEntry>&& entries);
