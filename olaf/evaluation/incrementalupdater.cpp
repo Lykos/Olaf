@@ -88,6 +88,28 @@ static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_pie
   -30,-40,-40,-50,-50,-40,-40,-30
 };
 
+static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_piece_square_values_king_endgame_pawns_right = {
+  -50,-50,-30,-30,-30,-30,-30,-40,
+  -50,-30,-30,  0,  0,  0,  0,-20,
+  -50,-30,-10, 10, 30, 30, 20,-10,
+  -50,-30,-10, 20, 40, 40, 30,  0,
+  -50,-30,-10, 20, 40, 40, 30,  0,
+  -50,-30,-10, 10, 30, 30, 20,-10,
+  -50,-30,-20,  0,  0,  0,  0,-20,
+  -50,-50,-30,-20,-20,-20,-30,-40
+};
+
+static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_piece_square_values_king_endgame_pawns_left = {
+  -40,-20,-30,-30,-30,-30,-50,-50,
+  -20,  0,  0,  0,  0,-30,-30,-50,
+  -10, 20, 30, 30, 10,-10,-30,-50,
+    0, 30, 40, 40, 20,-10,-30,-50,
+    0, 30, 40, 40, 20,-10,-30,-50,
+  -10, 20, 30, 30, 10,-10,-30,-50,
+  -20,  0,  0,  0,  0,-20,-30,-50,
+  -40,-30,-20,-20,-20,-30,-50,-50
+};
+
 static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_piece_square_values_king_endgame = {
   -50,-30,-30,-30,-30,-30,-30,-50
   -30,-30,  0,  0,  0,  0,-30,-30,
@@ -95,7 +117,7 @@ static const array<IncrementalUpdater::score_t, BitBoard::c_bitboard_size> c_pie
   -30,-10, 30, 40, 40, 30,-10,-30,
   -30,-10, 30, 40, 40, 30,-10,-30,
   -30,-10, 20, 30, 30, 20,-10,-30,
-  -30,-20,-10,  0,  0,-10,-20,-30,
+  -30,-20,  0, 10, 10,  0,-20,-30,
   -50,-40,-30,-20,-20,-30,-40,-50,
 };
 
