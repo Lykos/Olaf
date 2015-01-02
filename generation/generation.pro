@@ -21,5 +21,9 @@ HEADERS += \
 
 LIBS += -lgflags
 
+target.path = /usr/local/lib
+
+INSTALLS += target
+
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Olaf-Release/olaf -lolaf
 CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Olaf-Debug/olaf -lolaf
