@@ -20,8 +20,6 @@ private Q_SLOTS:
 
   void test_wrong_so();
 
-  void test_wrong_path();
-
   void test_probe_without_load();
 
   void test_probe_for_unknown();
