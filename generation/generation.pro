@@ -8,16 +8,12 @@ include(../common.pri)
 
 QT       -= core gui
 
-TARGET = generation
-CONFIG   += console
-CONFIG   -= app_bundle
+TARGET = olafgeneration
+TEMPLATE = lib
 
-TEMPLATE = app
-
-DEFINES += GENERATION_LIBRARY
+DEFINES += OLAFGENERATION_LIBRARY
 
 SOURCES += \
-    main.cpp \
     generation.cpp
 
 HEADERS += \

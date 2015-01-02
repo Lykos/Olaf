@@ -43,6 +43,10 @@ public:
    */
   SearcherFactory(ThinkingWriter* writer, const Config* config);
 
+  std::unique_ptr<Searcher> searcher() const;
+
+  std::unique_ptr<Searcher> opening_book_searcher() const;
+
   std::unique_ptr<Searcher> timed_searcher() const;
 
   std::unique_ptr<Searcher> iterative_searcher() const;
@@ -56,6 +60,8 @@ public:
   std::unique_ptr<PositionEvaluator> evaluator() const;
 
   std::unique_ptr<TranspositionTable> transposition_table() const;
+
+  std::unique_ptr<PawnTable> pawn_table() const;
 
   std::unique_ptr<EgbbProber> egbb_prober() const;
 

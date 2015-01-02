@@ -35,18 +35,17 @@ bool MoveChecker::pseudo_valid_move(const ChessBoard& board,
   // TODO Improve this.
   const Position source(incomplete_move.source());
   const BitBoard destinations(incomplete_move.destination());
-  const ColorBoard& turn_board = board.turn_board();
-  if (turn_board.piece_board(PieceSet::c_rook_index).get(source)) {
+  if (board.rook_board(board.turn_color()).get(source)) {
     return destinations & MagicMoves::moves_rook(source, board);
-  } else if (turn_board.piece_board(PieceSet::c_knight_index).get(source)) {
+  } else if (board.knight_board(board.turn_color()).get(source)) {
     return destinations & MagicMoves::moves_knight(source, board);
-  } else if (turn_board.piece_board(PieceSet::c_bishop_index).get(source)) {
+  } else if (board.bishop_board(board.turn_color()).get(source)) {
     return destinations & MagicMoves::moves_bishop(source, board);
-  } else if (turn_board.piece_board(PieceSet::c_queen_index).get(source)) {
+  } else if (board.queen_board(board.turn_color()).get(source)) {
     return destinations & MagicMoves::moves_queen(source, board);
-  } else if (turn_board.piece_board(PieceSet::c_king_index).get(source)) {
+  } else if (board.king_board(board.turn_color()).get(source)) {
     return destinations & MagicMoves::moves_king(source, board);
-  } else if (turn_board.piece_board(PieceSet::c_pawn_index).get(source)) {
+  } else if (board.pawn_board(board.turn_color()).get(source)) {
     return destinations & MagicMoves::moves_pawn(source, board);
   } else {
     return false;
@@ -91,42 +90,41 @@ Move MoveChecker::complete(IncompleteMove incomplete_move,
 bool MoveChecker::can_kill_king(const ChessBoard& board)
 {
   const BitBoard king_captures =
-      board.noturn_board().piece_board(PieceSet::c_king_index) | board.king_captures();
+      board.king_board(board.noturn_color()) | board.king_captures();
   if (!king_captures) {
     return false;
   }
-  const ColorBoard& turn_board = board.turn_board();
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_rook_index); sources;) {
+  for (BitBoard sources = board.rook_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     if (king_captures & MagicMoves::moves_rook(source, board)) {
       return true;
     }
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_knight_index); sources;) {
+  for (BitBoard sources = board.knight_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     if (king_captures & MagicMoves::moves_knight(source, board)) {
       return true;
     }
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_bishop_index); sources;) {
+  for (BitBoard sources = board.bishop_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     if (king_captures & MagicMoves::moves_bishop(source, board)) {
       return true;
     }
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_queen_index); sources;) {
+  for (BitBoard sources = board.queen_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     if (king_captures & MagicMoves::moves_queen(source, board)) {
       return true;
     }
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_king_index); sources;) {
+  for (BitBoard sources = board.king_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     if (king_captures & MagicMoves::moves_king(source, board)) {
       return true;
     }
   }
-  for (BitBoard sources = turn_board.piece_board(PieceSet::c_pawn_index); sources;) {
+  for (BitBoard sources = board.pawn_board(board.turn_color()); sources;) {
     const Position source = sources.next_position();
     if (king_captures & MagicMoves::moves_pawn(source, board)) {
       return true;

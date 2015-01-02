@@ -9,12 +9,11 @@
 #include <cstdlib>
 #include <ostream>
 #include <iostream>
+#include <sstream>
 #include <fstream>
-#include <gflags/gflags.h>
 
 #include "olaf/rules/bitboard.h"
-
-DEFINE_string(output_file, "", "If this is non-empty, the output will be written here.");
+#include "olaf/status.h"
 
 using namespace std;
 
@@ -471,7 +470,6 @@ bool try_integrate(const vector<uint64_t>& moves, int index, array<Magic, 64>* c
   auto it = search(optimized_magic_moves.begin(), optimized_magic_moves.end(),
                    moves.begin(), moves.end());
   if (it != optimized_magic_moves.end()) {
-    cout << "Hit!";
     (*magic)[index].index = it - optimized_magic_moves.begin();
     return true;
   } else {
@@ -562,43 +560,74 @@ void print_magic(const bool is_rook)
   cout << "}};" << endl;
 }
 
-void generate_magic()
+Status generate_magic(const string& output_file, const bool verbose)
 {
-  cout << "Generating occupancy for rook" << endl;
-  generate_occupancy_variations(true);
-  cout << "Generating move database for rook" << endl;
-  generate_move_database(true);
-  cout << "Optimizing move database for rook" << endl;
-  optimize_move_database(true);
-  cout << "Finishing magic for rook" << endl;
-  finish_magic(true);
-  cout << "Generating occupancy for bishop" << endl;
-  generate_occupancy_variations(false);
-  cout << "Generating move database for bishop" << endl;
-  generate_move_database(false);
-  cout << "Optimizing move database for bishop" << endl;
-  optimize_move_database(false);
-  cout << "Finishing magic for bishop" << endl;
-  finish_magic(false);
-  cout << "Entries: " << optimized_magic_moves.size() << endl;
-  int unoptimized_size = 0;
-  for (int i = 0; i < 64; ++i) {
-    unoptimized_size += magic_moves_bishop[i].size() + magic_moves_rook[i].size();
+  const bool for_rook = true;
+  const bool for_bishop = false;
+  if (verbose) {
+    cout << "Generating occupancy for rook" << endl;
   }
-  cout << "Unoptimized entries: " << unoptimized_size << endl << endl;
-  print(do_magic(Position("a8"), 18446462598732972029ull, true));
-  cout << endl;
-  print(do_magic(Position("b2"), 1 << 18, false));
-  cout << endl;
-  if (!FLAGS_output_file.empty()) {
-    ofstream file(FLAGS_output_file, ios::binary | ios::trunc | ios::out);
+  generate_occupancy_variations(for_rook);
+  if (verbose) {
+    cout << "Generating move database for rook" << endl;
+  }
+  generate_move_database(for_rook);
+  if (verbose) {
+    cout << "Optimizing move database for rook" << endl;
+  }
+  optimize_move_database(for_rook);
+  if (verbose) {
+    cout << "Finishing magic for rook" << endl;
+  }
+  finish_magic(for_rook);
+  if (verbose) {
+    cout << "Generating occupancy for bishop" << endl;
+  }
+  generate_occupancy_variations(for_bishop);
+  if (verbose) {
+    cout << "Generating move database for bishop" << endl;
+  }
+  generate_move_database(for_bishop);
+  if (verbose) {
+    cout << "Optimizing move database for bishop" << endl;
+  }
+  optimize_move_database(for_bishop);
+  if (verbose) {
+    cout << "Finishing magic for bishop" << endl;
+  }
+  finish_magic(for_bishop);
+  if (verbose) {
+    cout << "Entries: " << optimized_magic_moves.size() << endl;
+    int unoptimized_size = 0;
+    for (int i = 0; i < 64; ++i) {
+      unoptimized_size += magic_moves_bishop[i].size() + magic_moves_rook[i].size();
+    }
+    cout << "Unoptimized entries: " << unoptimized_size << endl << endl;
+    print(do_magic(Position("a8"), 18446462598732972029ull, for_rook));
+    cout << endl;
+    print(do_magic(Position("b2"), 1 << 18, for_bishop));
+    cout << endl;
+  }
+  if (!output_file.empty()) {
+    ofstream file(output_file, ios::binary | ios::trunc | ios::out);
     const char* const block = reinterpret_cast<char*>(&(optimized_magic_moves[0]));
     file.write(block, optimized_magic_moves.size() * sizeof(uint64_t));
+    if (file.fail()) {
+      file.close();
+      ostringstream oss;
+      oss << "Failed to write move table to file " << output_file << ".";
+      return Status::error(oss.str());
+    }
     file.close();
-    cout << "File written." << endl;
+    if (verbose) {
+      cout << "File written." << endl;
+    }
   }
-  print_magic(true);
-  print_magic(false);
+  if (verbose) {
+    print_magic(for_rook);
+    print_magic(for_bishop);
+  }
+  return Status::valid();
 }
 
 } // namespace generation

@@ -12,9 +12,11 @@ namespace olaf
 {
 
 EngineState::EngineState(unique_ptr<TranspositionTable> transposition_table,
+                         unique_ptr<PawnTable> pawn_table,
                          unique_ptr<EgbbProber> eggb_prober,
                          BoardState* const board_state):
   m_transposition_table(move(transposition_table)),
+  m_pawn_table(move(pawn_table)),
   m_egbb_prober(move(eggb_prober)),
   m_board_state(board_state),
   m_my_time(minutes(5)),
@@ -56,6 +58,7 @@ SearchContext EngineState::create_search_context()
     context.depth_mode = SearchContext::DepthMode::ITERATIVE;
   }
   context.transposition_table = m_transposition_table.get();
+  context.pawn_table = m_pawn_table.get();
   if (m_egbb_prober->is_initialized()) {
     context.prober = m_egbb_prober.get();
   }

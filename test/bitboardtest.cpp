@@ -105,5 +105,125 @@ void BitboardTest::test_set()
   QASSERT_THAT(board, Eq(result));
 }
 
+void BitboardTest::test_one_up_data()
+{
+  QTest::addColumn<BitBoard>("board");
+  QTest::addColumn<BitBoard>("shifted");
+
+  QTest::newRow("empty") << BitBoard(0) << BitBoard(0);
+  QTest::newRow("full") << BitBoard(0xffffffffffffffff) << BitBoard(0xffffffffffffff00);
+  QTest::newRow("upper_left_corner") << BitBoard(0x0100000000000000) << BitBoard(0);
+  QTest::newRow("upper_right_corner") << BitBoard(0x8000000000000000) << BitBoard(0);
+  QTest::newRow("lower_left_corner") << BitBoard(0x1) << BitBoard(0x100);
+  QTest::newRow("lower_right_corner") << BitBoard(0x80) << BitBoard(0x8000);
+}
+
+void BitboardTest::test_one_up()
+{
+  QFETCH(BitBoard, board);
+  QFETCH(BitBoard, shifted);
+  QASSERT_THAT(board.one_up(), Eq(shifted));
+}
+
+void BitboardTest::test_one_down_data()
+{
+  QTest::addColumn<BitBoard>("board");
+  QTest::addColumn<BitBoard>("shifted");
+
+  QTest::newRow("empty") << BitBoard(0) << BitBoard(0);
+  QTest::newRow("full") << BitBoard(0xffffffffffffffff) << BitBoard(0x00ffffffffffffff);
+  QTest::newRow("upper_left_corner") << BitBoard(0x0100000000000000) << BitBoard(0x0001000000000000);
+  QTest::newRow("upper_right_corner") << BitBoard(0x8000000000000000) << BitBoard(0x0080000000000000);
+  QTest::newRow("lower_left_corner") << BitBoard(0x1) << BitBoard(0);
+  QTest::newRow("lower_right_corner") << BitBoard(0x80) << BitBoard(0);
+}
+
+void BitboardTest::test_one_down()
+{
+  QFETCH(BitBoard, board);
+  QFETCH(BitBoard, shifted);
+  QASSERT_THAT(board.one_down(), Eq(shifted));
+}
+
+void BitboardTest::test_one_left_data()
+{
+  QTest::addColumn<BitBoard>("board");
+  QTest::addColumn<BitBoard>("shifted");
+
+  QTest::newRow("empty") << BitBoard(0) << BitBoard(0);
+  QTest::newRow("full") << BitBoard(0xffffffffffffffff) << BitBoard(0x7f7f7f7f7f7f7f7f);
+  QTest::newRow("upper_left_corner") << BitBoard(0x0100000000000000) << BitBoard(0);
+  QTest::newRow("upper_right_corner") << BitBoard(0x8000000000000000) << BitBoard(0x4000000000000000);
+  QTest::newRow("lower_left_corner") << BitBoard(0x1) << BitBoard(0);
+  QTest::newRow("lower_right_corner") << BitBoard(0x80) << BitBoard(0x40);
+}
+
+void BitboardTest::test_one_left()
+{
+  QFETCH(BitBoard, board);
+  QFETCH(BitBoard, shifted);
+  QASSERT_THAT(board.one_left(), Eq(shifted));
+}
+
+void BitboardTest::test_one_right_data()
+{
+  QTest::addColumn<BitBoard>("board");
+  QTest::addColumn<BitBoard>("shifted");
+
+  QTest::newRow("empty") << BitBoard(0) << BitBoard(0);
+  QTest::newRow("full") << BitBoard(0xffffffffffffffff) << BitBoard(0xfefefefefefefefe);
+  QTest::newRow("upper_left_corner") << BitBoard(0x0100000000000000) << BitBoard(0x0200000000000000);
+  QTest::newRow("upper_right_corner") << BitBoard(0x8000000000000000) << BitBoard(0);
+  QTest::newRow("lower_left_corner") << BitBoard(0x1) << BitBoard(0x2);
+  QTest::newRow("lower_right_corner") << BitBoard(0x80) << BitBoard(0);
+}
+
+void BitboardTest::test_one_right()
+{
+  QFETCH(BitBoard, board);
+  QFETCH(BitBoard, shifted);
+  QASSERT_THAT(board.one_right(), Eq(shifted));
+}
+
+void BitboardTest::test_north_fill_data()
+{
+  QTest::addColumn<BitBoard>("board");
+  QTest::addColumn<BitBoard>("filled");
+
+  QTest::newRow("empty") << BitBoard(0) << BitBoard(0);
+  QTest::newRow("full") << BitBoard(0xffffffffffffffff) << BitBoard(0xffffffffffffffff);
+  QTest::newRow("upper_left_corner") << BitBoard(0x0100000000000000) << BitBoard(0x0100000000000000);
+  QTest::newRow("upper_right_corner") << BitBoard(0x8000000000000000) << BitBoard(0x8000000000000000);
+  QTest::newRow("lower_left_corner") << BitBoard(0x1) << BitBoard(0x0101010101010101);
+  QTest::newRow("lower_right_corner") << BitBoard(0x80) << BitBoard(0x8080808080808080);
+}
+
+void BitboardTest::test_north_fill()
+{
+  QFETCH(BitBoard, board);
+  QFETCH(BitBoard, filled);
+  QASSERT_THAT(board.north_fill(), Eq(filled));
+}
+
+void BitboardTest::test_south_fill_data()
+{
+  QTest::addColumn<BitBoard>("board");
+  QTest::addColumn<BitBoard>("filled");
+
+  QTest::newRow("empty") << BitBoard(0) << BitBoard(0);
+  QTest::newRow("full") << BitBoard(0xffffffffffffffff) << BitBoard(0xffffffffffffffff);
+  QTest::newRow("upper_left_corner") << BitBoard(0x0100000000000001) << BitBoard(0x0101010101010101);
+  QTest::newRow("upper_right_corner") << BitBoard(0x8000000000000000) << BitBoard(0x8080808080808080);
+  QTest::newRow("lower_left_corner") << BitBoard(0x1) << BitBoard(0x1);
+  QTest::newRow("lower_right_corner") << BitBoard(0x80) << BitBoard(0x80);
+}
+
+void BitboardTest::test_south_fill()
+{
+  QFETCH(BitBoard, board);
+  QFETCH(BitBoard, filled);
+  QASSERT_THAT(board.south_fill(), Eq(filled));
+}
+
 } // namespace test
 } // namespace olaf

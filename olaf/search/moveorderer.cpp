@@ -50,22 +50,24 @@ void MoveOrderer::init_see_state(const ChessBoard& board, SeeState* const see_st
       see_state->may_xray = see_state->may_xray | color_board.piece_board(piece_index);
     }
     see_state->straight_pieces = see_state->straight_pieces
-        | color_board.piece_board(PieceSet::c_rook_index)
-        | color_board.piece_board(PieceSet::c_queen_index);
+        | board.rook_board(color)
+        | board.queen_board(color);
     see_state->diagonal_pieces = see_state->diagonal_pieces
-        | color_board.piece_board(PieceSet::c_bishop_index)
-        | color_board.piece_board(PieceSet::c_queen_index);
+        | board.bishop_board(color)
+        | board.queen_board(color);
   }
 }
 
 static inline BitBoard consider_xrays(const BitBoard occupied, const Position src, const MoveOrderer::SeeState& see_state)
 {
-  return ((MagicMoves::sliding_magic_moves(MagicNumbers::c_rook_magic, src, occupied) & see_state.straight_pieces)
-          | (MagicMoves::sliding_magic_moves(MagicNumbers::c_bishop_magic, src, occupied) & see_state.diagonal_pieces))
+  return ((MagicMoves::rook_magic_moves(src, occupied) & see_state.straight_pieces)
+          | (MagicMoves::bishop_magic_moves(src, occupied) & see_state.diagonal_pieces))
           & occupied;
 }
 
-static const Searcher::score_t c_killer_value = -1;
+static const Searcher::score_t c_queen_promotion_value = -1;
+
+static const Searcher::score_t c_killer_value = -2;
 
 static const Searcher::score_t c_quiet_value = -SearchContext::c_no_killers + c_killer_value;
 
@@ -84,15 +86,14 @@ Searcher::score_t MoveOrderer::see(const ChessBoard& board,
   BitBoard attackers = 0;
   BitBoard occupied = board.occupied();
   for (const Color color : c_colors) {
-    const ColorBoard& color_board = board.color_board(color);
     const int dst_index = dst.index();
     // Pawns can attack this square from the squares an opposing pawn would attack from here.
     const int color_index = static_cast<int>(other_color(color)) * BitBoard::c_bitboard_size;
     BitBoard pawn_attackers(MagicNumbers::c_pawn_capture_table[color_index + dst_index]);
-    attackers = attackers | (pawn_attackers & color_board.piece_board(PieceSet::c_pawn_index));
+    attackers = attackers | (pawn_attackers & board.pawn_board(color));
     // We use the fact that the knights and kings move symmetrically.
-    attackers = attackers | (BitBoard(MagicNumbers::c_knight_table[dst_index]) & color_board.piece_board(PieceSet::c_knight_index));
-    attackers = attackers | (BitBoard(MagicNumbers::c_king_table[dst_index]) & color_board.piece_board(PieceSet::c_king_index));
+    attackers = attackers | (BitBoard(MagicNumbers::c_knight_table[dst_index]) & board.knight_board(color));
+    attackers = attackers | (BitBoard(MagicNumbers::c_king_table[dst_index]) & board.king_board(color));
   }
   attackers = attackers | consider_xrays(occupied, dst, see_state);
   array<Searcher::score_t, 32> gain;
@@ -167,6 +168,8 @@ bool MoveOrderer::order_moves(const SearchContext& context,
     const int depth = context.search_depth - state.depth;
     if (m_use_see && move.is_capture()) {
       move_values[i] = see(context.board, move, see_state);
+    } else if (move.is_promotion() && move.created_piece() == PieceSet::c_queen_index) {
+      move_values[i] = c_queen_promotion_value;
     } else if (m_use_killers && static_cast<int>(context.killers.size()) > depth) {
       const SearchContext::Killers& killers = context.killers[depth];
       for (unsigned int j = 0; j < killers.size(); ++j) {

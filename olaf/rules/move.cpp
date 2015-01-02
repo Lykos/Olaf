@@ -42,7 +42,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   }
   if (BitBoard(dst) & board->king_captures()) {
     undo_info->king_victim_position =
-        board->color_board(noturn_color).piece_board(PieceSet::c_king_index).first_position();
+        board->king_board(noturn_color).first_position();
     board->remove_piece(noturn_color, PieceSet::c_king_index, undo_info->king_victim_position);
   }
   if (is_capture()) {

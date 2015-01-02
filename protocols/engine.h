@@ -25,6 +25,7 @@ class Engine
 public:
   Engine(ProtocolWriter* writer,
          std::unique_ptr<TranspositionTable> transposition_table,
+         std::unique_ptr<PawnTable> pawn_table,
          std::unique_ptr<EgbbProber> egbb_prober,
          BoardState* board_state,
          std::unique_ptr<Searcher> searcher);

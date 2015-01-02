@@ -9,6 +9,7 @@
 #include "olaf/search/moveorderer.h"
 #include "olaf/search/quiescer.h"
 #include "olaf/search/perft.h"
+#include "olaf/search/openingbooksearcher.h"
 #include "olaf/evaluation/positionevaluator.h"
 #include "olaf/parse/sanparser.h"
 #include "olaf/parse/epdparser.h"
@@ -62,6 +63,17 @@ SearcherFactory::SearcherFactory(ThinkingWriter* const writer,
   m_evaluator_factory(&(config->evaluation())),
   m_config(config)
 {}
+
+unique_ptr<Searcher> SearcherFactory::searcher() const
+{
+  return timed_searcher();
+}
+
+unique_ptr<Searcher> SearcherFactory::opening_book_searcher() const
+{
+  unique_ptr<Searcher> searcher(new OpeningBookSearcher(timed_searcher()));
+  return searcher;
+}
 
 unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 {
@@ -127,6 +139,17 @@ unique_ptr<TranspositionTable> SearcherFactory::transposition_table() const
   const long size = m_config->transposition_table().size();
   if (size) {
     table.reset(new TranspositionTable(size));
+  }
+  return table;
+}
+
+
+unique_ptr<PawnTable> SearcherFactory::pawn_table() const
+{
+  unique_ptr<PawnTable> table;
+  const long size = m_config->transposition_table().pawn_size();
+  if (size) {
+    table.reset(new PawnTable(size));
   }
   return table;
 }

@@ -3,6 +3,7 @@
 
 #include "olaf/rules/chessboard.h"
 #include "olaf/transposition_table/transpositiontable.h"
+#include "olaf/transposition_table/pawntable.h"
 #include "olaf/search/searcher.h"
 #include "olaf/tablebases/tablebaseprober.h"
 #include "olaf/rules/move.h"
@@ -104,12 +105,13 @@ struct SearchContext
   TranspositionTable* transposition_table;
 
   /**
-   * @brief get is a shortcut for transpotition_table->get(board.zobrist_hash())
+   * @brief get returns the entry for the current position from the transposition table.
+   *        If there is no transposition table or if the entry doesn't exist, returns nullptr.
    */
   const TranspositionTableEntry* get() const;
 
   /**
-   * @brief put is a shortcut for transpotition_table->put(board.zobrist_hash(), x)
+   * @brief put puts the entry in the transposition table for the current postion, if it exists.
    */
   void put(const TranspositionTableEntry& entry);
   void put(TranspositionTableEntry&& entry);
@@ -127,6 +129,20 @@ struct SearchContext
    * @brief nodes is the number of searched nodes.
    */
   int nodes = 0;
+
+  PawnTable* pawn_table;
+
+  /**
+   * @brief get returns the entry for the current position from the transposition table.
+   *        If there is no pawn table or if the entry doesn't exist, returns nullptr.
+   */
+  const PawnTableEntry* get_pawns() const;
+
+  /**
+   * @brief put puts the entry in the pawn table for the current postion, if it exists.
+   */
+  void put_pawns(const PawnTableEntry& entry);
+  void put_pawns(PawnTableEntry&& entry);
 };
 
 } // namespace olaf

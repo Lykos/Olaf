@@ -6,6 +6,8 @@
 #include <ostream>
 #include <gflags/gflags.h>
 
+#include "generation/generation.h"
+#include "olaf/rules/magicnumbers.h"
 #include "olaf/search/searcherfactory.h"
 #include "protocols/protocolreader.h"
 #include "protocols/protocolwriter.h"
@@ -59,6 +61,25 @@ int main(int argc, char* argv[])
     out = &cout;
   }
   out->setf(ios::unitbuf);
+
+  // If the move table doesn't exist, generate it.
+  {
+    ifstream move_table(FLAGS_move_table_file.c_str());
+    const int size = move_table.tellg();
+    if (size != sizeof(MagicNumbers::MoveTable)) {
+      const Status& status = generation::generate_magic(FLAGS_move_table_file, false);
+      if (!status.ok()) {
+        cout << status.message() << endl
+             << "Move table does not exist and generating it failed." << endl
+             << "In order to generate the move table at a different place," << endl
+             << "specify a path using --move_table=path/to/file." << endl;
+        exit(1);
+      }
+    }
+    move_table.close();
+  }
+
+  // Decide which protocol to use.
   string protocol_name;
   getline(*in, protocol_name);
   unique_ptr<ProtocolWriter> writer;
@@ -68,13 +89,20 @@ int main(int argc, char* argv[])
     *out << "Error: Unknown protocol " << protocol_name << "." << endl;
     return 1;
   }
+
+  // Create engine.
   SimpleThinkingWriter thinking_writer(writer.get());
   const Config config = read_config(FLAGS_config_file);
   SearcherFactory factory(&thinking_writer, &config);
-  auto searcher = factory.timed_searcher();
+  auto searcher = factory.searcher();
   BoardState board_state;
   unique_ptr<ProtocolReader> reader;
-  Engine engine(writer.get(), factory.transposition_table(), factory.egbb_prober(), &board_state, move(searcher));
+  Engine engine(writer.get(),
+                factory.transposition_table(),
+                factory.pawn_table(),
+                factory.egbb_prober(),
+                &board_state,
+                move(searcher));
   std::unique_ptr<EngineEventHelper> engine_helper(
         new EngineEventHelper(writer.get(), &board_state, &engine, &thinking_writer));
   if (protocol_name == "xboard") {

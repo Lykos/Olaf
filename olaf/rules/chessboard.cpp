@@ -166,29 +166,39 @@ bool ChessBoard::draw_insufficient_material() const
 {
   return false ||
       // two kings
-      (friends() == turn_board().piece_board(PieceSet::c_king_index)
-          && opponents() == noturn_board().piece_board(PieceSet::c_king_index))
+      (friends() == king_board(m_turn_color)
+          && opponents() == king_board(noturn_color()))
       // active player one minor piece and one king, other player one king
-      || (friends() == (turn_board().piece_board(PieceSet::c_king_index)
-                        | turn_board().piece_board(PieceSet::c_bishop_index)
-                        | turn_board().piece_board(PieceSet::c_knight_index))
-          && friends().number() == 3
-          && opponents() == noturn_board().piece_board(PieceSet::c_king_index))
+      || (friends() == (king_board(m_turn_color)
+                        | bishop_board(m_turn_color)
+                        | knight_board(m_turn_color))
+          && friends().number() == 2
+          && opponents() == king_board(noturn_color()))
       // active player one king, other player one minor piece and one king
-      || (opponents() == (noturn_board().piece_board(PieceSet::c_king_index)
-                          | noturn_board().piece_board(PieceSet::c_bishop_index)
-                          | noturn_board().piece_board(PieceSet::c_knight_index))
+      || (opponents() == (king_board(noturn_color())
+                          | bishop_board(noturn_color())
+                          | knight_board(noturn_color()))
+          && opponents().number() == 2
+          && friends() == king_board(m_turn_color))
+      // active player two knights and one king, other player one king
+      || (friends() == (king_board(m_turn_color)
+                        | knight_board(m_turn_color))
+          && friends().number() == 3
+          && opponents() == king_board(noturn_color()))
+      // active player one king, other player two knights and one king
+      || (opponents() == (king_board(noturn_color())
+                          | knight_board(noturn_color()))
           && opponents().number() == 3
-          && friends() == turn_board().piece_board(PieceSet::c_king_index))
+          && friends() == king_board(m_turn_color))
       // only two kings and two same color bishops
-      || (friends() == (turn_board().piece_board(PieceSet::c_king_index)
-                        | turn_board().piece_board(PieceSet::c_bishop_index))
-          && opponents() == (noturn_board().piece_board(PieceSet::c_king_index)
-                             | noturn_board().piece_board(PieceSet::c_bishop_index))
+      || (friends() == (king_board(m_turn_color)
+                        | bishop_board(m_turn_color))
+          && opponents() == (king_board(noturn_color())
+                             | bishop_board(noturn_color()))
           && friends().number() == 2
           && opponents().number() == 2
-          && (turn_board().piece_board(PieceSet::c_bishop_index).first_position().index() % 2
-              == noturn_board().piece_board(PieceSet::c_bishop_index).first_position().index() % 2));
+          && (bishop_board(m_turn_color).first_position().index() % 2
+              == bishop_board(noturn_color()).first_position().index() % 2));
 }
 
 bool ChessBoard::draw_repetitions() const

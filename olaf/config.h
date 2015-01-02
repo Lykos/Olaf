@@ -49,8 +49,12 @@ public:
 
     long size() const { return m_size; }
 
+    long pawn_size() const { return m_pawn_size; }
+
   private:
     const int m_size;
+
+    const int m_pawn_size;
   };
 
   class Tablebases {

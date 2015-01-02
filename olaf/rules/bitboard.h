@@ -24,6 +24,8 @@ constexpr BitBoard operator ^(BitBoard, BitBoard);
 
 constexpr BitBoard operator &(BitBoard, BitBoard);
 
+constexpr BitBoard operator ~(BitBoard);
+
 constexpr bool operator ==(BitBoard, BitBoard);
 
 constexpr bool operator !=(BitBoard, BitBoard);
@@ -40,6 +42,8 @@ class BitBoard
   friend constexpr BitBoard operator ^(BitBoard, BitBoard);
 
   friend constexpr BitBoard operator &(BitBoard, BitBoard);
+
+  friend constexpr BitBoard operator ~(BitBoard);
 
   friend constexpr bool operator ==(BitBoard, BitBoard);
 
@@ -93,6 +97,44 @@ public:
     x = (x + (x >> 4)) & m4;
     return (x * h01) >> 56;
 #endif
+  }
+
+  inline BitBoard north_fill() const
+  {
+    bitboard_t bits = m_bits;
+    bits |= bits << 8;
+    bits |= bits << 16;
+    bits |= bits << 32;
+    return BitBoard(bits);
+  }
+
+  inline BitBoard south_fill() const
+  {
+    bitboard_t bits = m_bits;
+    bits |= bits >> 8;
+    bits |= bits >> 16;
+    bits |= bits >> 32;
+    return BitBoard(bits);
+  }
+
+  constexpr BitBoard one_up() const
+  {
+    return BitBoard(m_bits << 8);
+  }
+
+  constexpr BitBoard one_down() const
+  {
+    return BitBoard(m_bits >> 8);
+  }
+
+  constexpr BitBoard one_right() const
+  {
+    return BitBoard((m_bits & 0x7f7f7f7f7f7f7f7f) << 1);
+  }
+
+  constexpr BitBoard one_left() const
+  {
+    return BitBoard((m_bits & 0xfefefefefefefefe) >> 1);
   }
 
   /**
@@ -163,6 +205,11 @@ constexpr BitBoard operator ^(BitBoard a, BitBoard b)
 constexpr BitBoard operator &(BitBoard a, BitBoard b)
 {
   return BitBoard(a.m_bits & b.m_bits);
+}
+
+constexpr BitBoard operator ~(BitBoard a)
+{
+  return BitBoard(~a.m_bits);
 }
 
 constexpr bool operator ==(BitBoard a, BitBoard b)

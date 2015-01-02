@@ -46,6 +46,42 @@ public:
 
   const ColorBoard& noturn_board() const;
 
+  inline BitBoard piece_board(const Color color,
+                              const Piece::piece_index_t piece_index) const
+  {
+    return color_board(color).piece_board(piece_index);
+  }
+
+  inline BitBoard king_board(const Color color) const
+  {
+    return piece_board(color, PieceSet::c_king_index);
+  }
+
+  inline BitBoard queen_board(const Color color) const
+  {
+    return piece_board(color, PieceSet::c_queen_index);
+  }
+
+  inline BitBoard rook_board(const Color color) const
+  {
+    return piece_board(color, PieceSet::c_rook_index);
+  }
+
+  inline BitBoard bishop_board(const Color color) const
+  {
+    return piece_board(color, PieceSet::c_bishop_index);
+  }
+
+  inline BitBoard knight_board(const Color color) const
+  {
+    return piece_board(color, PieceSet::c_knight_index);
+  }
+
+  inline BitBoard pawn_board(const Color color) const
+  {
+    return piece_board(color, PieceSet::c_pawn_index);
+  }
+
   inline bool ep_possible() const
   {
     return m_ep_captures;
