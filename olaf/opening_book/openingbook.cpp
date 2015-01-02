@@ -1,11 +1,60 @@
 #include "olaf/opening_book/openingbook.h"
 
+#include <algorithm>
 #include <cassert>
+#include <fstream>
+
+#include "olaf/rules/movechecker.h"
 
 using namespace std;
 
 namespace olaf
 {
+
+template <typename T>
+static void fill_number(const char* const bytes, T* const number)
+{
+  *number = 0;
+  for (int i = 0; i < sizeof(T); ++i) {
+    *number = (*number << 8) | bytes[i];
+  }
+}
+
+static vector<InternalOpeningBookEntry> create_entries(const char* const bytes,
+                                                       const uint64_t size)
+{
+  vector<InternalOpeningBookEntry> result;
+  for (uint64_t i = 0;
+       i <= size - sizeof(InternalOpeningBookEntry);
+       i += sizeof(InternalOpeningBookEntry)) {
+    result.emplace_back();
+    fill_number(bytes + i, &(result.back().opening_zobrist_hash));
+    fill_number(bytes + i + sizeof(uint64_t),
+                &(result.back().move));
+    fill_number(bytes + i + sizeof(uint64_t) + sizeof(uint16_t),
+                &(result.back().weight));
+    fill_number(bytes + i + sizeof(uint64_t) + 2 * sizeof(uint16_t),
+                &(result.back().learn));
+    if (result.back().move == 0 || result.back().weight == 0) {
+      result.pop_back();
+    }
+  }
+  return result;
+}
+
+// static
+unique_ptr<OpeningBook> OpeningBook::load(const string& book_file_name)
+{
+  ifstream file(book_file_name, ios::in | ios::binary | ios::ate);
+  const int size = file.tellg();
+  char* const bytes = new char[size];
+  file.seekg(0, ios::beg);
+  file.read(bytes, size);
+  file.close();
+  unique_ptr<OpeningBook> book(new OpeningBook(create_entries(bytes, size)));
+  delete[] bytes;
+  return book;
+}
 
 const uint64_t c_hash_values[781] = {
    0x9D39247E33776D41ULL, 0x2AF7398005AAA5C7ULL, 0x44DB015024623547ULL, 0x9C15F73E62A76AE2ULL,
@@ -242,6 +291,10 @@ static uint_fast8_t opening_piece_index(Color color, Piece::piece_index_t piece_
   return index;
 }
 
+OpeningBook::OpeningBook() {}
+
+OpeningBook::OpeningBook(vector<InternalOpeningBookEntry>&& entries): m_entries(entries) {}
+
 uint64_t OpeningBook::opening_zobrist_hash(const ChessBoard& board) const
 {
   uint64_t hash;
@@ -275,6 +328,63 @@ uint64_t OpeningBook::opening_zobrist_hash(const ChessBoard& board) const
     hash ^= c_hash_values[c_turn_offset];
   }
   return hash;
+}
+
+struct CompareHashes {
+  bool operator ()(const InternalOpeningBookEntry& a,
+                   const InternalOpeningBookEntry& b)
+  {
+    return a.opening_zobrist_hash < b.opening_zobrist_hash;
+  }
+};
+
+static OpeningBookEntry transform_entry(const ChessBoard& board,
+                                        const InternalOpeningBookEntry& entry)
+{
+  OpeningBookEntry result;
+  result.weight = entry.weight;
+  result.learn = entry.learn;
+  Position to(entry.move & 63);
+  const Position from((entry.move >> 6) & 63);
+  // Handle weird castle encoding.
+  if (board.piece_index(from) == PieceSet::c_king_index) {
+    if (to.column() == 0) {
+      to = Position(to.row(), 2);
+    }
+    if (to.column() == Position::c_column_size - 1) {
+      to = Position(to.row(), 6);
+    }
+  }
+  switch ((entry.move >> 12) & 7) {
+    case 0:
+      result.move = MoveChecker::complete(from, to, board);
+    case 1:
+      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_knight_index, board);
+    case 2:
+      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_bishop_index, board);
+    case 3:
+      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_rook_index, board);
+    case 4:
+      result.move = MoveChecker::complete_promotion(from, to, PieceSet::c_queen_index, board);
+  }
+  return result;
+}
+
+bool OpeningBook::get(const ChessBoard& board, vector<OpeningBookEntry>* const entries) const
+{
+  assert(entries);
+  entries->clear();
+  const uint64_t opening_hash = opening_zobrist_hash(board);
+  InternalOpeningBookEntry fake;
+  fake.opening_zobrist_hash = opening_hash;
+  const auto start = lower_bound(m_entries.begin(), m_entries.end(), fake, CompareHashes());
+  const auto stop = lower_bound(m_entries.begin(), m_entries.end(), fake, CompareHashes());
+  for (auto it = start; it != stop; ++it) {
+    if (it->weight != 0 && it->move != 0) {
+      entries->push_back(transform_entry(board, *it));
+    }
+  }
+  return entries->size();
 }
 
 } // namespace olaf
