@@ -1,11 +1,11 @@
 INCLUDEPATH += . ..
 DEPENDPATH += . ..
 
-VERSION=0.0.20
+VERSION=0.0.21
 
 DEFINES += \
     VERSION=\\\"$$VERSION\\\" \
-    VERSION_NAME=\\\"Opening_book\\\"
+    VERSION_NAME=\\\"Better_king_safety\\\"
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -Werror -pedantic
 CONFIG(release, debug|release) QMAKE_CXXFLAGS += -O3 -g
