@@ -25,7 +25,7 @@ static array<Position::index_t, Position::c_index_size> c_ep_victims = {
    0,  0,  0,  0,  0,  0,  0,  0
 };
 
-void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
+void Move::execute(ChessBoard* const board, UndoInfo* const undo_info, const bool update_incremental_state) const
 {
   const Position src(source());
   const Position dst(destination());
@@ -43,7 +43,10 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   if (BitBoard(dst) & board->king_captures()) {
     undo_info->king_victim_position =
         board->king_board(noturn_color).first_position();
-    board->remove_piece(noturn_color, PieceSet::c_king_index, undo_info->king_victim_position);
+    board->remove_piece(noturn_color,
+                        PieceSet::c_king_index,
+                        undo_info->king_victim_position,
+                        update_incremental_state);
   }
   if (is_capture()) {
     Position victim_position;
@@ -55,13 +58,16 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
     const Piece::piece_index_t captured_piece =
         board->piece_index(victim_position);
     undo_info->captured_piece = captured_piece;
-    board->remove_piece(noturn_color, captured_piece, victim_position);
+    board->remove_piece(noturn_color,
+                        captured_piece,
+                        victim_position,
+                        update_incremental_state);
   }
-  board->remove_piece(turn_color, piece_index, src);
+  board->remove_piece(turn_color, piece_index, src, update_incremental_state);
   if (is_promotion()) {
-    board->add_piece(turn_color, created_piece(), dst);
+    board->add_piece(turn_color, created_piece(), dst, update_incremental_state);
   } else {
-    board->add_piece(turn_color, piece_index, dst);
+    board->add_piece(turn_color, piece_index, dst, update_incremental_state);
   }
   undo_info->can_castle_k = board->turn_board().can_castle_k();
   undo_info->can_castle_q = board->turn_board().can_castle_q();
@@ -81,8 +87,8 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
     }
     undo_info->rook_source = rook_source;
     undo_info->rook_destination = rook_destination;
-    board->remove_piece(turn_color, PieceSet::c_rook_index, rook_source);
-    board->add_piece(turn_color, PieceSet::c_rook_index, rook_destination);
+    board->remove_piece(turn_color, PieceSet::c_rook_index, rook_source, update_incremental_state);
+    board->add_piece(turn_color, PieceSet::c_rook_index, rook_destination, update_incremental_state);
     board->king_captures(src_board | BitBoard(rook_destination));
   } else {
     board->disable_king_captures();
@@ -106,7 +112,7 @@ void Move::execute(ChessBoard* const board, UndoInfo* const undo_info) const
   board->next_turn();
 }
 
-void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
+void Move::undo(const UndoInfo& undo_info, ChessBoard* const board, const bool update_incremental_state) const
 {
   board->previous_turn();
   board->reversible_plies(undo_info.reversible_plies);
@@ -118,18 +124,18 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
   if (is_castle()) {
     static const Piece::piece_index_t c_rook_index =
         PieceSet::c_rook_index;
-    board->remove_piece(turn_color, c_rook_index, undo_info.rook_destination);
-    board->add_piece(turn_color, c_rook_index, undo_info.rook_source);
+    board->remove_piece(turn_color, c_rook_index, undo_info.rook_destination, update_incremental_state);
+    board->add_piece(turn_color, c_rook_index, undo_info.rook_source, update_incremental_state);
   }
   board->king_captures(undo_info.king_captures);
   board->can_castle_k(turn_color, undo_info.can_castle_k);
   board->can_castle_q(turn_color, undo_info.can_castle_q);
-  board->remove_piece(turn_color, piece_index, dst);
+  board->remove_piece(turn_color, piece_index, dst, update_incremental_state);
   if (is_promotion()) {
     Piece::piece_index_t c_pawn_index = PieceSet::c_pawn_index;
-    board->add_piece(turn_color, c_pawn_index, src);
+    board->add_piece(turn_color, c_pawn_index, src, update_incremental_state);
   } else {
-    board->add_piece(turn_color, piece_index, src);
+    board->add_piece(turn_color, piece_index, src, update_incremental_state);
   }
   if (is_capture()) {
     Position victim_position;
@@ -138,10 +144,10 @@ void Move::undo(const UndoInfo& undo_info, ChessBoard* const board) const
     } else {
       victim_position = dst;
     }
-    board->add_piece(noturn_color, undo_info.captured_piece, victim_position);
+    board->add_piece(noturn_color, undo_info.captured_piece, victim_position, update_incremental_state);
   }
   if (BitBoard(dst) & board->king_captures()) {
-    board->add_piece(noturn_color, PieceSet::c_king_index, undo_info.king_victim_position);
+    board->add_piece(noturn_color, PieceSet::c_king_index, undo_info.king_victim_position, update_incremental_state);
   }
   board->ep_captures(undo_info.ep_captures);
 }

@@ -130,12 +130,12 @@ public:
   /**
    * @brief execute executes the moves.
    */
-  void execute(ChessBoard* board, UndoInfo* undo_info) const;
+  void execute(ChessBoard* board, UndoInfo* undo_info, bool update_incremental_state = true) const;
 
   /**
    * @brief undo takes back the move actions.
    */
-  void undo(const UndoInfo& undo_info, ChessBoard* board) const;
+  void undo(const UndoInfo& undo_info, ChessBoard* board, bool update_incremental_state = true) const;
 private:
   constexpr Move(const Position source,
                  const Position destination,

@@ -119,10 +119,10 @@ void Perft::debug_perft(const int depth,
   int sum = 0;
   for (Move& move : moves) {
     UndoInfo undo_info;
-    move.execute(&try_board, &undo_info);
+    move.execute(&try_board, &undo_info, false);
     cout << "setboard " << FenParser::serialize(try_board) << endl;
     const PerftResult& result = internal_perft(depth - 1, &try_board);
-    move.undo(undo_info, &try_board);
+    move.undo(undo_info, &try_board, false);
     assert(try_board == board);
     sum += result.nodes;
     cout << "perft " << depth - 1 << endl;
@@ -149,13 +149,13 @@ Perft::PerftResult Perft::internal_perft(const int depth,
   vector<Move> moves = m_generator->generate_valid_moves(*board);
   for (Move& move : moves) {
     UndoInfo undo_info;
-    move.execute(board, &undo_info);
+    move.execute(board, &undo_info, false);
     if (depth > 1) {
       result += internal_perft(depth - 1, board);
     } else if (is_checked(board) && m_generator->generate_valid_moves(*board).empty()) {
       ++result.mates;
     }
-    move.undo(undo_info, board);
+    move.undo(undo_info, board, false);
     if (depth == 1) {
       ++result.nodes;
       if (move.is_capture()) {

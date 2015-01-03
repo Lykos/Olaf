@@ -229,28 +229,34 @@ string ChessBoard::draw_reason() const
 
 void ChessBoard::add_piece(const Color color,
                            const Piece::piece_index_t piece_index,
-                           const Position position)
+                           const Position position,
+                           const bool update_incremental_state)
 {
   assert(0 <= piece_index && piece_index < PieceSet::c_no_pieces);
   const int color_index = static_cast<int>(color);
   m_color_boards[color_index].piece_board(piece_index).set(position, true);
   m_occupied[color_index].set(position, true);
   m_pieces[position.index()] = piece_index;
-  ZobristHash::update(color, piece_index, position, &m_hash_state);
-  IncrementalUpdater::add_piece(color, piece_index, position, &m_incremental_state);
+  if (update_incremental_state) {
+    ZobristHash::update(color, piece_index, position, &m_hash_state);
+    IncrementalUpdater::add_piece(color, piece_index, position, &m_incremental_state);
+  }
 }
 
 void ChessBoard::remove_piece(const Color color,
                               const Piece::piece_index_t piece_index,
-                              const Position position)
+                              const Position position,
+                              const bool update_incremental_state)
 {
   assert(0 <= piece_index && piece_index < PieceSet::c_no_pieces);
   const int color_index = static_cast<int>(color);
   m_pieces[position.index()] = Piece::c_no_piece;
   m_occupied[color_index].set(position, false);
   m_color_boards[color_index].piece_board(piece_index).set(position, false);
-  ZobristHash::update(color, piece_index, position, &m_hash_state);
-  IncrementalUpdater::remove_piece(color, piece_index, position, &m_incremental_state);
+  if (update_incremental_state) {
+    ZobristHash::update(color, piece_index, position, &m_hash_state);
+    IncrementalUpdater::remove_piece(color, piece_index, position, &m_incremental_state);
+  }
 }
 
 void ChessBoard::can_castle_k(const Color color, const bool new_can_castle_k)

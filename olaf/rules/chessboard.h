@@ -265,14 +265,16 @@ public:
    */
   void add_piece(Color color,
                  Piece::piece_index_t piece_index,
-                 Position position);
+                 Position position,
+                 bool update_incremental_state = true);
 
   /**
    * @brief remove_piece removes a piece at the location in question.
    */
   void remove_piece(Color color,
                     Piece::piece_index_t piece_index,
-                    Position position);
+                    Position position,
+                    bool update_incremental_state = true);
 
   /**
    * @brief can_castle_k sets the king castling right for the given color.
