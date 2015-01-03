@@ -287,7 +287,7 @@ static inline PositionEvaluator::score_t attack_score(const ChessBoard& board,
                                                       const ColorAttacks& own_attacks,
                                                       const ColorAttacks& opponent_attacks)
 {
-  const BitBoard friends = board.turn_color() == color ? board.friends() : board.opponents();
+  const BitBoard friends = board.occupied(color);
   KingSafetyCalculator calculator(color, king_position, friends);
 
   calculator.own_attacks(own_attacks.pawns);
