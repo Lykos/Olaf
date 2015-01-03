@@ -244,69 +244,78 @@ static const uint_fast8_t c_rook_flag = 1 << 2;
 static const uint_fast8_t c_queen_flag = 1 << 3;
 static const uint_fast8_t c_king_flag = 1 << 4;
 
-static PositionEvaluator::score_t attack_score(const ChessBoard& board,
-                                               const Position king_position,
-                                               const Color color)
+struct ColorAttacks {
+  BitBoard pawns;
+  BitBoard knights;
+  BitBoard bishops;
+  BitBoard rooks;
+  BitBoard queens;
+  BitBoard kings;
+};
+
+static inline void calculate_attacks(const ChessBoard& board,
+                                     const Color color,
+                                     ColorAttacks* const attacks)
+{
+  BitBoard pawns = board.pawn_board(color);
+  while (pawns) {
+    attacks->pawns = attacks->pawns | MagicMoves::moves_pawn(pawns.next_position(), board);
+  }
+  BitBoard knights = board.knight_board(color);
+  while (knights) {
+    attacks->knights = attacks->knights | MagicMoves::moves_knight(knights.next_position(), board);
+  }
+  BitBoard bishops = board.bishop_board(color);
+  while (bishops) {
+    attacks->bishops = attacks->bishops | MagicMoves::moves_bishop(bishops.next_position(), board);
+  }
+  BitBoard rooks = board.rook_board(color);
+  while (rooks) {
+    attacks->rooks = attacks->rooks | MagicMoves::moves_rook(rooks.next_position(), board);
+  }
+  BitBoard queens = board.queen_board(color);
+  while (queens) {
+    attacks->queens = attacks->queens | MagicMoves::moves_queen(queens.next_position(), board);
+  }
+  BitBoard kings = board.king_board(color);
+  attacks->kings = MagicMoves::moves_king(kings.first_position(), board);
+}
+
+static inline PositionEvaluator::score_t attack_score(const ChessBoard& board,
+                                                      const Position king_position,
+                                                      const Color color,
+                                                      const ColorAttacks& own_attacks,
+                                                      const ColorAttacks& opponent_attacks)
 {
   const BitBoard friends = board.turn_color() == color ? board.friends() : board.opponents();
   KingSafetyCalculator calculator(color, king_position, friends);
 
-  BitBoard own_pawns = board.pawn_board(color);
-  while (own_pawns) {
-    calculator.own_attacks(MagicMoves::moves_pawn(own_pawns.next_position(), board));
-  }
-  BitBoard own_knights = board.knight_board(color);
-  while (own_knights) {
-    calculator.own_attacks(MagicMoves::moves_knight(own_knights.next_position(), board));
-  }
-  BitBoard own_bishops = board.bishop_board(color);
-  while (own_bishops) {
-    calculator.own_attacks(MagicMoves::moves_bishop(own_bishops.next_position(), board));
-  }
-  BitBoard own_rooks = board.rook_board(color);
-  while (own_rooks) {
-    calculator.own_attacks(MagicMoves::moves_rook(own_rooks.next_position(), board));
-  }
-  BitBoard own_queens = board.queen_board(color);
-  while (own_queens) {
-    calculator.own_attacks(MagicMoves::moves_queen(own_queens.next_position(), board));
-  }
+  calculator.own_attacks(own_attacks.pawns);
+  calculator.own_attacks(own_attacks.knights);
+  calculator.own_attacks(own_attacks.bishops);
+  calculator.own_attacks(own_attacks.rooks);
+  calculator.own_attacks(own_attacks.queens);
 
-  const Color opponent = other_color(color);
-  BitBoard opponent_pawns = board.pawn_board(opponent);
-  while (opponent_pawns) {
-    calculator.opponent_attacks(MagicMoves::moves_pawn(opponent_pawns.next_position(), board), c_pawn_flag);
-  }
-  BitBoard opponent_knights = board.knight_board(opponent);
-  while (opponent_knights) {
-    calculator.opponent_attacks(MagicMoves::moves_knight(opponent_knights.next_position(), board), c_knight_flag);
-  }
-  BitBoard opponent_bishops = board.bishop_board(opponent);
-  while (opponent_bishops) {
-    calculator.opponent_attacks(MagicMoves::moves_bishop(opponent_bishops.next_position(), board), c_bishop_flag);
-  }
-  BitBoard opponent_rooks = board.rook_board(opponent);
-  while (opponent_rooks) {
-    calculator.opponent_attacks(MagicMoves::moves_rook(opponent_rooks.next_position(), board), c_rook_flag);
-  }
-  BitBoard opponent_queens = board.queen_board(opponent);
-  while (opponent_queens) {
-    calculator.opponent_attacks(MagicMoves::moves_queen(opponent_queens.next_position(), board), c_queen_flag);
-  }
-  BitBoard opponent_kings = board.king_board(opponent);
-  while (opponent_kings) {
-    calculator.opponent_attacks(MagicMoves::moves_king(opponent_kings.next_position(), board), c_king_flag);
-  }
+  calculator.opponent_attacks(opponent_attacks.pawns, c_pawn_flag);
+  calculator.opponent_attacks(opponent_attacks.knights, c_knight_flag);
+  calculator.opponent_attacks(opponent_attacks.bishops, c_bishop_flag);
+  calculator.opponent_attacks(opponent_attacks.rooks, c_rook_flag);
+  calculator.opponent_attacks(opponent_attacks.queens, c_queen_flag);
+  calculator.opponent_attacks(opponent_attacks.kings, c_king_flag);
+
   return calculator.score();
 }
 
-static PositionEvaluator::score_t king_safety_score(const ChessBoard& board, const Color color)
+static inline PositionEvaluator::score_t king_safety_score(const ChessBoard& board,
+                                                           const Color color,
+                                                           const ColorAttacks& own_attacks,
+                                                           const ColorAttacks& opponent_attacks)
 {
   const Position king_position = board.king_board(color).first_position();
   const PositionEvaluator::score_t score =
       pawn_shield_score(board, king_position, color)
       + open_files_score(board, king_position, color);
-      + attack_score(board, king_position, color);
+      + attack_score(board, king_position, color, own_attacks, opponent_attacks);
   return score;
 }
 
@@ -314,7 +323,13 @@ PositionEvaluator::score_t KingSafetyEvaluator::evaluate(
     SearchState* const /* state */, SearchContext* const context)
 {
   const ChessBoard& board = context->board;
-  const score_t score = king_safety_score(board, board.turn_color()) - king_safety_score(board, board.noturn_color());
+  ColorAttacks turn_attacks;
+  calculate_attacks(board, board.turn_color(), &turn_attacks);
+  ColorAttacks noturn_attacks;
+  calculate_attacks(board, board.noturn_color(), &noturn_attacks);
+  const score_t score =
+      king_safety_score(board, board.turn_color(), turn_attacks, noturn_attacks)
+      - king_safety_score(board, board.noturn_color(), noturn_attacks, turn_attacks);
   return IncrementalUpdater::weighted_score(score, 0, board.incremental_state().material_score);
 }
 
