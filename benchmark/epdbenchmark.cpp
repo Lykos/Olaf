@@ -7,6 +7,7 @@
 #include <chrono>
 #include <dirent.h>
 #include <sstream>
+#include <iostream>
 
 #include "olaf/parse/epdposition.h"
 #include "olaf/parse/epdparser.h"
@@ -120,11 +121,13 @@ void EpdBenchmark::test_epd()
   auto ContainsMove = Matches(Contains(move));
   if (!position.best_moves.empty()) {
     if (ContainsMove(position.best_moves)) {
+      cout << "Success!" << endl;
       push_score(1);
     }
   } else {
     assert(!position.avoid_moves.empty());
     if (!ContainsMove(position.avoid_moves)) {
+      cout << "Success!" << endl;
       push_score(1);
     }
   }
