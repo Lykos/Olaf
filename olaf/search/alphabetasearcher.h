@@ -43,14 +43,6 @@ public:
   SearchResult search_windowed(SearchContext* context, score_t alpha, score_t beta);
 
   /**
-   * @brief recurse_alpha_beta should be called internally to recurse to the sub searcher.
-   * @param current_state the SearchState of the calling method.
-   * @param context the global SearchContext.
-   */
-  SearchResult recurse_sub_searcher(const SearchState& current_state,
-                                    SearchContext* context);
-
-  /**
    * @brief recurse_alpha_beta should be called internally to recurse. It takes care of
    *        stoppers, creates a new SearchState and calls alpha_beta.
    * @param current_state the SearchState of the calling method.
@@ -58,20 +50,6 @@ public:
    */
   SearchResult recurse_alpha_beta(const SearchState& current_state,
                                   SearchContext* context);
-
-  /**
-   * @brief search_move shortcut for executing a move, recursing and not undoing.
-   */
-  SearchResult recurse_move_noundo(Move move,
-                                   const SearchState& current_state,
-                                   SearchContext* context);
-
-  /**
-   * @brief search_move shortcut for executing a move, recursing and undoing.
-   */
-  SearchResult recurse_move(Move move,
-                            const SearchState& current_state,
-                            SearchContext* context);
 
 protected:
   /**
@@ -118,8 +96,10 @@ private:
 
   MoveOrderer m_orderer;
 
+protected:
   std::unique_ptr<AlphaBetaSearcher> m_sub_searcher;
 
+private:
   const int m_sub_searcher_depth;
 
   const bool m_ignore_depth;

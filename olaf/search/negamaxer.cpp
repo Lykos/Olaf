@@ -19,7 +19,7 @@ SearchResult NegaMaxer::alpha_beta(SearchState* const state,
   vector<Move> moves;
   const bool has_hash_move = generate_ordered_moves(*context, *state, &moves);
   if (moves.empty()) {
-    return recurse_sub_searcher(*state, context);
+    return m_sub_searcher->recurse_alpha_beta(*state, context);
   }
   SearchResult result;
   result.score = state->alpha;
@@ -41,7 +41,10 @@ SearchResult NegaMaxer::alpha_beta(SearchState* const state,
       }
       move.undo(undo_info, &(context->board));
     } else {
-      current_result = recurse_move(move, *state, context);
+      UndoInfo undo_info;
+      move.execute(&(context->board), &undo_info);
+      current_result = recurse_alpha_beta(*state, context);
+      move.undo(undo_info, &(context->board));
     }
     switch (update_result(move, &current_result, context, state, &result)) {
       case ResultReaction::INVALID:

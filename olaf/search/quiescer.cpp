@@ -6,6 +6,7 @@
 #include "olaf/evaluation/positionevaluator.h"
 #include "olaf/search/searchcontext.h"
 #include "olaf/search/movegenerator.h"
+#include "olaf/rules/undoinfo.h"
 
 using namespace std;
 
@@ -44,10 +45,13 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
   vector<Move> moves;
   generate_ordered_moves(*context, *state, &moves);
   if (moves.empty()) {
-    return recurse_sub_searcher(*state, context);
+    return m_sub_searcher->recurse_alpha_beta(*state, context);
   }
   for (const Move move : moves) {
-    SearchResult current_result = recurse_move(move, *state, context);
+    UndoInfo undo_info;
+    move.execute(&(context->board), &undo_info);
+    SearchResult current_result = recurse_alpha_beta(*state, context);
+    move.undo(undo_info, &(context->board));
     switch (update_result(move, &current_result, context, state, &result)) {
       case ResultReaction::INVALID:
         return SearchResult::invalid();

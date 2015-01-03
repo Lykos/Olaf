@@ -72,12 +72,6 @@ SearchResult AlphaBetaSearcher::search_windowed(SearchContext* const context,
   return recurse_alpha_beta(initial_state, context);
 }
 
-SearchResult AlphaBetaSearcher::recurse_sub_searcher(const SearchState& current_state,
-                                                     SearchContext* const context)
-{
- return m_sub_searcher->recurse_alpha_beta(current_state, context);
-}
-
 static bool is_checked(ChessBoard* const board)
 {
   board->next_turn();
@@ -97,7 +91,7 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     return SearchResult::invalid();
   } else if ((!m_ignore_depth && recurse_depth <= m_sub_searcher_depth)
              || (m_sub_searcher != nullptr && context->board.finished())) {
-    return recurse_sub_searcher(current_state, context);
+    return m_sub_searcher->recurse_alpha_beta(current_state, context);
   }
   SearchState recurse_state{static_cast<score_t>(-current_state.beta),
                             static_cast<score_t>(-current_state.alpha),
@@ -134,26 +128,6 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
     result.terminal = true;
     result.main_variation.clear();
   }
-  return result;
-}
-
-SearchResult AlphaBetaSearcher::recurse_move_noundo(const Move move,
-                                                    const SearchState& current_state,
-                                                    SearchContext* const context)
-{
-  UndoInfo undo_info;
-  move.execute(&(context->board), &undo_info);
-  return recurse_alpha_beta(current_state, context);
-}
-
-SearchResult AlphaBetaSearcher::recurse_move(const Move move,
-                                             const SearchState& current_state,
-                                             SearchContext* const context)
-{
-  UndoInfo undo_info;
-  move.execute(&(context->board), &undo_info);
-  const SearchResult& result = recurse_alpha_beta(current_state, context);
-  move.undo(undo_info, &(context->board));
   return result;
 }
 

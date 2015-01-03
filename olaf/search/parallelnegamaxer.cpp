@@ -4,6 +4,7 @@
 #include <future>
 
 #include "olaf/rules/move.h"
+#include "olaf/rules/undoinfo.h"
 #include "olaf/search/searchcontext.h"
 
 using namespace std;
@@ -20,7 +21,9 @@ static pair<Move, SearchResult> eval_move(ParallelNegaMaxer* const searcher,
   // to the same object in the copy. The rest of the state, however,
   // will be copied. We need this because we cannot use the same board.
   SearchContext context_copy(context);
-  return {move, searcher->recurse_move_noundo(move, state, &context_copy)};
+  UndoInfo undo_info;
+  move.execute(&(context_copy.board), &undo_info);
+  return {move, searcher->recurse_alpha_beta(state, &context_copy)};
 }
 
 SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
@@ -29,13 +32,16 @@ SearchResult ParallelNegaMaxer::alpha_beta(SearchState* const state,
   vector<Move> moves;
   generate_ordered_moves(*context, *state, &moves);
   if (moves.empty()) {
-    return recurse_sub_searcher(*state, context);
+    return m_sub_searcher->recurse_alpha_beta(*state, context);
   }
   auto it = moves.begin();
   // Do the first one synchronously
   SearchResult result;
   result.score = state->alpha;
-  SearchResult first_result = recurse_move(*it, *state, context);
+  UndoInfo undo_info;
+  it->execute(&(context->board), &undo_info);
+  SearchResult first_result = recurse_alpha_beta(*state, context);
+  it->undo(undo_info, &(context->board));
   switch (update_result(*it, &first_result, context, state, &result)) {
     case ResultReaction::INVALID:
       return SearchResult::invalid();

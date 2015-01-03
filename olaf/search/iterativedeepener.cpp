@@ -14,18 +14,28 @@ using namespace chrono;
 namespace olaf
 {
 
-const SearchResult::score_t c_stable_margin = 10;
+const SearchResult::score_t c_stable_margin = 50;
 
-static bool score_stable(const vector<SearchResult::score_t> scores) {
-  if (scores.size() < 3) {
+static bool results_stable(const vector<SearchResult> results) {
+  if (results.size() < 3) {
     return false;
   }
-  const SearchResult::score_t a = *(scores.end() - 1);
-  const SearchResult::score_t b = *(scores.end() - 2);
-  const SearchResult::score_t c = *(scores.end() - 3);
-  const SearchResult::score_t min_seen = min(a, min(b, c));
-  const SearchResult::score_t max_seen = max(a, max(b, c));
-  return max_seen - min_seen < c_stable_margin;
+  {
+    const SearchResult::score_t a = (results.end() - 1)->score;
+    const SearchResult::score_t b = (results.end() - 2)->score;
+    const SearchResult::score_t c = (results.end() - 3)->score;
+    const SearchResult::score_t min_seen = min(a, min(b, c));
+    const SearchResult::score_t max_seen = max(a, max(b, c));
+    if (max_seen - min_seen > c_stable_margin) {
+      return false;
+    }
+  }
+  {
+    const Move a = (results.end() - 1)->main_variation.back();
+    const Move b = (results.end() - 2)->main_variation.back();
+    const Move c = (results.end() - 3)->main_variation.back();
+    return a == b && b == c;
+  }
 }
 
 IterativeDeepener::IterativeDeepener(unique_ptr<AlphaBetaSearcher> searcher,
@@ -38,7 +48,7 @@ IterativeDeepener::IterativeDeepener(unique_ptr<AlphaBetaSearcher> searcher,
   m_initial_window(initial_window)
 {}
 
-static const int c_leave_early_factor = 10;
+static const int c_leave_early_factor = 5;
 
 SearchResult IterativeDeepener::search(SearchContext* context)
 {
@@ -69,7 +79,7 @@ SearchResult IterativeDeepener::search(SearchContext* context)
   // Now we have one move and can be more brutal for the weak stopper.
   CompositeStopper composite_stopper{context->forced_stopper, context->weak_stopper};
   context->forced_stopper = &composite_stopper;
-  vector<SearchResult::score_t> scores{result.score};
+  vector<SearchResult> results{result};
   while (context->search_depth < max_depth) {
     ++context->search_depth;
     SearchResult next_result = windowed_search(context, result.score);
@@ -77,17 +87,17 @@ SearchResult IterativeDeepener::search(SearchContext* context)
       break;
     }
     assert(!next_result.main_variation.empty());
-    result = std::move(next_result);
+    result = next_result;
     milliseconds time = duration_cast<milliseconds>(steady_clock::now() - start);
     m_writer->output(context->board, result, context->nodes, time, context->search_depth);
     if (result.terminal) {
       break;
     }
-    scores.push_back(next_result.score);
+    results.push_back(next_result);
     // If we understood the position, we can leave early.
     if (context->time_mode == SearchContext::TimeMode::ADAPTED
         && context->elapsed() * c_leave_early_factor > context->allocated_time
-        && score_stable(scores)) {
+        && results_stable(results)) {
       break;
     }
   }
