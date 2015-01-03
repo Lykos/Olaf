@@ -13,15 +13,13 @@ namespace olaf
 class TimeStopper : public Stopper
 {
 public:
-  TimeStopper(const std::chrono::milliseconds& millis);
+  TimeStopper(const std::chrono::steady_clock::time_point& now,
+              const std::chrono::milliseconds& millis);
 
   bool should_stop() const override;
 
 private:
-  const std::chrono::steady_clock::time_point m_start;
-
-  const std::chrono::milliseconds m_millis;
-
+  const std::chrono::steady_clock::time_point m_stop;
 };
 
 } // namespace olaf

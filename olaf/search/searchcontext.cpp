@@ -1,7 +1,9 @@
 #include "olaf/search/searchcontext.h"
+
 #include <limits>
 
 using namespace std;
+using namespace chrono;
 
 namespace olaf
 {
@@ -70,6 +72,11 @@ void SearchContext::put_pawns(PawnTableEntry&& entry)
   if (pawn_table) {
     pawn_table->put(board.pawn_zobrist_hash(), move(entry));
   }
+}
+
+milliseconds SearchContext::elapsed() const
+{
+  return duration_cast<milliseconds>(steady_clock::now() - time_start);
 }
 
 } // namespace olaf

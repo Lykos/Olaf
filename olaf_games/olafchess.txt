@@ -4340,3 +4340,6 @@ Sat Jan  3 12:36:19 2015: LiebensPawn resigns (0-1).
 Sat Jan  3 12:36:20 2015: juho 1664 vs olafchess 2024 rated Blitz 5 0 started.
 Sat Jan  3 12:41:55 2015: juho resigns (0-1).
 Sat Jan  3 12:41:56 2015: olafchess logged out.
+Sat Jan  3 12:44:13 2015: olafchess logged in.
+Sat Jan  3 13:03:45 2015: CHELLER 1543 vs olafchess 2028 rated Blitz 5 0 started.
+Sat Jan  3 13:04:12 2015: Game aborted by CHELLER at move 1 (*).

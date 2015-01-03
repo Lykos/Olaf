@@ -6,15 +6,14 @@ using namespace chrono;
 namespace olaf
 {
 
-TimeStopper::TimeStopper(const milliseconds& millis):
-  m_start(steady_clock::now()),
-  m_millis(millis)
+TimeStopper::TimeStopper(const steady_clock::time_point& now,
+                         const milliseconds& millis):
+  m_stop(now + millis)
 {}
 
 bool TimeStopper::should_stop() const
 {
-  milliseconds elapsed = duration_cast<milliseconds>(steady_clock::now() - m_start);
-  return elapsed >= m_millis;
+  return steady_clock::now() >= m_stop;
 }
 
 } // namespace olaf

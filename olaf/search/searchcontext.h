@@ -46,6 +46,9 @@ struct SearchContext
 
   TimeMode time_mode;
 
+  /**
+   * @brief total_time is the total time left for us.
+   */
   std::chrono::milliseconds total_time;
 
   std::chrono::milliseconds increment;
@@ -143,6 +146,21 @@ struct SearchContext
    */
   void put_pawns(const PawnTableEntry& entry);
   void put_pawns(PawnTableEntry&& entry);
+
+  /**
+   * @brief time_start represents the time at which the search started;
+   */
+  std::chrono::steady_clock::time_point time_start;
+
+  /**
+   * @brief elapsed returns the time elapsed since the start of the search.
+   */
+  std::chrono::milliseconds elapsed() const;
+
+  /**
+   * @brief allocated_time is only valid if the time mode is ADAPTED. Then it stores the allocated time for this move.
+   */
+  std::chrono::milliseconds allocated_time;
 };
 
 } // namespace olaf
