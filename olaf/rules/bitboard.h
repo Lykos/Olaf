@@ -181,17 +181,6 @@ const BitBoard c_6_row(0xff0000000000);
 const BitBoard c_7_row(0xff000000000000);
 const BitBoard c_8_row(0xff00000000000000);
 
-const std::array<BitBoard, Position::c_row_size> c_rows = {
-  c_1_row,
-  c_2_row,
-  c_3_row,
-  c_4_row,
-  c_5_row,
-  c_6_row,
-  c_7_row,
-  c_8_row
-};
-
 constexpr BitBoard operator |(BitBoard a, BitBoard b)
 {
   return BitBoard(a.m_bits | b.m_bits);
