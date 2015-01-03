@@ -38168,3 +38168,1177 @@
 15. h5 cxd4 16. h6 Rxe5+ 17. Kf1 Bf8 18. hxg7 Bxg7 19. Qh7+ Kf8 20. f3 Qa6+ 
 {White resigns} 0-1
 
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "18:49:52"]
+[Round "-"]
+[White "lg9"]
+[Black "olafchess"]
+[WhiteElo "1824"]
+[BlackElo "2016"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. c3 d5 4. exd5 Qxd5 5. d4 Bg4 6. Be2 e6 7. O-O Nf6 
+8. Be3 cxd4 9. cxd4 Be7 10. Nc3 Qd6 11. a3 O-O 12. Rc1 Rad8 13. Qb3 Bxf3 
+14. Bxf3 Nxd4 15. Bxd4 Qxd4 16. Qxb7 Rd7 17. Qb3 Qf4 18. Rcd1 Bd6 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:06:22"]
+[Round "-"]
+[White "olafchess"]
+[Black "jugador"]
+[WhiteElo "2019"]
+[BlackElo "1592"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bd3 Nf6 5. c3 g6 6. Nf3 Bg7 7. Be3 O-O 
+8. Nbd2 a6 9. O-O Nc6 10. Bf4 Nh5 11. Be3 Bg4 12. Qb3 Bxf3 13. Nxf3 Qd7 
+14. Rad1 e6 15. c4 Na5 16. Qc3 Nxc4 17. Bxc4 Rac8 18. Ne5 Bxe5 19. dxe5 Qe7 
+20. Rd4 Ng7 21. Qb3 dxc4 22. Rxc4 Nf5 23. Rxc8 Rxc8 24. Bd2 h5 25. Rd1 b5 
+26. Bc3 Rc4 27. Rd2 Qb7 28. Rd8+ Kg7 29. Rd3 Qe4 30. Qd1 Nh4 31. f3 Qc6 
+32. Rd6 Qc5+ 33. Bd4 Qb4 34. a3 Qa5 35. Bb6 Qa4 36. b3 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:17:25"]
+[Round "-"]
+[White "olafchess"]
+[Black "WZMORAES"]
+[WhiteElo "2024"]
+[BlackElo "1711"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Bg5 Qa5 7. Bxf6 exf6 
+8. cxd5 Bb4 9. Qd2 O-O 10. dxc6 Re8+ 11. Be2 bxc6 12. Kf1 Ba6 13. Bxa6 Qxa6+ 
+14. Nge2 Rad8 15. Kg1 Rxe2 16. Qxe2 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:23:01"]
+[Round "-"]
+[White "paladin1"]
+[Black "olafchess"]
+[WhiteElo "1588"]
+[BlackElo "2026"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. c4 Bg7 6. Nc2 Nf6 7. Nc3 d6 
+8. Be2 O-O 9. O-O Nd7 10. Qd2 Nc5 11. f3 Qa5 12. Rb1 Rd8 13. b4 Bxc3 
+14. Qxc3 Nxb4 15. Bb2 e5 16. Nxb4 Na4 17. Qa3 Qc5+ 18. Kh1 Nxb2 19. Qxb2 Be6 
+20. Rfc1 Rab8 21. Nd3 Qe3 22. c5 dxc5 23. Bf1 Rxd3 24. Bxd3 Qxd3 25. Qxe5 Rd8 
+26. h4 b6 27. Rd1 Qxd1+ 28. Rxd1 Rxd1+ 29. Kh2 Rd8 30. g4 Rd2+ 31. Kg3 Rxa2 
+32. h5 gxh5 33. gxh5 h6 34. Qf6 Kh7 35. Kf4 Re2 36. Ke5 Rd2 37. f4 Rb2 
+38. f5 Bb3 39. Qd8 Ra2 40. Kf6 Bc4 41. Qf8 Rg2 42. e5 a6 43. Qd6 Rf2 
+44. Qd7 Be6 {White forfeits on time} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:32:46"]
+[Round "-"]
+[White "olafchess"]
+[Black "WZMORAES"]
+[WhiteElo "2030"]
+[BlackElo "1681"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bd3 Nc6 5. c3 Qc7 6. Ne2 Bg4 7. f3 Bh5 
+8. b4 a6 9. Bf4 Qd7 10. Nd2 Bg6 11. Nb3 e6 12. O-O Nf6 13. b5 axb5 14. Bxb5 Be7 
+15. Nc5 Bxc5 16. dxc5 O-O 17. Nd4 Rfe8 18. Re1 h6 19. Qb3 Rec8 20. Rac1 Nxd4 
+21. cxd4 Qd8 22. Red1 Qa5 23. Bd3 Bxd3 24. Rxd3 Qxa2 25. Qxb7 Rab8 26. Bxb8 
+{Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:40:35"]
+[Round "-"]
+[White "jugador"]
+[Black "olafchess"]
+[WhiteElo "1652"]
+[BlackElo "2033"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 a6 5. Bd3 Bc5 6. Ne2 Ne7 7. O-O O-O 
+8. a4 d5 9. e5 Nbc6 10. Bf4 Qc7 11. Nd2 Nxe5 12. Nb3 Bd6 13. Bg3 Nxd3 
+14. cxd3 e5 15. d4 Rd8 16. Rc1 Nc6 17. Nc5 Qb6 18. Nc3 Bxc5 19. dxc5 Qxc5 
+20. Qh5 Be6 21. Bxe5 d4 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:45:23"]
+[Round "-"]
+[White "olafchess"]
+[Black "jugador"]
+[WhiteElo "2036"]
+[BlackElo "1649"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. d4 exd4 6. Qxd4 Qxd4 7. Nxd4 Bd7 
+8. Be3 O-O-O 9. Nc3 f6 10. O-O-O Bd6 11. Nce2 Ne7 12. Bf4 c5 13. Bxd6 cxd6 
+14. Nb3 Bb5 15. Nf4 Bc4 16. Kb1 g5 17. Nd5 Bxd5 18. exd5 Ng6 19. Rhe1 Rde8 
+20. Nd2 Re5 21. Nc4 Rxe1 22. Rxe1 Nf4 23. Nxd6+ Kd7 24. Nxb7 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:48:58"]
+[Round "-"]
+[White "jugador"]
+[Black "olafchess"]
+[WhiteElo "1646"]
+[BlackElo "2039"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. Nc3 Bg7 6. Nde2 Nf6 7. g3 O-O 
+8. Bg2 d6 9. O-O Rb8 10. b3 Bg4 11. Bb2 e5 12. h3 Bxe2 13. Nxe2 Qb6 14. c4 Rbd8 
+15. Kh2 Rfe8 16. Qd2 Nd7 17. Rad1 Nc5 18. Nc3 Qa5 19. Ba1 Rd7 20. Nd5 Qxd2 
+21. Rxd2 f5 22. exf5 gxf5 23. Rfd1 Rf7 24. Ne3 f4 25. Nc2 f3 26. Bf1 Ne4 
+27. Rxd6 Nxd6 28. Rxd6 Bf8 29. Rd5 Bg7 30. c5 Bf6 31. Bc4 Na5 32. Ne3 Nxc4 
+33. Nxc4 Bg7 34. Bxe5 Rf5 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:55:55"]
+[Round "-"]
+[White "olafchess"]
+[Black "jugador"]
+[WhiteElo "2042"]
+[BlackElo "1643"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e6 6. Be2 Be7 7. O-O Nc6 
+8. Be3 a6 9. f4 Qc7 10. Qe1 Bd7 11. Rd1 Rc8 12. g4 Nxd4 13. Rxd4 Bc6 14. Bf3 b5 
+15. e5 dxe5 16. Bxc6+ Qxc6 17. fxe5 Nxg4 18. Rxg4 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "19:57:48"]
+[Round "-"]
+[White "jugador"]
+[Black "olafchess"]
+[WhiteElo "1640"]
+[BlackElo "2045"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. Nc3 Bg7 6. Nde2 Nf6 7. g3 O-O 
+8. Bg2 d6 9. O-O Be6 10. b3 d5 11. Nf4 Nxe4 12. Nxe4 Bxa1 13. Ng5 Bf5 
+14. Nxd5 e6 15. Ba3 Qxg5 16. Qxa1 exd5 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "20:03:48"]
+[Round "-"]
+[White "olafchess"]
+[Black "brobbins"]
+[WhiteElo "2050"]
+[BlackElo "1734"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 e6 7. f3 Be7 
+8. Qd2 Qc7 9. O-O-O Nbd7 10. Kb1 b5 11. g4 Nc5 12. b4 Na4 13. Nce2 d5 
+14. g5 Nd7 15. exd5 exd5 16. Bf4 Qc4 17. c3 O-O 18. Nf5 Bd8 19. Nd6 Qc6 
+20. Bh3 Ndb6 21. Nxc8 Rxc8 22. Bxc8 Nxc8 23. Qxd5 Nxc3+ 24. Nxc3 Qxc3 
+25. Qe4 Nb6 26. Rd3 Qc8 27. Bd6 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "20:14:27"]
+[Round "-"]
+[White "olafchess"]
+[Black "paladin1"]
+[WhiteElo "2052"]
+[BlackElo "1595"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d3 Bc5 5. c3 Bb6 6. Bg5 h6 7. Bxf6 Qxf6 
+8. Nbd2 Ne7 9. Qb3 c6 10. Rd1 O-O 11. O-O Rd8 12. d4 d6 13. Rfe1 Ng6 14. a3 Nf4 
+15. g3 Nh3+ 16. Kg2 Bg4 17. Be2 Nxf2 18. Kxf2 exd4 19. cxd4 Bxd4+ 20. Kg2 
+{Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "20:44:32"]
+[Round "-"]
+[White "gareloco"]
+[Black "olafchess"]
+[WhiteElo "1197"]
+[BlackElo "2052"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. Nc3 Bg7 6. Be3 Nf6 7. f3 O-O 
+8. Qd2 d5 9. O-O-O dxe4 10. fxe4 e5 11. Nxc6 Qxd2+ 12. Kxd2 bxc6 13. Kc1 Bg4 
+14. Rd6 Rad8 15. Rxc6 Nxe4 16. Bd3 Nxc3 17. bxc3 Be6 18. Ra6 Bd5 19. Rg1 e4 
+20. Bb5 Rc8 21. Bd4 Bxd4 22. cxd4 Rc7 23. Ba4 Bxa2 24. Kb2 Bd5 25. Bb3 Bxb3 
+26. cxb3 Rd7 27. Ra4 Re8 28. Re1 e3 29. Kc3 e2 30. Kd2 Rde7 31. d5 Re3 
+32. Rxa7 Rxb3 33. Rc7 Rb4 34. d6 Rd4+ 35. Kc3 Rxd6 36. Rc4 Rd1 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "21:23:41"]
+[Round "-"]
+[White "olafchess"]
+[Black "verdugo21"]
+[WhiteElo "2059"]
+[BlackElo "1819"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. Bc4 Nb6 5. Bb3 dxe5 6. Qh5 e6 7. dxe5 a5 
+8. a4 N8d7 9. Nc3 Nc5 10. Nge2 Nxb3 11. cxb3 Qd3 12. O-O Qg6 13. Qf3 Bb4 
+14. Nb5 O-O 15. Nxc7 Rb8 16. Be3 Nd5 17. Ba7 Nxc7 18. Bxb8 Nd5 19. Rfd1 Bd7 
+20. Bd6 Bxd6 21. exd6 Bc6 22. Nd4 Nb4 23. Nxc6 Nxc6 24. d7 Rd8 25. Rac1 h5 
+26. Qe3 e5 27. Qb6 Qg5 28. Qxb7 Nd4 29. Rc8 Kh7 30. Rxd8 Qxd8 31. Rxd4 exd4 
+32. Qc8 Qe7 33. h3 Qe1+ 34. Kh2 Qxf2 35. Qc7 d3 36. d8=Q d2 37. Qc2+ g6 
+38. Qcxd2 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "21:30:02"]
+[Round "-"]
+[White "verdugo21"]
+[Black "olafchess"]
+[WhiteElo "1813"]
+[BlackElo "2065"]
+[TimeControl "3+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. Nc3 Bg7 6. Be3 Nf6 7. f3 O-O 
+8. Qd2 d5 9. Nxc6 bxc6 10. e5 Nd7 11. e6 fxe6 12. O-O-O Qa5 13. Bd4 Bxd4 
+14. Qxd4 e5 15. Qd2 e6 16. a3 Rb8 17. Re1 c5 18. Kb1 Qxa3 19. Bb5 Qb4 
+20. Qd3 d4 21. Nd1 Rxb5 22. h4 c4 23. Qe4 Nc5 24. Qxe5 Nd3 25. Qxd4 Nxe1 
+26. c3 e5 27. cxb4 exd4 28. Rxe1 Bf5+ 29. Kc1 Rxb4 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "21:40:55"]
+[Round "-"]
+[White "olafchess"]
+[Black "Onandov"]
+[WhiteElo "2068"]
+[BlackElo "1692"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 d6 3. d4 Nd7 4. Nc3 Ngf6 5. Bc4 Be7 6. O-O O-O 7. Re1 c6 
+8. a4 b6 9. Bg5 a6 10. Bb3 Bb7 11. Qe2 Qc7 12. Rad1 Rfe8 13. Qc4 Rf8 
+14. Bxf6 Bxf6 15. Nd5 Qb8 16. Nxf6+ Nxf6 17. Qc3 Nd7 18. dxe5 Nxe5 
+19. Qb4 Nxf3+ 20. gxf3 b5 21. Rxd6 Qc7 22. axb5 axb5 23. Red1 Rad8 
+24. Bxf7+ Kxf7 25. Qb3+ Ke7 26. Qe6# {Black checkmated} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "21:49:56"]
+[Round "-"]
+[White "olafchess"]
+[Black "cosmiccondomrum"]
+[WhiteElo "2070"]
+[BlackElo "1631"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 d6 2. d4 c6 3. Nf3 Qc7 4. Nc3 e5 5. Bc4 Bg4 6. dxe5 dxe5 7. O-O Nf6 
+8. h3 Bh5 9. Bd3 Bb4 10. g4 Bxc3 11. bxc3 Bg6 12. g5 Nh5 13. Nh4 Nd7 
+14. Nf5 O-O-O 15. Be3 Kb8 16. Qf3 Bxf5 17. Qxf5 g6 18. Qxf7 Rdf8 19. Qe7 Nf4 
+20. Bxf4 Rxf4 21. Qg7 Rhf8 22. Qxh7 Qc8 23. Qxg6 Rh4 24. Kg2 Rfh8 25. Qd6+ Ka8 
+26. Rh1 Nb6 27. Qxe5 Rxh3 28. Qf5 Qxf5 29. exf5 R3h4 30. Rxh4 Rxh4 31. g6 Nd7 
+32. Re1 Nf6 33. Re6 Nd7 34. Re8+ Nb8 35. Be2 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "21:57:06"]
+[Round "-"]
+[White "cosmiccondomrum"]
+[Black "olafchess"]
+[WhiteElo "1629"]
+[BlackElo "2072"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. d4 Nf6 2. c4 e6 3. a3 d5 4. Nc3 c6 5. Nf3 dxc4 6. e4 b5 7. Be2 Nbd7 
+8. O-O Be7 9. Bf4 Bb7 10. Qc2 O-O 11. b3 c5 12. e5 Nd5 13. Nxd5 exd5 
+14. bxc4 bxc4 15. Rab1 Nb6 16. a4 cxd4 17. Nxd4 Bc5 18. Rfd1 Qc7 19. Nb5 Qc6 
+20. Nd4 Qxa4 21. Qf5 Bc8 22. Qh5 Bxd4 23. Rxd4 Be6 24. Bh6 gxh6 25. Qxh6 Qc2 
+26. Qf6 Qxb1+ 27. Bf1 Nd7 28. Qg5+ Qg6 29. Qh4 Nxe5 30. f4 Nf3+ {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "22:05:33"]
+[Round "-"]
+[White "hotznplotz"]
+[Black "olafchess"]
+[WhiteElo "1938"]
+[BlackElo "2049"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. d4 Nf6 2. Bg5 e6 3. Nd2 h6 4. Bxf6 Qxf6 5. e3 Nc6 6. f4 d5 7. Ngf3 Bd6 
+8. c3 Bd7 9. Bd3 O-O-O 10. b4 g5 11. g3 gxf4 12. exf4 Ne7 13. O-O Nf5 
+14. Qe2 Rhg8 15. Rf2 Bxf4 16. Ne5 Bxe5 17. dxe5 Qh4 18. Bxf5 exf5 19. Nf3 Qh5 
+20. Nd4 Qxe2 21. Nxe2 Rge8 22. Nd4 Rxe5 23. Raf1 Rh8 24. Nxf5 Be6 25. Nd4 Re3 
+26. Rf3 Rxf3 27. Rxf3 Kd7 28. Kg2 Ra8 29. Rf6 Rh8 30. h4 Ke7 31. Rf2 Re8 
+32. Nf5+ Bxf5 33. Rxf5 Ke6 34. Rh5 Rh8 35. Kf3 f6 36. Kf4 Kd6 37. Kf5 Ke7 
+38. g4 c6 39. g5 fxg5 40. hxg5 Rf8+ 41. Ke5 hxg5 42. Rxg5 Rf7 43. a4 Kd7 
+44. a5 Re7+ 45. Kd4 Kd6 46. Rg6+ Re6 47. Rg7 Re4+ 48. Kd3 Re7 49. Rg8 Rf7 
+50. Ra8 a6 51. Rh8 Rf3+ 52. Kd4 Rf4+ 53. Kd3 Rf3+ 54. Kd4 Rf4+ 55. Kd3 Rf7 
+56. Rh5 Rf3+ 57. Kd4 Rf4+ 58. Kd3 Rf3+ 59. Kd4 Rf4+ 60. Kd3 Rf7 61. Rh6+ Ke5 
+62. Rh5+ Ke6 63. Rh6+ Ke5 64. Rh5+ Kd6 65. Rh6+ Kd7 66. Kd4 Rf4+ 67. Kd3 Rf3+ 
+68. Kd4 Rf4+ 69. Kd3 Rf3+ 70. Kd4 Rf7 71. Kd3 Rg7 72. Kd4 Rg4+ 73. Kd3 Rg1 
+74. Kd4 Ra1 75. Kc5 Rb1 76. Rh7+ {Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "22:17:54"]
+[Round "-"]
+[White "olafchess"]
+[Black "paladin1"]
+[WhiteElo "2051"]
+[BlackElo "1610"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. d4 exd4 6. Qxd4 Qxd4 7. Nxd4 Bd7 
+8. Be3 O-O-O 9. Nc3 Ne7 10. O-O-O g6 11. Nf3 Bg7 12. Ng5 Rdf8 13. Kb1 h6 
+14. Nf3 g5 15. h3 Re8 16. Rhe1 b6 17. Ne2 c5 18. Ng3 f5 19. Nh5 Rh7 
+20. Nxg7 Rxg7 21. Ne5 Be6 22. f3 fxe4 23. fxe4 Ng8 24. Bd2 Nf6 25. Bc3 Rh7 
+26. b3 Nh5 27. Nd3 {Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "22:25:14"]
+[Round "-"]
+[White "paladin1"]
+[Black "olafchess"]
+[WhiteElo "1608"]
+[BlackElo "2053"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 a6 5. c4 Nc6 6. Nc3 Qc7 7. Be2 Bd6 
+8. g3 Nxd4 9. Qxd4 e5 10. Qd2 Nf6 11. b3 Bb4 12. Bf3 O-O 13. O-O d5 14. exd5 e4 
+15. Bg2 b5 16. Bb2 bxc4 17. a3 Bd6 18. Rac1 cxb3 19. Nxe4 Nxe4 20. Bxe4 Qb7 
+21. Rc6 Be7 22. Rfc1 Qb5 23. Rh6 f5 24. d6 fxe4 25. dxe7 Re8 26. Qd4 Rxe7 
+27. Rc5 Qd3 {White forfeits on time} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "22:33:22"]
+[Round "-"]
+[White "olafchess"]
+[Black "Heian"]
+[WhiteElo "2059"]
+[BlackElo "1801"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Be7 5. O-O b5 6. Bb3 Nf6 7. Re1 O-O 
+8. c3 d6 9. h3 d5 10. exd5 Nxd5 11. Nxe5 Nxe5 12. Rxe5 Nf6 13. d4 Bd6 
+14. Re1 Ng4 15. hxg4 Qh4 16. Qf3 Bxg4 17. g3 Qh5 18. Qd5 Qh3 19. Nd2 Bxg3 
+20. fxg3 Qxg3+ 21. Kf1 Rae8 22. Rxe8 Rxe8 23. Qxf7+ {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "22:40:14"]
+[Round "-"]
+[White "olafchess"]
+[Black "paladin1"]
+[WhiteElo "2061"]
+[BlackElo "1590"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 
+8. a4 Rb8 9. axb5 axb5 10. Nc3 d6 11. d4 Nxd4 12. Nxd4 exd4 13. Qxd4 c5 
+14. Qd1 c4 15. Ba2 Be6 16. Nd5 Re8 17. Qf3 Bxd5 18. exd5 Nd7 19. Bf4 Bf8 
+20. Rxe8 Qxe8 21. Rc1 Nf6 22. Bb1 Qe7 23. Rd1 Re8 24. h3 Nd7 25. Bg3 Ne5 
+26. Qe3 {Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "22:49:01"]
+[Round "-"]
+[White "Danton1956"]
+[Black "olafchess"]
+[WhiteElo "1618"]
+[BlackElo "2063"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 Nc6 5. Nf3 d6 6. Bb5 Nf6 7. O-O e5 
+8. Bg5 Be6 9. Rc1 Be7 10. Nd5 Bd7 11. Qa4 O-O 12. Nxe7+ Qxe7 13. Rfd1 a6 
+14. Bxc6 Bxc6 15. Rxc6 bxc6 16. Qxc6 Rfd8 17. Bxf6 Qxf6 18. b4 Qe6 19. Qd5 Qxd5 
+20. Rxd5 Rdc8 21. g3 Rc1+ 22. Kg2 Rc4 23. a3 Rxe4 24. Rxd6 Re2 25. Rd7 e4 
+26. Nd4 Rd2 27. Kf1 Rc8 28. Ke1 Rd3 29. Ke2 g6 30. f3 Rc4 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "23:03:06"]
+[Round "-"]
+[White "olafchess"]
+[Black "Danton1956"]
+[WhiteElo "2065"]
+[BlackElo "1616"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. g4 h6 7. h4 Nc6 
+8. Rg1 d5 9. Bb5 Bd7 10. Bxc6 bxc6 11. exd5 Nxd5 12. Nxd5 cxd5 13. g5 hxg5 
+14. hxg5 Qb6 15. Nb3 a5 16. Be3 Qb4+ 17. c3 Qe4 18. Qd4 Rh4 19. Qb6 a4 
+20. Nd2 Qd3 21. Qb7 Rc8 22. Nf3 Re4 23. Nd4 a3 24. Rc1 Rxe3+ 25. fxe3 Qxe3+ 
+26. Ne2 axb2 27. Qxb2 Bc5 28. Rg3 Qf2+ 29. Kd2 Bd6 30. Rg4 Bc5 31. Rg3 Bd6 
+32. Rg4 Bc5 33. Rh1 Qe3+ 34. Ke1 Ke7 35. Rf1 Qe5 36. Kd1 Rb8 37. Qc2 Be3 
+38. g6 f5 39. Rh4 Kf6 40. Nc1 Bb5 41. Nd3 Qg3 42. Rb4 {Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "23:22:13"]
+[Round "-"]
+[White "Danton1956"]
+[Black "olafchess"]
+[WhiteElo "1614"]
+[BlackElo "2067"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. Nc3 Bg7 6. Be3 Nf6 7. f3 O-O 
+8. Qd2 d5 9. exd5 Nxd5 10. Nxc6 bxc6 11. Bd4 Bxd4 12. Qxd4 e5 13. Qd2 Rb8 
+14. Bc4 Qh4+ {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.02"]
+[Time "23:25:27"]
+[Round "-"]
+[White "olafchess"]
+[Black "Danton1956"]
+[WhiteElo "2037"]
+[BlackElo "1644"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. g4 h6 7. h4 Nc6 
+8. Rg1 d5 9. Bb5 Bd7 10. exd5 Nxd5 11. Nxd5 exd5 12. Bxc6 bxc6 13. Qe2+ Be7 
+14. Nf5 Bxf5 15. gxf5 Kf8 16. Qg4 Bf6 17. Kf1 c5 18. h5 Kg8 19. Kg2 d4 
+20. Qf3 Kh7 21. Bf4 Qd7 22. Bg3 Rhe8 23. Rge1 c4 24. a3 a5 25. Rad1 a4 
+26. Rxe8 Rxe8 27. Kg1 Qb5 28. Rb1 Rd8 29. Qg4 Rd5 30. Bh4 Bxh4 31. Qxh4 Rxf5 
+32. Qxd4 Rxh5 33. Qe4+ f5 34. Qf3 Rg5+ 35. Kh1 Qe8 36. Rg1 Qh5+ 37. Qxh5 Rxh5+ 
+38. Kg2 Rg5+ 39. Kf1 Rxg1+ 40. Kxg1 g5 41. Kf1 g4 42. f3 g3 43. f4 h5 
+44. Kg2 h4 45. Kh3 Kg6 46. Kg2 Kf6 47. Kh3 Ke6 48. Kg2 Kd5 49. Kf3 Kd4 
+50. Ke2 Ke4 51. c3 h3 52. Kf1 Kf3 53. Ke1 h2 54. Kd2 h1=Q 55. Kc2 g2 
+56. b3 cxb3+ 57. Kd3 Qd1+ 58. Kc4 g1=Q 59. Kb5 Qd5+ 60. Kxa4 Qa7+ 61. Kb4 Qaa5# 
+{White checkmated} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "00:18:48"]
+[Round "-"]
+[White "olafchess"]
+[Black "paladin1"]
+[WhiteElo "2040"]
+[BlackElo "1637"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. d4 exd4 6. Qxd4 Qxd4 7. Nxd4 Bd7 
+8. Be3 O-O-O 9. Nc3 Bd6 10. Nf3 f6 11. Nd2 Be6 12. Nb3 b6 13. Nd4 Bd7 
+14. O-O-O Ne7 15. Kb1 Rde8 16. h4 h5 17. Nde2 Be5 18. Na4 Bg4 19. f3 Be6 
+20. f4 Bd6 21. Nxb6+ Kb7 22. Na4 Bg4 23. Rd2 Nf5 24. exf5 Rxe3 25. Nd4 Rhe8 
+26. Ne6 Bxf5 27. Nxg7 Re1+ 28. Rd1 Rxh1 29. Rxh1 Re4 30. Nxf5 Rxa4 
+31. Nxd6+ cxd6 32. g3 Re4 33. Rg1 {Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "00:33:52"]
+[Round "-"]
+[White "omg"]
+[Black "olafchess"]
+[WhiteElo "1659"]
+[BlackElo "2043"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. d4 Nf6 2. Nf3 e6 3. e3 b6 4. c4 Bb7 5. Nc3 Bb4 6. Qc2 Nc6 7. Bd3 O-O 
+8. b3 d5 9. O-O Bxc3 10. Qxc3 Ne4 11. Bxe4 dxe4 12. Nd2 f5 13. a4 Qg5 
+14. f3 Ne7 15. f4 Qf6 16. Ba3 Rfd8 17. Bxe7 Qxe7 18. a5 Ba6 19. axb6 axb6 
+20. Ra2 Bb7 21. Rfa1 Rxa2 22. Rxa2 c5 23. dxc5 Qxc5 24. b4 Qc6 25. Qe5 Rd3 
+26. b5 Qc8 27. Kf2 Rd8 28. Ke2 Qd7 29. Qc3 Qd3+ 30. Qxd3 exd3+ 31. Kf2 Be4 
+32. Ra6 Rb8 33. g4 Rb7 34. h4 h6 35. g5 hxg5 36. fxg5 Kf7 37. h5 Ke7 
+38. Ra8 Kd6 39. Rd8+ Kc7 40. Rd4 e5 41. h6 exd4 42. h7 dxe3+ 43. Kxe3 Rb8 
+44. g6 Rd8 45. Nb3 Kd6 46. Nd4 Re8 47. Nb3 f4+ 48. Kxf4 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "01:11:55"]
+[Round "-"]
+[White "gareloco"]
+[Black "olafchess"]
+[WhiteElo "1171"]
+[BlackElo "2011"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 a6 5. Nc3 Qc7 6. Be3 Nf6 7. f3 Bb4 
+8. Qd2 d5 9. e5 Qxe5 10. O-O-O O-O 11. Bf4 Qh5 12. g4 Nxg4 13. fxg4 Qxg4 
+14. Be2 Qh3 15. Rhg1 Bxc3 16. bxc3 e5 17. Bxe5 g6 18. Rdf1 Nc6 19. Rf3 Qd7 
+20. Bf6 Nd8 21. Qh6 Ne6 22. Nxe6 fxe6 23. Rxg6+ hxg6 24. Qh8+ Kf7 25. Bg7+ Ke7 
+26. Qxf8# {Black checkmated} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "01:17:37"]
+[Round "-"]
+[White "olafchess"]
+[Black "gareloco"]
+[WhiteElo "2011"]
+[BlackElo "1171"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 
+8. c3 Re8 9. d4 d5 10. dxe5 Nxe5 11. Nxe5 Bd6 12. Nc6 Bxh2+ 13. Kxh2 Ng4+ 
+14. Qxg4 Bxg4 15. Nxd8 Raxd8 16. Bg5 f6 17. Bd2 Kh8 18. f3 Be6 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "01:23:04"]
+[Round "-"]
+[White "olafchess"]
+[Black "Boden"]
+[WhiteElo "2013"]
+[BlackElo "1512"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bg5 Bg7 5. Qd2 O-O 6. Nf3 c6 7. Bc4 b5 
+8. Bd3 a6 9. a4 Bb7 10. axb5 axb5 11. Rxa8 Bxa8 12. e5 dxe5 13. dxe5 Nd5 
+14. O-O Qd7 15. Nxd5 cxd5 16. Qb4 e6 17. Bxb5 Bc6 18. Bd3 Qc8 19. Re1 Qb7 
+20. Bd2 Nd7 21. Qxb7 Bxb7 22. Bb5 Nb6 23. Nd4 Nc4 24. Bxc4 dxc4 25. Bc3 Rd8 
+26. Nf3 Bxf3 27. gxf3 Rd5 28. Re4 Rc5 29. Kf1 h5 30. Ke1 Rc8 31. Kd2 Kf8 
+32. Bb4+ Ke8 33. f4 Bf8 34. Bxf8 Kxf8 35. Kc3 Ke7 36. Rxc4 Rd8 37. Rd4 Rc8+ 
+38. Rc4 Rd8 39. Rd4 Rc8+ 40. Kb3 Rb8+ 41. Rb4 Rd8 42. Rb7+ Kf8 43. Kc3 Rd1 
+44. Rb8+ Kg7 45. Rb4 Rf1 46. Kd3 Rxf2 47. h4 Rh2 48. c4 Rxh4 49. c5 Rh3+ 
+50. Kd2 Rh2+ 51. Kc3 Rh1 52. Kd2 Rh2+ 53. Kd3 Rh3+ 54. Kd4 Rh1 55. c6 Rd1+ 
+56. Kc5 Rd5+ 57. Kb6 Rd8 58. c7 Rc8 59. Rd4 h4 60. Rd8 Rxc7 61. Kxc7 h3 
+62. Rd3 f6 63. Rxh3 fxe5 64. fxe5 g5 65. Kd6 Kg6 66. Kxe6 g4 67. Rg3 Kg5 
+68. Rxg4+ Kxg4 69. Kd6 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "02:01:38"]
+[Round "-"]
+[White "visubhau"]
+[Black "olafchess"]
+[WhiteElo "1626"]
+[BlackElo "2000"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "1/2-1/2"]
+
+1. e4 c5 2. Nf3 Nc6 3. c4 e5 4. Nc3 Nf6 5. Bd3 Be7 6. Bb1 O-O 7. b3 Re8 
+8. O-O Qa5 9. Bb2 Qd8 10. Nd5 d6 11. Nxe7+ Qxe7 12. d3 Nd4 13. Nxd4 cxd4 
+14. h3 Be6 15. f4 Rad8 16. f5 Bd7 17. g4 Bc6 18. g5 Nd7 19. Qg4 Nc5 20. f6 Qc7 
+21. Qh4 Qa5 22. fxg7 Kxg7 23. Qh6+ Kg8 24. Rxf7 Kxf7 25. Qxh7+ Ke6 26. Qf5+ Ke7 
+27. Qh7+ Ke6 28. Qf5+ Ke7 29. Qh7+ Ke6 30. Qf5+ {Game drawn by repetition} 1/2-1/2
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "02:16:42"]
+[Round "-"]
+[White "fearless11"]
+[Black "olafchess"]
+[WhiteElo "1473"]
+[BlackElo "2001"]
+[TimeControl "5+4"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. d4 Nf6 2. e3 d5 3. c4 Nc6 4. Nc3 Bf5 5. a3 e6 6. cxd5 Nxd5 7. Nf3 Nxc3 
+8. bxc3 Bd6 9. Bb5 Qf6 10. Bxc6+ bxc6 11. O-O Be4 12. Bd2 O-O 13. Qe2 Rad8 
+14. Rfc1 Rfe8 15. c4 c5 16. Bc3 Qh6 17. h3 Qg6 18. Kh1 Bd3 19. Qd2 Qf5 
+20. Re1 Bxc4 21. Qc1 Bd5 22. Qb1 Bxf3 23. Qxf5 Bxg2+ 24. Kxg2 exf5 
+25. dxc5 Bxc5 26. Red1 Rd6 27. Bb4 Rg6+ 28. Kh2 Bb6 29. Rac1 Rge6 30. Bc5 Re5 
+31. Bxb6 cxb6 32. Rc7 a6 33. Rdd7 Rf8 34. Rb7 Re6 35. Ra7 b5 36. Rab7 Rc6 
+37. Rdc7 Rxc7 38. Rxc7 Ra8 39. Rb7 Kf8 40. Kg3 g6 41. Kf4 Re8 42. Ra7 Re4+ 
+43. Kf3 Ra4 44. Ra8+ Ke7 45. Ra7+ Kf6 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "02:31:52"]
+[Round "-"]
+[White "olafchess"]
+[Black "fearless11"]
+[WhiteElo "2002"]
+[BlackElo "1472"]
+[TimeControl "5+4"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e6 2. d4 d5 3. Nd2 dxe4 4. Nxe4 Nf6 5. Nxf6+ Qxf6 6. Nf3 Qd8 7. Bd3 c5 
+8. Be3 cxd4 9. Nxd4 Nc6 10. Nxc6 bxc6 11. Qf3 Bb7 12. O-O Be7 13. Rfd1 Qc7 
+14. Bd4 O-O 15. Qg3 Qxg3 16. hxg3 Rfd8 17. Be5 g6 18. Bc4 Rxd1+ 19. Rxd1 Rd8 
+20. Re1 Kf8 21. Re3 Ke8 22. Rb3 Rd7 23. Be2 f6 24. Bf4 e5 25. Be3 c5 26. Bb5 
+{Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "02:44:00"]
+[Round "-"]
+[White "fearless11"]
+[Black "olafchess"]
+[WhiteElo "1487"]
+[BlackElo "1987"]
+[TimeControl "6+4"]
+[Mode "ICS"]
+[Result "1/2-1/2"]
+
+1. d4 Nf6 2. e3 d5 3. Nf3 e6 4. c4 Be7 5. Nc3 O-O 6. cxd5 exd5 7. Bd3 Nc6 
+8. O-O Bg4 9. h3 Be6 10. a3 Re8 11. Re1 Qd6 12. Nb5 Qd7 13. Nc3 Bf5 14. Qc2 Bg6 
+15. Bxg6 hxg6 16. Bd2 Rab8 17. Re2 Bd8 18. Rae1 Re6 19. e4 dxe4 20. Nxe4 Nxd4 
+21. Nxf6+ Bxf6 22. Nxd4 Bxd4 23. Rxe6 fxe6 24. Bc3 Bxc3 25. Qxc3 Re8 
+26. Qc2 Qf7 27. Qe4 b6 28. Qb7 a5 29. Re3 e5 30. Rf3 Qd7 31. Qe4 Kh7 
+32. Qh4+ Kg8 33. Qc4+ Re6 34. Qg4 e4 35. Rg3 Qd5 36. Kh2 Qe5 37. Qd1 Qxb2 
+38. Qd8+ Kh7 39. Qh4+ Kg8 40. Qd8+ Kf7 41. Qd7+ Re7 42. Qd5+ Ke8 43. Qa8+ Kf7 
+44. Qd5+ Ke8 45. Qa8+ Kd7 46. Qd5+ Kc8 47. Qa8+ Kd7 48. Qd5+ Kc8 49. Qa8+ Kd7 
+{Game drawn by repetition} 1/2-1/2
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "03:13:48"]
+[Round "-"]
+[White "olafchess"]
+[Black "Anadol"]
+[WhiteElo "1989"]
+[BlackElo "1486"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. c4 Bg7 6. Be3 d6 7. Nc3 Bd7 
+8. Nxc6 Bxc6 9. Bd3 Nf6 10. Qf3 Qd7 11. O-O Qg4 12. Nb5 Bxb5 13. cxb5 Qxf3 
+14. gxf3 O-O 15. Rac1 b6 16. Rc6 Rfc8 17. Rd1 Rxc6 18. bxc6 Rc8 19. Rc1 Ne8 
+20. Rc2 Nc7 21. Rd2 Ne6 22. Bb5 Nc5 23. b4 Ne6 24. Rc2 Nc7 25. Bc4 e6 
+26. Rc1 Kf8 27. Bf4 Ke7 28. Bg5+ f6 29. Bf4 e5 30. Be3 Ne6 31. Bd5 Nd4 
+32. Bxd4 exd4 33. b5 f5 34. exf5 gxf5 35. Re1+ Kf6 36. Re6+ Kg5 37. Re7 Kg6 
+38. Rxa7 Be5 39. Be6 Re8 40. Bf7+ Kf6 41. Bxe8 d3 42. Rf7+ Kg5 43. c7 d2 
+44. c8=Q d1=Q+ 45. Kg2 Qd3 46. h4+ Kf4 47. Qc1+ {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "03:58:07"]
+[Round "-"]
+[White "JollyJake"]
+[Black "olafchess"]
+[WhiteElo "1540"]
+[BlackElo "1991"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. e3 c5 5. Ne2 cxd4 6. exd4 d5 7. a3 Be7 
+8. cxd5 Nxd5 9. Nxd5 exd5 10. Ng3 Nc6 11. Bd3 Qb6 12. O-O Bf6 13. Nf5 Bxf5 
+14. Bxf5 O-O 15. Qd3 g6 16. Bh3 Bxd4 17. b4 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "04:07:53"]
+[Round "-"]
+[White "olafchess"]
+[Black "dagsy"]
+[WhiteElo "1991"]
+[BlackElo "1226"]
+[TimeControl "2+12"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. Bd3 a6 6. Ngf3 c5 7. c3 Nc6 
+8. O-O Be7 9. Qc2 h6 10. b3 cxd4 11. cxd4 Nb4 12. Qb1 Nxd3 13. Qxd3 O-O 
+14. Bb2 Re8 15. Rad1 Nf8 16. Rc1 Bd7 17. Rfd1 Bb5 18. Qe3 Ng6 19. Re1 Qd7 
+20. Rcd1 Rec8 21. Rc1 Rc6 22. Rb1 Rac8 23. a4 Bxa4 24. bxa4 Rc2 25. Qb3 a5 
+26. Qb5 Qc7 27. Rec1 Nf4 28. Rxc2 Qxc2 29. Rc1 Qxc1+ 30. Bxc1 Rxc1+ 31. Nf1 Bb4 
+32. g3 Nh3+ 33. Kg2 Ng5 34. Nxg5 hxg5 35. Ne3 Kh7 36. Qxb7 Kg6 37. Qb6 Kh7 
+38. Qa7 Kg6 39. h4 gxh4 40. gxh4 Ra1 41. h5+ Kh7 42. Qxf7 Ra2 43. Ng4 Bd2 
+44. Nf6+ {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "04:25:56"]
+[Round "-"]
+[White "olafchess"]
+[Black "Ara61"]
+[WhiteElo "1998"]
+[BlackElo "1776"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 
+8. Na3 b5 9. Bxf6 gxf6 10. Nd5 f5 11. Bd3 Be6 12. c4 b4 13. Qa4 Rc8 
+14. Nxb4 Qb6 15. Nac2 Bg7 16. exf5 Bd7 17. Qxa6 Rb8 18. Qxb6 Rxb6 19. a3 O-O 
+20. O-O Na5 21. f6 Bxf6 22. Nd5 Bd8 23. Nxb6 Bxb6 24. Ne3 f5 25. Nd5 Bd8 
+26. Rab1 Nb3 27. Rfe1 e4 28. Be2 Nd4 29. Rbd1 Ne6 30. Nc3 Bc7 31. Nb5 Bxb5 
+32. cxb5 f4 33. Bc4 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "04:30:03"]
+[Round "-"]
+[White "Ara61"]
+[Black "olafchess"]
+[WhiteElo "1769"]
+[BlackElo "2005"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 g6 5. Be3 Bg7 6. Nc3 Nf6 7. f3 O-O 
+8. Qd2 d5 9. exd5 Nxd5 10. Nxc6 bxc6 11. Nxd5 cxd5 12. O-O-O e6 13. Bd4 Bxd4 
+14. Qxd4 Bb7 15. h4 Qa5 16. Kb1 Rae8 17. f4 f6 18. h5 e5 19. Qe3 Qb6 
+20. Qxb6 axb6 21. hxg6 hxg6 22. Bb5 Re7 23. Rh6 Rg7 24. fxe5 fxe5 25. Rdh1 Kf7 
+26. Rf1+ Ke7 27. Rxf8 Kxf8 28. Rh8+ Ke7 29. Rh1 Kd6 30. Kc1 d4 31. Rg1 Rf7 
+32. Kd2 Rf2+ 33. Kd1 Rxg2 34. Rxg2 Bxg2 35. Ke2 Bd5 36. a3 Kc5 37. Bd3 e4 
+38. Ba6 b5 39. Bc8 Bc4+ 40. Kd2 e3+ 41. Ke1 Bd5 42. Bd7 Be4 43. Kd1 Bf3+ 
+44. Ke1 g5 45. Be6 g4 46. b4+ Kd6 47. Bf5 g3 48. Bh3 g2 49. Bxg2 Bxg2 
+50. Ke2 Kd5 51. Kd3 Bf1# {White checkmated} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "04:36:37"]
+[Round "-"]
+[White "olafchess"]
+[Black "Ara61"]
+[WhiteElo "1980"]
+[BlackElo "1794"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 
+8. Na3 b5 9. Nd5 Be7 10. Bxf6 Bxf6 11. c3 O-O 12. Nc2 Be6 13. Qf3 Bg5 
+14. Bd3 Bxd5 15. exd5 Ne7 16. Nb4 f5 17. Qh5 Ng6 18. O-O e4 19. Nc6 Qf6 
+20. Bc2 Ne5 21. Nxe5 dxe5 22. Bb3 Kh8 23. Rad1 g6 24. Qe2 Rad8 25. a4 bxa4 
+26. Bxa4 Rd6 27. Bc6 Qd8 28. Qxa6 f4 29. c4 f3 30. gxf3 exf3 31. Kh1 Bf4 
+32. c5 Qh4 33. h3 Qxh3+ 34. Kg1 Qg2# {White checkmated} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "04:51:50"]
+[Round "-"]
+[White "Zhivago"]
+[Black "olafchess"]
+[WhiteElo "1757"]
+[BlackElo "1987"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. d4 cxd4 3. Nf3 Nc6 4. Bd3 Nf6 5. O-O e5 6. Bg5 Be7 7. Nbd2 O-O 
+8. h4 d5 9. exd5 Qxd5 10. Re1 Bg4 11. Bxf6 Bxf6 12. Ne4 Bxh4 13. a3 Rad8 
+14. Qe2 Bf6 15. Nxf6+ gxf6 16. Be4 Qc5 17. Qd3 h6 18. Nh4 Rfe8 19. Qg3 h5 
+20. f3 d3+ 21. Kh1 d2 22. fxg4 dxe1=R+ 23. Rxe1 hxg4 24. Qxg4+ Kf8 25. Nf5 Re6 
+26. Qg7+ Ke8 27. Nh6 Qf8 28. Qh7 Red6 29. Nf5 Rd1 30. Ng7+ Qxg7 31. Qxg7 Rxe1+ 
+32. Kh2 Rxe4 33. Qxf6 Rf4 34. Qh8+ Ke7 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "04:57:45"]
+[Round "-"]
+[White "olafchess"]
+[Black "Zhivago"]
+[WhiteElo "1994"]
+[BlackElo "1750"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 d6 4. h3 Nf6 5. Nc3 Bd7 6. Bc4 Be7 7. O-O h6 
+8. d4 exd4 9. Nxd4 Qc8 10. Bf4 Nxd4 11. Qxd4 Bxh3 12. gxh3 Qxh3 13. Rfe1 Nh5 
+14. Bd2 Bf6 15. Qd5 O-O-O 16. Qxf7 Be5 17. Be6+ Kb8 18. Bxh3 Rdf8 19. Qxh5 g6 
+20. Qe2 g5 21. Be3 Rhg8 22. Qc4 g4 23. Bg2 h5 24. Nb5 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:01:56"]
+[Round "-"]
+[White "Zhivago"]
+[Black "olafchess"]
+[WhiteElo "1744"]
+[BlackElo "2000"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nc3 e6 3. f4 d5 4. exd5 exd5 5. d4 Nf6 6. Nf3 cxd4 7. Qxd4 a6 
+8. Ne5 Nc6 9. Nxc6 bxc6 10. Be2 Bd6 11. O-O Qc7 12. Bd3 Qe7 13. Bd2 Bc5 
+14. Rae1 Bxd4+ 15. Kh1 Be6 16. f5 O-O 17. fxe6 fxe6 18. Bg5 e5 19. Rf3 e4 
+20. Nxe4 dxe4 21. Bxe4 Qc7 22. Bd3 Bxb2 23. Rh3 Qa5 24. Bc4+ Nd5 25. Bxd5+ cxd5 
+{White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:07:17"]
+[Round "-"]
+[White "olafchess"]
+[Black "Zhivago"]
+[WhiteElo "1974"]
+[BlackElo "1770"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 h6 4. O-O Nf6 5. Nc3 Be7 6. Bd5 d6 7. Bxc6+ bxc6 
+8. d4 Bg4 9. dxe5 Bxf3 10. Qxf3 dxe5 11. Qg3 Bd6 12. Qxg7 Rg8 13. Qxh6 Rg6 
+14. Qh3 Ke7 15. Be3 Qg8 16. Rad1 Qg7 17. Qf3 Rg8 18. g3 Qh7 19. Bxa7 Ng4 
+20. h4 Nf6 21. Kh2 Rg4 22. Rfe1 Rxh4+ 23. Kg1 Rf4 24. Qd3 Ng4 25. Bc5 Qh2+ 
+26. Kf1 Rxf2+ 27. Bxf2 Qxf2# {White checkmated} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:14:17"]
+[Round "-"]
+[White "Zhivago"]
+[Black "olafchess"]
+[WhiteElo "1762"]
+[BlackElo "1982"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. c3 Nf6 3. Qc2 Nc6 4. Bb5 Qb6 5. Bxc6 Qxc6 6. d3 c4 7. f3 cxd3 
+8. Qxd3 e5 9. Be3 Bc5 10. Ne2 Bxe3 11. Qxe3 O-O 12. Nd2 Qb5 13. Nb3 Qb6 
+14. Qxb6 axb6 15. c4 d6 16. Nd2 Be6 17. b3 Ra3 18. O-O Ra5 19. Nc3 Rfa8 
+20. a4 R5a6 21. Nd5 Rd8 22. b4 Bxd5 23. cxd5 Rc8 24. Kf2 Rca8 25. Nc4 b5 
+26. Na5 bxa4 27. Rfc1 b6 28. Nb7 b5 29. Rc7 Ne8 30. Re7 R6a7 31. Rc1 a3 
+32. Rxe8+ Rxe8 33. Nxd6 Rb8 34. Nxb5 Ra4 35. d6 a2 36. d7 Rd8 37. Rc8 Ra8 
+38. Rxd8+ Rxd8 {White forfeits on time} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:22:29"]
+[Round "-"]
+[White "olafchess"]
+[Black "Zhivago"]
+[WhiteElo "1989"]
+[BlackElo "1755"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 d6 3. d4 exd4 4. Qxd4 Nc6 5. Bb5 Bd7 6. Bxc6 bxc6 7. Nc3 Nf6 
+8. e5 dxe5 9. Nxe5 Bd6 10. Bf4 O-O 11. O-O Re8 12. Rfe1 Qe7 13. Rad1 Ng4 
+14. Nf3 Be6 15. Bxd6 cxd6 16. Qxd6 Qxd6 17. Rxd6 Nf6 18. Rxc6 Rad8 19. Rc7 Nd5 
+20. Nxd5 Rxd5 21. Rxa7 Red8 22. h3 h6 23. Rc1 g5 24. Re1 g4 25. hxg4 Bxg4 
+26. Rb7 Be6 27. a3 Rh5 28. Ne5 Rd5 29. Nd3 Rh4 30. Rb8+ Kg7 31. g3 Rg5 
+32. Rb4 Rh3 33. Nf4 Rhxg3+ 34. fxg3 Rxg3+ 35. Kh2 Rf3 36. Kg2 
+{Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:30:19"]
+[Round "-"]
+[White "Zhivago"]
+[Black "olafchess"]
+[WhiteElo "1748"]
+[BlackElo "1996"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. d4 cxd4 3. f4 Nc6 4. a3 d5 5. e5 Nh6 6. g4 Bxg4 7. Be2 e6 
+8. Nf3 Bxf3 9. Bxf3 Qh4+ 10. Kf1 Nf5 11. Qe1 Qh6 12. Qf2 Nxe5 13. fxe5 Qxc1+ 
+14. Kg2 Qxb2 15. Nd2 Ne3+ 16. Kh3 Qxc2 17. Be2 Be7 18. Nf3 Qf5+ 19. Kg3 Qg4# 
+{White checkmated} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:33:45"]
+[Round "-"]
+[White "olafchess"]
+[Black "Zhivago"]
+[WhiteElo "2002"]
+[BlackElo "1742"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 d6 3. d4 exd4 4. Nxd4 Nf6 5. Nc3 Be7 6. Be2 Nfd7 7. Nd5 c6 
+8. Nxe7 Qxe7 9. Nf5 Qe6 10. Nxg7+ {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:35:11"]
+[Round "-"]
+[White "Zhivago"]
+[Black "olafchess"]
+[WhiteElo "1736"]
+[BlackElo "2008"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. b4 cxb4 3. d4 d5 4. e5 Bf5 5. Bd3 Bxd3 6. Qxd3 Nc6 7. Be3 Nh6 
+8. Nd2 e6 9. Bxh6 gxh6 10. f4 Qh4+ 11. g3 Qg4 12. Ne2 Qg6 13. Qb5 Rb8 
+14. Nb3 Qxc2 15. O-O a6 16. Qb6 Qxe2 17. Rfc1 Qe3+ 18. Kg2 Qe2+ 19. Kh3 Qb5 
+20. Qxb5 axb5 21. Rc2 Be7 22. Kg2 O-O 23. Kf3 Bd8 24. Ke3 Bb6 25. Nc5 Ra8 
+26. g4 Ra3+ {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:42:08"]
+[Round "-"]
+[White "olafchess"]
+[Black "Zhivago"]
+[WhiteElo "2014"]
+[BlackElo "1730"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nxd4 exd4 5. O-O c5 6. d3 a6 7. Bc4 d6 
+8. Bf4 Ne7 9. Qf3 Ng6 10. Bxf7+ Kd7 11. Bxg6 hxg6 12. Qg4+ Kc7 13. Qxg6 Qh4 
+14. Qg3 Qh5 15. c3 Bg4 16. cxd4 g5 17. Be3 Qh4 18. dxc5 Qxg3 19. hxg3 dxc5 
+20. Nc3 Bd6 21. Bxg5 Rh5 22. f4 Rah8 23. Bh4 Kd7 24. Nd5 Rxh4 25. gxh4 Rxh4 
+26. e5 Bb8 27. Ne3 Be2 28. Rf2 Bxd3 29. g3 Rh7 30. Rd1 Ba7 31. Rxd3+ Ke8 
+32. Rfd2 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:49:00"]
+[Round "-"]
+[White "Zhivago"]
+[Black "olafchess"]
+[WhiteElo "1725"]
+[BlackElo "2019"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. Nf3 Nc6 3. a3 Nf6 4. Nc3 e5 5. Bc4 Nxe4 6. Bxf7+ Kxf7 7. Nxe4 d5 
+8. Nfg5+ Kg6 9. h4 dxe4 10. h5+ Kxg5 11. d4+ Kf5 12. g4+ Ke6 13. d5+ Qxd5 
+14. Qxd5+ Kxd5 15. Rg1 Nd4 16. Kf1 Nxc2 17. Be3 Nxa1 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "05:52:55"]
+[Round "-"]
+[White "olafchess"]
+[Black "Zhivago"]
+[WhiteElo "2024"]
+[BlackElo "1720"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 d6 3. d4 exd4 4. Qxd4 Bg4 5. Bb5+ c6 6. Be2 Nd7 7. O-O Ngf6 
+8. Nc3 Bxf3 9. Bxf3 Ne5 10. Be3 Nxf3+ 11. gxf3 Nd7 12. f4 Qh4 13. Qc4 Nf6 
+14. f3 Nh5 15. Ne2 Be7 16. Qb3 b6 17. Qa4 b5 18. Qa6 O-O 19. Qxc6 Rac8 
+20. Qxb5 Rxc2 21. Rae1 Rfc8 22. Bf2 Qh3 23. Be3 g6 24. e5 dxe5 25. fxe5 Bh4 
+26. Rd1 Ng3 27. hxg3 Bxg3 28. Rf2 Bxf2+ 29. Kxf2 Qh2+ 30. Ke1 Qh1+ 
+31. Bg1 Rxe2+ 32. Kxe2 Qg2+ 33. Ke3 Qg5+ 34. Ke4 f5+ 35. Kd3 Rd8+ 36. Bd4 Rxd4+ 
+37. Kxd4 Qf4+ 38. Kc3 {Black forfeits on time} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "06:09:49"]
+[Round "-"]
+[White "IDW"]
+[Black "olafchess"]
+[WhiteElo "1160"]
+[BlackElo "2024"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. d4 Nf6 2. e3 d5 3. Nf3 e6 4. g3 Bb4+ 5. c3 Bd6 6. Bg2 Nc6 7. Nbd2 O-O 
+8. O-O e5 9. Re1 e4 10. Ne5 Bxe5 11. dxe5 Nxe5 12. Nb3 Bg4 13. Qd2 Qd6 
+14. Nd4 Nd3 15. Rf1 c5 16. Ne2 Ne5 17. h3 Bxh3 18. Bxh3 Nf3+ {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "06:17:04"]
+[Round "-"]
+[White "olafchess"]
+[Black "IDW"]
+[WhiteElo "2024"]
+[BlackElo "1160"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 d6 3. d4 exd4 4. Qxd4 Nf6 5. e5 Nfd7 6. exd6 Nc6 7. Qe3+ Nde5 
+8. Nxe5 Nxe5 9. Qxe5+ Be6 10. dxc7 Qd7 11. Bb5 {Black resigns} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "06:18:46"]
+[Round "-"]
+[White "IDW"]
+[Black "olafchess"]
+[WhiteElo "1160"]
+[BlackElo "2024"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. d4 Nf6 2. e3 d5 3. Nf3 e6 4. g3 Bb4+ 5. c3 Bd6 6. Bg2 Nc6 7. O-O O-O 
+8. b4 a6 9. a3 e5 10. Nbd2 e4 11. Ne1 Re8 12. Qb3 a5 13. b5 Ne7 14. a4 Be6 
+15. Ba3 Bxa3 16. Rxa3 Nf5 17. Qd1 Qd6 18. Bh1 Qxa3 19. Ng2 Qxc3 20. Nf4 Nxe3 
+21. fxe3 Qxe3+ 22. Rf2 Qxd4 23. Nxe4 Qxd1+ 24. Kg2 Nxe4 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "06:22:40"]
+[Round "-"]
+[White "olafchess"]
+[Black "IDW"]
+[WhiteElo "2024"]
+[BlackElo "1160"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 d6 3. d4 exd4 4. Qxd4 Nc6 5. Bb5 Bd7 6. Bxc6 Bxc6 7. Nc3 Ne7 
+8. O-O Ng6 9. Nd5 Bxd5 10. exd5 Be7 11. Qxg7 Bf6 12. Re1+ Kd7 13. Qxf7+ Kc8 
+14. Re6 Be5 15. Rb1 b6 16. Bg5 Qf8 17. Qxf8+ Rxf8 18. Bh6 Rg8 19. Be3 Kb7 
+20. Ne1 Rae8 21. Rxe8 Rxe8 22. Nd3 a5 23. Re1 Rg8 24. Bg5 Rh8 25. Bd2 Rg8 
+26. Re4 Rf8 27. Re1 Rf7 28. a3 a4 29. Re4 b5 30. Rb4 Ka6 31. c4 Nf4 
+32. cxb5+ Kb6 33. Be3+ Ka5 34. Nxf4 Bxf4 35. Bxf4 Re7 36. Bd2 Kb6 37. Be3+ Kb7 
+38. Rxa4 Re5 39. Rd4 h5 40. a4 h4 41. a5 h3 42. gxh3 Rh5 43. Kg2 Rh8 
+44. a6+ Ka8 45. Rg4 Rg8 46. Rxg8# {Black checkmated} 1-0
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "06:31:40"]
+[Round "-"]
+[White "LiebensPawn"]
+[Black "olafchess"]
+[WhiteElo "1273"]
+[BlackElo "2024"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. d4 Nf6 2. e3 d5 3. Bd3 c5 4. c3 e6 5. f4 Nc6 6. Nd2 Bd6 7. Ngf3 c4 
+8. Bc2 Bd7 9. O-O O-O 10. Ne5 Re8 11. Rf3 Qc7 12. Rh3 Ne7 13. g4 h6 14. g5 hxg5 
+15. fxg5 Bxe5 16. gxf6 Bxf6 17. Qh5 Kf8 18. e4 e5 19. Qh8+ Ng8 20. Nf3 Bxh3 
+21. Qxh3 exd4 22. cxd4 dxe4 23. Ne5 Bxe5 24. dxe5 Qxe5 25. Qe3 Nf6 {White resigns} 0-1
+
+[Event "ICS rated Blitz game"]
+[Site "chessclub.com 5000"]
+[Date "2015.01.03"]
+[Time "06:36:51"]
+[Round "-"]
+[White "juho"]
+[Black "olafchess"]
+[WhiteElo "1660"]
+[BlackElo "2028"]
+[TimeControl "5+0"]
+[Mode "ICS"]
+[Result "0-1"]
+
+1. e4 c5 2. d4 cxd4 3. Qxd4 Nc6 4. Qe3 Nf6 5. Nc3 e5 6. Bd2 Be7 7. h3 O-O 
+8. O-O-O d5 9. exd5 Nxd5 10. Nxd5 Qxd5 11. c4 Qc5 12. a3 Bf5 13. g4 Bg6 
+14. Qxc5 Bxc5 15. f4 Be4 16. fxe5 Bxh1 17. Ne2 Nxe5 18. Bc3 Nxc4 19. Ng3 Ne3 
+20. Nxh1 Nxd1 21. Kxd1 Rfe8 22. Kc2 Re3 23. Bc4 Rxh3 24. Bd5 Rb8 25. Be1 Re8 
+26. Bb4 Bxb4 27. axb4 Re2+ 28. Kb1 Re1+ {White resigns} 0-1
+
