@@ -26,7 +26,6 @@ SOURCES += \
     search/compositestopper.cpp \
     search/timestopper.cpp \
     search/forcedstopper.cpp \
-    search/parallelnegamaxer.cpp \
     search/capturegenerator.cpp \
     search/thinkingwriter.cpp \
     search/nostopper.cpp \
@@ -70,7 +69,8 @@ SOURCES += \
     transposition_table/hashstate.cpp \
     evaluation/compositeevaluator.cpp \
     search/openingbooksearcher.cpp \
-    opening_book/openingbook.cpp
+    opening_book/openingbook.cpp \
+    search/searchstatistics.cpp
 
 HEADERS += \
     config.h \
@@ -90,7 +90,6 @@ HEADERS += \
     search/compositestopper.h \
     search/timestopper.h \
     search/forcedstopper.h \
-    search/parallelnegamaxer.h \
     search/capturegenerator.h \
     search/thinkingwriter.h \
     search/nostopper.h \
@@ -134,7 +133,8 @@ HEADERS += \
     transposition_table/hashstate.h \
     evaluation/compositeevaluator.h \
     search/openingbooksearcher.h \
-    opening_book/openingbook.h
+    opening_book/openingbook.h \
+    search/searchstatistics.h
 
 target.path = /usr/local/lib
 
