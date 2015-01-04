@@ -43,6 +43,8 @@ private:
 
   void move(const Move& move);
 
+  void output_statistics(const SearchContext& context);
+
   std::mutex m_mutex;
 
   std::condition_variable m_condition_variable;

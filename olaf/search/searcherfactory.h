@@ -51,8 +51,6 @@ public:
 
   std::unique_ptr<Searcher> iterative_searcher() const;
 
-  std::unique_ptr<AlphaBetaSearcher> parallel_alpha_beta_searcher() const;
-
   std::unique_ptr<AlphaBetaSearcher> sequential_alpha_beta_searcher() const;
 
   std::unique_ptr<AlphaBetaSearcher> quiescer() const;

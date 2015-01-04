@@ -22,7 +22,8 @@ public:
            depth_t sub_searcher_depth,
            bool ignore_depth);
 
-  SearchResult alpha_beta(SearchState* state,
+  SearchResult alpha_beta(const TranspositionTableEntry* entry,
+                          SearchState* state,
                           SearchContext* context) final;
 
 private:

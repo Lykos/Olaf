@@ -2,7 +2,6 @@
 
 #include "olaf/search/simpletimedsearcher.h"
 #include "olaf/search/iterativedeepener.h"
-#include "olaf/search/parallelnegamaxer.h"
 #include "olaf/search/negamaxer.h"
 #include "olaf/search/capturegenerator.h"
 #include "olaf/search/simplemovegenerator.h"
@@ -90,17 +89,6 @@ unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
                                   m_writer,
                                   m_config->search.min_depth,
                                   m_config->search.initial_window));
-  return searcher;
-}
-
-unique_ptr<AlphaBetaSearcher> SearcherFactory::parallel_alpha_beta_searcher() const
-{
-  unique_ptr<AlphaBetaSearcher> searcher(new ParallelNegaMaxer(
-                                           move_generator(),
-                                           move_orderer(),
-                                           sequential_alpha_beta_searcher(),
-                                           m_config->search.sequential_depth,
-                                           false));
   return searcher;
 }
 

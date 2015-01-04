@@ -18,7 +18,8 @@ class NegaMaxer : public AlphaBetaSearcher
 public:
   using AlphaBetaSearcher::AlphaBetaSearcher;
 
-  SearchResult alpha_beta(SearchState* state,
+  SearchResult alpha_beta(const TranspositionTableEntry* entry,
+                          SearchState* state,
                           SearchContext* context) final;
 };
 

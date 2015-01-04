@@ -36,8 +36,9 @@ public:
 
   MoveOrderer();
 
-  bool order_moves(const SearchContext& context,
+  bool order_moves(const TranspositionTableEntry* const entry,
                    const SearchState& state,
+                   SearchContext* context,
                    std::vector<Move>* moves);
 
 private:

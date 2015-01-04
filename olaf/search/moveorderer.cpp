@@ -141,44 +141,55 @@ MoveOrderer::MoveOrderer(const Config::MoveOrdering& config):
   m_use_killers(config.use_killers)
 {}
 
-bool MoveOrderer::order_moves(const SearchContext& context,
+bool MoveOrderer::order_moves(const TranspositionTableEntry* const entry,
                               const SearchState& state,
+                              SearchContext* const context,
                               vector<Move>* moves)
 {
+  if (state.depth >= 3) {
+    ++(context->statistics.sorts_at_depth_at_least_3);
+    if (entry) {
+      ++(context->statistics.entries_at_depth_at_least_3);
+    }
+    if (entry && entry->has_best_move) {
+      ++(context->statistics.entries_at_depth_at_least_3_with_candidate);
+    }
+  }
+  assert(m_use_hash_move);
   bool hash_move_found = false;
   unsigned int start = 0;
-  if (m_use_hash_move) {
-    const TranspositionTableEntry* const entry = context.get();
-    if (entry != nullptr && entry->has_best_move) {
-      ++start;
-      for (Move& move : *moves) {
-        if (move == entry->best_move) {
-          swap(move, moves->front());
-          hash_move_found = true;
-          break;
+  if (m_use_hash_move && entry && entry->has_best_move) {
+    ++start;
+    for (Move& move : *moves) {
+      if (move == entry->best_move) {
+        if (state.depth >= 3) {
+          ++(context->statistics.hash_moves_at_depth_at_least_3);
         }
+        swap(move, moves->front());
+        hash_move_found = true;
+        break;
       }
     }
   }
   vector<Searcher::score_t> move_values(moves->size());
   SeeState see_state;
   if (m_use_see) {
-    init_see_state(context.board, &see_state);
+    init_see_state(context->board, &see_state);
   }
   for (unsigned int i = start; i < moves->size(); ++i) {
     move_values[i] = c_quiet_value;
     const Move move = (*moves)[i];
-    const int depth = context.search_depth - state.depth;
+    const int depth = context->search_depth - state.depth;
     if (m_use_see && move.is_capture()) {
-      move_values[i] = see(context.board, move, see_state);
+      move_values[i] = see(context->board, move, see_state);
     } else if (m_use_promotions && move.is_promotion()) {
       if (move.created_piece() == PieceSet::c_queen_index) {
         move_values[i] = c_queen_promotion_value;
       } else {
         move_values[i] = c_other_promotion_value;
       }
-    } else if (m_use_killers && static_cast<int>(context.killers.size()) > depth) {
-      const SearchContext::Killers& killers = context.killers[depth];
+    } else if (m_use_killers && static_cast<int>(context->killers.size()) > depth) {
+      const SearchContext::Killers& killers = context->killers[depth];
       for (unsigned int j = 0; j < killers.size(); ++j) {
         if (move == killers[j]) {
           move_values[i] = c_killer_value + j;

@@ -27,7 +27,8 @@ Quiescer::Quiescer(unique_ptr<PositionEvaluator> evaluator,
   m_evaluator(move(evaluator))
 {}
 
-SearchResult Quiescer::alpha_beta(SearchState* const state,
+SearchResult Quiescer::alpha_beta(const TranspositionTableEntry* const entry,
+                                  SearchState* const state,
                                   SearchContext* const context)
 {
   SearchResult result;
@@ -43,7 +44,7 @@ SearchResult Quiescer::alpha_beta(SearchState* const state,
   }
   result.score = state->alpha;
   vector<Move> moves;
-  generate_ordered_moves(*context, *state, &moves);
+  generate_ordered_moves(entry, *state, context, &moves);
   if (moves.empty()) {
     return m_sub_searcher->recurse_alpha_beta(*state, context);
   }

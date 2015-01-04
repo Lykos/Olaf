@@ -18,7 +18,7 @@ public:
 
   static const score_t c_draw_score = 0;
 
-  SearchResult alpha_beta(SearchState* state, SearchContext* context) final;
+  SearchResult alpha_beta(const TranspositionTableEntry* entry, SearchState* state, SearchContext* context) final;
 
   virtual score_t evaluate(SearchState* state, SearchContext* context) = 0;
 

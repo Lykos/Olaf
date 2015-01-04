@@ -88,11 +88,13 @@ public:
 
   SearchContext create_search_context();
 
-  inline void stop() { m_forced_stopper.request_stop(); }
+  inline void stop() { m_forced_stopper.request_stop(); m_forced_stopped = true; }
 
   inline void weak_stop() { m_weak_stopper.request_stop(); }
 
   void set_egt_path(const std::string& path);
+
+  inline bool forced_stopped() const { return m_forced_stopped; }
 
 private:
   std::unique_ptr<TranspositionTable> m_transposition_table;
@@ -126,6 +128,8 @@ private:
   int m_nps;
 
   int m_moves = 0;
+
+  bool m_forced_stopped = false;
 
   std::chrono::milliseconds m_my_time;
 

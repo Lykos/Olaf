@@ -13,11 +13,12 @@ using namespace std;
 namespace olaf
 {
 
-SearchResult NegaMaxer::alpha_beta(SearchState* const state,
+SearchResult NegaMaxer::alpha_beta(const TranspositionTableEntry* const entry,
+                                   SearchState* const state,
                                    SearchContext* const context)
 {
   vector<Move> moves;
-  const bool has_hash_move = generate_ordered_moves(*context, *state, &moves);
+  const bool has_hash_move = generate_ordered_moves(entry, *state, context, &moves);
   if (moves.empty()) {
     return m_sub_searcher->recurse_alpha_beta(*state, context);
   }

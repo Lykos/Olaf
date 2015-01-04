@@ -5,6 +5,7 @@
 #include "olaf/transposition_table/transpositiontable.h"
 #include "olaf/transposition_table/pawntable.h"
 #include "olaf/search/searcher.h"
+#include "olaf/search/searchstatistics.h"
 #include "olaf/tablebases/tablebaseprober.h"
 #include "olaf/rules/move.h"
 
@@ -161,6 +162,8 @@ struct SearchContext
    * @brief allocated_time is only valid if the time mode is ADAPTED. Then it stores the allocated time for this move.
    */
   std::chrono::milliseconds allocated_time;
+
+  SearchStatistics statistics;
 };
 
 } // namespace olaf

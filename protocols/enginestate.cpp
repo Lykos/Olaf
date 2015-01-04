@@ -30,6 +30,7 @@ void EngineState::reset_stoppers()
 {
   m_weak_stopper.reset();
   m_forced_stopper.reset();
+  m_forced_stopped = false;
 }
 
 SearchContext EngineState::create_search_context()

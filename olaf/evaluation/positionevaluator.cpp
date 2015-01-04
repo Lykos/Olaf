@@ -9,6 +9,7 @@ PositionEvaluator::~PositionEvaluator()
 {}
 
 SearchResult PositionEvaluator::alpha_beta(
+    const TranspositionTableEntry* /* entry */,
     SearchState* const state,
     SearchContext* const context)
 {

@@ -39,15 +39,17 @@ AlphaBetaSearcher::~AlphaBetaSearcher()
 {}
 
 bool AlphaBetaSearcher::generate_ordered_moves(
-    const SearchContext& context,
+    const TranspositionTableEntry* const entry,
     const SearchState& state,
+    SearchContext* const context,
     vector<Move>* const moves)
 {
-  *moves = m_generator->generate_moves(context.board);
+  *moves = m_generator->generate_moves(context->board);
   if (moves->empty()) {
     return false;
   }
-  return m_orderer.order_moves(context, state, moves);
+  const bool has_hash_move = m_orderer.order_moves(entry, state, context, moves);
+  return has_hash_move;
 }
 
 SearchResult AlphaBetaSearcher::search(SearchContext* const context)
@@ -80,7 +82,14 @@ static bool is_checked(ChessBoard* const board)
   return result;
 }
 
-const int c_stop_check_nodes = 10000;
+static const int c_stop_check_nodes = 10000;
+
+static const SearchResult::score_t c_safety_margin = 10000;
+
+static bool is_terminal(const SearchResult::score_t score)
+{
+  return abs(score) >= (PositionEvaluator::c_win_score - c_safety_margin);
+}
 
 SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_state,
                                                    SearchContext* const context)
@@ -117,16 +126,51 @@ SearchResult AlphaBetaSearcher::recurse_alpha_beta(const SearchState& current_st
       if (entry->has_best_move) {
         result.main_variation.emplace_back(entry->best_move);
       }
+    } else if (entry->depth == current_state.depth) {
+      if (entry->node_type == NodeType::AllNode) {
+        // We know entry.score > alpha from the above conditional.
+        // We also know we found a proof that the score is at most entry.score with the same depth.
+        // So we can reduce beta to entry.score + 1, i.e. raise recursive alpha to -entry.score - 1.
+        recurse_state.alpha = -entry->score - 1;
+      } else if (entry->node_type == NodeType::CutNode) {
+        // We know entry.score < beta from the above conditional.
+        // We also know we found a proof that the score is at least entry.score with the same depth.
+        // So we can raise alpha to entry.score - 1, i.e. reduce recursive beta to -entry.score + 1.
+        recurse_state.beta = -entry->score + 1;
+      }
     }
   }
-  SearchResult result = alpha_beta(&recurse_state, context);
-  const score_t c_safety_margin = 10000;
+  SearchResult result = alpha_beta(entry, &recurse_state, context);
   // Stalemate. Not in check, but all moves lead to an immediate loss of the king.
-  if (abs(result.score) >= (PositionEvaluator::c_win_score - c_safety_margin)
-      && result.depth == context->search_depth - recurse_depth + 2 && !is_checked(&(context->board))) {
+  if (is_terminal(result.score)
+      && result.depth == context->search_depth - recurse_depth + 2
+      && !is_checked(&(context->board))) {
     result.score = PositionEvaluator::c_draw_score;
     result.terminal = true;
     result.main_variation.clear();
+  }
+  {
+    TranspositionTableEntry new_entry;
+    if (is_terminal(result.score)) {
+      new_entry.score = result.score < 0
+          ? result.score + context->search_depth - current_state.depth - 1
+          : result.score - context->search_depth + current_state.depth + 1;
+    } else {
+      new_entry.score = result.score;
+    }
+    new_entry.terminal = result.terminal;
+    new_entry.depth = current_state.depth;
+    new_entry.result_depth = result.depth;
+    if (result.main_variation.empty()) {
+      new_entry.has_best_move = false;
+    } else {
+      new_entry.has_best_move = true;
+      new_entry.best_move = result.main_variation.back();
+    }
+    new_entry.node_type = result.score <= current_state.alpha
+        ? NodeType::AllNode
+        : (result.score >= current_state.beta ? NodeType::CutNode : NodeType::PvNode);
+    context->put(std::move(new_entry));
   }
   return result;
 }
@@ -143,21 +187,14 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
   }
   ResultReaction reaction;
   const score_t recursive_score = -recursive_result->score;
-  TranspositionTableEntry entry;
-  entry.score = recursive_score;
-  entry.terminal = recursive_result->terminal;
-  entry.depth = state->depth - 1;
-  entry.result_depth = recursive_result->depth;
-  if (recursive_result->main_variation.empty()) {
-    entry.has_best_move = false;
-  } else {
-    entry.has_best_move = true;
-    entry.best_move = recursive_result->main_variation.back();
-  }
-  if (recursive_score > state->alpha) {
+  if (recursive_score > result->score) {
     result->score = recursive_score;
     result->terminal = recursive_result->terminal;
     result->depth = recursive_result->depth;
+    result->main_variation.clear();
+    result->main_variation.emplace_back(move);
+  }
+  if (recursive_score > state->alpha) {
     if (recursive_score >= state->beta) {
       if (!move.is_capture()) {
         const depth_t depth = context->search_depth - state->depth;
@@ -170,21 +207,16 @@ AlphaBetaSearcher::ResultReaction AlphaBetaSearcher::update_result(
           killers[0] = move;
         }
       }
-      result->main_variation.clear();
-      entry.node_type = NodeType::CutNode;
       reaction = ResultReaction::RETURN;
     } else {
       state->alpha = recursive_score;
       result->main_variation = std::move(recursive_result->main_variation);
       result->main_variation.emplace_back(move);
-      entry.node_type = NodeType::PvNode;
       reaction = ResultReaction::CONTINUE;
     }
   } else {
-    entry.node_type = NodeType::AllNode;
     reaction = ResultReaction::CONTINUE;
   }
-  context->put(std::move(entry));
   return reaction;
 }
 

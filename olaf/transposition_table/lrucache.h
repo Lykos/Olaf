@@ -23,6 +23,8 @@ public:
 
   void put(key_t key, V&& value);
 
+  double hit_rate() const { return static_cast<double>(m_hits) / (m_hits + m_misses); }
+
   long hits() const { return m_hits; }
 
   long misses() const { return m_misses; }

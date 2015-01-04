@@ -55,7 +55,10 @@ protected:
   /**
    * @brief generate_ordered_moves generates moves and orders them. It returns true if the first move is very likely the best.
    */
-  bool generate_ordered_moves(const SearchContext& context, const SearchState& state, std::vector<Move>* moves);
+  bool generate_ordered_moves(const TranspositionTableEntry* entry,
+                              const SearchState& state,
+                              SearchContext* context,
+                              std::vector<Move>* moves);
 
   /**
    * @brief The ResultReaction enum tells the searcher what to do after update_result has returned.
@@ -89,7 +92,7 @@ protected:
    *        alpha_beta should not be called directly. Instead, search_move or recurse_alpha_beta
    *        should be used.
    */
-  virtual SearchResult alpha_beta(SearchState* state, SearchContext* context) = 0;
+  virtual SearchResult alpha_beta(const TranspositionTableEntry* entry, SearchState* state, SearchContext* context) = 0;
 
 private:
   std::unique_ptr<MoveGenerator> m_generator;

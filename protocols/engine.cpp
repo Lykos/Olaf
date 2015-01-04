@@ -1,9 +1,12 @@
 #include "engine.h"
 
 #include <cassert>
+#include <sstream>
 
 #include "olaf/search/stopper.h"
 #include "olaf/rules/chessboard.h"
+#include "olaf/transposition_table/pawntable.h"
+#include "olaf/transposition_table/transpositiontable.h"
 #include "protocols/result.h"
 
 using namespace std;
@@ -42,13 +45,15 @@ void Engine::run()
     if (m_state.my_turn() && !m_state.analyze()) {
       SearchContext context = m_state.create_search_context();
       SearchResult result = m_searcher->search(&context);
-      if (result.valid) {
+      if (result.valid && !m_state.forced_stopped()) {
         move(result.main_variation.back());
       }
+      output_statistics(context);
     }
     if (m_state.pondering() || m_state.analyze()) {
       SearchContext context = m_state.create_search_context();
       m_searcher->search(&context);
+      output_statistics(context);
     }
   }
 }
@@ -97,6 +102,15 @@ void Engine::move(const Move &move)
   m_writer->move(move);
   m_state.flip_turn();
   m_state.board_state().move(move);
+}
+
+void Engine::output_statistics(const SearchContext& context)
+{
+  ostringstream stats;
+  stats << "Hit rate for transposition table: " << context.transposition_table->hit_rate()
+        << ". Hit rate for pawn table: " << context.pawn_table->hit_rate() << ". "
+        << context.statistics;
+  m_writer->comment(stats.str());
 }
 
 } // namespace olaf

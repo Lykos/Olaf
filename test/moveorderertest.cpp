@@ -66,11 +66,9 @@ void MoveOrdererTest::test_order()
   QFETCH(vector<Move>, moves);
   QFETCH(vector<Move>, ordered_moves);
 
-  TranspositionTable table(5);
   SearchContext context;
   context.search_depth = 1;
   context.board = board;
-  context.transposition_table = &table;
   if (has_hash_move) {
     context.put(entry);
   }
@@ -81,7 +79,7 @@ void MoveOrdererTest::test_order()
   SearchState state;
   state.depth = 1;
 
-  m_orderer.order_moves(context, state, &moves);
+  m_orderer.order_moves(&entry, state, &context, &moves);
   QASSERT_THAT(moves, ElementsAreArray(ordered_moves));
 }
 
