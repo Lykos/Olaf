@@ -89,7 +89,7 @@ const vector<Perft::PerftExample>& Perft::examples()
     PerftResult{89890, 9470, 0, 0, 0, 0},
     PerftResult{3894594, 440388, 0, 0, 0, 0},
     PerftResult{164075551, 19528068, 122, 0, 0, 228},
-    PerftResult{6923051137ull, 0, 0, 0, 0, 0}};
+    PerftResult{6923051137ull, 868499408, 5167, 0, 0, 10070}};
 
   static const vector<PerftExample> examples{
     PerftExample{"initial", fen_initial, expected_results_initial},
