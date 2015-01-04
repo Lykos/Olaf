@@ -27,7 +27,7 @@ namespace benchmark
 
 typedef Perft::PerftResult PerftResult;
 
-const int c_depth = 6;
+const int c_depth = 4;
 
 PerftBenchmark::PerftBenchmark():
   Benchmark("Perft")
