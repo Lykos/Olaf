@@ -27,9 +27,9 @@ SearchResult NegaMaxer::alpha_beta(SearchState* const state,
   bool hash_move_done = false;
   for (Move& move : moves) {
     SearchResult current_result;
+    UndoInfo undo_info;
+    move.execute(&(context->board), &undo_info);
     if (hash_move_done) {
-      UndoInfo undo_info;
-      move.execute(&(context->board), &undo_info);
       SearchState null_window_state = *state;
       null_window_state.beta = null_window_state.alpha + 1;
       const SearchResult& null_window_result =
@@ -39,13 +39,10 @@ SearchResult NegaMaxer::alpha_beta(SearchState* const state,
       } else {
         current_result = null_window_result;
       }
-      move.undo(undo_info, &(context->board));
     } else {
-      UndoInfo undo_info;
-      move.execute(&(context->board), &undo_info);
       current_result = recurse_alpha_beta(*state, context);
-      move.undo(undo_info, &(context->board));
     }
+    move.undo(undo_info, &(context->board));
     switch (update_result(move, &current_result, context, state, &result)) {
       case ResultReaction::INVALID:
         return SearchResult::invalid();
