@@ -28,27 +28,35 @@ bool SearchContext::probe(score_t* const score)
   }
 }
 
-const TranspositionTableEntry* SearchContext::get() const
+bool SearchContext::get(const depth_t current_depth, SearchResult* const result) const
 {
   if (transposition_table) {
-    return transposition_table->get(board.zobrist_hash());
+    return transposition_table->get(board.zobrist_hash(), search_depth - current_depth, result);
   } else {
-    return nullptr;
+    return false;
   }
 }
 
-void SearchContext::put(const TranspositionTableEntry& entry)
+void SearchContext::put(const depth_t current_depth, const SearchResult& entry)
 {
   if (transposition_table) {
-    transposition_table->put(board.zobrist_hash(), entry);
+    transposition_table->put(board.zobrist_hash(), search_depth - current_depth, entry);
   }
 }
 
-void SearchContext::put(TranspositionTableEntry&& entry)
+void SearchContext::put(const depth_t current_depth, SearchResult&& entry)
 {
   if (transposition_table) {
-    transposition_table->put(board.zobrist_hash(), move(entry));
+    transposition_table->put(board.zobrist_hash(), search_depth - current_depth, move(entry));
   }
+}
+
+vector<Move> SearchContext::reconstruct_pv()
+{
+  if (transposition_table) {
+    return transposition_table->reconstruct_pv(&board);
+  }
+  return {};
 }
 
 const PawnTableEntry* SearchContext::get_pawns() const

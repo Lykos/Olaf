@@ -20,6 +20,7 @@ SimpleThinkingWriter::SimpleThinkingWriter(ProtocolWriter* const writer):
 
 void SimpleThinkingWriter::output(const ChessBoard& board,
                                   const SearchResult& result,
+                                  const vector<Move>& main_variation,
                                   const int nodes,
                                   const milliseconds& time,
                                   const Searcher::depth_t depth)
@@ -35,9 +36,7 @@ void SimpleThinkingWriter::output(const ChessBoard& board,
     ++turn_number;
     ++ply;
   }
-  const vector<Move>& moves = result.main_variation;
-  for (auto it = moves.crbegin(); it != moves.crend(); ++it) {
-    const Move& move = *it;
+  for (const Move move : main_variation) {
     if (ply % 2 == 0) {
       oss << " " << turn_number << ".";
       ++turn_number;

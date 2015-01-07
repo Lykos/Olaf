@@ -10,14 +10,14 @@
 namespace olaf
 {
 
-class AlphaBetaSearcher;
+class NegaMaxer;
 class SearchContext;
 class ThinkingWriter;
 
 class IterativeDeepener : public Searcher
 {
 public:
-  IterativeDeepener(std::unique_ptr<AlphaBetaSearcher> searcher,
+  IterativeDeepener(std::unique_ptr<NegaMaxer> searcher,
                     ThinkingWriter* writer,
                     depth_t min_depth,
                     score_t initial_window);
@@ -30,7 +30,7 @@ public:
   SearchResult windowed_search(SearchContext* context, score_t score);
 
 private:
-  std::unique_ptr<AlphaBetaSearcher> m_searcher;
+  std::unique_ptr<NegaMaxer> m_searcher;
 
   ThinkingWriter* const m_writer;
 

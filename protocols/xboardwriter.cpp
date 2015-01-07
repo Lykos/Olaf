@@ -167,7 +167,7 @@ void XBoardWriter::thinking_output(const int ply,
                                    const string& moves)
 {
   unique_lock<mutex> lock(m_mutex);
-  *m_out << ply << "\t" << score << "\t" << centiseconds << "\t" << nodes << "\t" << moves << endl;
+  *m_out << ply << "  " << score << "  " << centiseconds << "  " << nodes << "  " << moves << endl;
 }
 
 std::string XBoardWriter::error_name(const ErrorType type) const

@@ -8,7 +8,7 @@ namespace olaf
 {
 
 IncrementalEvaluator::score_t IncrementalEvaluator::evaluate(
-    SearchState* const /* state */,
+    const SearchState& /* state */,
     SearchContext* const context)
 {
   return context->board.incremental_score();

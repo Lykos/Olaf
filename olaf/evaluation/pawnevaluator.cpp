@@ -1,6 +1,8 @@
 #include "olaf/evaluation/pawnevaluator.h"
 
 #include "olaf/transposition_table/pawntable.h"
+#include "olaf/rules/chessboard.h"
+#include "olaf/search/searchcontext.h"
 
 using namespace std;
 
@@ -188,7 +190,7 @@ static PositionEvaluator::score_t adjust_score(const ChessBoard& board,
   return score_calculator.score(board.turn_color());
 }
 
-PositionEvaluator::score_t PawnEvaluator::evaluate(SearchState* const /* state */,
+PositionEvaluator::score_t PawnEvaluator::evaluate(const SearchState& /* state */,
                                                    SearchContext* const context)
 {
   const PawnTableEntry* const entry = context->get_pawns();

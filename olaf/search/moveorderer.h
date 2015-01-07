@@ -36,7 +36,15 @@ public:
 
   MoveOrderer();
 
-  bool order_moves(const TranspositionTableEntry* const entry,
+  /**
+   * @brief order_moves orders moves according to some criteria.
+   * @param entry is the result from the transposition table.
+   * @param state is the current search state
+   * @param context is the search context
+   * @param moves is the vector of moves to be ordered.
+   * @return true if the first move is a hash move.
+   */
+  bool order_moves(const SearchResult& entry,
                    const SearchState& state,
                    SearchContext* context,
                    std::vector<Move>* moves);

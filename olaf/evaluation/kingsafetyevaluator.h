@@ -9,7 +9,7 @@ namespace olaf
 class KingSafetyEvaluator : public PositionEvaluator
 {
 public:
-  score_t evaluate(SearchState* state, SearchContext* context) override;
+  score_t evaluate(const SearchState& state, SearchContext* context) override;
 };
 
 } // namespace olaf

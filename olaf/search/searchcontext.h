@@ -111,14 +111,20 @@ struct SearchContext
   /**
    * @brief get returns the entry for the current position from the transposition table.
    *        If there is no transposition table or if the entry doesn't exist, returns nullptr.
+   * @param current_depth The current remaining depth of the search (can be negative in quiescent search)
+   *                      This is stored in SearchState and will be used to calculate the distance to root.
    */
-  const TranspositionTableEntry* get() const;
+  bool get(depth_t current_depth, SearchResult* result) const;
 
   /**
    * @brief put puts the entry in the transposition table for the current postion, if it exists.
+   * @param current_depth The current remaining depth of the search (can be negative in quiescent search)
+   *                      This is stored in SearchState and will be used to calculate the distance to root.
    */
-  void put(const TranspositionTableEntry& entry);
-  void put(TranspositionTableEntry&& entry);
+  void put(depth_t current_depth, const SearchResult& entry);
+  void put(depth_t current_depth, SearchResult&& entry);
+
+  std::vector<Move> reconstruct_pv();
 
   /**
    * @brief c_no_killers if this is changed, the replacement logic has to be changed as well.

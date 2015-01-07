@@ -28,9 +28,10 @@ class SimpleThinkingWriter : public ThinkingWriter
 
   void output(const ChessBoard& board,
               const SearchResult& result,
+              const std::vector<Move>& main_variation,
               int nodes,
               const std::chrono::milliseconds &time,
-              Searcher::depth_t depth);
+              Searcher::depth_t depth) override;
 
 private:
   ProtocolWriter* const m_writer;

@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
   {
     ifstream move_table(FLAGS_move_table_file.c_str());
     const int size = move_table.tellg();
-    if (size != sizeof(MagicNumbers::MoveTable)) {
+    if (size != sizeof(MagicNumbers::c_move_table_size)) {
       const Status& status = generation::generate_magic(FLAGS_move_table_file, false);
       if (!status.ok()) {
         cout << status.message() << endl
@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
     }
     move_table.close();
   }
+  MagicNumbers::init();
 
   // Decide which protocol to use.
   string protocol_name;

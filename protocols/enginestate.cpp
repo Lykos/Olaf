@@ -60,7 +60,7 @@ SearchContext EngineState::create_search_context()
   }
   context.transposition_table = m_transposition_table.get();
   context.pawn_table = m_pawn_table.get();
-  if (m_egbb_prober->is_initialized()) {
+  if (m_egbb_prober && m_egbb_prober->is_initialized()) {
     context.prober = m_egbb_prober.get();
   }
   return context;
@@ -68,7 +68,9 @@ SearchContext EngineState::create_search_context()
 
 void EngineState::set_egt_path(const string& path)
 {
-  m_egbb_prober->load(path);
+  if (m_egbb_prober) {
+    m_egbb_prober->load(path);
+  }
 }
 
 } // namespace olaf

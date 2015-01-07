@@ -34,7 +34,7 @@ public:
    */
   static inline BitBoard rook_magic_moves(const Position source, const BitBoard occupied)
   {
-    return sliding_magic_moves(MagicNumbers::instance()->rook_magic, source, occupied);
+    return sliding_magic_moves(MagicNumbers::c_rook_magic, source, occupied);
   }
 
   /**
@@ -43,7 +43,7 @@ public:
    */
   static inline BitBoard bishop_magic_moves(const Position source, const BitBoard occupied)
   {
-    return sliding_magic_moves(MagicNumbers::instance()->bishop_magic, source, occupied);
+    return sliding_magic_moves(MagicNumbers::c_bishop_magic, source, occupied);
   }
 
   static inline BitBoard moves_rook(const Position source, const ChessBoard& board)
@@ -58,8 +58,8 @@ public:
 
   static inline BitBoard moves_queen(const Position source, const ChessBoard& board)
   {
-    return (sliding_magic_moves(MagicNumbers::instance()->rook_magic, source, board.occupied())
-            | sliding_magic_moves(MagicNumbers::instance()->bishop_magic, source, board.occupied())) & BitBoard(~board.friends());
+    return (sliding_magic_moves(MagicNumbers::c_rook_magic, source, board.occupied())
+            | sliding_magic_moves(MagicNumbers::c_bishop_magic, source, board.occupied())) & BitBoard(~board.friends());
   }
 
   static inline BitBoard moves_knight(const Position source, const ChessBoard& board)

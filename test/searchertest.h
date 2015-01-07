@@ -30,7 +30,7 @@ private:
   SearchContext m_context;
 
 private Q_SLOTS:
-  void init_test_case();
+  void initTestCase();
 
   void test_mate();
 

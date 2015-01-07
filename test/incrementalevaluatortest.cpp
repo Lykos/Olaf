@@ -49,7 +49,7 @@ void IncrementalEvaluatorTest::test_evaluate()
   SearchContext context;
   context.board = board;
   SearchState state;
-  QASSERT_THAT(m_evaluator.evaluate(&state, &context), Eq(score));
+  QASSERT_THAT(m_evaluator.evaluate(state, &context), Eq(score));
   for (Move& move : m_generator->generate_valid_moves(board)) {
     UndoInfo undo_info;
     move.execute(&board, &undo_info);

@@ -9,7 +9,7 @@ CompositeEvaluator::CompositeEvaluator(vector<unique_ptr<PositionEvaluator>>&& s
   m_sub_evaluators(std::move(sub_evaluators))
 {}
 
-PositionEvaluator::score_t CompositeEvaluator::evaluate(SearchState* state, SearchContext* context)
+PositionEvaluator::score_t CompositeEvaluator::evaluate(const SearchState& state, SearchContext* context)
 {
   score_t score = 0;
   for (auto& evaluator : m_sub_evaluators) {

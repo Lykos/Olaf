@@ -19,7 +19,7 @@ EvaluatorFactory::EvaluatorFactory(const Config::Evaluation* const config):
 unique_ptr<PositionEvaluator> EvaluatorFactory::evaluator() const
 {
   vector<std::unique_ptr<PositionEvaluator>> sub_evaluators;
-  sub_evaluators.emplace_back(tablebase_evaluator());
+  //sub_evaluators.emplace_back(tablebase_evaluator());
   sub_evaluators.emplace_back(incremental_evaluator());
   sub_evaluators.emplace_back(kingsafety_evaluator());
   std::unique_ptr<PositionEvaluator> composite_evaluator(

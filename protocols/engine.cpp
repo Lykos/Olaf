@@ -46,7 +46,8 @@ void Engine::run()
       SearchContext context = m_state.create_search_context();
       SearchResult result = m_searcher->search(&context);
       if (result.valid && !m_state.forced_stopped()) {
-        move(result.main_variation.back());
+        assert(result.has_best_move);
+        move(result.best_move);
       }
       output_statistics(context);
     }

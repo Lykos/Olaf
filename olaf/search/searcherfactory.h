@@ -13,7 +13,8 @@
 namespace olaf
 {
 
-class AlphaBetaSearcher;
+class NegaMaxer;
+class Quiescer;
 class ThinkingWriter;
 class MoveGenerator;
 class MoveOrderer;
@@ -51,9 +52,9 @@ public:
 
   std::unique_ptr<Searcher> iterative_searcher() const;
 
-  std::unique_ptr<AlphaBetaSearcher> sequential_alpha_beta_searcher() const;
+  std::unique_ptr<NegaMaxer> negamaxer() const;
 
-  std::unique_ptr<AlphaBetaSearcher> quiescer() const;
+  std::unique_ptr<Quiescer> quiescer() const;
 
   std::unique_ptr<PositionEvaluator> evaluator() const;
 

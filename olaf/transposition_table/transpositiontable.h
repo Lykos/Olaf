@@ -2,47 +2,41 @@
 #define TRANSPOSITIONTABLEENTRY_H
 
 #include <memory>
+#include <vector>
 
 #include "olaf/transposition_table/lrucache.h"
 #include "olaf/search/searchresult.h"
 #include "olaf/rules/move.h"
+#include "olaf/search/nodetype.h"
 
 namespace olaf
 {
 
-enum class NodeType
-{
-  PvNode,
-  CutNode,
-  AllNode
+extern template class LruCache<SearchResult>;
+
+class TranspositionTable {
+public:
+  typedef LruCache<SearchResult>::key_t key_t;
+
+  explicit TranspositionTable(long capacity_bytes);
+
+  std::vector<Move> reconstruct_pv(ChessBoard* const board) const;
+
+  bool get(key_t key, SearchResult::depth_t distance_to_root, SearchResult* value) const;
+
+  void put(key_t key, SearchResult::depth_t distance_to_root, const SearchResult& value);
+
+  void put(key_t key, SearchResult::depth_t distance_to_root, SearchResult&& value);
+
+  inline double hit_rate() const { return m_table.hit_rate(); }
+
+  inline long hits() const { return m_table.hits(); }
+
+  inline long misses() const { return m_table.misses(); }
+
+private:
+  LruCache<SearchResult> m_table;
 };
-
-struct TranspositionTableEntry
-{
-  /**
-   * @brief depth of the search beyond the current position.
-   *        This should be used to determine how valuable a result is.
-   */
-  SearchResult::depth_t depth;
-
-  /**
-   * @brief result_depth this is the actual depth of the node for which
-   *        this score was returned. This can be more than depth because
-   *        of quiescent search. It should only be used for special interior
-   *        node detection.
-   */
-  SearchResult::depth_t result_depth;
-
-  SearchResult::score_t score;
-  NodeType node_type;
-  Move best_move;
-  bool has_best_move;
-  bool terminal;
-};
-
-extern template class LruCache<TranspositionTableEntry>;
-
-typedef LruCache<TranspositionTableEntry> TranspositionTable;
 
 } // namespace olaf
 

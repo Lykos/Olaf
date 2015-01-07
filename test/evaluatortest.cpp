@@ -35,9 +35,9 @@ void EvaluatorTest::test_compare()
   QFETCH(ChessBoard, worse_position);
 
   m_context.board = better_position;
-  PositionEvaluator::score_t better_score = m_evaluator->evaluate(&m_state, &m_context);
+  PositionEvaluator::score_t better_score = m_evaluator->evaluate(m_state, &m_context);
   m_context.board = worse_position;
-  PositionEvaluator::score_t worse_score = m_evaluator->evaluate(&m_state, &m_context);
+  PositionEvaluator::score_t worse_score = m_evaluator->evaluate(m_state, &m_context);
   QASSERT_THAT(better_score, Gt(worse_score));
 }
 

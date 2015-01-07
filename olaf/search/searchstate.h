@@ -1,6 +1,11 @@
 #ifndef SEARCHSTATE_H
 #define SEARCHSTATE_H
 
+#ifdef TRACE
+#include <ostream>
+#include <string>
+#endif
+
 #include "olaf/search/searchresult.h"
 
 namespace olaf
@@ -19,6 +24,15 @@ struct SearchState {
   score_t beta;
   depth_t depth;
 };
+
+#ifdef TRACE
+std::ostream& operator <<(std::ostream& out, const SearchState& state);
+
+/**
+ * @brief Returns the indentation for this search branch for debug output.
+ */
+std::string indentation(const SearchState& state);
+#endif
 
 }  // namespace olaf
 

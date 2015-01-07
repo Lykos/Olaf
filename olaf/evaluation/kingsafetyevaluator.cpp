@@ -4,6 +4,7 @@
 
 #include "olaf/evaluation/incrementalupdater.h"
 #include "olaf/rules/magicmoves.h"
+#include "olaf/search/searchcontext.h"
 
 using namespace std;
 
@@ -320,7 +321,7 @@ static inline PositionEvaluator::score_t king_safety_score(const ChessBoard& boa
 }
 
 PositionEvaluator::score_t KingSafetyEvaluator::evaluate(
-    SearchState* const /* state */, SearchContext* const context)
+    const SearchState& /* state */, SearchContext* const context)
 {
   const ChessBoard& board = context->board;
   ColorAttacks turn_attacks;

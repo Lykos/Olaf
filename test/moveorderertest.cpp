@@ -22,7 +22,7 @@ void MoveOrdererTest::test_order_data()
 {
   QTest::addColumn<ChessBoard>("board");
   QTest::addColumn<bool>("has_hash_move");
-  QTest::addColumn<TranspositionTableEntry>("entry");
+  QTest::addColumn<SearchResult>("entry");
   QTest::addColumn<bool>("has_killer_move");
   QTest::addColumn<Move>("killer_move");
   QTest::addColumn<vector<Move>>("moves");
@@ -38,21 +38,27 @@ void MoveOrdererTest::test_order_data()
     const Move hash_move = MoveChecker::complete(Position("a7"), Position("a5"), board);
     vector<Move> moves{quiet_move, positive_see_move, negative_see_move, hash_move, neutral_see_move};
     vector<Move> ordered_moves{hash_move, positive_see_move, neutral_see_move, quiet_move, negative_see_move};
+    SearchResult transposition_table_result;
+    transposition_table_result.has_best_move = true;
+    transposition_table_result.best_move = hash_move;
+    transposition_table_result.valid = true;
     QTest::newRow("hash move first")
-        << board << true << TranspositionTableEntry{1, 1, 1, NodeType::PvNode, hash_move, true, false}
+        << board << true << transposition_table_result
         << false << killer_move << moves << ordered_moves;
   }
   {
     vector<Move> moves{quiet_move, positive_see_move, negative_see_move, neutral_see_move};
     vector<Move> ordered_moves{positive_see_move, neutral_see_move, quiet_move, negative_see_move};
+    SearchResult transposition_table_result;
     QTest::newRow("no hash move")
-        << board << false << TranspositionTableEntry() << false << killer_move << moves << ordered_moves;
+        << board << false << transposition_table_result << false << killer_move << moves << ordered_moves;
   }
   {
     vector<Move> moves{quiet_move, positive_see_move, negative_see_move, neutral_see_move, killer_move};
     vector<Move> ordered_moves{positive_see_move, neutral_see_move, killer_move, quiet_move, negative_see_move};
+    SearchResult transposition_table_result;
     QTest::newRow("killer move")
-        << board << false << TranspositionTableEntry() << true << killer_move << moves << ordered_moves;
+        << board << false << transposition_table_result << true << killer_move << moves << ordered_moves;
   }
 }
 
@@ -60,7 +66,7 @@ void MoveOrdererTest::test_order()
 {
   QFETCH(ChessBoard, board);
   QFETCH(bool, has_hash_move);
-  QFETCH(TranspositionTableEntry, entry);
+  QFETCH(SearchResult, entry);
   QFETCH(bool, has_killer_move);
   QFETCH(Move, killer_move);
   QFETCH(vector<Move>, moves);
@@ -70,7 +76,7 @@ void MoveOrdererTest::test_order()
   context.search_depth = 1;
   context.board = board;
   if (has_hash_move) {
-    context.put(entry);
+    context.put(0, entry);
   }
   if (has_killer_move) {
     context.killers.resize(1);
@@ -79,7 +85,7 @@ void MoveOrdererTest::test_order()
   SearchState state;
   state.depth = 1;
 
-  m_orderer.order_moves(&entry, state, &context, &moves);
+  m_orderer.order_moves(entry, state, &context, &moves);
   QASSERT_THAT(moves, ElementsAreArray(ordered_moves));
 }
 

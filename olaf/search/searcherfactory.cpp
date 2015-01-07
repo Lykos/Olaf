@@ -85,34 +85,26 @@ unique_ptr<Searcher> SearcherFactory::timed_searcher() const
 unique_ptr<Searcher> SearcherFactory::iterative_searcher() const
 {
   unique_ptr<Searcher> searcher(new IterativeDeepener(
-                                  sequential_alpha_beta_searcher(),
+                                  negamaxer(),
                                   m_writer,
                                   m_config->search.min_depth,
                                   m_config->search.initial_window));
   return searcher;
 }
 
-unique_ptr<AlphaBetaSearcher> SearcherFactory::sequential_alpha_beta_searcher() const
+unique_ptr<NegaMaxer> SearcherFactory::negamaxer() const
 {
-  assert(m_config->search.use_quiescent_search);
-  unique_ptr<AlphaBetaSearcher> sub_searcher =
-      m_config->search.use_quiescent_search ? quiescer() : evaluator();
-  unique_ptr<AlphaBetaSearcher> searcher(new NegaMaxer(move_generator(),
-                                                       move_orderer(),
-                                                       move(sub_searcher),
-                                                       0,
-                                                       false));
+  unique_ptr<NegaMaxer> searcher(new NegaMaxer(move_generator(),
+                                               move_orderer(),
+                                               quiescer()));
   return searcher;
 }
 
-unique_ptr<AlphaBetaSearcher> SearcherFactory::quiescer() const
+unique_ptr<Quiescer> SearcherFactory::quiescer() const
 {
-  unique_ptr<AlphaBetaSearcher> searcher(new Quiescer(evaluator(),
-                                                      capture_generator(),
-                                                      move_orderer(),
-                                                      evaluator(),
-                                                      0,
-                                                      true));
+  unique_ptr<Quiescer> searcher(new Quiescer(capture_generator(),
+                                             move_orderer(),
+                                             evaluator()));
   return searcher;
 }
 
@@ -144,7 +136,7 @@ unique_ptr<PawnTable> SearcherFactory::pawn_table() const
 
 unique_ptr<EgbbProber> SearcherFactory::egbb_prober() const
 {
-  unique_ptr<EgbbProber> prob(new EgbbProber(m_config->tablebases.cache_size));
+  unique_ptr<EgbbProber> prob(m_config->tablebases.enabled ? new EgbbProber(m_config->tablebases.cache_size) : nullptr);
   return prob;
 }
 

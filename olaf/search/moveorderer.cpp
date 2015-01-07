@@ -65,9 +65,7 @@ static inline BitBoard consider_xrays(const BitBoard occupied, const Position sr
           & occupied;
 }
 
-static const Searcher::score_t c_queen_promotion_value = -1;
-
-static const Searcher::score_t c_killer_value = -2;
+static const Searcher::score_t c_killer_value = -1;
 
 static const Searcher::score_t c_quiet_value = -SearchContext::c_no_killers + c_killer_value;
 
@@ -141,29 +139,22 @@ MoveOrderer::MoveOrderer(const Config::MoveOrdering& config):
   m_use_killers(config.use_killers)
 {}
 
-bool MoveOrderer::order_moves(const TranspositionTableEntry* const entry,
+bool MoveOrderer::order_moves(const SearchResult& entry,
                               const SearchState& state,
                               SearchContext* const context,
                               vector<Move>* moves)
 {
   if (state.depth >= 3) {
-    ++(context->statistics.sorts_at_depth_at_least_3);
-    if (entry) {
-      ++(context->statistics.entries_at_depth_at_least_3);
-    }
-    if (entry && entry->has_best_move) {
-      ++(context->statistics.entries_at_depth_at_least_3_with_candidate);
-    }
+    ++(context->statistics.sorts);
   }
-  assert(m_use_hash_move);
   bool hash_move_found = false;
   unsigned int start = 0;
-  if (m_use_hash_move && entry && entry->has_best_move) {
+  if (m_use_hash_move && entry.valid && entry.has_best_move) {
     ++start;
     for (Move& move : *moves) {
-      if (move == entry->best_move) {
+      if (move == entry.best_move) {
         if (state.depth >= 3) {
-          ++(context->statistics.hash_moves_at_depth_at_least_3);
+          ++(context->statistics.hash_moves);
         }
         swap(move, moves->front());
         hash_move_found = true;
@@ -184,7 +175,9 @@ bool MoveOrderer::order_moves(const TranspositionTableEntry* const entry,
       move_values[i] = see(context->board, move, see_state);
     } else if (m_use_promotions && move.is_promotion()) {
       if (move.created_piece() == PieceSet::c_queen_index) {
-        move_values[i] = c_queen_promotion_value;
+        move_values[i] =
+            IncrementalUpdater::piece_values()[PieceSet::c_queen_index]
+            - IncrementalUpdater::piece_values()[PieceSet::c_pawn_index];
       } else {
         move_values[i] = c_other_promotion_value;
       }

@@ -6,10 +6,11 @@
 #include <iostream>
 #include <gflags/gflags.h>
 
-#include "autobenchmark.h"
-#include "compositebenchmarkresult.h"
-#include "benchmarkresult.h"
+#include "benchmark/autobenchmark.h"
+#include "benchmark/compositebenchmarkresult.h"
+#include "benchmark/benchmarkresult.h"
 #include "olaf/config.h"
+#include "olaf/rules/magicnumbers.h"
 
 using namespace std;
 using namespace olaf;
@@ -34,6 +35,7 @@ Config read_config(const string& config_file)
 int main(int argc, char* argv[])
 {
   google::ParseCommandLineFlags(&argc, &argv, true);
+  MagicNumbers::init();
 
   // get hostname
   char hostname[1024];

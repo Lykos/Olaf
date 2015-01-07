@@ -14,7 +14,7 @@ class CompositeEvaluator : public PositionEvaluator
 public:
   explicit CompositeEvaluator(std::vector<std::unique_ptr<PositionEvaluator>>&& sub_evaluators);
 
-  score_t evaluate(SearchState* state, SearchContext* context) override;
+  score_t evaluate(const SearchState& state, SearchContext* context) override;
 
 private:
   std::vector<std::unique_ptr<PositionEvaluator>> m_sub_evaluators;

@@ -2,13 +2,15 @@
 
 #include <memory>
 
+#include "olaf/search/searchcontext.h"
+
 using namespace std;
 
 namespace olaf
 {
 
 TablebaseEvaluator::score_t TablebaseEvaluator::evaluate(
-    SearchState* const /* state */,
+    const SearchState& /* state */,
     SearchContext* const context)
 {
   score_t score;

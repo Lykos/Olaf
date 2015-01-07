@@ -26,26 +26,15 @@ class MagicNumbers
 public:
   static const int c_move_table_size = 107648;
 
-  // Note that this is completely unsafe for parallelism the first time it is called.
-  // Later it is fine, though.
-  inline static const MagicNumbers* instance() {
-    if (!m_instance) {
-      m_instance = new MagicNumbers;
-    }
-    return m_instance;
-  }
-
-  typedef std::array<std::uint64_t, c_move_table_size> MoveTable;
-
-  MoveTable move_table;
-
   static const int c_no_squares = 64;
+
+  static void init();
 
   typedef std::array<Magic, c_no_squares> MagicTable;
 
-  MagicTable rook_magic;
+  static const MagicTable c_rook_magic;
 
-  MagicTable bishop_magic;
+  static const MagicTable c_bishop_magic;
 
   typedef std::array<std::uint64_t, c_no_squares> SquareTable;
 
@@ -93,8 +82,6 @@ private:
   MagicNumbers(MagicNumbers&&) = delete;
   MagicNumbers& operator =(const MagicNumbers&) = delete;
   MagicNumbers& operator =(MagicNumbers&&) = delete;
-
-  static const MagicNumbers* m_instance;
 };
 
 } // namespace olaf

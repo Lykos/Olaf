@@ -114,9 +114,9 @@ void EpdBenchmark::test_epd()
   context.transposition_table = &transposition_table;
   PawnTable pawn_table(0x1000);
   context.pawn_table = &pawn_table;
-  const vector<Move> main_variation = m_searcher->search(&context).main_variation;
-  QVERIFY(!main_variation.empty());
-  Move move = main_variation.back();
+  const SearchResult& result = m_searcher->search(&context);
+  QVERIFY(result.has_best_move);
+  const Move move = result.best_move;
   long score = 0;
   auto ContainsMove = Matches(Contains(move));
   if (!position.best_moves.empty()) {

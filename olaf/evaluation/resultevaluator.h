@@ -8,7 +8,8 @@
 namespace olaf
 {
 
-class ChessBoard;
+class SearchState;
+class SearchContext;
 
 /**
  * @brief The ResultEvaluator class evaluates the position according to the result if it is a terminal position.
@@ -19,7 +20,7 @@ class ResultEvaluator : public PositionEvaluator
 public:
   explicit ResultEvaluator(std::unique_ptr<PositionEvaluator> evaluator);
 
-  score_t evaluate(SearchState* state, SearchContext* context) override;
+  score_t evaluate(const SearchState& state, SearchContext* context) override;
 
 private:
   std::unique_ptr<PositionEvaluator> m_evaluator;

@@ -29,8 +29,15 @@ SearchResult OpeningBookSearcher::search(SearchContext* context)
       for (const OpeningBookEntry& entry : entries) {
         if (number < entry.weight) {
           SearchResult result;
-          result.main_variation.push_back(entry.move);
+          result.has_best_move = true;
+          result.best_move = entry.move;
           result.score = 0;
+          result.search_depth = 0;
+          result.real_depth = 0;
+          result.valid = true;
+          result.terminal = false;
+          result.node_type = NodeType::PvNode;
+          result.node_type_valid = true;
           return result;
         }
         number -= entry.weight;

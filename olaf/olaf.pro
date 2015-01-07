@@ -37,7 +37,6 @@ SOURCES += \
     search/searchcontext.cpp \
     search/quiescer.cpp \
     search/movegenerator.cpp \
-    search/alphabetasearcher.cpp \
     parse/sanparser.cpp \
     parse/epdparser.cpp \
     parse/epdposition.cpp \
@@ -70,7 +69,9 @@ SOURCES += \
     evaluation/compositeevaluator.cpp \
     search/openingbooksearcher.cpp \
     opening_book/openingbook.cpp \
-    search/searchstatistics.cpp
+    search/searchstatistics.cpp \
+    search/searchstate.cpp \
+    search/nodetype.cpp
 
 HEADERS += \
     config.h \
@@ -97,7 +98,6 @@ HEADERS += \
     search/searchcontext.h \
     search/nothinkingwriter.h \
     search/searcher.h \
-    search/alphabetasearcher.h \
     parse/sanparser.h \
     parse/epdparser.h \
     parse/epdposition.h \
@@ -134,7 +134,8 @@ HEADERS += \
     evaluation/compositeevaluator.h \
     search/openingbooksearcher.h \
     opening_book/openingbook.h \
-    search/searchstatistics.h
+    search/searchstatistics.h \
+    search/nodetype.h
 
 target.path = /usr/local/lib
 

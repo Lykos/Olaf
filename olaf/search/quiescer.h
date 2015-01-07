@@ -3,30 +3,31 @@
 
 #include <memory>
 
-#include "olaf/search/alphabetasearcher.h"
 #include "olaf/search/searchresult.h"
+#include "olaf/search/moveorderer.h"
+#include "olaf/evaluation/positionevaluator.h"
 
 namespace olaf
 {
 
 class MoveGenerator;
-class PositionEvaluator;
+class SearchState;
 
-class Quiescer : public AlphaBetaSearcher
+class Quiescer
 {
 public:
-  Quiescer(std::unique_ptr<PositionEvaluator> evaluator,
-           std::unique_ptr<MoveGenerator> generator,
-           MoveOrderer orderer,
-           std::unique_ptr<AlphaBetaSearcher> sub_searcher,
-           depth_t sub_searcher_depth,
-           bool ignore_depth);
+  typedef SearchResult::score_t score_t;
 
-  SearchResult alpha_beta(const TranspositionTableEntry* entry,
-                          SearchState* state,
-                          SearchContext* context) final;
+  Quiescer(std::unique_ptr<MoveGenerator> generator,
+           MoveOrderer orderer,
+           std::unique_ptr<PositionEvaluator> evaluator);
+
+  SearchResult quiesce(const SearchState& state,
+                       SearchContext* context);
 
 private:
+  std::unique_ptr<MoveGenerator> m_generator;
+  MoveOrderer m_orderer;
   std::unique_ptr<PositionEvaluator> m_evaluator;
 };
 
