@@ -34,7 +34,6 @@ Config::Search::Search(const YAML::Node& node):
   default_moves_to_play(find_with_default(node, "default_moves_to_play", 40)),
   min_depth(find_with_default(node, "min_depth", 1)),
   sequential_depth(find_with_default(node, "sequential_depth", 2)),
-  use_quiescent_search(find_with_default(node, "use_quiescent_search", true)),
   initial_window(find_with_default(node, "initial_window", 25))
 {}
 

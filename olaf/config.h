@@ -30,8 +30,6 @@ public:
 
     const int sequential_depth;
 
-    const bool use_quiescent_search;
-
     const int initial_window;
   };
 
